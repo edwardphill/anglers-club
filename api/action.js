@@ -74,8 +74,8 @@ export default route(["POST"], async (req) => {
       // Takes a seat only while one is open; the host doesn't count against the seats.
       const rows = await q(
         `insert into rsvps (trip_id, member_id, club_id, status, at)
-         select $1, $2, $3, $4, $5
-         where $4 <> 'in' or $6::int is null
+         select $1::text, $2::text, $3::text, $4::text, $5::double precision
+         where $4::text <> 'in' or $6::int is null
            or (select count(*) from rsvps r where r.trip_id = $1 and r.status = 'in'
                and r.member_id <> $2 and r.member_id <> $7) < $6::int
          on conflict (trip_id, member_id) do update set

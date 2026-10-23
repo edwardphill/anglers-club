@@ -20,14 +20,14 @@ Each club also has a built-in Fly Picker tab and a link to the Trout Species Map
   - `GET /api/state` returns a club's data. `POST /api/action` makes every change.
   - `GET /api/health` checks the database.
 - `lib/`: database access, passwords and input checks.
-- Database: Postgres on Neon. Tables are created automatically on the first request.
+- Database: Postgres on Supabase, through its pooled connection (any Postgres works). Tables are created automatically on the first request, with row-level security on so Supabase's public data API can't reach them; only the site's server can.
 
 Security: club passwords are hashed with scrypt on the server. Joining gives each device a random sign-in token, and only a hash of it is stored. Password guesses are rate limited. Only a trip's host or the club organizer can edit or delete a trip, and only the organizer can change club details, change the password or remove members.
 
 ## Deploy on Vercel
 
 1. Import this repo in Vercel. Framework preset: Other. There's no build command; the output directory is `public`.
-2. In the project, open Storage, create a Neon Postgres database, and connect it to the project. This sets `DATABASE_URL`.
+2. In the project, open Storage, create a Supabase database, and connect it to the project. This sets `POSTGRES_URL`. With a Supabase project you already have, add its transaction pooler connection string as `POSTGRES_URL` under Environment Variables instead.
 3. Redeploy, then open `/api/health`. It should return `{"ok":true,"clubs":0}`.
 
 ## Run the tests

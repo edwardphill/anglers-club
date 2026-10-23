@@ -8,7 +8,7 @@
     "test": "node tests/api.test.mjs"
   },
   "dependencies": {
-    "@neondatabase/serverless": "^1.0.0"
+    "postgres": "^3.4.5"
   },
   "engines": {
     "node": "22.x"
