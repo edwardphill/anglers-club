@@ -163,6 +163,25 @@ export default route(["POST"], async (req) => {
       return {};
     }
 
+    case "catch.add": {
+      const speciesId = str(p.speciesId, 40);
+      if (!/^[a-z0-9-]{2,40}$/.test(speciesId)) throw new HttpError(400, "Pick a species from the list.");
+      const caughtOn = str(p.caughtOn, 10);
+      if (caughtOn && !/^\d{4}-\d{2}-\d{2}$/.test(caughtOn)) throw new HttpError(400, "Use a real date.");
+      await limit(`catch:${me.id}`, 200, 60 * 60e3, "That's a lot of catches in an hour. Try again later.");
+      const id = newId("k", 6);
+      await q(
+        "insert into catches (id, member_id, club_id, species_id, caught_on, water, note, at) values ($1, $2, $3, $4, $5, $6, $7, $8)",
+        [id, me.id, clubId, speciesId, caughtOn, str(p.water, 80), str(p.note, 500), now],
+      );
+      return { id };
+    }
+
+    case "catch.delete": {
+      await q("delete from catches where id = $1 and member_id = $2", [str(p.id, 40), me.id]);
+      return {};
+    }
+
     default:
       throw new HttpError(400, "That action isn't recognized.");
   }

@@ -34,6 +34,7 @@ http.createServer(async (req, res) => {
   }
   const file = join(root, "public", url.pathname === "/" ? "index.html" : url.pathname);
   if (!existsSync(file)) { res.statusCode = 404; return res.end("Not found"); }
-  res.setHeader("Content-Type", file.endsWith(".html") ? "text/html; charset=utf-8" : "application/octet-stream");
+  const type = { html: "text/html; charset=utf-8", js: "text/javascript; charset=utf-8", json: "application/json" }[file.split(".").pop()];
+  res.setHeader("Content-Type", type || "application/octet-stream");
   res.end(readFileSync(file));
 }).listen(Number(process.env.PORT || 3999), () => console.log("dev server ready"));

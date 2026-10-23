@@ -9,7 +9,7 @@ export default route(["GET"], async (req) => {
   const clubId = str(req.query?.club, 80);
   const me = await requireMember(req, clubId);
 
-  const [clubs, members, trips, rsvps, comments, reports] = await Promise.all([
+  const [clubs, members, trips, rsvps, comments, reports, catches] = await Promise.all([
     q("select * from clubs where id = $1", [clubId]),
     q("select id, handle, role, at from members where club_id = $1 order by at", [clubId]),
     q(
@@ -20,6 +20,8 @@ export default route(["GET"], async (req) => {
     q("select trip_id, member_id, status, at from rsvps where club_id = $1", [clubId]),
     q("select id, trip_id, member_id, text, at from comments where club_id = $1 order by at limit 6000", [clubId]),
     q("select trip_id, member_id, worked, count, cond, notes, at from reports where club_id = $1", [clubId]),
+    // Only the caller's own life list.
+    q("select id, species_id, caught_on, water, note, at from catches where member_id = $1 order by at limit 2000", [me.id]),
   ]);
 
   return {
@@ -36,5 +38,6 @@ export default route(["GET"], async (req) => {
       id: `${r.trip_id}~${r.member_id}`, tripId: r.trip_id, uid: r.member_id,
       worked: r.worked, count: r.count === null ? "" : r.count, cond: r.cond, notes: r.notes, at: r.at,
     })),
+    catches: catches.map((c) => ({ id: c.id, speciesId: c.species_id, caughtOn: c.caught_on, water: c.water, note: c.note, at: c.at })),
   };
 });

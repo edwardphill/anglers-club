@@ -1,6 +1,7 @@
-// Assembles public/index.html from src/club.html and the embedded Fly Picker.
+// Assembles public/index.html from src/club.html, the embedded Fly Picker and the Trout Map
+// checklist, and copies the Trout Map's coastlines to public/trout-land.js.
 // Run after editing anything under src/: npm run build
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -14,6 +15,7 @@ const swap = (marker, text) => {
 };
 swap("<!--FP_TEMPLATE-->", read("src/flypicker/template.html").trimEnd());
 swap("<!--FP_SCRIPTS-->", read("src/flypicker/scripts.html").trimEnd());
+swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() + "\n</script>");
 
 // Everything through the first </style> belongs in <head>; the rest is the body.
 const cut = page.indexOf("</style>") + "</style>".length;
@@ -47,4 +49,6 @@ ${body.trim()}
 
 mkdirSync(join(root, "public"), { recursive: true });
 writeFileSync(join(root, "public/index.html"), html);
+// The Trout Map's coastlines load with that tab, not with the page.
+copyFileSync(join(root, "src/trout-land.js"), join(root, "public/trout-land.js"));
 console.log(`public/index.html: ${(html.length / 1024).toFixed(0)} KB`);

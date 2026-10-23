@@ -71,7 +71,8 @@ a{color:var(--green)}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--green)}
 .me{display:flex;align-items:center;gap:8px;background:none;border:1px solid var(--hair);border-radius:999px;padding:3px 12px 3px 3px;cursor:pointer;font:italic 400 .98rem var(--body);max-width:34%;min-width:0;flex:none}
 .me span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-@media (max-width:640px){.tabs-in{justify-content:space-between}.tablist{gap:4px 18px}.me{padding:3px}.me span{display:none}}
+.tab .short{display:none}
+@media (max-width:640px){.tabs-in{justify-content:space-between}.tablist{gap:4px 15px}.tab{letter-spacing:.1em}.tab .short{display:inline}.tab .long{display:none}.me{padding:3px}.me span{display:none}}
 
 main.wrap{padding-block:28px 80px;display:grid;gap:20px}
 .banner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;background:var(--warn-wash);color:var(--warn);border:1px solid var(--brass);padding:11px 16px}
@@ -291,6 +292,79 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .err{color:var(--oxblood)}
 .err:empty{display:none}
 
+/* Trout Map tab: a personal life list over an antique chart */
+.tm{display:grid;gap:26px}
+.tm-lede{color:var(--muted);max-width:62ch;margin-top:-6px}
+.tm-score{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 26px;align-items:end;border-top:2px solid var(--ink);border-bottom:1px solid var(--brass);padding:16px 4px 18px}
+.tm-big{font:600 clamp(3rem,9vw,4.4rem)/.9 var(--serif);font-variant-numeric:lining-nums;color:var(--green)}
+.tm-big small{font:italic 500 .34em var(--serif);color:var(--muted);margin-left:.25em}
+.tm-score-r{display:grid;gap:8px;min-width:0}
+.tm-cap{font:500 .64rem/1.3 var(--caps);letter-spacing:.2em;color:var(--brass-ink)}
+.tm-bar{height:8px;border:1px solid var(--brass);background:var(--paper);overflow:hidden}
+.tm-bar i{display:block;height:100%;background:var(--green)}
+.tm-sub{color:var(--muted);font-size:.98rem}
+.tm-tiers{grid-column:1/-1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px 22px;margin-top:10px}
+.tm-tier{display:grid;grid-template-rows:auto 1fr auto auto;gap:5px;min-width:0}
+.tm-tier b{font:600 1.1rem/1.2 var(--serif)}
+.tm-tier span{font-size:.95rem;color:var(--muted)}
+.tm-tier .tm-bar{height:5px}
+@media (max-width:700px){.tm-score{grid-template-columns:minmax(0,1fr)}.tm-tiers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tm-map{position:relative;background:var(--paper);border:1px solid var(--brass);box-shadow:0 0 0 3px var(--ground),0 0 0 4px var(--brass);padding:10px}
+.tm-map svg{display:block;width:100%;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none;cursor:default}
+.tm-map svg.zoomed{touch-action:none;cursor:grab}
+.tm-map svg.dragging{cursor:grabbing}
+.tm-ctl{position:absolute;top:18px;right:18px;display:grid;gap:6px}
+.tm-ctl .icon-btn{background:var(--paper);width:36px;height:36px}
+.tm-ctl .icon-btn.world{font:500 .56rem/1 var(--caps);letter-spacing:.1em}
+@media (max-width:640px){.tm-ctl{position:static;display:flex;justify-content:flex-end;gap:8px;margin-top:8px}.tm-map{padding:8px}}
+.tm-loading{display:grid;place-items:center;aspect-ratio:960/313;color:var(--muted);font-style:italic}
+.tm-tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--ground);font:italic 400 .95rem/1.25 var(--body);padding:5px 10px;white-space:nowrap;transform:translate(-50%,calc(-100% - 12px));z-index:2}
+.tm-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;padding:10px 4px 2px}
+.tm-legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.95rem;color:var(--muted);align-items:center}
+.tm-legend span{display:inline-flex;align-items:center;gap:7px}
+.tm-legend svg{width:16px;height:16px;flex:none}
+.tm-note{font-size:.9rem;color:var(--muted);font-style:italic;padding:0 4px}
+.tm-focus{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 14px;background:var(--green-wash);border:1px solid var(--green);padding:10px 16px}
+.tm-boards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:0 22px;border-top:2px solid var(--ink)}
+.tm-board{display:grid;gap:6px;text-align:left;background:none;border:0;border-bottom:1px solid var(--hair);padding:13px 4px 12px;cursor:pointer;color:inherit;min-width:0}
+@media (hover:hover){.tm-board:hover{background:var(--paper)}}
+.tm-board[aria-pressed="true"]{background:var(--green-wash)}
+.tm-board-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.tm-board-h b{font:600 1.15rem/1.2 var(--serif);overflow-wrap:anywhere}
+.tm-board-h span{font-size:.95rem;color:var(--muted);white-space:nowrap;font-variant-numeric:lining-nums}
+.tm-board .seatbar{flex-wrap:wrap;gap:3px}
+.tm-board .seatbar i{width:9px;height:9px}
+.tm-board.done .tm-board-h span{color:var(--green)}
+.tm-sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px;padding:0 2px 10px}
+.tm-sec-h h2{font-style:italic;font-weight:500;font-size:1.75rem}
+.tm-tools{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin-bottom:6px}
+.tm-search{flex:1 1 220px;max-width:340px;background:var(--paper);border:1px solid var(--hair);border-bottom-color:var(--muted);padding:9px 12px;font:400 1rem var(--body)}
+.tm-search:focus{border-color:var(--ink);outline:none}
+.tm-tier-h{font:500 .72rem/1.3 var(--caps);letter-spacing:.2em;color:var(--brass-ink);padding:22px 4px 4px}
+.tm-tier-h em{display:block;font:italic 400 .98rem var(--body);letter-spacing:0;color:var(--muted);margin-top:2px}
+.tm-group-h{font:italic 500 1.3rem/1.2 var(--serif);color:var(--muted);padding:12px 4px 6px}
+.tm-row{display:grid;grid-template-columns:20px minmax(0,1fr) auto;gap:14px;align-items:start;width:100%;text-align:left;background:none;border:0;padding:11px 6px;cursor:pointer;color:inherit}
+@media (hover:hover){.tm-row:hover{background:var(--paper)}}
+.tm-box{width:16px;height:16px;border:1.4px solid var(--brass);margin-top:5px;display:grid;place-items:center}
+.tm-row.caught .tm-box{background:var(--green);border-color:var(--green)}
+.tm-row.caught .tm-box::after{content:"";width:8px;height:4px;border-left:1.6px solid var(--green-ink);border-bottom:1.6px solid var(--green-ink);transform:translateY(-1px) rotate(-45deg)}
+.tm-row.extinct .tm-box{border-style:dashed;border-color:var(--muted)}
+.tm-row.form .tm-box{width:12px;height:12px;margin:7px 0 0 2px}
+.tm-nm{font:600 1.18rem/1.25 var(--serif);overflow-wrap:anywhere}
+.tm-row.extinct .tm-nm{color:var(--muted)}
+.tm-meta{color:var(--muted);font-size:.95rem;overflow-wrap:anywhere}
+.tm-meta i{color:var(--ink)}
+.tm-flag{font:500 .6rem/1 var(--caps);letter-spacing:.14em;padding:3px 6px 2px;margin-left:8px;vertical-align:2px;white-space:nowrap}
+.tm-flag.form{color:var(--green);border:1px solid var(--green)}
+.tm-flag.extinct{color:var(--oxblood);border:1px solid var(--oxblood)}
+.tm-flag.optional{color:var(--brass-ink);border:1px solid var(--brass)}
+.tm-when{font-style:italic;font-size:.95rem;color:var(--green);white-space:nowrap;padding-top:3px}
+.tm-fish{display:block;width:100%;max-width:400px;height:auto;margin:-4px 0 2px}
+.tm-catches{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.tm-catches li{border:1px solid var(--hair);background:var(--ground);padding:10px 14px;display:grid;gap:3px}
+.tm-catches .cm-h b{font-size:1.05rem}
+.tm-empty{color:var(--muted);font-style:italic;padding:14px 4px}
+
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);background:var(--ink);color:var(--ground);font:italic 400 1.05rem/1.3 var(--body);padding:11px 20px;max-width:calc(100% - 32px);text-align:center;z-index:30;pointer-events:none;opacity:0}
 #toast.show{opacity:1}
 @media (prefers-reduced-motion:no-preference){#toast{transition:opacity .2s}}
@@ -311,6 +385,7 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
     </div>
     <div class="club-acts">
       <button class="btn ghost" id="home-btn" type="button" hidden>All clubs</button>
+      <button class="btn ghost" id="invite-btn" type="button" hidden>Invite</button>
       <button class="btn primary w" id="start-btn" type="button" hidden>Start a club</button>
       <button class="btn primary w" id="post-btn" type="button" hidden>Post a trip</button>
     </div>
@@ -320,11 +395,11 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 <nav class="tabs" id="tabsbar" aria-label="Club views" hidden>
   <div class="wrap tabs-in">
     <div class="tablist" role="tablist">
-      <button class="tab" role="tab" id="t-upcoming" data-tab="upcoming" aria-selected="true">Upcoming</button>
+      <button class="tab" role="tab" id="t-upcoming" data-tab="upcoming" aria-selected="true"><span class="long">Upcoming</span><span class="short">Trips</span></button>
       <button class="tab" role="tab" id="t-calendar" data-tab="calendar" aria-selected="false">Calendar</button>
       <button class="tab" role="tab" id="t-logbook" data-tab="logbook" aria-selected="false">Logbook</button>
-      <button class="tab" role="tab" id="t-flies" data-tab="flies" aria-selected="false">Fly Picker</button>
-      <a class="tab" href="https://claude.ai/artifact/7uY3BqzwU5i6z4fHubjK5D" target="_blank" rel="noopener">Trout Map ↗</a>
+      <button class="tab" role="tab" id="t-flies" data-tab="flies" aria-selected="false"><span class="long">Fly Picker</span><span class="short">Flies</span></button>
+      <button class="tab" role="tab" id="t-trout" data-tab="trout" aria-selected="false"><span class="long">Trout Map</span><span class="short">Trout</span></button>
     </div>
     <button class="me" id="me-btn" type="button" aria-label="Club settings and your name"></button>
   </div>
@@ -369,6 +444,50 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
         <div style="display:grid;gap:14px">
           <div class="fp-note" id="fp-note" hidden></div>
           <div id="fp-host"></div>
+        </div>
+      </div>
+      <div id="v-trout" role="tabpanel" aria-labelledby="t-trout" hidden>
+        <div class="tm">
+          <p class="tm-lede">Every native trout, char, taimen and lenok on one chart. Log a fish and its range fills in for good. A personal life list, like a birder's notebook: only you see yours.</p>
+          <div class="tm-score" id="tm-score"></div>
+          <div>
+            <div class="tm-map" id="tm-map">
+              <div class="tm-loading" id="tm-map-msg">Drawing the chart…</div>
+              <div class="tm-ctl" id="tm-ctl" hidden>
+                <button class="icon-btn" type="button" data-act="tm-zin" aria-label="Zoom in">+</button>
+                <button class="icon-btn" type="button" data-act="tm-zout" aria-label="Zoom out">−</button>
+                <button class="icon-btn world" type="button" data-act="tm-world" aria-label="Show the whole map">ALL</button>
+              </div>
+              <div class="tm-tip" id="tm-tip" hidden></div>
+            </div>
+            <div class="tm-foot">
+              <div class="tm-legend" aria-label="Map key">
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#1F4D3A" stroke="#FFFDF8" stroke-width="1.5"/></svg>Caught</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="#FFFDF8" stroke="#9C7A3C" stroke-width="1.6"/></svg>Still to catch</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8" fill="#FFFDF8" stroke="#9C7A3C" stroke-width="1.3"/></svg>Form</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="#FFFDF8" stroke="#4A564E" stroke-width="1.2" stroke-dasharray="2 1.6"/></svg>Extinct</span>
+              </div>
+              <button class="btn ghost small" type="button" data-act="tm-save">Save map as image</button>
+            </div>
+            <p class="tm-note">Pinch, scroll with Ctrl, or use + to zoom. Tap a range to open it. Circles mark each native range roughly, not survey lines.</p>
+          </div>
+          <div id="tm-focus" class="tm-focus" hidden></div>
+          <section>
+            <div class="tm-sec-h"><h2>Regional boards</h2><span class="hint">Boards count every entry you can still catch, forms included. Tap one to zoom there.</span></div>
+            <div class="tm-boards" id="tm-boards"></div>
+          </section>
+          <section>
+            <div class="tm-sec-h"><h2>The checklist</h2><span class="hint" id="tm-count"></span></div>
+            <div class="tm-tools">
+              <div class="chips" role="group" aria-label="Show">
+                <button class="chip" type="button" data-tmf="all" aria-pressed="true">All</button>
+                <button class="chip" type="button" data-tmf="todo" aria-pressed="false">Still to catch</button>
+                <button class="chip" type="button" data-tmf="caught" aria-pressed="false">Caught</button>
+              </div>
+              <input class="tm-search" id="tm-q" type="search" placeholder="Find a species, river or region" aria-label="Find a species" autocomplete="off">
+            </div>
+            <div id="tm-list"></div>
+          </section>
         </div>
       </div>
     </div>
@@ -1307,13 +1426,180 @@ function startFlyPicker(FP_ROOT, FP_OPTS) {
   return { set: fpSet };
 }
 </script>
+<script>
+// The Trout Species Map checklist (README v2, Appendix A, 27 September 2026).
+// [id, common name, scientific name, range, tier, group, lat, lon, flags, board, radius]
+// group: the checklist table it sits in. board: the regional board it counts toward.
+// flags: "f" a form (a sub-entry: logged, not counted), "x" extinct (shown, not countable),
+// "o" optional (logged, not counted).
+// lat/lon and radius (degrees) draw an approximate circle over each listed native range,
+// a stand-in until the dataset's range polygons are loaded.
+window.TROUT_TIERS = {
+  1: "North America · Oncorhynchus",
+  2: "Europe, W. Asia & North Africa · Salmo",
+  3: "East Asia & Japan",
+  4: "Char, taimen & lenok",
+};
+window.TROUT_GROUPS = {
+  cutthroat: "Cutthroat trout",
+  rainbow: "Rainbow, redband & golden",
+  southwest: "Southwest & Mexico",
+  brown: "Brown trout & relatives",
+  masu: "Masu (cherry salmon)",
+  asianchar: "Asian char",
+  nachar: "North American char",
+  euchar: "European & Asian char",
+  taimen: "Taimen, huchen & lenok",
+};
+window.TROUT_BOARDS = {
+  pnw: "Pacific Northwest & Alaska",
+  rockies: "Northern Rockies",
+  greatbasin: "Great Basin",
+  california: "California",
+  southwest: "Southern Rockies & Southwest",
+  mexico: "Mexico",
+  east: "Eastern North America",
+  atlantic: "British Isles & North Atlantic",
+  alps: "Central Europe & Italy",
+  balkans: "Balkans",
+  nafrica: "North Africa",
+  caspian: "Black Sea, Caspian & Middle East",
+  siberia: "Siberia & Kamchatka",
+  japan: "Japan & Taiwan",
+  amur: "Korea, China & the Amur",
+};
+window.TROUT_SPECIES = [
+  ["coastal-cutthroat", "Coastal cutthroat", "O. c. clarkii", "Pacific coast, Alaska to N. California", 1, "cutthroat", 49.5, -124.8, "", "pnw", 5],
+  ["westslope-cutthroat", "Westslope cutthroat", "O. c. lewisi", "Montana, Idaho, BC, Alberta, Washington", 1, "cutthroat", 47.6, -114.6, "", "rockies", 3.5],
+  ["yellowstone-cutthroat", "Yellowstone cutthroat", "O. c. bouvieri", "Yellowstone and upper Snake", 1, "cutthroat", 44.6, -110.4, "", "rockies", 2],
+  ["snake-river-finespotted", "Snake River finespotted", "O. c. behnkei", "Upper Snake, Wyoming", 1, "cutthroat", 43.5, -110.8, "", "rockies", 1.5],
+  ["bonneville-cutthroat", "Bonneville cutthroat", "O. c. utah", "Bonneville basin", 1, "cutthroat", 40.3, -112.3, "", "greatbasin", 2.5],
+  ["bear-lake-cutthroat", "Bear Lake cutthroat", "Bonneville form", "Bear Lake, Utah/Idaho", 1, "cutthroat", 41.95, -111.33, "f", "greatbasin", 0.6],
+  ["lahontan-cutthroat", "Lahontan cutthroat", "O. c. henshawi", "Lahontan basin, NV/CA/OR", 1, "cutthroat", 40.4, -118.2, "", "greatbasin", 2.5],
+  ["pilot-peak-lahontan", "Pilot Peak Lahontan", "henshawi strain", "Pyramid Lake", 1, "cutthroat", 40.0, -119.55, "f", "greatbasin", 0.6],
+  ["humboldt-cutthroat", "Humboldt cutthroat", "henshawi form", "Humboldt drainage, Nevada", 1, "cutthroat", 41.0, -116.0, "f", "greatbasin", 1.5],
+  ["willow-whitehorse-cutthroat", "Willow–Whitehorse cutthroat", "henshawi form", "SE Oregon", 1, "cutthroat", 42.3, -118.3, "f", "greatbasin", 0.7],
+  ["paiute-cutthroat", "Paiute cutthroat", "O. c. seleniris", "Silver King Creek, California", 1, "cutthroat", 38.55, -119.65, "", "california", 0.5],
+  ["colorado-river-cutthroat", "Colorado River cutthroat", "O. c. pleuriticus", "Upper Colorado basin", 1, "cutthroat", 39.6, -107.6, "", "southwest", 3],
+  ["greenback-cutthroat", "Greenback cutthroat", "O. c. stomias", "Bear Creek / South Platte, Colorado", 1, "cutthroat", 39.2, -105.3, "", "southwest", 1],
+  ["rio-grande-cutthroat", "Rio Grande cutthroat", "O. c. virginalis", "New Mexico, Colorado", 1, "cutthroat", 36.5, -105.8, "", "southwest", 2.5],
+  ["alvord-cutthroat", "Alvord cutthroat", "O. c. alvordensis", "Alvord basin, OR/NV", 1, "cutthroat", 42.2, -118.6, "x", "greatbasin", 0.9],
+  ["yellowfin-cutthroat", "Yellowfin cutthroat", "O. c. macdonaldi", "Twin Lakes, Colorado", 1, "cutthroat", 39.08, -106.35, "x", "southwest", 0.5],
+
+  ["coastal-rainbow", "Coastal rainbow", "O. m. irideus", "Pacific slope", 1, "rainbow", 44.0, -122.8, "", "pnw", 5],
+  ["steelhead", "Steelhead", "anadromous rainbow", "Pacific coast", 1, "rainbow", 46.3, -124.1, "f", "pnw", 4],
+  ["kamchatka-steelhead", "Kamchatka steelhead (mikizha)", "O. m. mykiss", "Kamchatka, Russia", 1, "rainbow", 55.5, 158.5, "", "siberia", 3],
+  ["columbia-redband", "Columbia River redband", "O. m. gairdneri", "Columbia basin", 1, "rainbow", 46.5, -118.6, "", "pnw", 3.5],
+  ["great-basin-redband", "Great Basin redband", "O. m. newberrii", "Oregon desert basins", 1, "rainbow", 43.1, -119.6, "", "greatbasin", 2.5],
+  ["mccloud-redband", "McCloud River redband", "O. m. stonei", "McCloud River, California", 1, "rainbow", 41.2, -122.1, "", "california", 0.7],
+  ["sheepheaven-redband", "Sheepheaven Creek redband", "stonei form", "Siskiyou County, California", 1, "rainbow", 41.5, -122.0, "f", "california", 0.5],
+  ["warner-lakes-redband", "Warner Lakes redband", "newberrii form", "Warner basin, Oregon", 1, "rainbow", 42.4, -119.9, "f", "greatbasin", 0.7],
+  ["goose-lake-redband", "Goose Lake redband", "newberrii form", "Goose Lake, OR/CA", 1, "rainbow", 41.95, -120.4, "f", "greatbasin", 0.6],
+  ["eagle-lake-rainbow", "Eagle Lake rainbow", "O. m. aquilarum", "Eagle Lake, California", 1, "rainbow", 40.65, -120.75, "", "california", 0.5],
+  ["kern-river-rainbow", "Kern River rainbow", "O. m. gilberti", "Kern River, California", 1, "rainbow", 35.9, -118.45, "", "california", 0.9],
+  ["little-kern-golden", "Little Kern golden", "O. m. whitei", "Little Kern, California", 1, "rainbow", 36.3, -118.55, "", "california", 0.5],
+  ["california-golden", "California golden", "O. m. aguabonita", "Golden Trout Creek, S. Fork Kern", 1, "rainbow", 36.35, -118.25, "", "california", 0.5],
+  ["kamloops-rainbow", "Kamloops rainbow", "rainbow form", "BC interior lakes", 1, "rainbow", 50.7, -120.3, "f", "pnw", 2],
+  ["gerrard-rainbow", "Gerrard rainbow", "rainbow form", "Kootenay Lake, BC", 1, "rainbow", 49.7, -116.85, "f", "pnw", 0.7],
+
+  ["apache-trout", "Apache trout", "O. apache", "White Mountains, Arizona", 1, "southwest", 33.9, -109.5, "", "southwest", 0.9],
+  ["gila-trout", "Gila trout", "O. gilae", "New Mexico, Arizona", 1, "southwest", 33.3, -108.3, "", "southwest", 1.5],
+  ["mexican-golden", "Mexican golden trout", "O. chrysogaster", "Sierra Madre Occidental", 1, "southwest", 26.0, -107.0, "", "mexico", 3],
+  ["rio-yaqui-trout", "Río Yaqui trout", "undescribed", "Chihuahua, Sonora", 1, "southwest", 29.5, -108.3, "", "mexico", 1.8],
+  ["rio-mayo-trout", "Río Mayo trout", "undescribed", "Chihuahua, Sonora", 1, "southwest", 27.8, -108.5, "", "mexico", 1.5],
+  ["rio-conchos-trout", "Río Conchos trout", "undescribed", "Chihuahua", 1, "southwest", 27.3, -107.0, "", "mexico", 1.5],
+  ["san-pedro-martir-trout", "San Pedro Mártir trout", "O. m. nelsoni", "Baja California", 1, "southwest", 31.0, -115.5, "", "mexico", 0.8],
+  ["sierra-madre-trouts", "Río San Lorenzo, Piaxtla, Culiacán trouts", "undescribed, grouped", "Durango, Sinaloa", 1, "southwest", 24.5, -105.8, "", "mexico", 2.5],
+
+  ["brown-trout", "Brown trout", "S. trutta", "Europe to the Caspian", 2, "brown", 50.5, 10.0, "", "alps", 11],
+  ["sea-trout", "Sea trout", "anadromous brown", "Atlantic and Baltic coasts", 2, "brown", 56.5, 8.5, "f", "atlantic", 6],
+  ["ferox-trout", "Ferox trout", "brown form", "Scotland, Ireland", 2, "brown", 57.1, -4.6, "f", "atlantic", 2],
+  ["gillaroo", "Gillaroo", "brown form", "Lough Melvin, Ireland", 2, "brown", 54.43, -8.15, "f", "atlantic", 0.5],
+  ["sonaghen", "Sonaghen", "brown form", "Lough Melvin, Ireland", 2, "brown", 54.42, -8.05, "f", "atlantic", 0.5],
+  ["danube-brown", "Danube brown lineage", "brown lineage", "Danube basin", 2, "brown", 47.5, 15.0, "f", "alps", 4],
+  ["marble-trout", "Marble trout", "S. marmoratus", "Soča and Po basins", 2, "brown", 46.2, 13.4, "", "balkans", 1.5],
+  ["softmouth-trout", "Softmouth trout", "S. obtusirostris", "Neretva, Zeta, Krka, Jadro", 2, "brown", 43.5, 17.8, "", "balkans", 1.5],
+  ["ohrid-trout", "Ohrid trout", "S. letnica", "Lake Ohrid", 2, "brown", 41.0, 20.75, "", "balkans", 0.5],
+  ["belvica", "Belvica", "S. ohridanus", "Lake Ohrid", 2, "brown", 41.05, 20.7, "", "balkans", 0.5],
+  ["prespa-trout", "Prespa trout", "S. peristericus", "Lake Prespa basin", 2, "brown", 40.9, 21.05, "", "balkans", 0.5],
+  ["carpione", "Carpione", "S. carpio", "Lake Garda, Italy", 2, "brown", 45.65, 10.65, "", "alps", 0.5],
+  ["mediterranean-trout", "Mediterranean trout", "S. cettii", "Italy, Sicily", 2, "brown", 39.5, 16.0, "", "alps", 3.5],
+  ["macrostigma-trout", "Macrostigma trout", "S. macrostigma", "Sardinia, Corsica", 2, "brown", 40.5, 9.1, "", "alps", 1.5],
+  ["zrmanja-trout", "Zrmanja trout", "S. zrmanjaensis", "Zrmanja, Croatia", 2, "brown", 44.2, 15.9, "", "balkans", 0.6],
+  ["dinaric-trout", "Dinaric trout", "S. farioides", "Western Balkans", 2, "brown", 44.0, 18.5, "", "balkans", 2.5],
+  ["pelagonian-trout", "Pelagonian trout", "S. pelagonicus", "North Macedonia", 2, "brown", 41.4, 21.5, "", "balkans", 1],
+  ["aral-trout", "Aral trout", "S. oxianus", "Amu Darya", 2, "brown", 40.5, 63.0, "", "caspian", 4],
+  ["caspian-trout", "Caspian trout", "S. caspius", "Caspian basin", 2, "brown", 41.5, 48.5, "", "caspian", 4],
+  ["black-sea-trout", "Black Sea trout", "S. labrax", "Black Sea basin", 2, "brown", 41.6, 41.5, "", "caspian", 4],
+  ["sevan-trout", "Sevan trout", "S. ischchan", "Lake Sevan, Armenia", 2, "brown", 40.4, 45.2, "", "caspian", 0.6],
+  ["flathead-trout", "Flathead trout", "S. platycephalus", "Zamantı River, Turkey", 2, "brown", 38.4, 36.0, "", "caspian", 0.6],
+  ["anatolian-trouts", "Anatolian trouts", "S. abanticus, coruhensis, rizeensis, euphrataeus", "Turkey, grouped", 2, "brown", 40.0, 39.0, "", "caspian", 4],
+  ["tigris-trout", "Tigris trout", "S. tigridis", "Turkey, Iraq, Iran", 2, "brown", 37.5, 43.5, "", "caspian", 2.5],
+  ["iranian-trouts", "Iranian trouts", "S. trutta lineages", "Namak and Urmia basins, Iran", 2, "brown", 36.0, 49.0, "", "caspian", 3],
+  ["lake-ifni-trout", "Lake Ifni trout", "S. akairos", "High Atlas, Morocco", 2, "brown", 31.0, -7.95, "", "nafrica", 0.5],
+  ["atlas-trout", "Atlas trout", "S. trutta Atlas lineage", "Morocco (native Africa)", 2, "brown", 33.0, -5.3, "", "nafrica", 2],
+  ["algerian-trout", "Algerian trout", "N. African lineage", "Algeria (native Africa)", 2, "brown", 36.6, 6.0, "", "nafrica", 1.5],
+  ["sidi-ali-trout", "Sidi Ali trout", "S. pallaryi", "Lake Sidi Ali, Morocco", 2, "brown", 33.07, -5.0, "x", "nafrica", 0.5],
+  ["atlantic-salmon", "Atlantic salmon", "S. salar", "North Atlantic", 2, "brown", 64.5, -19.0, "o", "atlantic", 10],
+
+  ["yamame", "Yamame", "O. m. masou", "Japan, Korea, Russian Far East", 3, "masu", 37.5, 139.6, "", "japan", 4.5],
+  ["sakuramasu", "Sakuramasu", "sea-run yamame", "Japan Sea coasts", 3, "masu", 39.6, 140.1, "f", "japan", 2.5],
+  ["amago", "Amago", "O. m. ishikawae", "SW Japan", 3, "masu", 34.0, 134.0, "", "japan", 2.5],
+  ["satsukimasu", "Satsukimasu", "sea-run amago", "Pacific-side Japan", 3, "masu", 35.4, 136.8, "f", "japan", 2],
+  ["biwamasu", "Biwamasu", "O. masou subsp.", "Lake Biwa", 3, "masu", 35.25, 136.1, "", "japan", 0.6],
+  ["formosan-landlocked-salmon", "Formosan landlocked salmon", "O. m. formosanus", "Taiwan", 3, "masu", 24.35, 121.3, "", "japan", 0.6],
+  ["korean-masu", "Korean masu", "masu form", "Korea", 3, "masu", 37.8, 128.5, "f", "amur", 1.5],
+
+  ["nikko-iwana", "Nikko-iwana", "S. leucomaenis pluvius", "Central Honshu", 3, "asianchar", 36.5, 139.2, "", "japan", 2],
+  ["yamato-iwana", "Yamato-iwana", "S. l. japonicus", "Kii Peninsula", 3, "asianchar", 34.2, 135.9, "", "japan", 1],
+  ["gogi", "Gogi", "S. l. imbrius", "Western Honshu", 3, "asianchar", 35.2, 132.7, "", "japan", 1.5],
+  ["ezo-iwana", "Ezo-iwana (amemasu)", "S. l. leucomaenis", "Hokkaido, N. Honshu", 3, "asianchar", 43.0, 142.5, "", "japan", 2.5],
+  ["kirikuchi-char", "Kirikuchi char", "yamato form", "Kii Peninsula, southernmost char", 3, "asianchar", 34.0, 135.8, "f", "japan", 0.6],
+  ["miyabe-char", "Miyabe char", "S. malma miyabei", "Lake Shikaribetsu", 3, "asianchar", 43.27, 143.1, "", "japan", 0.5],
+  ["oshorokoma", "Oshorokoma", "S. malma krascheninnikovi", "Hokkaido, Kamchatka", 3, "asianchar", 43.8, 142.9, "", "japan", 3],
+  ["kundzha", "Kundzha", "S. leucomaenis", "Sakhalin, Primorye", 3, "asianchar", 48.0, 140.5, "", "amur", 4.5],
+
+  ["brook-trout", "Brook trout", "S. fontinalis", "Eastern North America", 4, "nachar", 44.0, -74.0, "", "east", 8],
+  ["coaster-brook-trout", "Coaster brook trout", "brook form", "Lake Superior", 4, "nachar", 47.5, -88.0, "f", "east", 3],
+  ["salter-brook-trout", "Salter brook trout", "brook form", "New England, Maritimes", 4, "nachar", 45.5, -63.5, "f", "east", 3],
+  ["aurora-trout", "Aurora trout", "brook form", "Ontario", 4, "nachar", 47.5, -80.5, "f", "east", 0.6],
+  ["silver-trout", "Silver trout", "S. agassizii", "New Hampshire", 4, "nachar", 42.9, -72.1, "x", "east", 0.6],
+  ["lake-trout", "Lake trout", "S. namaycush", "Canada, Great Lakes", 4, "nachar", 54.0, -102.0, "", "east", 12],
+  ["siscowet-humper", "Siscowet and humper", "lake trout forms", "Lake Superior", 4, "nachar", 47.8, -86.5, "f", "east", 2],
+  ["bull-trout", "Bull trout", "S. confluentus", "Pacific Northwest, Rockies", 4, "nachar", 48.5, -115.0, "", "pnw", 4.5],
+  ["dolly-varden", "Dolly Varden", "S. malma", "North Pacific rim", 4, "nachar", 59.0, -150.0, "", "pnw", 8],
+  ["arctic-char", "Arctic char", "S. alpinus", "Circumpolar", 4, "nachar", 64.0, -51.5, "", "atlantic", 9],
+  ["sunapee-trout", "Sunapee trout", "Arctic char form", "New Hampshire, Maine", 4, "nachar", 43.4, -71.6, "f", "east", 0.6],
+  ["blueback-trout", "Blueback trout", "Arctic char form", "Maine", 4, "nachar", 46.6, -69.2, "f", "east", 0.8],
+  ["quebec-red-trout", "Quebec red trout", "S. marstoni", "Quebec", 4, "nachar", 47.3, -72.5, "f", "east", 2],
+
+  ["alpine-char", "Alpine char", "S. umbla", "Alpine lakes", 4, "euchar", 46.8, 9.5, "", "alps", 3],
+  ["torgoch", "Torgoch (Welsh char)", "char form", "Wales", 4, "euchar", 53.1, -4.1, "f", "atlantic", 0.6],
+  ["irish-scottish-char", "Irish and Scottish char", "char forms", "Ireland, Scotland", 4, "euchar", 56.3, -5.2, "f", "atlantic", 2.5],
+  ["lake-constance-char", "Lake Constance char", "S. profundus", "Lake Constance", 4, "euchar", 47.6, 9.4, "x", "alps", 0.6],
+  ["siberian-char", "Siberian char lineages", "grouped", "Taimyr and Siberia", 4, "euchar", 69.0, 92.0, "", "siberia", 8],
+  ["boganida-char", "Boganida char", "S. boganidae", "Taimyr", 4, "euchar", 72.0, 99.0, "", "siberia", 2],
+  ["long-finned-char", "Long-finned char", "S. svetovidovi", "Chukotka", 4, "euchar", 67.5, 172.1, "", "siberia", 1],
+  ["white-char", "White char", "S. albus", "Kamchatka", 4, "euchar", 56.3, 160.8, "", "siberia", 1.5],
+  ["kronotsky-chars", "Kronotsky chars", "grouped", "Lake Kronotskoe", 4, "euchar", 54.6, 160.3, "", "siberia", 0.8],
+  ["levanidovs-char", "Levanidov's char", "S. levanidovi", "Russian Far East", 4, "euchar", 51.5, 139.0, "", "siberia", 3],
+
+  ["siberian-taimen", "Siberian taimen", "Hucho taimen", "Mongolia, Siberia", 4, "taimen", 50.5, 100.5, "", "siberia", 10],
+  ["danube-huchen", "Danube huchen", "H. hucho", "Danube basin", 4, "taimen", 48.7, 18.5, "", "alps", 4],
+  ["sichuan-taimen", "Sichuan taimen", "H. bleekeri", "Upper Yangtze", 4, "taimen", 32.5, 102.5, "", "amur", 2.5],
+  ["korean-taimen", "Korean taimen", "H. ishikawae", "Yalu River", 4, "taimen", 41.0, 126.5, "", "amur", 2],
+  ["sakhalin-taimen", "Sakhalin taimen", "Parahucho perryi", "Hokkaido, Sakhalin", 4, "taimen", 46.5, 142.5, "", "amur", 3],
+  ["sharp-snouted-lenok", "Sharp-snouted lenok", "Brachymystax lenok", "Siberia, Mongolia", 4, "taimen", 52.0, 110.0, "", "siberia", 9],
+  ["blunt-snouted-lenok", "Blunt-snouted lenok", "B. tumensis", "Amur basin, Korea", 4, "taimen", 47.0, 132.0, "", "amur", 5],
+  ["qinling-lenok", "Qinling lenok", "B. tsinlingensis", "Qinling Mountains, China", 4, "taimen", 33.8, 107.8, "", "amur", 1.5],
+];
+</script>
 
 <script>
 (() => {
 "use strict";
 /* ---------- constants ---------- */
 const APP_URL = location.origin + "/";
-const TROUT_MAP_URL = "https://claude.ai/artifact/7uY3BqzwU5i6z4fHubjK5D";
 const TZN = { E: "America/New_York", C: "America/Chicago", M: "America/Denver", AZ: "America/Phoenix", P: "America/Los_Angeles", AK: "America/Anchorage", HI: "Pacific/Honolulu" };
 const ZONE_LABEL = { "America/New_York": "Eastern", "America/Chicago": "Central", "America/Denver": "Mountain", "America/Phoenix": "Arizona (no daylight saving)", "America/Los_Angeles": "Pacific", "America/Anchorage": "Alaska", "Pacific/Honolulu": "Hawaii" };
 // State: name, default lat, lon (a main city), time zone, Fly Picker region.
@@ -1344,7 +1630,7 @@ const COND_PH = { fish: "e.g. No generation till 2 PM", hunt: "e.g. Youth weeken
 const WHERE_PH = { fish: "e.g. the river or lake", hunt: "e.g. the WMA or lease" };
 const COUNT_LABEL = { fish: "Fish landed", hunt: "Harvest" };
 const WORKED_LABEL = { fish: "Flies that worked", hunt: "What worked" };
-const TABS = ["upcoming", "calendar", "logbook", "flies"];
+const TABS = ["upcoming", "calendar", "logbook", "flies", "trout"];
 const NO_WRITE = "You can look around but can't change anything. Ask the person who shared this page for edit access.";
 
 /* ---------- state ---------- */
@@ -1353,7 +1639,7 @@ const S = {
   readOnly: false, connected: false, booting: true, sessions: {}, poll: 0, loadSeq: 0,
   clubs: new Map(), clubsLoaded: false, myClubs: [],
   clubId: null, unsubs: [],
-  trips: new Map(), rsvps: [], comments: [], reports: [], members: new Map(), loaded: { trips: false, members: false },
+  trips: new Map(), rsvps: [], comments: [], reports: [], catches: [], catchIdx: null, members: new Map(), loaded: { trips: false, members: false },
   profiles: {}, tab: "upcoming", filter: "all", mine: false, cal: null, calSel: null, sheet: null,
   fp: null, fpClub: null, fpNote: "", lastInvite: "",
 };
@@ -1575,8 +1861,9 @@ function enterClub(cid, opts = {}) {
   S.clubId = cid || null;
   S.me = { id: (session(S.clubId) || {}).memberId || null, role: "" };
   S.loadSeq++;
-  S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.members = new Map();
+  S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.catches = []; S.catchIdx = null; S.members = new Map();
   S.loaded = { trips: false, members: false };
+  TM.focus = null; TM.sel = null; TM.Z = { k: 1, x: 0, y: 0 };
   S.tab = opts.tab && TABS.includes(opts.tab) ? opts.tab : "upcoming";
   S.filter = "all"; S.mine = false; S.cal = null; S.calSel = null; S.fpNote = "";
   const mt = $("#mine-toggle"); if (mt) mt.checked = false;
@@ -1672,6 +1959,7 @@ function renderHeader(v) {
   $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : "Fishing & hunting clubs, city by city";
   $("#hd-title").textContent = inClub ? c.name : "Anglers Club";
   $("#home-btn").hidden = !inClub;
+  $("#invite-btn").hidden = v !== "club";
   $("#start-btn").hidden = true;
   $("#post-btn").hidden = v !== "club" || S.readOnly;
 }
@@ -1828,6 +2116,582 @@ function openFliesForTrip(t) {
   window.scrollTo(0, 0);
 }
 
+/* ---------- Trout Map tab ---------- */
+// The checklist comes from src/trout-species.js (inlined). The coastlines, already projected,
+// load with the tab from /trout-land.js. Species and range circles are placed with the same
+// Natural Earth projection, so the page needs no map library.
+const SP = (window.TROUT_SPECIES || []).map((r, i) => ({
+  n: i + 1, id: r[0], name: r[1], sci: r[2], range: r[3], tier: r[4], group: r[5], lat: r[6], lon: r[7], flag: r[8], board: r[9], rad: r[10],
+}));
+const SPM = new Map(SP.map((x) => [x.id, x]));
+const BOARDS = window.TROUT_BOARDS || {}, GROUPS = window.TROUT_GROUPS || {}, TIERS = window.TROUT_TIERS || {};
+const isForm = (x) => x.flag === "f", isExtinct = (x) => x.flag === "x", isOptional = (x) => x.flag === "o";
+const counts = (x) => !x.flag;                             // full entries make the life list
+const slot = (x) => x.flag === "" || x.flag === "f";      // board slots: anything catchable, forms too
+const tierName = (t) => String(TIERS[t] || "").split(" · ")[0];
+const tierGenus = (t) => String(TIERS[t] || "").split(" · ")[1] || "";
+const TM = {
+  built: false, building: false, loading: null, svg: null, zg: null, dots: [], labels: [], ppu: 0,
+  Z: { k: 1, x: 0, y: 0 }, pts: new Map(), focus: null, sel: null, filter: "all", q: "", ptr: new Map(), drag: null, anim: 0,
+};
+function catchIdx() {
+  if (S.catchIdx) return S.catchIdx;
+  const m = new Map();
+  (S.catches || []).forEach((c) => { if (!SPM.has(c.speciesId)) return; if (!m.has(c.speciesId)) m.set(c.speciesId, []); m.get(c.speciesId).push(c); });
+  m.forEach((a) => a.sort((p, q) => (q.caughtOn || "").localeCompare(p.caughtOn || "") || (q.at || 0) - (p.at || 0)));
+  return (S.catchIdx = m);
+}
+function firstCaught(list) {
+  const dated = list.filter((c) => c.caughtOn).map((c) => c.caughtOn).sort();
+  return dated[0] || "";
+}
+function setHTML(el, html) { if (el && el._html !== html) { el.innerHTML = html; el._html = html; } }
+const washOf = (x, st) => +(st.tfo * (x.rad >= 6 ? 0.55 : 1)).toFixed(3);
+const spState = (x, idx) => (idx.has(x.id) ? "caught" : isExtinct(x) ? "extinct" : isOptional(x) ? "optional" : "todo");
+// One palette for the chart and the saved image.
+const TM_STYLE = {
+  caught: { tf: "#1F4D3A", tfo: 0.26, ts: "#1F4D3A", tso: 0.8, dash: "", df: "#1F4D3A", ds: "#FFFDF8", dsw: 1.3 },
+  todo: { tf: "#9C7A3C", tfo: 0.1, ts: "#9C7A3C", tso: 0.55, dash: "", df: "#FFFDF8", ds: "#9C7A3C", dsw: 1.5 },
+  optional: { tf: "#9C7A3C", tfo: 0.05, ts: "#9C7A3C", tso: 0.45, dash: "3 2", df: "#FFFDF8", ds: "#9C7A3C", dsw: 1.2 },
+  extinct: { tf: "#4A564E", tfo: 0.04, ts: "#4A564E", tso: 0.5, dash: "3 2", df: "#FFFDF8", ds: "#4A564E", dsw: 1.1 },
+};
+
+/* Projection: Natural Earth 1, constants from the generated land file. */
+const RAD = Math.PI / 180;
+function ne1(lam, phi) {
+  const p2 = phi * phi, p4 = p2 * p2;
+  return [
+    lam * (0.8707 - 0.131979 * p2 + p4 * (-0.013791 + p4 * (0.003971 * p2 - 0.001529 * p4))),
+    phi * (1.007226 + p2 * (0.015085 + p4 * (-0.044475 + 0.028874 * p2 - 0.005916 * p4))),
+  ];
+}
+function proj(lon, lat) { const L = window.TROUT_LAND, [X, Y] = ne1(lon * RAD, lat * RAD); return [L.tx + L.s * X, L.ty - L.s * Y]; }
+const lineD = (pts) => pts.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join("");
+function circleD(lat, lon, r) {
+  const f1 = lat * RAD, l1 = lon * RAD, d = r * RAD, pts = [];
+  for (let i = 0; i < 48; i++) {
+    const th = (i / 48) * 2 * Math.PI;
+    const f2 = Math.asin(Math.sin(f1) * Math.cos(d) + Math.cos(f1) * Math.sin(d) * Math.cos(th));
+    const l2 = l1 + Math.atan2(Math.sin(th) * Math.sin(d) * Math.cos(f1), Math.cos(d) - Math.sin(f1) * Math.sin(f2));
+    pts.push(proj(l2 / RAD, f2 / RAD));
+  }
+  return lineD(pts) + "Z";
+}
+function gratD() {
+  let d = "";
+  for (let lon = -180; lon <= 180; lon += 30) { const p = []; for (let lat = -80; lat <= 80; lat += 2) p.push(proj(lon, lat)); d += lineD(p); }
+  for (let lat = -15; lat <= 75; lat += 15) { const p = []; for (let lon = -180; lon <= 180; lon += 3) p.push(proj(lon, lat)); d += lineD(p); }
+  return d;
+}
+function outlineD() {
+  const p = [];
+  for (let lat = -90; lat <= 90; lat += 2) p.push(proj(-180, lat));
+  for (let lat = 90; lat >= -90; lat -= 2) p.push(proj(180, lat));
+  return lineD(p) + "Z";
+}
+const rangePx = (x) => Math.max(4, x.rad * RAD * window.TROUT_LAND.s);   // circle radius in map units
+
+function loadLand() {
+  if (window.TROUT_LAND) return Promise.resolve();
+  if (!TM.loading) TM.loading = new Promise((res, rej) => {
+    const el = document.createElement("script");
+    el.src = "/trout-land.js";
+    el.onload = () => (window.TROUT_LAND ? res() : rej(new Error("empty")));
+    el.onerror = () => { TM.loading = null; el.remove(); rej(new Error("load")); };
+    document.head.appendChild(el);
+  });
+  return TM.loading;
+}
+async function ensureTroutMap() {
+  if (TM.built || TM.building) return;
+  TM.building = true;
+  const msg = $("#tm-map-msg");
+  if (msg) msg.textContent = "Drawing the chart…";
+  try {
+    await loadLand();
+    buildMap();
+    TM.built = true;
+    if (msg) msg.remove();
+    $("#tm-ctl").hidden = false;
+    paintMap(); applyZoom();
+  } catch (e) {
+    console.error(e);
+    if (msg) msg.innerHTML = `The chart didn't load. <button class="linkbtn" type="button" data-act="tm-retry">Try again</button>`;
+  } finally { TM.building = false; }
+}
+function buildMap() {
+  const L = window.TROUT_LAND, W = L.w, H = L.h, out = outlineD();
+  SP.forEach((x) => TM.pts.set(x.id, proj(x.lon, x.lat)));
+  const order = [...SP].sort((a, b) => b.rad - a.rad);   // small ranges draw on top
+  const terr = order.map((x) => `<path data-sp="${x.id}" d="${circleD(x.lat, x.lon, x.rad)}" vector-effect="non-scaling-stroke" stroke-width="0.9"/>`).join("");
+  const dots = order.map((x) => { const [cx, cy] = TM.pts.get(x.id); return `<circle data-sp="${x.id}" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3" vector-effect="non-scaling-stroke"/>`; }).join("");
+  const labels = order.map((x) => { const [cx, cy] = TM.pts.get(x.id); return `<text data-sp="${x.id}" x="${cx.toFixed(1)}" y="${cy.toFixed(1)}">${esc(x.name)}</text>`; }).join("");
+  const host = $("#tm-map");
+  host.insertAdjacentHTML("afterbegin", `<svg id="tm-svg" viewBox="0 0 ${W} ${H}" role="img" aria-label="World chart of native trout ranges. The checklist below lists every species.">
+    <defs><clipPath id="tm-clip"><path d="${out}"/></clipPath></defs>
+    <g id="tm-z">
+      <g clip-path="url(#tm-clip)">
+        <path d="${out}" fill="#E7EDE8"/>
+        <path d="${gratD()}" fill="none" stroke="#C3D0C6" stroke-width="0.6" vector-effect="non-scaling-stroke"/>
+        <path d="${L.land}" fill="#FBF7EC" stroke="#A89466" stroke-width="0.7" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+        <path d="${L.borders}" fill="none" stroke="#CDBE9C" stroke-width="0.5" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>
+        <g id="tm-terr">${terr}</g>
+        <g id="tm-dots">${dots}</g>
+        <g id="tm-labels" font-family="'EB Garamond', Georgia, serif" fill="#1E2A22" stroke="#FBF7EC" paint-order="stroke" stroke-linejoin="round">${labels}</g>
+        <circle id="tm-ring" r="8" fill="none" stroke="#7A2430" stroke-width="2" vector-effect="non-scaling-stroke" visibility="hidden"/>
+      </g>
+      <path d="${out}" fill="none" stroke="#9C7A3C" stroke-width="1" vector-effect="non-scaling-stroke"/>
+    </g>
+  </svg>`);
+  TM.svg = $("#tm-svg"); TM.zg = $("#tm-z");
+  TM.dots = [...TM.svg.querySelectorAll("#tm-dots circle")].map((el) => [el, isForm(SPM.get(el.dataset.sp))]);
+  TM.labels = [...TM.svg.querySelectorAll("#tm-labels text")].map((el) => [el, SPM.get(el.dataset.sp)]);
+  wireMap();
+}
+function paintMap() {
+  if (!TM.built) return;
+  const idx = catchIdx(), f = TM.focus;
+  const dim = (x) => (f && x.board !== f ? 0.16 : 1);
+  TM.svg.querySelectorAll("#tm-terr path").forEach((el) => {
+    const x = SPM.get(el.dataset.sp), st = TM_STYLE[spState(x, idx)];
+    el.setAttribute("fill", st.tf); el.setAttribute("fill-opacity", washOf(x, st));
+    el.setAttribute("stroke", st.ts); el.setAttribute("stroke-opacity", st.tso);
+    if (st.dash) el.setAttribute("stroke-dasharray", st.dash); else el.removeAttribute("stroke-dasharray");
+    el.setAttribute("opacity", dim(x));
+  });
+  TM.dots.forEach(([el]) => {
+    const x = SPM.get(el.dataset.sp), st = TM_STYLE[spState(x, idx)];
+    el.setAttribute("fill", st.df); el.setAttribute("stroke", st.ds); el.setAttribute("stroke-width", st.dsw);
+    if (st.dash) el.setAttribute("stroke-dasharray", "2 1.5"); else el.removeAttribute("stroke-dasharray");
+    el.setAttribute("opacity", dim(x));
+  });
+  const ring = $("#tm-ring");
+  if (TM.sel && TM.pts.has(TM.sel)) { const [cx, cy] = TM.pts.get(TM.sel); ring.setAttribute("cx", cx); ring.setAttribute("cy", cy); ring.setAttribute("visibility", "visible"); }
+  else ring.setAttribute("visibility", "hidden");
+  applyZoom();
+}
+function applyZoom() {
+  if (!TM.built) return;
+  const L = window.TROUT_LAND, { k, x, y } = TM.Z;
+  TM.zg.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k.toFixed(4)})`);
+  TM.svg.classList.toggle("zoomed", k > 1.01);
+  const w = TM.svg.getBoundingClientRect().width;
+  if (w) TM.ppu = w / L.w;
+  if (!TM.ppu) return;
+  const u = 1 / (TM.ppu * k);             // one screen pixel, in map units
+  const big = TM.ppu * L.w > 640 ? 1 : 1.15;
+  TM.dots.forEach(([el, form]) => el.setAttribute("r", ((form ? 3.2 : 5) * big * u).toFixed(3)));
+  const lg = $("#tm-labels");
+  lg.setAttribute("font-size", (13 * u).toFixed(3)); lg.setAttribute("stroke-width", (3.2 * u).toFixed(3));
+  TM.labels.forEach(([el, sp]) => {
+    const show = (k >= 3 && !isForm(sp)) || k >= 6.5;
+    const hidden = !show || (TM.focus && sp.board !== TM.focus);
+    el.setAttribute("display", hidden ? "none" : "inline");
+    if (!hidden) { const [cx, cy] = TM.pts.get(sp.id); el.setAttribute("x", (cx + 8 * u).toFixed(2)); el.setAttribute("y", (cy + 4.5 * u).toFixed(2)); }
+  });
+  $("#tm-ring").setAttribute("r", (10 * u).toFixed(3));
+}
+function clampZ(z) {
+  const L = window.TROUT_LAND, k = Math.max(1, Math.min(16, z.k));
+  return { k, x: Math.min(0, Math.max(L.w - L.w * k, z.x)), y: Math.min(0, Math.max(L.h - L.h * k, z.y)) };
+}
+function zoomAt(f, px, py) {
+  const { k, x, y } = TM.Z, nk = Math.max(1, Math.min(16, k * f));
+  TM.Z = clampZ({ k: nk, x: px - (px - x) * (nk / k), y: py - (py - y) * (nk / k) });
+  applyZoom();
+}
+function animateTo(t) {
+  if (!TM.built) return;
+  t = clampZ(t);
+  cancelAnimationFrame(TM.anim);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { TM.Z = t; applyZoom(); return; }
+  const L = window.TROUT_LAND, a = { ...TM.Z };
+  const ca = [(L.w / 2 - a.x) / a.k, (L.h / 2 - a.y) / a.k], cb = [(L.w / 2 - t.x) / t.k, (L.h / 2 - t.y) / t.k];
+  const t0 = performance.now(), dur = 460;
+  const step = (now) => {
+    let p = Math.min(1, (now - t0) / dur);
+    p = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    const k = a.k * Math.pow(t.k / a.k, p), cx = ca[0] + (cb[0] - ca[0]) * p, cy = ca[1] + (cb[1] - ca[1]) * p;
+    TM.Z = p >= 1 ? t : clampZ({ k, x: L.w / 2 - cx * k, y: L.h / 2 - cy * k });
+    applyZoom();
+    if (p < 1) TM.anim = requestAnimationFrame(step);
+  };
+  TM.anim = requestAnimationFrame(step);
+}
+function fitIds(ids, maxK = 9) {
+  const L = window.TROUT_LAND;
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  ids.forEach((id) => { const [px, py] = TM.pts.get(id), r = rangePx(SPM.get(id)) * 0.8; x0 = Math.min(x0, px - r); x1 = Math.max(x1, px + r); y0 = Math.min(y0, py - r); y1 = Math.max(y1, py + r); });
+  if (!Number.isFinite(x0)) return;
+  const pad = 10, k = Math.max(1, Math.min(maxK, L.w / (x1 - x0 + pad * 2), L.h / (y1 - y0 + pad * 2)));
+  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
+  animateTo({ k, x: L.w / 2 - cx * k, y: L.h / 2 - cy * k });
+}
+function svgPt(cx, cy) { const r = TM.svg.getBoundingClientRect(), L = window.TROUT_LAND; return [(cx - r.left) * L.w / r.width, (cy - r.top) * L.h / r.height]; }
+// Nearest marker within tol screen pixels, else the smallest range circle under the point.
+function hitTest(cx, cy, tol) {
+  const r = TM.svg.getBoundingClientRect(), s = r.width / window.TROUT_LAND.w, { k, x, y } = TM.Z;
+  let best = null, bd = tol, inside = null;
+  SP.forEach((sp) => {
+    const [px, py] = TM.pts.get(sp.id), sx = r.left + (px * k + x) * s, sy = r.top + (py * k + y) * s;
+    const d = Math.hypot(sx - cx, sy - cy);
+    const pref = TM.focus && sp.board !== TM.focus ? 1.6 : 1;   // dimmed markers lose ties
+    if (d * pref < bd) { bd = d * pref; best = sp.id; }
+    if (d < rangePx(sp) * k * s * 0.85 && (!TM.focus || sp.board === TM.focus) && (!inside || sp.rad < SPM.get(inside).rad)) inside = sp.id;
+  });
+  return best || inside;
+}
+function hideTip() { const t = $("#tm-tip"); if (t) t.hidden = true; if (TM.svg) TM.svg.style.cursor = ""; }
+function hoverTip(e) {
+  const id = hitTest(e.clientX, e.clientY, 12), tip = $("#tm-tip");
+  if (!id) { hideTip(); return; }
+  const x = SPM.get(id), st = spState(x, catchIdx()), box = $("#tm-map").getBoundingClientRect();
+  tip.textContent = x.name + (st === "caught" ? " · caught" : st === "extinct" ? " · extinct" : "");
+  tip.style.left = (e.clientX - box.left) + "px"; tip.style.top = (e.clientY - box.top) + "px";
+  tip.hidden = false; TM.svg.style.cursor = "pointer";
+}
+function wireMap() {
+  const svg = TM.svg;
+  const mid = (p, q) => svgPt((p.x + q.x) / 2, (p.y + q.y) / 2);
+  svg.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    cancelAnimationFrame(TM.anim);
+    TM.ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (TM.ptr.size === 1) TM.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, moved: false, z: { ...TM.Z } };
+    else if (TM.ptr.size === 2) {
+      const [p, q] = [...TM.ptr.values()];
+      TM.drag = { pinch: true, d0: Math.max(10, Math.hypot(p.x - q.x, p.y - q.y)), m0: mid(p, q), z: { ...TM.Z }, moved: true };
+      hideTip();
+    }
+  });
+  svg.addEventListener("pointermove", (e) => {
+    if (!TM.ptr.has(e.pointerId)) { if (e.pointerType === "mouse") hoverTip(e); return; }
+    TM.ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const d = TM.drag;
+    if (!d) return;
+    if (d.pinch) {
+      if (TM.ptr.size < 2) return;
+      const [p, q] = [...TM.ptr.values()], m = mid(p, q);
+      const k = Math.max(1, Math.min(16, d.z.k * Math.hypot(p.x - q.x, p.y - q.y) / d.d0));
+      const mp = [(d.m0[0] - d.z.x) / d.z.k, (d.m0[1] - d.z.y) / d.z.k];
+      TM.Z = clampZ({ k, x: m[0] - mp[0] * k, y: m[1] - mp[1] * k });
+      applyZoom();
+      return;
+    }
+    const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+    if (!d.moved) {
+      if (Math.hypot(dx, dy) < 6) return;
+      d.moved = true; hideTip();
+      if (TM.Z.k > 1.01) { try { svg.setPointerCapture(e.pointerId); } catch (_) {} svg.classList.add("dragging"); }
+    }
+    if (d.z.k > 1.01) {
+      const s = window.TROUT_LAND.w / svg.getBoundingClientRect().width;
+      TM.Z = clampZ({ k: d.z.k, x: d.z.x + dx * s, y: d.z.y + dy * s });
+      applyZoom();
+    }
+  });
+  const end = (e) => {
+    if (!TM.ptr.has(e.pointerId)) return;
+    TM.ptr.delete(e.pointerId);
+    const d = TM.drag;
+    if (e.type === "pointerup" && d && !d.pinch && !d.moved && d.id === e.pointerId) {
+      const id = hitTest(e.clientX, e.clientY, e.pointerType === "mouse" ? 12 : 20);
+      if (id) { hideTip(); openSheet("species", { sp: id }); }
+    }
+    if (!TM.ptr.size) { TM.drag = null; svg.classList.remove("dragging"); }
+    else if (d && d.pinch) { const [id, p] = [...TM.ptr.entries()][0]; TM.drag = { id, sx: p.x, sy: p.y, moved: true, z: { ...TM.Z } }; }
+  };
+  svg.addEventListener("pointerup", end);
+  svg.addEventListener("pointercancel", end);
+  svg.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hideTip(); });
+  // Plain scrolling keeps scrolling the page until the map is zoomed; Ctrl-scroll and trackpad pinch zoom.
+  svg.addEventListener("wheel", (e) => {
+    if (!e.ctrlKey && TM.Z.k <= 1.001) return;
+    e.preventDefault();
+    const [px, py] = svgPt(e.clientX, e.clientY);
+    zoomAt(Math.exp(-e.deltaY * (e.ctrlKey ? 0.012 : 0.0025) * (e.deltaMode === 1 ? 16 : 1)), px, py);
+  }, { passive: false });
+}
+function zoomStep(f) { const L = window.TROUT_LAND, { k, x, y } = TM.Z, c = [(L.w / 2 - x) / k, (L.h / 2 - y) / k], nk = k * f; animateTo({ k: nk, x: L.w / 2 - c[0] * nk, y: L.h / 2 - c[1] * nk }); }
+function mapIntoView() {
+  const el = $("#tm-map"); if (!el) return;
+  const r = el.getBoundingClientRect();
+  if (r.top < 60 || r.bottom > window.innerHeight) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+}
+function focusBoard(k) {
+  TM.focus = TM.focus === k ? null : k;
+  renderTroutTab();
+  if (!TM.built) return;
+  if (TM.focus) fitIds(SP.filter((x) => x.board === TM.focus).map((x) => x.id));
+  else animateTo({ k: 1, x: 0, y: 0 });
+  mapIntoView();
+}
+async function showOnMap(id) {
+  closeSheet();
+  if (S.tab !== "trout") goTab("trout");
+  for (let i = 0; i < 40 && !TM.built; i++) await sleep(100);
+  if (!TM.built) return;
+  if (TM.focus && SPM.get(id).board !== TM.focus) TM.focus = null;
+  TM.sel = id;
+  renderTroutTab();
+  const x = SPM.get(id), L = window.TROUT_LAND, [px, py] = TM.pts.get(id);
+  const k = Math.max(2.5, Math.min(10, L.h / (rangePx(x) * 4.5)));
+  animateTo({ k, x: L.w / 2 - px * k, y: L.h / 2 - py * k });
+  mapIntoView();
+}
+
+function renderTroutTab() {
+  const idx = catchIdx();
+  const full = SP.filter(counts), got = full.filter((x) => idx.has(x.id)).length;
+  const forms = SP.filter(isForm), gotF = forms.filter((x) => idx.has(x.id)).length;
+  const pct = full.length ? Math.round((got / full.length) * 100) : 0;
+  const tiers = [1, 2, 3, 4].map((t) => {
+    const a = full.filter((x) => x.tier === t), g = a.filter((x) => idx.has(x.id)).length;
+    return `<div class="tm-tier"><span class="tm-cap">Tier ${roman(t)}</span><b>${esc(tierName(t))}</b><span>${g} of ${a.length}</span><div class="tm-bar" aria-hidden="true"><i style="width:${a.length ? Math.round((g / a.length) * 100) : 0}%"></i></div></div>`;
+  }).join("");
+  const name = S.members.get(S.me.id)?.handle;
+  setHTML($("#tm-score"), `<div class="tm-big">${got}<small>of ${full.length}</small></div>
+    <div class="tm-score-r"><span class="tm-cap">${name ? esc(name) + "'s life list" : "Your life list"}</span>
+      <div class="tm-bar" role="progressbar" aria-label="Species on your life list" aria-valuemin="0" aria-valuemax="${full.length}" aria-valuenow="${got}"><i style="width:${pct}%"></i></div>
+      <span class="tm-sub">${pct}% of the species that count. Forms ${gotF} of ${forms.length}. The five extinct entries stay on the chart but don't count.</span></div>
+    <div class="tm-tiers">${tiers}</div>`);
+
+  setHTML($("#tm-boards"), Object.entries(BOARDS).map(([k, nm]) => {
+    const all = SP.filter((x) => x.board === k && slot(x)), g = all.filter((x) => idx.has(x.id)).length;
+    const boxes = all.map((x) => `<i class="${idx.has(x.id) ? "on" : ""}"></i>`).join("");
+    return `<button class="tm-board ${all.length && g === all.length ? "done" : ""}" type="button" data-tmb="${k}" aria-pressed="${TM.focus === k}">
+      <span class="tm-board-h"><b>${esc(nm)}</b><span>${g} of ${all.length}</span></span><span class="seatbar" aria-hidden="true">${boxes}</span></button>`;
+  }).join(""));
+
+  const fb = $("#tm-focus");
+  fb.hidden = !TM.focus;
+  if (TM.focus) fb.innerHTML = `<span>Showing <b>${esc(BOARDS[TM.focus])}</b> on the chart and in the checklist.</span><button class="btn ghost small" type="button" data-act="tm-unfocus">Show everything</button>`;
+  document.querySelectorAll("[data-tmf]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.tmf === TM.filter)));
+  renderChecklist();
+  if (!TM.built) ensureTroutMap(); else paintMap();
+}
+function renderChecklist() {
+  const idx = catchIdx(), q = TM.q.trim().toLowerCase();
+  const show = SP.filter((x) => {
+    if (TM.focus && x.board !== TM.focus) return false;
+    const got = idx.has(x.id);
+    if (TM.filter === "caught" && !got) return false;
+    if (TM.filter === "todo" && (got || isExtinct(x))) return false;
+    if (q && !(x.name + " " + x.sci + " " + x.range + " " + BOARDS[x.board] + " " + GROUPS[x.group]).toLowerCase().includes(q)) return false;
+    return true;
+  });
+  $("#tm-count").textContent = show.length === SP.length ? `${SP.length} entries` : `${show.length} of ${SP.length} entries`;
+  const el = $("#tm-list");
+  if (!show.length) {
+    setHTML(el, `<p class="tm-empty">${TM.filter === "caught" && !q ? "Nothing logged here yet. Open a species and log a catch." : "Nothing matches."}</p>`);
+    return;
+  }
+  let html = "", tier = 0, group = "";
+  show.forEach((x) => {
+    if (x.tier !== tier) {
+      if (group) html += "</ul>";
+      tier = x.tier; group = "";
+      html += `<h3 class="tm-tier-h">Tier ${roman(tier)} · ${esc(tierName(tier))}<em>${esc(tier === 4 ? "Char aren't true trout. They're here anyway." : tierGenus(tier))}</em></h3>`;
+    }
+    if (x.group !== group) {
+      if (group) html += "</ul>";
+      group = x.group;
+      html += `<h4 class="tm-group-h">${esc(GROUPS[group] || "")}</h4><ul class="rows">`;
+    }
+    const list = idx.get(x.id) || [], got = list.length > 0, first = firstCaught(list);
+    const flag = isForm(x) ? `<span class="tm-flag form">Form</span>` : isExtinct(x) ? `<span class="tm-flag extinct">Extinct</span>` : isOptional(x) ? `<span class="tm-flag optional">Optional</span>` : "";
+    const when = got ? (first ? fmtD(first, { month: "short", day: "numeric", year: "numeric" }) : "Caught") : "";
+    html += `<li><button class="tm-row ${got ? "caught" : ""} ${isForm(x) ? "form" : ""} ${isExtinct(x) ? "extinct" : ""}" type="button" data-sp="${x.id}" aria-label="${esc(x.name + (got ? ", caught" : isExtinct(x) ? ", extinct" : ", not yet"))}">
+      <span class="tm-box" aria-hidden="true"></span>
+      <span class="tmain"><span class="tm-nm">${esc(x.name)}${flag}</span><span class="tm-meta"><i>${esc(x.sci)}</i> · ${esc(x.range)}</span></span>
+      <span class="tm-when">${esc(when)}</span></button></li>`;
+  });
+  setHTML(el, html + "</ul>");
+}
+
+/* Species sheet */
+function fishSvg(x, caught) {
+  const slash = x.group === "cutthroat" ? `<path d="M104,163 C124,172 146,178 166,180" fill="none" stroke="#7A2430" stroke-width="5" stroke-linecap="round"/>` : "";
+  const spots = [[196,118],[252,131],[300,140],[352,146],[398,151],[444,154],[490,158],[536,160],[582,163],[628,165],[672,167],[228,104],[284,110],[330,116],[376,120],[420,124],[466,127],[512,130],[558,133],[604,137],[650,141],[318,166],[414,176],[506,181],[598,186],[740,120],[748,185]]
+    .map(([cx, cy]) => `<ellipse cx="${cx}" cy="${cy}" rx="4.6" ry="3.3"/>`).join("");
+  return `<svg class="tm-fish" viewBox="40 40 780 215" aria-hidden="true">
+    <path d="M62,150 C110,111 190,90 300,86 C420,82 562,99 700,130 L793,95 C772,147 772,161 793,213 L700,177 C562,204 430,216 320,212 C200,208 110,188 62,150 Z" fill="${caught ? "#1F4D3A" : "#9C7A3C"}" fill-opacity="${caught ? 0.16 : 0.08}"/>
+    <g fill="none" stroke="#1E2A22" stroke-linejoin="round">
+      <path d="M62,150 C110,111 190,90 300,86 C420,82 562,99 700,130" stroke-width="2.4"/>
+      <path d="M700,177 C562,204 430,216 320,212 C200,208 110,188 62,150" stroke-width="2.4"/>
+      <path d="M700,130 L793,95 C772,147 772,161 793,213 L700,177" stroke-width="1.9"/>
+      <path d="M332,88 C372,50 424,47 452,64 L404,93" stroke-width="1.9"/>
+      <path d="M612,117 C628,99 652,99 661,112 C646,115 630,120 621,126" stroke-width="1.9"/>
+      <path d="M236,196 C258,222 290,234 314,229 C292,215 266,204 248,194" stroke-width="1.9"/>
+      <path d="M386,210 C400,238 428,248 450,243 C432,230 410,219 396,208" stroke-width="1.9"/>
+      <path d="M540,196 C548,224 570,238 592,235 C577,219 564,205 555,191" stroke-width="1.9"/>
+      <path d="M132,116 C154,146 154,162 134,192" stroke="#4A564E" stroke-width="1.4"/>
+      <path d="M62,150 C78,160 94,167 116,171" stroke="#4A564E" stroke-width="1.4"/>
+      <path d="M142,156 C300,145 500,147 692,154" stroke="#4A564E" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round"/>
+    </g>
+    ${slash}<circle cx="96" cy="139" r="6.5" fill="#1E2A22"/><g fill="#1E2A22" opacity=".45">${spots}</g>
+  </svg>`;
+}
+function speciesSheetMarkup(id) {
+  const x = SPM.get(id);
+  if (!x) return sheetTop("Species") + `<div class="sh-scroll"><p class="muted">That species isn't on the checklist.</p></div>`;
+  const t0 = todayStr();
+  return sheetTop("Checklist no. " + x.n) + `<div class="sh-scroll">
+    <div id="sp-head" style="display:grid;gap:12px"></div>
+    <section class="sh-sec"><h3>Your catches</h3><div id="sp-catches"></div></section>
+    ${isExtinct(x)
+      ? `<section class="sh-sec"><h3>Log a catch</h3><p class="hint">Extinct. It stays on the chart so the list tells the whole story, but there's nothing left to catch.</p></section>`
+      : `<form class="f sh-sec" id="catch-form" autocomplete="off" novalidate>
+      <h3>Log a catch</h3>
+      <div class="row2">
+        <label>Date<input id="k-date" type="date" value="${t0}" max="${t0}"></label>
+        <label>Water<input id="k-water" maxlength="80" placeholder="Optional"></label>
+      </div>
+      <label>Private note <span class="sub">Only you see it.</span><textarea id="k-note" rows="2" maxlength="500" placeholder="Fly, size, who was along"></textarea></label>
+      <p class="hint">A water name is plenty. Nothing here stores where you fished.</p>
+      <p class="err" id="k-err" aria-live="polite"></p>
+      <div class="form-acts"><button class="btn primary" type="submit">Log it</button></div>
+    </form>`}
+  </div>`;
+}
+function updateSpeciesSheet() {
+  const id = S.sheet && S.sheet.sp, x = SPM.get(id), head = $("#sp-head");
+  if (!x || !head) return;
+  const list = catchIdx().get(id) || [], got = list.length > 0, first = firstCaught(list);
+  const status = got
+    ? `Caught${first ? ", first logged " + fmtD(first, { month: "long", day: "numeric", year: "numeric" }) : ""}${list.length > 1 ? ` · ${list.length} catches` : ""}`
+    : isExtinct(x) ? "Extinct" : "Not yet";
+  const counts_ = isExtinct(x) ? "Shown, not countable" : isForm(x) ? "A form: logged as a sub-entry, not counted in the total" : isOptional(x) ? "Optional: logged, not counted in the total" : "Counts toward your life list";
+  const flag = isForm(x) ? `<span class="tm-flag form">Form</span>` : isExtinct(x) ? `<span class="tm-flag extinct">Extinct</span>` : isOptional(x) ? `<span class="tm-flag optional">Optional</span>` : "";
+  head.innerHTML = `${fishSvg(x, got)}
+    <div class="tv-kind"><span class="kind fish">Tier ${roman(x.tier)} · ${esc(tierName(x.tier))}</span>${flag}</div>
+    <h2 class="tv-title">${esc(x.name)}</h2>
+    <p class="tv-when">${esc(x.sci)}</p>
+    <dl class="facts">
+      <div class="wide"><dt>Native range</dt><dd>${esc(x.range)}</dd></div>
+      <div><dt>Regional board</dt><dd>${esc(BOARDS[x.board])}</dd></div>
+      <div><dt>Group</dt><dd>${esc(GROUPS[x.group])}</dd></div>
+      <div><dt>Your list</dt><dd>${esc(status)}</dd></div>
+      <div><dt>Counts</dt><dd>${esc(counts_)}</dd></div>
+    </dl>
+    <div class="host-tools"><button class="btn ghost small" type="button" data-act="tm-show" data-sp="${x.id}">Show on the chart</button></div>`;
+  $("#sp-catches").innerHTML = got
+    ? `<ul class="tm-catches">${list.map((c) => `<li><div class="cm-h"><b>${c.caughtOn ? esc(fmtD(c.caughtOn, { month: "long", day: "numeric", year: "numeric" })) : "Undated"}</b>${c.water ? `<span class="muted">${esc(c.water)}</span>` : ""}<button type="button" data-act="tm-del" data-k="${esc(c.id)}">Delete</button></div>${c.note ? `<p class="cm-t">${esc(c.note)}</p>` : ""}</li>`).join("")}</ul>`
+    : `<p class="muted">${isExtinct(x) ? "Gone before anyone could log one." : "Not logged yet."}</p>`;
+}
+async function submitCatch() {
+  const id = S.sheet && S.sheet.sp, x = SPM.get(id), err = $("#k-err");
+  if (!x) return;
+  const caughtOn = $("#k-date").value;
+  if (caughtOn && !/^\d{4}-\d{2}-\d{2}$/.test(caughtOn)) { err.textContent = "Pick a date, or clear it."; return; }
+  if (caughtOn && caughtOn > todayStr()) { err.textContent = "That date hasn't happened yet."; return; }
+  err.textContent = "";
+  const had = (catchIdx().get(id) || []).length > 0;
+  const ok = await act("catch.add", { speciesId: id, caughtOn, water: $("#k-water").value.trim(), note: $("#k-note").value.trim() },
+    had ? "Catch logged" : counts(x) ? `${x.name} is on your life list` : "Logged");
+  if (ok) { const w = $("#k-water"), n = $("#k-note"); if (w) w.value = ""; if (n) n.value = ""; }
+}
+
+/* Saved image of the chart */
+async function saveMapImage() {
+  if (!TM.built) { toast("The chart is still loading."); return; }
+  const L = window.TROUT_LAND, sc = 2, pad = 36, top = 108, bottom = 44, W = L.w + pad * 2, H = L.h + top + bottom;
+  const cv = document.createElement("canvas");
+  cv.width = W * sc; cv.height = H * sc;
+  const g = cv.getContext("2d");
+  if (!g || !window.Path2D) { toast("This browser can't save the image."); return; }
+  try { await document.fonts.ready; } catch (e) {}
+  g.scale(sc, sc);
+  g.fillStyle = "#FFFDF8"; g.fillRect(0, 0, W, H);
+  g.strokeStyle = "#9C7A3C"; g.lineWidth = 1; g.strokeRect(10.5, 10.5, W - 21, H - 21); g.strokeRect(14.5, 14.5, W - 29, H - 29);
+  const idx = catchIdx(), full = SP.filter(counts), got = full.filter((x) => idx.has(x.id)).length;
+  const name = S.members.get(S.me.id)?.handle;
+  g.textAlign = "center"; g.fillStyle = "#7D5F28"; g.font = "500 12px 'Cinzel', Georgia, serif";
+  g.fillText(((club() && club().name) || "Anglers Club").toUpperCase(), W / 2, 44);
+  g.fillStyle = "#1E2A22"; g.font = "600 34px 'Cormorant Garamond', Georgia, serif";
+  g.fillText((name ? name + "'s" : "My") + " trout life list", W / 2, 80);
+  g.fillStyle = "#4A564E"; g.font = "italic 16px 'EB Garamond', Georgia, serif";
+  g.fillText(`${got} of ${full.length} species · ${fmtD(todayStr(), { month: "long", day: "numeric", year: "numeric" })}`, W / 2, 101);
+  g.save(); g.translate(pad, top);
+  g.beginPath(); g.rect(0, 0, L.w, L.h); g.clip();         // the chart's crop, as on screen
+  const outline = new Path2D(outlineD());
+  g.save(); g.clip(outline);
+  g.fillStyle = "#E7EDE8"; g.fill(outline);
+  g.strokeStyle = "#C3D0C6"; g.lineWidth = 0.5; g.stroke(new Path2D(gratD()));
+  const land = new Path2D(L.land);
+  g.fillStyle = "#FBF7EC"; g.fill(land); g.strokeStyle = "#A89466"; g.lineWidth = 0.6; g.stroke(land);
+  g.setLineDash([2, 2]); g.strokeStyle = "#CDBE9C"; g.lineWidth = 0.4; g.stroke(new Path2D(L.borders)); g.setLineDash([]);
+  const order = [...SP].sort((a, b) => b.rad - a.rad);
+  order.forEach((x) => {
+    const st = TM_STYLE[spState(x, idx)], p = new Path2D(circleD(x.lat, x.lon, x.rad));
+    g.globalAlpha = washOf(x, st); g.fillStyle = st.tf; g.fill(p);
+    g.globalAlpha = st.tso; g.strokeStyle = st.ts; g.lineWidth = 0.6; g.setLineDash(st.dash ? [2, 1.5] : []); g.stroke(p);
+  });
+  g.globalAlpha = 1; g.setLineDash([]);
+  order.forEach((x) => {
+    const st = TM_STYLE[spState(x, idx)], [cx, cy] = TM.pts.get(x.id);
+    g.beginPath(); g.arc(cx, cy, isForm(x) ? 1.5 : 2.4, 0, Math.PI * 2);
+    g.fillStyle = st.df; g.fill(); g.strokeStyle = st.ds; g.lineWidth = 0.8; g.stroke();
+  });
+  g.restore();
+  g.strokeStyle = "#9C7A3C"; g.lineWidth = 0.8; g.stroke(outline);
+  g.restore();
+  g.fillStyle = "#4A564E"; g.font = "italic 13px 'EB Garamond', Georgia, serif";
+  g.fillText("Green: caught. Brass: still to catch. Circles mark native ranges roughly. Coastlines: Natural Earth.", W / 2, H - 26);
+  cv.toBlob((blob) => {
+    if (!blob) { toast("Couldn't make the image."); return; }
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob); a.download = "trout-life-list.png";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 5000);
+    toast("Saved trout-life-list.png");
+  }, "image/png");
+}
+
+/* ---------- invite ---------- */
+// The club password is stored hashed on the server, so the invite can't fill it in. Whoever
+// types it here has it remembered on this device so the button in the header is one tap next time.
+const INV_KEY = "nac-invite";
+function rememberedPw(cid) { try { return (JSON.parse(localStorage.getItem(INV_KEY) || "{}") || {})[cid] || ""; } catch (e) { return ""; } }
+function rememberPw(cid, pw) {
+  try {
+    const m = JSON.parse(localStorage.getItem(INV_KEY) || "{}") || {};
+    if (pw) m[cid] = pw; else delete m[cid];
+    localStorage.setItem(INV_KEY, JSON.stringify(m));
+  } catch (e) {}
+}
+const smsHref = (text) => "sms:?&body=" + encodeURIComponent(text);
+function inviteSheetMarkup() {
+  const c = club();
+  if (!c) return sheetTop("Invite") + `<div class="sh-scroll"></div>`;
+  const pw = rememberedPw(c.id), text = inviteText(c, pw);
+  return sheetTop("Invite") + `<div class="sh-scroll"><div style="display:grid;gap:18px">
+    <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true"><span>${esc(crestOf(c.name))}</span></span>
+      <div><h2 style="font-size:1.55rem">Invite someone to ${esc(c.name)}</h2><p class="muted">The link opens the club. The password lets them in.</p></div></div>
+    <form class="f" id="inv-form" autocomplete="off" novalidate>
+      <label>Club password <span class="sub">Type it once to put it in the text, or leave it blank and send it separately. It's remembered on this device.</span>
+        <input id="inv-pw" maxlength="60" value="${esc(pw)}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Leave blank to send it separately"></label>
+    </form>
+    <textarea class="copybox" id="inv-text" rows="4" readonly aria-label="Invite text">${esc(text)}</textarea>
+    <div class="tool-row" id="inv-tools">
+      <button class="btn primary small" type="button" data-act="inv-copy">Copy invite</button>
+      <a class="btn ghost small" id="inv-sms" href="${esc(smsHref(text))}">Open Messages</a>
+      ${navigator.share ? `<button class="btn ghost small" type="button" data-act="inv-share">Share…</button>` : ""}
+    </div>
+    <p class="hint">${isClubOwner()
+      ? `The site stores the password scrambled, so it can't fill it in for you. Lost it? <button class="linkbtn" type="button" data-act="club">Set a new one in club settings</button>.`
+      : "Don't have the password? Ask the organizer."}</p>
+  </div></div>`;
+}
+function updateInvite() {
+  const c = club(), inp = $("#inv-pw");
+  if (!c || !inp) return;
+  const pw = inp.value.trim(), text = inviteText(c, pw);
+  $("#inv-text").value = text;
+  $("#inv-sms").setAttribute("href", smsHref(text));
+  rememberPw(c.id, pw);
+}
+
 /* ---------- render loop ---------- */
 function renderBanner(v) {
   const b = $("#banner");
@@ -1841,12 +2705,18 @@ function renderBanner(v) {
 }
 function renderTabs() {
   const fishOk = kinds() !== "hunt";
-  if (!fishOk && S.tab === "flies") S.tab = "upcoming";
+  if (!fishOk && (S.tab === "flies" || S.tab === "trout")) S.tab = "upcoming";
   $("#t-flies").hidden = !fishOk;
+  $("#t-trout").hidden = !fishOk;
   document.querySelectorAll(".tab[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === S.tab)));
-  ["upcoming", "calendar", "logbook", "flies"].forEach((t) => { $("#v-" + t).hidden = t !== S.tab; });
-  $("#filters").hidden = S.tab === "flies";
-  const vh = $("#view-h"), vt = { upcoming: "Forthcoming Fixtures", logbook: "The Logbook" }[S.tab];
+  const tl = $(".tablist"), cur = $("#t-" + S.tab);
+  if (tl && cur && tl.scrollWidth > tl.clientWidth) {
+    const l = cur.offsetLeft - tl.offsetLeft, r = l + cur.offsetWidth;
+    if (l < tl.scrollLeft || r > tl.scrollLeft + tl.clientWidth) tl.scrollLeft = Math.max(0, l - 16);
+  }
+  TABS.forEach((t) => { $("#v-" + t).hidden = t !== S.tab; });
+  $("#filters").hidden = S.tab === "flies" || S.tab === "trout";
+  const vh = $("#view-h"), vt = { upcoming: "Forthcoming Fixtures", logbook: "The Logbook", trout: "Trout of the World" }[S.tab];
   vh.hidden = !vt; if (vt) vh.textContent = vt;
   $("#kind-chips").hidden = kinds() !== "both";
   document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === S.filter)));
@@ -1873,9 +2743,11 @@ function renderAll() {
     else if (S.tab === "calendar") renderCalendar();
     else if (S.tab === "logbook") renderLogbook();
     else if (S.tab === "flies") renderFliesTab();
+    else if (S.tab === "trout") renderTroutTab();
   }
   renderBanner(v);
   if (S.sheet && S.sheet.mode === "trip") updateTripSheet();
+  if (S.sheet && S.sheet.mode === "species") updateSpeciesSheet();
   if (S.sheet && S.sheet.mode === "club") updateMembersList();
 }
 function applyAccess() { document.body.classList.toggle("ro", S.readOnly); scheduleRender(); }
@@ -1900,9 +2772,12 @@ function openSheet(mode, data = {}) {
   else if (mode === "club") body.innerHTML = clubSheetMarkup();
   else if (mode === "new") body.innerHTML = newClubMarkup();
   else if (mode === "created") body.innerHTML = createdMarkup(data);
+  else if (mode === "species") body.innerHTML = speciesSheetMarkup(data.sp);
+  else if (mode === "invite") body.innerHTML = inviteSheetMarkup();
   if (!dlg().open) { try { dlg().showModal(); } catch (e) { dlg().setAttribute("open", ""); } }
   const sc = $(".sh-scroll", body); if (sc) sc.scrollTop = 0;
   if (mode === "trip") updateTripSheet();
+  if (mode === "species") updateSpeciesSheet();
   if (mode === "form") wireTripForm(data.id);
   if (mode === "new") wireClubFields($("#new-form"), true);
   if (mode === "club") { const f = $("#club-form"); if (f) wireClubFields(f, false); updateMembersList(); }
@@ -2231,9 +3106,8 @@ function clubSheetMarkup() {
       <div class="form-acts"><button class="btn primary" type="submit">Save name</button></div>
     </form>
     <section class="sh-sec"><h3>Invite people</h3>
-      <p class="hint">Send the link and the club password. ${owner ? "The password isn't stored in readable form, so set a new one below if you've lost it." : "Ask the organizer if you don't have the password."}</p>
-      <div class="tool-row"><button class="btn ghost small" type="button" data-act="copy-invite">Copy invite link</button></div>
-      <div id="invite-out"></div>
+      <p class="hint">Send the link and the club password. The Invite button at the top of the club does the same.</p>
+      <div class="tool-row"><button class="btn ghost small" type="button" data-act="invite">Write an invite</button></div>
     </section>
     <section class="sh-sec"><h3>Your other devices</h3>
       <p class="hint">Open this link on your phone or laptop to sign in there as you, without the password. Keep it to yourself.</p>
@@ -2283,6 +3157,12 @@ document.addEventListener("click", async (e) => {
   if (day) { S.calSel = day.dataset.day; renderCalendar(); return; }
   const trip = e.target.closest(".trip[data-trip]");
   if (trip) { openSheet("trip", { id: trip.dataset.trip }); return; }
+  const sp = e.target.closest(".tm-row[data-sp]");
+  if (sp) { openSheet("species", { sp: sp.dataset.sp }); return; }
+  const tb = e.target.closest("[data-tmb]");
+  if (tb) { focusBoard(tb.dataset.tmb); return; }
+  const tf = e.target.closest("[data-tmf]");
+  if (tf) { TM.filter = tf.dataset.tmf; document.querySelectorAll("[data-tmf]").forEach((b) => b.setAttribute("aria-pressed", String(b === tf))); renderChecklist(); return; }
   const cr = e.target.closest(".club-row[data-club]");
   if (cr) { enterClub(cr.dataset.club, { save: S.myClubs.includes(cr.dataset.club) }); return; }
   const r = e.target.closest("[data-rsvp]");
@@ -2290,6 +3170,7 @@ document.addEventListener("click", async (e) => {
   if (e.target.closest("#post-btn")) { openSheet("form", {}); return; }
   if (e.target.closest("#start-btn")) { openSheet("new"); return; }
   if (e.target.closest("#home-btn")) { enterClub(null); return; }
+  if (e.target.closest("#invite-btn")) { openSheet("invite"); return; }
   if (e.target.closest("#me-btn")) { openSheet("club"); return; }
   if (e.target.closest("#cal-prev")) { calShift(-1); return; }
   if (e.target.closest("#cal-next")) { calShift(1); return; }
@@ -2316,7 +3197,17 @@ document.addEventListener("click", async (e) => {
     case "ask-delete": $("#del-confirm").hidden = false; break;
     case "no-delete": $("#del-confirm").hidden = true; break;
     case "do-delete": if (t) await deleteTrip(t); break;
-    case "copy-invite": { const c = club(); if (c) copyText(inviteText(c, ""), $("#invite-out"), "Invite link copied. Send the password with it."); break; }
+    case "invite": openSheet("invite"); break;
+    case "inv-copy": { const pw = ($("#inv-pw") || {}).value || ""; copyText($("#inv-text").value, $("#inv-tools"), pw.trim() ? "Invite copied. Paste it into a text." : "Invite copied. Send the password separately."); break; }
+    case "inv-share": { try { await navigator.share({ title: club().name, text: $("#inv-text").value }); } catch (err) { /* closed the share sheet */ } break; }
+    case "tm-zin": zoomStep(2); break;
+    case "tm-zout": zoomStep(0.5); break;
+    case "tm-world": TM.sel = null; if (TM.focus) { TM.focus = null; renderTroutTab(); } else paintMap(); animateTo({ k: 1, x: 0, y: 0 }); break;
+    case "tm-unfocus": focusBoard(TM.focus); break;
+    case "tm-retry": ensureTroutMap(); break;
+    case "tm-save": await saveMapImage(); break;
+    case "tm-show": await showOnMap(a.dataset.sp); break;
+    case "tm-del": await act("catch.delete", { id: a.dataset.k }, "Catch removed"); break;
     case "copy-device": { const sv = session(); if (sv) copyText(APP_URL + "#key-" + S.clubId + "." + sv.token, $("#device-out"), "Sign-in link copied. Open it on your other device."); break; }
     case "copy-announce": copyText($("#announce-text").value, $("#announce"), "Copied. Paste it into your group text."); break;
     case "done-announce": { const el = $("#announce"); if (el) el.remove(); if (S.sheet) S.sheet.justPosted = false; break; }
@@ -2332,10 +3223,17 @@ document.addEventListener("click", async (e) => {
 dlg().addEventListener("cancel", (e) => { e.preventDefault(); closeSheet(); });
 dlg().addEventListener("close", () => { S.sheet = null; });
 $("#mine-toggle").addEventListener("change", (e) => { S.mine = e.target.checked; scheduleRender(); });
+document.addEventListener("input", (e) => {
+  if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
+  else if (e.target.id === "inv-pw") updateInvite();
+});
+let tmResize = 0;
+window.addEventListener("resize", () => { clearTimeout(tmResize); tmResize = setTimeout(() => { if (TM.built && S.tab === "trout") applyZoom(); }, 120); });
 
 document.addEventListener("submit", async (e) => {
   const id = e.target.id;
-  if (!["cm-form", "rep-form", "me-form", "gate-form", "new-form", "pw-form", "club-form"].includes(id)) return;
+  if (id === "inv-form") { e.preventDefault(); return; }
+  if (!["cm-form", "rep-form", "me-form", "gate-form", "new-form", "pw-form", "club-form", "catch-form"].includes(id)) return;
   e.preventDefault();
   const btn = e.target.querySelector("button[type=submit]");
   if (btn && btn.disabled) return;
@@ -2348,6 +3246,7 @@ document.addEventListener("submit", async (e) => {
     else if (id === "new-form") await submitNewClub(e.target);
     else if (id === "pw-form") await submitPassword();
     else if (id === "club-form") await submitClubDetails(e.target);
+    else if (id === "catch-form") await submitCatch();
   } finally { if (btn && btn.isConnected) btn.disabled = false; }
 });
 
@@ -2401,6 +3300,7 @@ async function submitNewClub(form) {
     S.sessions[c.id] = { memberId: out.session.memberId, token: out.session.token };
     saveSessions();
     enterClub(c.id);
+    rememberPw(c.id, pw.trim());
     openSheet("created", { id: c.id, club: c, invite: inviteText(c, pw.trim()) });
     loadDirectory();
   } catch (e) { err.textContent = e.message; }
@@ -2413,6 +3313,7 @@ async function submitPassword() {
   const ok = await act("club.password", { password: pw }, "Password saved");
   if (!ok) return;
   S.lastInvite = inviteText(c, pw.trim());
+  rememberPw(c.id, pw.trim());
   const input = $("#p-pw"); if (input) input.value = "";
   const out = $("#pw-out");
   if (out) out.innerHTML = `<div style="display:grid;gap:8px;margin-top:4px"><p class="hint">Invite text with the new password:</p><textarea class="copybox" rows="4" readonly aria-label="Invite text">${esc(S.lastInvite)}</textarea><div><button class="btn ghost small" type="button" data-act="copy-pw-invite">Copy invite</button></div></div>`;
@@ -2484,6 +3385,7 @@ async function loadClub(cid) {
     S.members = new Map(out.members.map((m) => [m.id, { handle: m.handle, role: m.role, at: m.at }]));
     S.trips = new Map(out.trips.map((t) => [t.id, { ...t, seats: typeof t.seats === "number" ? t.seats : null, kind: t.kind === "hunt" ? "hunt" : "fish" }]));
     S.rsvps = out.rsvps; S.comments = out.comments; S.reports = out.reports;
+    S.catches = Array.isArray(out.catches) ? out.catches : []; S.catchIdx = null;
     S.loaded = { trips: true, members: true };
     S.connected = true;
     scheduleRender();
@@ -2564,7 +3466,7 @@ async function boot() {
   loadSessions();
   const h = (location.hash || "").slice(1);
   let want = null, wantTab = null, wantTrip = null, m;
-  if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
+  if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
   else if ((m = /^trip-([a-z0-9-]{1,80})\.([a-z0-9]{1,40})$/.exec(h))) { want = m[1]; wantTrip = m[2]; }
   else if ((m = /^key-([a-z0-9-]{1,80})\.([A-Za-z0-9_-]{20,100})$/.exec(h))) {
     // A sign-in link from another device: keep the token, then drop it from the address bar.

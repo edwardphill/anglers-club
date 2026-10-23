@@ -119,6 +119,27 @@ assert.equal(s.comments[0].text, "I'll drive. It's Jo's truck.");
 assert.equal(s.reports[0].count, 7);
 assert.equal(s.club.ownerId, owner.memberId); ok("state has everything in the right shapes");
 
+r = await act(sam, "catch.add", { speciesId: "westslope-cutthroat", caughtOn: "2026-08-14", water: "Middle Fork Flathead", note: "Hopper" });
+assert.equal(r.status, 200, JSON.stringify(r.body)); const catchId = r.body.id;
+r = await act(sam, "catch.add", { speciesId: "Not A Species!" });
+assert.equal(r.status, 400);
+r = await act(sam, "catch.add", { speciesId: "brook-trout", caughtOn: "last week" });
+assert.equal(r.status, 400); ok("catch logged, bad species and dates refused");
+r = await act(jo, "catch.add", { speciesId: "brook-trout" });
+assert.equal(r.status, 200);
+r = await state(sam);
+assert.equal(r.body.catches.length, 1);
+assert.deepEqual(
+  { speciesId: r.body.catches[0].speciesId, caughtOn: r.body.catches[0].caughtOn, water: r.body.catches[0].water, note: r.body.catches[0].note },
+  { speciesId: "westslope-cutthroat", caughtOn: "2026-08-14", water: "Middle Fork Flathead", note: "Hopper" },
+); ok("life list is private to each member");
+r = await act(jo, "catch.delete", { id: catchId });
+r = await state(sam);
+assert.equal(r.body.catches.length, 1); ok("can't delete someone else's catch");
+r = await act(sam, "catch.delete", { id: catchId });
+r = await state(sam);
+assert.equal(r.body.catches.length, 0); ok("delete own catch");
+
 r = await act(sam, "club.password", { password: "new one" });
 assert.equal(r.status, 403); ok("only organizer changes password");
 r = await act(owner, "club.password", { password: "Hatch" });
@@ -159,5 +180,12 @@ assert.equal(r.status, 429); ok("password guessing is rate limited");
 
 r = await act(owner, "nonsense", {});
 assert.equal(r.status, 400); ok("unknown action refused");
+
+// A database set up before the catches table (production) picks it up on the next cold start.
+spawnSync("psql", [...conn, "-q", "-c", "drop table catches"], { encoding: "utf8" });
+const fresh = await import(`../lib/db.js?again=${Date.now()}`);
+await fresh.ensureSchema();
+const t = spawnSync("psql", [...conn, "-tAc", "select relrowsecurity from pg_class where oid = to_regclass('public.catches')"], { encoding: "utf8" });
+assert.equal(t.stdout.trim(), "t"); ok("older databases get the catches table");
 
 console.log(`\nAll ${n} checks passed.`);
