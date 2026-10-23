@@ -134,32 +134,33 @@ dialog::backdrop{background:rgba(27,39,36,.35)}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .35s ease}}
 
 :host{display:block;color-scheme:light;
-  --bg:#F5F3E8; --panel:#FCFAF4; --ink:#2B2721; --muted:#6B6253; --line:#C2B8A3; --field:#F5F3E8;
-  --accent:#2C6A99; --accent-ink:#FFFFFF; --accent-soft:#DFEAF1; --on:#A9C7DC; --bad:#BF4128;
-  --strong:#4C7A3F; --strong-soft:#E3ECD6; --fair:#94650F; --fair-soft:#F4E8CB; --weak:#6B6253; --weak-soft:#ECE7D8;
-  --display:"IM Fell English","EB Garamond",Garamond,Georgia,serif;
-  --body:"EB Garamond",Garamond,"Times New Roman",Georgia,serif;
-  --mono:"IM Fell English","EB Garamond",Georgia,serif}
+  --bg:#FBF8F1; --panel:#FFFDF8; --ink:#1E2A22; --muted:#4A564E; --line:#DDD3BE; --field:#FBF8F1;
+  --accent:#1F4D3A; --accent-ink:#FBF8F1; --accent-soft:#E6EEE8; --on:#A9C4B3; --bad:#7A2430;
+  --strong:#1F4D3A; --strong-soft:#E6EEE8; --fair:#7D5F28; --fair-soft:#F5EEDD; --weak:#4A564E; --weak-soft:#EEE8DA;
+  --display:"Cormorant Garamond",Garamond,Georgia,serif;
+  --body:"EB Garamond",Garamond,Georgia,serif;
+  --mono:"EB Garamond",Garamond,Georgia,serif}
 .fp-body{font-size:17px}
-.fp-h{font-weight:400;font-size:clamp(1.6rem,4vw,1.9rem)}
+.fp-h{font-weight:600;font-style:italic;font-size:clamp(1.9rem,4.5vw,2.4rem)}
 main{max-width:none}
-h1,h2{font-weight:400}
-.card h2{font-style:italic;font-size:1.3rem}
-#f,.card{border:1px solid var(--ink);border-radius:3px;box-shadow:0 0 0 3px var(--panel),0 0 0 4px var(--ink)}
-.fly{border:1.5px solid var(--line);border-radius:3px}
-.hrow{border-width:1.4px;border-radius:3px}
-select,input[type=date],input[type=number],input[type=text],textarea{border-width:1.5px;border-radius:3px}
-.go,.ghost{font-family:"IM Fell English SC","EB Garamond",Georgia,serif;font-weight:400;letter-spacing:.07em;font-size:1.05rem;border:1px solid var(--ink);border-radius:3px}
-.seg label{font-family:var(--mono);font-size:.98rem;border-width:1.4px;border-radius:3px}
-.chip,.engine,.status,.pill{font-family:var(--mono);font-size:.86rem;letter-spacing:.02em;text-transform:none}
-.summary,.sub,.hmeta,.size,.rank,.pct{font-size:.95rem}
-.rank{font-family:var(--display);font-weight:400;font-size:1.3rem;font-variant-numeric:lining-nums}
-.fly-name,.hname{font-size:1.18rem;font-weight:400;font-style:italic}
-.summary,.pct,.size,.hmeta{font-variant-numeric:lining-nums}
-.rnotes,.cite-block{border-left-color:var(--accent)}
-dialog{border:1.6px solid var(--ink)}
-@media (min-width:761px){#f{top:calc(env(safe-area-inset-top,0px) + 66px)}}
-.filterbar{scroll-margin-top:66px}
+h1,h2{font-weight:600}
+.card h2{font-size:1.45rem}
+#f,.card{border:1px solid #9C7A3C;border-radius:0;box-shadow:0 0 0 3px var(--panel),0 0 0 4px #9C7A3C}
+ol.flies{gap:0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+.fly{border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;padding:16px 4px}
+.fly:first-child{border-top:0}
+.hrow,.more,.acts button,.filterbar,.filterbar button,.note,.engine{border-radius:0}
+select,input[type=date],input[type=number],input[type=text],textarea{border-radius:0}
+.go,.ghost{font-family:"Cinzel","Times New Roman",serif;font-weight:600;letter-spacing:.14em;font-size:.78rem;border-radius:0;border:1px solid var(--ink)}
+.go{border-color:var(--accent)}
+.seg label{font-family:"Cinzel","Times New Roman",serif;font-size:.66rem;letter-spacing:.12em;border-radius:0}
+.chip,.engine,.status,.pill,.group-label{font-family:"Cinzel","Times New Roman",serif;font-size:.6rem;letter-spacing:.14em;text-transform:none;border-radius:0}
+.summary,.sub,.hmeta,.size,.pct{font-variant-numeric:lining-nums}
+.rank{font-family:var(--display);font-weight:600;font-size:1.55rem;font-variant-numeric:lining-nums}
+.fly-name,.hname{font-size:1.28rem;font-weight:600}
+dialog{border:1px solid var(--ink);border-radius:0}
+@media (min-width:761px){#f{top:calc(env(safe-area-inset-top,0px) + 62px)}}
+.filterbar{scroll-margin-top:62px}
 </style><div class="fp-body"><main>
   <div class="top">
     <div style="display:grid;gap:6px">
