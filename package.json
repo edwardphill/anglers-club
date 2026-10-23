@@ -1,0 +1,16 @@
+{
+  "name": "anglers-club",
+  "private": true,
+  "type": "module",
+  "description": "Fishing and hunting trip calendars for clubs in any city.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "test": "node tests/api.test.mjs"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.0"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}
