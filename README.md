@@ -13,7 +13,7 @@ Each club also has a built-in Fly Picker tab and a link to the Trout Species Map
 ## How it's built
 
 - `public/index.html`: the whole site, one page. It is generated; edit `src/` and run `npm run build`.
-- `src/club.html`: the page source. `src/flypicker/` holds the embedded Fly Picker.
+- `src/club.html`: the page source. `src/flypicker/` holds the embedded Fly Picker, built from the main branch of [edwardphill/fly-picker](https://github.com/edwardphill/fly-picker). To pull in Fly Picker changes, run `python3 scripts/sync_flypicker.py ../fly-picker`, then `npm run build`.
 - `api/`: Vercel serverless functions.
   - `GET /api/clubs` lists clubs. `POST /api/clubs` starts one.
   - `POST /api/join` checks a club password.
