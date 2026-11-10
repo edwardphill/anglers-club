@@ -38,6 +38,8 @@ Security: club passwords are hashed with scrypt on the server. Joining gives eac
 3. For the Trip Planner, add `ANTHROPIC_API_KEY` (from the Claude Console) under Environment Variables. `PLANNER_MODEL` optionally overrides the model (default `claude-sonnet-5-5`).
 4. Redeploy, then open `/api/health`. It should return `{"ok":true,"clubs":0}`.
 
+Supabase pauses free projects after a week without traffic, and the site then fails with "tenant/user ... not found". `vercel.json` runs a daily cron against `/api/health` to keep it awake. If it does pause, restore the project in the Supabase dashboard.
+
 ## Run the tests
 
 The tests run every API route against a local Postgres:

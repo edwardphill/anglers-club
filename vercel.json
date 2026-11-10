@@ -22,5 +22,11 @@
       "maxDuration": 60,
       "includeFiles": "data/**"
     }
-  }
+  },
+  "crons": [
+    {
+      "path": "/api/health",
+      "schedule": "17 11 * * *"
+    }
+  ]
 }
