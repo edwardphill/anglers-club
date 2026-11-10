@@ -9,7 +9,7 @@ import { usePsql } from "./pg-adapter.mjs";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 usePsql((process.env.PGTEST || "").split(" ").filter(Boolean));
 const routes = {};
-for (const name of ["health", "clubs", "join", "state", "action"]) {
+for (const name of ["health", "clubs", "join", "state", "action", "plan"]) {
   routes[name] = (await import(`../api/${name}.js`)).default;
 }
 
@@ -25,14 +25,12 @@ http.createServer(async (req, res) => {
       query: Object.fromEntries(url.searchParams),
       get body() { return raw ? JSON.parse(raw) : null; },
     };
-    const vres = {
-      setHeader: (k, v) => res.setHeader(k, v),
-      status(c) { res.statusCode = c; return this; },
-      json(o) { res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(o)); },
-    };
-    return routes[m[1]](vreq, vres);
+    // Vercel's response helpers on top of Node's own response, so streaming routes can write().
+    res.status = (c) => { res.statusCode = c; return res; };
+    res.json = (o) => { res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(o)); };
+    return routes[m[1]](vreq, res);
   }
-  const page = ["/", "/trout", "/stocking"].includes(url.pathname.replace(/(.)\/$/, "$1"));   // vercel.json rewrites
+  const page = ["/", "/trout", "/stocking", "/plan"].includes(url.pathname.replace(/(.)\/$/, "$1"));   // vercel.json rewrites
   const file = join(root, "public", page ? "index.html" : url.pathname);
   if (!existsSync(file)) { res.statusCode = 404; return res.end("Not found"); }
   const type = { html: "text/html; charset=utf-8", js: "text/javascript; charset=utf-8", json: "application/json" }[file.split(".").pop()];

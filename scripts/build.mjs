@@ -1,5 +1,6 @@
 // Assembles public/index.html from src/club.html, the embedded Fly Picker and the Trout Map
-// checklist, and copies the Trout Map's coastlines to public/trout-land.js.
+// checklist; writes the files the tabs load later (coastlines, stocking schedule); and copies the
+// Fly Picker's data and engine where the Trip Planner's server code can use them.
 // Run after editing anything under src/: npm run build
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -64,6 +65,21 @@ mkdirSync(join(root, "public"), { recursive: true });
 writeFileSync(join(root, "public/index.html"), html);
 // The Trout Map's coastlines load with that tab, not with the page.
 copyFileSync(join(root, "src/trout-land.js"), join(root, "public/trout-land.js"));
-// The Stocking tab's schedule loads with that tab too.
-copyFileSync(join(root, "src/stocking-tn.js"), join(root, "public/stocking-tn.js"));
+// The Stocking tab's schedule loads with that tab too. data/stocking-tn.json is the source; the
+// Trip Planner reads the same file on the server.
+writeFileSync(join(root, "public/stocking-tn.js"),
+  "// Tennessee trout stocking schedule (TWRA). Generated from data/stocking-tn.json by npm run build.\n" +
+  "window.STOCKING = " + read("data/stocking-tn.json").trim() + ";\n");
+
+// The Trip Planner runs the Fly Picker's engine on the server: copy its data and engine out of
+// the embedded Fly Picker so the two never drift apart.
+const fp = read("src/flypicker/scripts.html");
+const dataLine = fp.split("\n").find((l) => l.startsWith("const DATA = "));
+if (!dataLine) throw new Error("Fly Picker data not found in src/flypicker/scripts.html");
+writeFileSync(join(root, "data/flypicker.json"), dataLine.slice("const DATA = ".length).replace(/;\s*$/, "") + "\n");
+const e0 = fp.indexOf("const FP = (() => {"), e1 = fp.indexOf("module.exports = FP;");
+if (e0 < 0 || e1 < 0) throw new Error("Fly Picker engine not found in src/flypicker/scripts.html");
+writeFileSync(join(root, "lib/fp-engine.cjs"),
+  "// The Fly Picker's engine, copied from src/flypicker/scripts.html by npm run build. Do not edit.\n" +
+  "/* eslint-disable */\nconst DATA = require(\"../data/flypicker.json\");\n" + fp.slice(e0, e1) + "module.exports = FP;\n");
 console.log(`public/index.html: ${(html.length / 1024).toFixed(0)} KB`);

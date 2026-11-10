@@ -11,6 +11,16 @@
     {
       "source": "/stocking",
       "destination": "/index.html"
+    },
+    {
+      "source": "/plan",
+      "destination": "/index.html"
     }
-  ]
+  ],
+  "functions": {
+    "api/plan.js": {
+      "maxDuration": 60,
+      "includeFiles": "data/**"
+    }
+  }
 }
