@@ -1,0 +1,9 @@
+[
+  {
+    "match": "caney|center hill",
+    "water": "Caney Fork",
+    "dam": "Center Hill Dam",
+    "note": "The Corps of Engineers runs the dam; TVA posts its hourly generation schedule.",
+    "url": "https://www.tva.com/environment/lake-levels#CEHT1"
+  }
+]

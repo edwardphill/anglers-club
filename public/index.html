@@ -1692,6 +1692,7 @@ window.TROUT_SPECIES = [
   ["qinling-lenok", "Qinling lenok", "B. tsinlingensis", "Qinling Mountains, China", 4, "taimen", 33.8, 107.8, "", "amur", 1.5],
 ];
 window.TROUT_ART = {};
+window.GENERATION = [{"match":"caney|center hill","water":"Caney Fork","dam":"Center Hill Dam","note":"The Corps of Engineers runs the dam; TVA posts its hourly generation schedule.","url":"https://www.tva.com/environment/lake-levels#CEHT1"}];
 </script>
 
 <script>
@@ -2718,6 +2719,14 @@ async function saveMapImage() {
   }, "image/png");
 }
 
+/* ---------- dam generation ---------- */
+// Which tailwater's generation schedule goes with a trip or a water (data/generation.json).
+function generationFor(text) {
+  const t = String(text || "");
+  return (window.GENERATION || []).find((g) => { try { return new RegExp(g.match, "i").test(t); } catch (e) { return false; } }) || null;
+}
+const genButton = (g) => g ? `<a class="btn ghost small" href="${esc(g.url)}" target="_blank" rel="noopener" title="${esc(g.note || "")}">${esc(g.dam)} generation</a>` : "";
+
 /* ---------- Trip Planner tab ---------- */
 // Questions go to /api/plan, which streams the answer back as newline-delimited JSON. The last few
 // questions and answers stay on this device so they're there when you come back.
@@ -3133,6 +3142,7 @@ function waterSheetMarkup(id) {
       <div class="host-tools">
         ${S.readOnly ? "" : `<button class="btn primary small" type="button" data-act="sk-post" data-w="${L.id}">Post a trip here</button>`}
         <button class="btn ghost small" type="button" data-act="sk-show" data-w="${L.id}">Show on the map</button>
+        ${genButton(generationFor(L.name))}
         <a class="btn ghost small" href="${esc(gm)}" target="_blank" rel="noopener">Google Maps</a>
       </div>
     </div>
@@ -3401,6 +3411,7 @@ function updateTripSheet() {
       <button class="btn primary small" type="button" data-act="flies-for-trip">Pick flies</button></div>`;
   }
   tools.innerHTML = `${fp}<div class="tool-row">
+      ${k === "fish" ? genButton(generationFor((t.water || "") + " " + (t.title || ""))) : ""}
       <a class="btn ghost small" href="${esc(gcalUrl(t))}" target="_blank" rel="noopener">Add to Google Calendar</a>
       <button class="btn ghost small" type="button" data-act="copy">Copy text for the group chat</button>
     </div>`;

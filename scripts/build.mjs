@@ -28,8 +28,11 @@ if (existsSync(artDir)) {
     art[m[1].toLowerCase()] = "/trout-art/" + f;
   }
 }
+// Dam generation schedules (data/generation.json) are linked from trips, the Stocking tab and the
+// Trip Planner.
 swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() +
-  "\nwindow.TROUT_ART = " + JSON.stringify(art) + ";\n</script>");
+  "\nwindow.TROUT_ART = " + JSON.stringify(art) + ";\nwindow.GENERATION = " +
+  JSON.stringify(JSON.parse(read("data/generation.json"))) + ";\n</script>");
 
 // Everything through the first </style> belongs in <head>; the rest is the body.
 const cut = page.indexOf("</style>") + "</style>".length;
