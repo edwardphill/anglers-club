@@ -1,7 +1,7 @@
 // Assembles public/index.html from src/club.html, the embedded Fly Picker and the Trout Map
 // checklist, and copies the Trout Map's coastlines to public/trout-land.js.
 // Run after editing anything under src/: npm run build
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -15,7 +15,20 @@ const swap = (marker, text) => {
 };
 swap("<!--FP_TEMPLATE-->", read("src/flypicker/template.html").trimEnd());
 swap("<!--FP_SCRIPTS-->", read("src/flypicker/scripts.html").trimEnd());
-swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() + "\n</script>");
+// Species illustrations: trout-art/<species-id>.png (or .jpg, .webp, .svg) replaces the generic
+// trout on that species' card. Files are copied to public/trout-art/.
+const artDir = join(root, "trout-art"), art = {};
+if (existsSync(artDir)) {
+  mkdirSync(join(root, "public/trout-art"), { recursive: true });
+  for (const f of readdirSync(artDir).sort()) {
+    const m = /^([a-z0-9-]+)\.(png|jpe?g|webp|svg)$/i.exec(f);
+    if (!m) continue;
+    copyFileSync(join(artDir, f), join(root, "public/trout-art", f));
+    art[m[1].toLowerCase()] = "/trout-art/" + f;
+  }
+}
+swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() +
+  "\nwindow.TROUT_ART = " + JSON.stringify(art) + ";\n</script>");
 
 // Everything through the first </style> belongs in <head>; the rest is the body.
 const cut = page.indexOf("</style>") + "</style>".length;
@@ -51,4 +64,6 @@ mkdirSync(join(root, "public"), { recursive: true });
 writeFileSync(join(root, "public/index.html"), html);
 // The Trout Map's coastlines load with that tab, not with the page.
 copyFileSync(join(root, "src/trout-land.js"), join(root, "public/trout-land.js"));
+// The Stocking tab's schedule loads with that tab too.
+copyFileSync(join(root, "src/stocking-tn.js"), join(root, "public/stocking-tn.js"));
 console.log(`public/index.html: ${(html.length / 1024).toFixed(0)} KB`);

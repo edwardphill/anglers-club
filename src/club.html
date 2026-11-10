@@ -71,15 +71,12 @@ main.wrap{padding-block:28px 80px;display:grid;gap:20px}
 .loading{color:var(--muted);font-style:italic;padding:20px 2px}
 
 /* Framed panels carry a brass double rule */
-.start,.gate,.flies-card{background:var(--paper);border:1px solid var(--brass);box-shadow:0 0 0 3px var(--ground),0 0 0 4px var(--brass)}
+.start,.gate{background:var(--paper);border:1px solid var(--brass);box-shadow:0 0 0 3px var(--ground),0 0 0 4px var(--brass)}
 .grid-wrap{background:var(--paper);border:1px solid var(--ink)}
 
 /* Ledger lists */
 .rows{list-style:none;margin:0;padding:0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
 .rows>li+li{border-top:1px solid var(--hair)}
-.rows>li.ledger-h+li{border-top:0}
-.ledger-h{display:grid;grid-template-columns:150px minmax(0,1fr) 160px;gap:24px;padding:10px 6px 9px;border-bottom:1px solid var(--brass);font:500 .64rem/1 var(--caps);letter-spacing:.2em;color:var(--brass-ink)}
-.ledger-h span:last-child{text-align:right}
 
 /* Home */
 .home{display:grid;gap:32px}
@@ -149,8 +146,7 @@ main.wrap{padding-block:28px 80px;display:grid;gap:20px}
 .pill{display:inline-block;font:500 .64rem/1 var(--caps);letter-spacing:.14em;padding:3px 7px 2px}
 .pill.bad{background:var(--oxblood-wash);color:var(--oxblood)}
 @media (max-width:640px){
-  .ledger-h{display:none}
-  .trip{grid-template-columns:minmax(0,1fr);gap:8px;padding:16px 4px}
+    .trip{grid-template-columns:minmax(0,1fr);gap:8px;padding:16px 4px}
   .tside{justify-items:start;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;text-align:left}
   .seats{justify-items:start;grid-auto-flow:column;align-items:center}
 }
@@ -187,12 +183,7 @@ main.wrap{padding-block:28px 80px;display:grid;gap:20px}
 .day-panel-h{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
 .day-panel-h h3{font-size:1.45rem}
 
-/* Logbook */
-.flies-card{padding:18px 22px;display:grid;gap:12px}
-.flies-card h2{font-size:1.55rem}
-.flylist{display:flex;flex-wrap:wrap;gap:6px 20px}
-.fly{font:italic 400 1.1rem var(--body);color:var(--green);display:inline-flex;gap:6px;align-items:baseline}
-.fly b{font:500 .64rem var(--caps);letter-spacing:.12em;color:var(--brass-ink)}
+/* Past trips on the calendar show their reports */
 .rep-lines{display:grid;gap:3px;margin-top:6px}
 .rep-line{font-size:.96rem;color:var(--muted);overflow-wrap:anywhere}
 .rep-line strong{color:var(--ink);font-weight:500}
@@ -351,10 +342,35 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .tm-flag.optional{color:var(--brass-ink);border:1px solid var(--brass)}
 .tm-when{font-style:italic;font-size:.95rem;color:var(--green);white-space:nowrap;padding-top:3px}
 .tm-fish{display:block;width:100%;max-width:400px;height:auto;margin:-4px 0 2px}
+.tm-art{max-height:220px;object-fit:contain;object-position:left center}
 .tm-catches{list-style:none;margin:0;padding:0;display:grid;gap:10px}
 .tm-catches li{border:1px solid var(--hair);background:var(--ground);padding:10px 14px;display:grid;gap:3px}
 .tm-catches .cm-h b{font-size:1.05rem}
 .tm-empty{color:var(--muted);font-style:italic;padding:14px 4px}
+
+/* Stocking tab */
+.sk-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin-bottom:10px}
+.sk-when{display:flex;align-items:center;gap:8px;font:500 .64rem/1 var(--caps);letter-spacing:.16em;color:var(--brass-ink)}
+.sk-when select{font:400 1rem var(--body);letter-spacing:0;color:var(--ink);background:var(--paper);border:1px solid var(--hair);border-bottom-color:var(--muted);padding:8px 10px}
+.sk-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:0}
+.chip .sk-dot{vertical-align:1px}
+.sk-row{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:20px;align-items:start;width:100%;text-align:left;background:none;border:0;padding:14px 6px;cursor:pointer;color:inherit}
+@media (hover:hover){.sk-row:hover{background:var(--paper)}}
+.sk-row.sel{background:var(--green-wash)}
+.sk-nm{font:600 1.3rem/1.2 var(--serif);overflow-wrap:anywhere}
+.sk-side{display:grid;justify-items:end;gap:4px;text-align:right;white-space:nowrap}
+.sk-rel{font-style:italic;color:var(--green)}
+.sk-rel.soon{color:var(--oxblood)}
+.sk-mi{font-size:.92rem;color:var(--muted);font-variant-numeric:lining-nums}
+.stamp .wk{font:500 .58rem/1 var(--caps);letter-spacing:.14em;color:var(--green)}
+@media (max-width:640px){.sk-row{grid-template-columns:62px minmax(0,1fr);gap:12px}.sk-side{grid-column:2;justify-items:start;grid-auto-flow:column;gap:12px;white-space:normal}.sk-nm{font-size:1.15rem}}
+.sk-pill{display:inline-block;font:500 .6rem/1 var(--caps);letter-spacing:.14em;color:#fff;padding:4px 8px 3px;margin:0 6px 4px 0}
+.sk-next{background:var(--green-wash);border:1px solid var(--green);padding:12px 16px;display:grid;gap:3px}
+.sk-next b{font:600 1.35rem/1.2 var(--serif)}
+.sk-dates{display:flex;flex-wrap:wrap;gap:6px}
+.sk-dates span{border:1px solid var(--hair);background:var(--ground);padding:3px 8px;font-size:.95rem;font-variant-numeric:lining-nums}
+.sk-dates span.past{color:var(--muted);text-decoration:line-through;opacity:.7}
+.sk-dates span.nx{border-color:var(--green);background:var(--green-wash);color:var(--green)}
 
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);background:var(--ink);color:var(--ground);font:italic 400 1.05rem/1.3 var(--body);padding:11px 20px;max-width:calc(100% - 32px);text-align:center;z-index:30;pointer-events:none;opacity:0}
 #toast.show{opacity:1}
@@ -384,9 +400,8 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 <nav class="tabs" id="tabsbar" aria-label="Club views" hidden>
   <div class="wrap tabs-in">
     <div class="tablist" role="tablist">
-      <button class="tab" role="tab" id="t-upcoming" data-tab="upcoming" aria-selected="true"><span class="long">Upcoming</span><span class="short">Trips</span></button>
-      <button class="tab" role="tab" id="t-calendar" data-tab="calendar" aria-selected="false">Calendar</button>
-      <button class="tab" role="tab" id="t-logbook" data-tab="logbook" aria-selected="false">Logbook</button>
+      <button class="tab" role="tab" id="t-calendar" data-tab="calendar" aria-selected="true">Calendar</button>
+      <button class="tab" role="tab" id="t-stocking" data-tab="stocking" aria-selected="false" hidden>Stocking</button>
       <button class="tab" role="tab" id="t-flies" data-tab="flies" aria-selected="false"><span class="long">Fly Picker</span><span class="short">Flies</span></button>
       <button class="tab" role="tab" id="t-trout" data-tab="trout" aria-selected="false"><span class="long">Trout Map</span><span class="short">Trout</span></button>
     </div>
@@ -412,8 +427,7 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
         </div>
         <label class="toggle w"><input type="checkbox" id="mine-toggle"> Just my trips</label>
       </div>
-      <div id="v-upcoming" role="tabpanel" aria-labelledby="t-upcoming"></div>
-      <div id="v-calendar" role="tabpanel" aria-labelledby="t-calendar" hidden>
+      <div id="v-calendar" role="tabpanel" aria-labelledby="t-calendar">
         <div class="cal">
           <div class="cal-head">
             <h2 id="cal-title"></h2>
@@ -428,11 +442,51 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
           <div class="day-panel" id="cal-day"></div>
         </div>
       </div>
-      <div id="v-logbook" role="tabpanel" aria-labelledby="t-logbook" hidden></div>
       <div id="v-flies" role="tabpanel" aria-labelledby="t-flies" hidden>
         <div style="display:grid;gap:14px">
           <div class="fp-note" id="fp-note" hidden></div>
           <div id="fp-host"></div>
+        </div>
+      </div>
+      <div id="v-stocking" role="tabpanel" aria-labelledby="t-stocking" hidden>
+        <div class="tm">
+          <p class="tm-lede" id="sk-lede">The state's trout stocking schedule, with every stocked water on one map. Tap a water to see its dates or post a trip there.</p>
+          <div class="tm-score" id="sk-score"></div>
+          <div>
+            <div class="tm-map" id="sk-map">
+              <div class="tm-loading sk-loading" id="sk-map-msg">Loading the schedule…</div>
+              <div class="tm-ctl" id="sk-ctl" hidden>
+                <button class="icon-btn" type="button" data-act="sk-zin" aria-label="Zoom in">+</button>
+                <button class="icon-btn" type="button" data-act="sk-zout" aria-label="Zoom out">−</button>
+                <button class="icon-btn world" type="button" data-act="sk-all" aria-label="Show the whole state">ALL</button>
+              </div>
+              <div class="tm-tip" id="sk-tip" hidden></div>
+            </div>
+            <div class="tm-foot"><div class="tm-legend" id="sk-legend" aria-label="Map key"></div></div>
+            <p class="tm-note" id="sk-note"></p>
+          </div>
+          <section>
+            <div class="tm-sec-h"><h2>Coming up</h2><span class="hint" id="sk-count"></span></div>
+            <div class="sk-filters">
+              <input class="tm-search" id="sk-q" type="search" placeholder="Find a water or county" aria-label="Find a water or county" autocomplete="off">
+              <label class="sk-when">When
+                <select id="sk-when">
+                  <option value="7">Next 7 days</option>
+                  <option value="30">Next 30 days</option>
+                  <option value="upcoming" selected>Anything coming up</option>
+                  <option value="all">The whole season</option>
+                </select></label>
+              <div class="chips" role="group" aria-label="Sort">
+                <button class="chip" type="button" data-sks="soon" aria-pressed="true">Soonest</button>
+                <button class="chip" type="button" data-sks="near" aria-pressed="false">Nearest</button>
+              </div>
+            </div>
+            <div class="sk-filters">
+              <div class="chips" id="sk-regions" role="group" aria-label="Region"></div>
+              <div class="chips" id="sk-types" role="group" aria-label="Water type"></div>
+            </div>
+            <ul class="rows" id="sk-list"></ul>
+          </section>
         </div>
       </div>
       <div id="v-trout" role="tabpanel" aria-labelledby="t-trout" hidden>
@@ -526,7 +580,9 @@ const COND_PH = { fish: "e.g. No generation till 2 PM", hunt: "e.g. Youth weeken
 const WHERE_PH = { fish: "e.g. the river or lake", hunt: "e.g. the WMA or lease" };
 const COUNT_LABEL = { fish: "Fish landed", hunt: "Harvest" };
 const WORKED_LABEL = { fish: "Flies that worked", hunt: "What worked" };
-const TABS = ["upcoming", "calendar", "logbook", "flies", "trout"];
+const TABS = ["calendar", "stocking", "flies", "trout"];
+// Older links named tabs that are gone; they land on the calendar.
+const OLD_TABS = { upcoming: "calendar", logbook: "calendar" };
 const NO_WRITE = "You can look around but can't change anything. Ask the person who shared this page for edit access.";
 
 /* ---------- state ---------- */
@@ -536,7 +592,7 @@ const S = {
   clubs: new Map(), clubsLoaded: false, myClubs: [],
   clubId: null, unsubs: [],
   trips: new Map(), rsvps: [], comments: [], reports: [], catches: [], catchIdx: null, members: new Map(), loaded: { trips: false, members: false },
-  profiles: {}, tab: "upcoming", filter: "all", mine: false, cal: null, calSel: null, sheet: null,
+  profiles: {}, wantTab: null, tab: "calendar", filter: "all", mine: false, cal: null, calSel: null, sheet: null,
   fp: null, fpClub: null, fpNote: "", lastInvite: "",
 };
 
@@ -748,8 +804,8 @@ function toast(msg) {
 /* ---------- navigation ---------- */
 function setHash() {
   let h = "home";
-  if (S.clubId) h = "club-" + S.clubId + (S.tab !== "upcoming" ? "." + S.tab : "");
-  try { history.replaceState(null, "", "#" + h); } catch (e) {}
+  if (S.clubId) h = "club-" + S.clubId + (S.tab !== "calendar" ? "." + S.tab : "");
+  try { history.replaceState(null, "", "/#" + h); } catch (e) {}
 }
 function enterClub(cid, opts = {}) {
   S.unsubs.forEach((u) => { try { u(); } catch (e) {} });
@@ -759,8 +815,11 @@ function enterClub(cid, opts = {}) {
   S.loadSeq++;
   S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.catches = []; S.catchIdx = null; S.members = new Map();
   S.loaded = { trips: false, members: false };
-  TM.focus = null; TM.sel = null; TM.Z = { k: 1, x: 0, y: 0 };
-  S.tab = opts.tab && TABS.includes(opts.tab) ? opts.tab : "upcoming";
+  TM.focus = null; TM.sel = null; if (TM.pz) TM.pz.set({ k: 1, x: 0, y: 0 });
+  SK.sel = null; SK.built = false;
+  const want = OLD_TABS[opts.tab] || opts.tab || S.wantTab;
+  S.tab = want && TABS.includes(want) ? want : "calendar";
+  if (S.clubId) S.wantTab = null;
   S.filter = "all"; S.mine = false; S.cal = null; S.calSel = null; S.fpNote = "";
   const mt = $("#mine-toggle"); if (mt) mt.checked = false;
   if (S.clubId && session(S.clubId)) loadClub(S.clubId);
@@ -827,15 +886,6 @@ function clubRow(c, tag) {
 function emptyState(title, body, withBtn) {
   return `<div class="empty"><h2>${esc(title)}</h2><p>${esc(body)}</p>${withBtn && !S.readOnly ? `<button class="btn primary" type="button" data-act="post">Post a trip</button>` : ""}</div>`;
 }
-function groupByMonth(list, rowOpts) {
-  const groups = new Map();
-  list.forEach((t) => { const k = t.date.slice(0, 7); if (!groups.has(k)) groups.set(k, []); groups.get(k).push(t); });
-  const head = `<li class="ledger-h" aria-hidden="true"><span>Date</span><span>${rowOpts.reports ? "Water &amp; Reports" : "Water &amp; Particulars"}</span><span>${rowOpts.reports ? "" : "Places"}</span></li>`;
-  return [...groups].map(([k, ts], i) => `<div class="group">
-      <div class="group-h"><h2>${esc(monthLabel(k))}</h2><span>${ts.length} ${ts.length === 1 ? "trip" : "trips"}</span></div>
-      <ul class="rows">${i === 0 ? head : ""}${ts.map((t) => tripRow(t, rowOpts)).join("")}</ul></div>`).join("");
-}
-
 /* ---------- views ---------- */
 function currentView() {
   if (S.booting) return "boot";
@@ -867,7 +917,7 @@ function renderHome() {
     .sort((a, b) => (a.state + a.city + a.name).localeCompare(b.state + b.city + b.name));
   let html = "";
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
-  if (!S.readOnly) html += `<section class="start"><div><h2>Start a club for your city</h2><p>Pick your city, set a club password, and text it to your crew. Trips, RSVPs, one thread per trip, a logbook and the Fly Picker come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
+  if (!S.readOnly) html += `<section class="start"><div><h2>Start a club for your city</h2><p>Pick your city, set a club password, and text it to your crew. A trip calendar with RSVPs and one thread per trip, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
   html += `<section class="home-sec"><h2 class="home-h">${mine.length ? "Other clubs" : "Find your club"}</h2>${others.length
     ? `<ul class="rows">${others.map((c) => clubRow(c, "Join")).join("")}</ul>`
     : `<p class="muted" style="padding-inline:2px">${S.clubs.size ? "You're in every club so far." : "No clubs yet. Start the first one."}</p>`}</section>`;
@@ -889,20 +939,6 @@ function renderGate() {
     ${body}
     <div><button class="btn ghost small" type="button" data-act="home">See all clubs</button></div>
   </div>`;
-}
-function renderUpcoming() {
-  const el = $("#v-upcoming");
-  if (!S.loaded.trips) { el.innerHTML = `<p class="loading">Loading trips…</p>`; return; }
-  const t0 = todayStr();
-  const list = [...S.trips.values()].filter((t) => t.date >= t0 && passes(t)).sort(byWhen);
-  if (!list.length) {
-    const any = [...S.trips.values()].some((t) => t.date >= t0);
-    el.innerHTML = any
-      ? emptyState("No trips match", "Try All trips, or turn off Just my trips.", false)
-      : emptyState("Nothing on the calendar yet", "Post the day, the water, and how many seats you have. Members RSVP and plan in one thread instead of five text threads.", true);
-    return;
-  }
-  el.innerHTML = groupByMonth(list, {});
 }
 function renderCalendar() {
   if (!S.cal) { const d = parseD(todayStr()); S.cal = { y: d.getFullYear(), m: d.getMonth() }; }
@@ -930,41 +966,17 @@ function renderCalendar() {
   const sel = S.calSel || t0;
   const ts = byDay.get(sel) || [];
   $("#cal-day").innerHTML = `<div class="day-panel-h"><h3>${esc(fmtD(sel, { weekday: "long", month: "long", day: "numeric" }))}</h3>${!S.readOnly ? `<button class="btn ghost small" type="button" data-act="post-day" data-day="${sel}">Post a trip this day</button>` : ""}</div>`
-    + (ts.length ? `<ul class="rows">${ts.map((t) => tripRow(t, { reports: sel < t0 })).join("")}</ul>` : `<p class="muted">No trips this day.</p>`);
+    + (ts.length ? `<ul class="rows">${ts.map((t) => tripRow(t, { reports: sel < t0 })).join("")}</ul>` : nextUp(sel));
 }
-function hotFlies() {
-  const cutoff = addDays(todayStr(), -120), tally = new Map();
-  S.reports.forEach((r) => {
-    const t = S.trips.get(r.tripId);
-    if (!t || t.kind !== "fish" || t.date < cutoff || !r.worked) return;
-    String(r.worked).split(/[,;\n]+/).map((s) => s.trim()).filter((s) => s && s.length <= 40).forEach((name) => {
-      const k = name.toLowerCase();
-      const cur = tally.get(k) || { name, n: 0 }; cur.n++; tally.set(k, cur);
-    });
-  });
-  return [...tally.values()].sort((a, b) => b.n - a.n || a.name.localeCompare(b.name)).slice(0, 10);
+// With nothing on the chosen day, point at the next trip so the calendar still answers "what's next".
+function nextUp(after) {
+  if (!S.loaded.trips) return `<p class="loading">Loading trips…</p>`;
+  const next = [...S.trips.values()].filter((t) => t.date > after && !t.canceled && passes(t)).sort(byWhen)[0];
+  if (next) return `<p class="muted">No trips this day. Next up:</p><ul class="rows">${tripRow(next, {})}</ul>`;
+  const any = [...S.trips.values()].some((t) => t.date >= todayStr());
+  return any ? `<p class="muted">No trips this day.</p>`
+    : emptyState("Nothing on the calendar yet", "Post the day, the water and how many seats you have. Members RSVP and plan in one thread instead of five text threads.", true);
 }
-function renderLogbook() {
-  const el = $("#v-logbook");
-  if (!S.loaded.trips) { el.innerHTML = `<p class="loading">Loading the logbook…</p>`; return; }
-  const t0 = todayStr();
-  const past = [...S.trips.values()].filter((t) => t.date < t0 && !t.canceled && passes(t)).sort((a, b) => byWhen(b, a));
-  let top = "";
-  if (kinds() !== "hunt") {
-    const flies = hotFlies();
-    top = `<div class="flies-card">
-      <h2>Flies that worked lately</h2>
-      ${flies.length
-        ? `<div class="flylist">${flies.map((f) => `<span class="fly">${esc(f.name)}${f.n > 1 ? ` <b>×${f.n}</b>` : ""}</span>`).join("")}</div>`
-        : `<p class="muted">Pulled from this club's fishing reports over the last four months. Add a report after your next trip and the flies show up here.</p>`}
-      <p class="hint">Planning the next one? <button class="linkbtn" type="button" data-act="tab-flies">Open the Fly Picker</button> for what's hatching.</p>
-    </div>`;
-  }
-  el.innerHTML = top + (past.length
-    ? groupByMonth(past, { reports: true })
-    : `<div style="margin-top:${top ? "18px" : "0"}">${emptyState("No past trips yet", "Trips land here the day after they happen. Anyone who went can add a report.", false)}</div>`);
-}
-
 /* ---------- Fly Picker tab ---------- */
 const fpDefaults = () => ({ region: (club() && club().region) || "south", water_type: "freestone", date: todayStr() });
 function ensureFlyPicker() {
@@ -1012,6 +1024,109 @@ function openFliesForTrip(t) {
   window.scrollTo(0, 0);
 }
 
+/* ---------- pan and zoom for the SVG maps ---------- */
+// Drag to pan, pinch or Ctrl/trackpad scroll to zoom, plain scroll keeps scrolling the page until
+// the map is zoomed in. Taps (no movement) go to opts.onTap. Coordinates are the SVG's viewBox
+// units (W x H); zg is the group that gets the transform.
+function makePanZoom(svg, zg, W, H, opts = {}) {
+  const maxK = opts.maxK || 16, ptr = new Map();
+  let drag = null, anim = 0;
+  const pz = { Z: { k: 1, x: 0, y: 0 }, ppu: 0, W, H };
+  const clamp = (z) => { const k = Math.max(1, Math.min(maxK, z.k)); return { k, x: Math.min(0, Math.max(W - W * k, z.x)), y: Math.min(0, Math.max(H - H * k, z.y)) }; };
+  const toView = (cx, cy) => { const r = svg.getBoundingClientRect(); return [(cx - r.left) * W / r.width, (cy - r.top) * H / r.height]; };
+  pz.apply = () => {
+    const { k, x, y } = pz.Z;
+    zg.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k.toFixed(4)})`);
+    svg.classList.toggle("zoomed", k > 1.01);
+    const w = svg.getBoundingClientRect().width;
+    if (w) pz.ppu = w / W;
+    if (opts.onZoom) opts.onZoom(pz);
+  };
+  pz.unit = () => (pz.ppu ? 1 / (pz.ppu * pz.Z.k) : 0);       // one screen pixel, in map units
+  pz.screenOf = (px, py) => { const r = svg.getBoundingClientRect(), s = r.width / W, { k, x, y } = pz.Z; return [r.left + (px * k + x) * s, r.top + (py * k + y) * s]; };
+  pz.set = (z) => { cancelAnimationFrame(anim); pz.Z = clamp(z); pz.apply(); };
+  pz.zoomAt = (f, px, py) => { const { k, x, y } = pz.Z, nk = Math.max(1, Math.min(maxK, k * f)); pz.set({ k: nk, x: px - (px - x) * (nk / k), y: py - (py - y) * (nk / k) }); };
+  pz.animateTo = (t) => {
+    t = clamp(t);
+    cancelAnimationFrame(anim);
+    if (matchMedia("(prefers-reduced-motion: reduce)").matches) { pz.Z = t; pz.apply(); return; }
+    const a = { ...pz.Z }, ca = [(W / 2 - a.x) / a.k, (H / 2 - a.y) / a.k], cb = [(W / 2 - t.x) / t.k, (H / 2 - t.y) / t.k];
+    const t0 = performance.now(), dur = 460;
+    const step = (now) => {
+      let p = Math.min(1, (now - t0) / dur);
+      p = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      const k = a.k * Math.pow(t.k / a.k, p), cx = ca[0] + (cb[0] - ca[0]) * p, cy = ca[1] + (cb[1] - ca[1]) * p;
+      pz.Z = p >= 1 ? t : clamp({ k, x: W / 2 - cx * k, y: H / 2 - cy * k });
+      pz.apply();
+      if (p < 1) anim = requestAnimationFrame(step);
+    };
+    anim = requestAnimationFrame(step);
+  };
+  pz.centerOn = (px, py, k) => pz.animateTo({ k, x: W / 2 - px * k, y: H / 2 - py * k });
+  pz.zoomStep = (f) => { const { k, x, y } = pz.Z; pz.centerOn((W / 2 - x) / k, (H / 2 - y) / k, k * f); };
+  pz.fit = (x0, y0, x1, y1, fitMax = 9, pad = 10) => {
+    const k = Math.max(1, Math.min(fitMax, W / (x1 - x0 + pad * 2), H / (y1 - y0 + pad * 2)));
+    pz.centerOn((x0 + x1) / 2, (y0 + y1) / 2, k);
+  };
+  const mid = (p, q) => toView((p.x + q.x) / 2, (p.y + q.y) / 2);
+  svg.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    cancelAnimationFrame(anim);
+    ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (ptr.size === 1) drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, moved: false, z: { ...pz.Z } };
+    else if (ptr.size === 2) {
+      const [p, q] = [...ptr.values()];
+      drag = { pinch: true, d0: Math.max(10, Math.hypot(p.x - q.x, p.y - q.y)), m0: mid(p, q), z: { ...pz.Z }, moved: true };
+      if (opts.onLeave) opts.onLeave();
+    }
+  });
+  svg.addEventListener("pointermove", (e) => {
+    if (!ptr.has(e.pointerId)) { if (e.pointerType === "mouse" && opts.onHover) opts.onHover(e); return; }
+    ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const d = drag;
+    if (!d) return;
+    if (d.pinch) {
+      if (ptr.size < 2) return;
+      const [p, q] = [...ptr.values()], m = mid(p, q);
+      const k = Math.max(1, Math.min(maxK, d.z.k * Math.hypot(p.x - q.x, p.y - q.y) / d.d0));
+      const mp = [(d.m0[0] - d.z.x) / d.z.k, (d.m0[1] - d.z.y) / d.z.k];
+      pz.Z = clamp({ k, x: m[0] - mp[0] * k, y: m[1] - mp[1] * k });
+      pz.apply();
+      return;
+    }
+    const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+    if (!d.moved) {
+      if (Math.hypot(dx, dy) < 6) return;
+      d.moved = true;
+      if (opts.onLeave) opts.onLeave();
+      if (pz.Z.k > 1.01) { try { svg.setPointerCapture(e.pointerId); } catch (_) {} svg.classList.add("dragging"); }
+    }
+    if (d.z.k > 1.01) {
+      const s = W / svg.getBoundingClientRect().width;
+      pz.Z = clamp({ k: d.z.k, x: d.z.x + dx * s, y: d.z.y + dy * s });
+      pz.apply();
+    }
+  });
+  const end = (e) => {
+    if (!ptr.has(e.pointerId)) return;
+    ptr.delete(e.pointerId);
+    const d = drag;
+    if (e.type === "pointerup" && d && !d.pinch && !d.moved && d.id === e.pointerId && opts.onTap) opts.onTap(e);
+    if (!ptr.size) { drag = null; svg.classList.remove("dragging"); }
+    else if (d && d.pinch) { const [id, p] = [...ptr.entries()][0]; drag = { id, sx: p.x, sy: p.y, moved: true, z: { ...pz.Z } }; }
+  };
+  svg.addEventListener("pointerup", end);
+  svg.addEventListener("pointercancel", end);
+  svg.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse" && opts.onLeave) opts.onLeave(); });
+  svg.addEventListener("wheel", (e) => {
+    if (!e.ctrlKey && pz.Z.k <= 1.001) return;
+    e.preventDefault();
+    const [px, py] = toView(e.clientX, e.clientY);
+    pz.zoomAt(Math.exp(-e.deltaY * (e.ctrlKey ? 0.012 : 0.0025) * (e.deltaMode === 1 ? 16 : 1)), px, py);
+  }, { passive: false });
+  return pz;
+}
+
 /* ---------- Trout Map tab ---------- */
 // The checklist comes from src/trout-species.js (inlined). The coastlines, already projected,
 // load with the tab from /trout-land.js. Species and range circles are placed with the same
@@ -1027,8 +1142,8 @@ const slot = (x) => x.flag === "" || x.flag === "f";      // board slots: anythi
 const tierName = (t) => String(TIERS[t] || "").split(" · ")[0];
 const tierGenus = (t) => String(TIERS[t] || "").split(" · ")[1] || "";
 const TM = {
-  built: false, building: false, loading: null, svg: null, zg: null, dots: [], labels: [], ppu: 0,
-  Z: { k: 1, x: 0, y: 0 }, pts: new Map(), focus: null, sel: null, filter: "all", q: "", ptr: new Map(), drag: null, anim: 0,
+  built: false, building: false, loading: null, svg: null, zg: null, dots: [], labels: [],
+  pz: null, pts: new Map(), focus: null, sel: null, filter: "all", q: "",
 };
 function catchIdx() {
   if (S.catchIdx) return S.catchIdx;
@@ -1142,7 +1257,10 @@ function buildMap() {
   TM.svg = $("#tm-svg"); TM.zg = $("#tm-z");
   TM.dots = [...TM.svg.querySelectorAll("#tm-dots circle")].map((el) => [el, isForm(SPM.get(el.dataset.sp))]);
   TM.labels = [...TM.svg.querySelectorAll("#tm-labels text")].map((el) => [el, SPM.get(el.dataset.sp)]);
-  wireMap();
+  TM.pz = makePanZoom(TM.svg, TM.zg, L.w, L.h, {
+    maxK: 16, onZoom: troutZoomed, onHover: hoverTip, onLeave: hideTip,
+    onTap: (e) => { const id = hitTest(e.clientX, e.clientY, e.pointerType === "mouse" ? 12 : 20); if (id) { hideTip(); openSheet("species", { sp: id }); } },
+  });
 }
 function paintMap() {
   if (!TM.built) return;
@@ -1166,16 +1284,13 @@ function paintMap() {
   else ring.setAttribute("visibility", "hidden");
   applyZoom();
 }
-function applyZoom() {
-  if (!TM.built) return;
-  const L = window.TROUT_LAND, { k, x, y } = TM.Z;
-  TM.zg.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k.toFixed(4)})`);
-  TM.svg.classList.toggle("zoomed", k > 1.01);
-  const w = TM.svg.getBoundingClientRect().width;
-  if (w) TM.ppu = w / L.w;
-  if (!TM.ppu) return;
-  const u = 1 / (TM.ppu * k);             // one screen pixel, in map units
-  const big = TM.ppu * L.w > 640 ? 1 : 1.15;
+// Trout chart zoom: the pan/zoom helper moves the chart; this keeps markers and labels a
+// constant size on screen.
+function applyZoom() { if (TM.pz) TM.pz.apply(); }
+function troutZoomed(pz) {
+  const { k } = pz.Z, u = pz.unit(), L = window.TROUT_LAND;
+  if (!u) return;
+  const big = pz.ppu * L.w > 640 ? 1 : 1.15;
   TM.dots.forEach(([el, form]) => el.setAttribute("r", ((form ? 3.2 : 5) * big * u).toFixed(3)));
   const lg = $("#tm-labels");
   lg.setAttribute("font-size", (13 * u).toFixed(3)); lg.setAttribute("stroke-width", (3.2 * u).toFixed(3));
@@ -1187,49 +1302,17 @@ function applyZoom() {
   });
   $("#tm-ring").setAttribute("r", (10 * u).toFixed(3));
 }
-function clampZ(z) {
-  const L = window.TROUT_LAND, k = Math.max(1, Math.min(16, z.k));
-  return { k, x: Math.min(0, Math.max(L.w - L.w * k, z.x)), y: Math.min(0, Math.max(L.h - L.h * k, z.y)) };
-}
-function zoomAt(f, px, py) {
-  const { k, x, y } = TM.Z, nk = Math.max(1, Math.min(16, k * f));
-  TM.Z = clampZ({ k: nk, x: px - (px - x) * (nk / k), y: py - (py - y) * (nk / k) });
-  applyZoom();
-}
-function animateTo(t) {
-  if (!TM.built) return;
-  t = clampZ(t);
-  cancelAnimationFrame(TM.anim);
-  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { TM.Z = t; applyZoom(); return; }
-  const L = window.TROUT_LAND, a = { ...TM.Z };
-  const ca = [(L.w / 2 - a.x) / a.k, (L.h / 2 - a.y) / a.k], cb = [(L.w / 2 - t.x) / t.k, (L.h / 2 - t.y) / t.k];
-  const t0 = performance.now(), dur = 460;
-  const step = (now) => {
-    let p = Math.min(1, (now - t0) / dur);
-    p = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-    const k = a.k * Math.pow(t.k / a.k, p), cx = ca[0] + (cb[0] - ca[0]) * p, cy = ca[1] + (cb[1] - ca[1]) * p;
-    TM.Z = p >= 1 ? t : clampZ({ k, x: L.w / 2 - cx * k, y: L.h / 2 - cy * k });
-    applyZoom();
-    if (p < 1) TM.anim = requestAnimationFrame(step);
-  };
-  TM.anim = requestAnimationFrame(step);
-}
 function fitIds(ids, maxK = 9) {
-  const L = window.TROUT_LAND;
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
   ids.forEach((id) => { const [px, py] = TM.pts.get(id), r = rangePx(SPM.get(id)) * 0.8; x0 = Math.min(x0, px - r); x1 = Math.max(x1, px + r); y0 = Math.min(y0, py - r); y1 = Math.max(y1, py + r); });
-  if (!Number.isFinite(x0)) return;
-  const pad = 10, k = Math.max(1, Math.min(maxK, L.w / (x1 - x0 + pad * 2), L.h / (y1 - y0 + pad * 2)));
-  const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-  animateTo({ k, x: L.w / 2 - cx * k, y: L.h / 2 - cy * k });
+  if (Number.isFinite(x0)) TM.pz.fit(x0, y0, x1, y1, maxK, 10);
 }
-function svgPt(cx, cy) { const r = TM.svg.getBoundingClientRect(), L = window.TROUT_LAND; return [(cx - r.left) * L.w / r.width, (cy - r.top) * L.h / r.height]; }
 // Nearest marker within tol screen pixels, else the smallest range circle under the point.
 function hitTest(cx, cy, tol) {
-  const r = TM.svg.getBoundingClientRect(), s = r.width / window.TROUT_LAND.w, { k, x, y } = TM.Z;
+  const s = TM.pz.ppu, k = TM.pz.Z.k;
   let best = null, bd = tol, inside = null;
   SP.forEach((sp) => {
-    const [px, py] = TM.pts.get(sp.id), sx = r.left + (px * k + x) * s, sy = r.top + (py * k + y) * s;
+    const [px, py] = TM.pts.get(sp.id), [sx, sy] = TM.pz.screenOf(px, py);
     const d = Math.hypot(sx - cx, sy - cy);
     const pref = TM.focus && sp.board !== TM.focus ? 1.6 : 1;   // dimmed markers lose ties
     if (d * pref < bd) { bd = d * pref; best = sp.id; }
@@ -1246,69 +1329,6 @@ function hoverTip(e) {
   tip.style.left = (e.clientX - box.left) + "px"; tip.style.top = (e.clientY - box.top) + "px";
   tip.hidden = false; TM.svg.style.cursor = "pointer";
 }
-function wireMap() {
-  const svg = TM.svg;
-  const mid = (p, q) => svgPt((p.x + q.x) / 2, (p.y + q.y) / 2);
-  svg.addEventListener("pointerdown", (e) => {
-    if (e.pointerType === "mouse" && e.button !== 0) return;
-    cancelAnimationFrame(TM.anim);
-    TM.ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    if (TM.ptr.size === 1) TM.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, moved: false, z: { ...TM.Z } };
-    else if (TM.ptr.size === 2) {
-      const [p, q] = [...TM.ptr.values()];
-      TM.drag = { pinch: true, d0: Math.max(10, Math.hypot(p.x - q.x, p.y - q.y)), m0: mid(p, q), z: { ...TM.Z }, moved: true };
-      hideTip();
-    }
-  });
-  svg.addEventListener("pointermove", (e) => {
-    if (!TM.ptr.has(e.pointerId)) { if (e.pointerType === "mouse") hoverTip(e); return; }
-    TM.ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
-    const d = TM.drag;
-    if (!d) return;
-    if (d.pinch) {
-      if (TM.ptr.size < 2) return;
-      const [p, q] = [...TM.ptr.values()], m = mid(p, q);
-      const k = Math.max(1, Math.min(16, d.z.k * Math.hypot(p.x - q.x, p.y - q.y) / d.d0));
-      const mp = [(d.m0[0] - d.z.x) / d.z.k, (d.m0[1] - d.z.y) / d.z.k];
-      TM.Z = clampZ({ k, x: m[0] - mp[0] * k, y: m[1] - mp[1] * k });
-      applyZoom();
-      return;
-    }
-    const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
-    if (!d.moved) {
-      if (Math.hypot(dx, dy) < 6) return;
-      d.moved = true; hideTip();
-      if (TM.Z.k > 1.01) { try { svg.setPointerCapture(e.pointerId); } catch (_) {} svg.classList.add("dragging"); }
-    }
-    if (d.z.k > 1.01) {
-      const s = window.TROUT_LAND.w / svg.getBoundingClientRect().width;
-      TM.Z = clampZ({ k: d.z.k, x: d.z.x + dx * s, y: d.z.y + dy * s });
-      applyZoom();
-    }
-  });
-  const end = (e) => {
-    if (!TM.ptr.has(e.pointerId)) return;
-    TM.ptr.delete(e.pointerId);
-    const d = TM.drag;
-    if (e.type === "pointerup" && d && !d.pinch && !d.moved && d.id === e.pointerId) {
-      const id = hitTest(e.clientX, e.clientY, e.pointerType === "mouse" ? 12 : 20);
-      if (id) { hideTip(); openSheet("species", { sp: id }); }
-    }
-    if (!TM.ptr.size) { TM.drag = null; svg.classList.remove("dragging"); }
-    else if (d && d.pinch) { const [id, p] = [...TM.ptr.entries()][0]; TM.drag = { id, sx: p.x, sy: p.y, moved: true, z: { ...TM.Z } }; }
-  };
-  svg.addEventListener("pointerup", end);
-  svg.addEventListener("pointercancel", end);
-  svg.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") hideTip(); });
-  // Plain scrolling keeps scrolling the page until the map is zoomed; Ctrl-scroll and trackpad pinch zoom.
-  svg.addEventListener("wheel", (e) => {
-    if (!e.ctrlKey && TM.Z.k <= 1.001) return;
-    e.preventDefault();
-    const [px, py] = svgPt(e.clientX, e.clientY);
-    zoomAt(Math.exp(-e.deltaY * (e.ctrlKey ? 0.012 : 0.0025) * (e.deltaMode === 1 ? 16 : 1)), px, py);
-  }, { passive: false });
-}
-function zoomStep(f) { const L = window.TROUT_LAND, { k, x, y } = TM.Z, c = [(L.w / 2 - x) / k, (L.h / 2 - y) / k], nk = k * f; animateTo({ k: nk, x: L.w / 2 - c[0] * nk, y: L.h / 2 - c[1] * nk }); }
 function mapIntoView() {
   const el = $("#tm-map"); if (!el) return;
   const r = el.getBoundingClientRect();
@@ -1319,7 +1339,7 @@ function focusBoard(k) {
   renderTroutTab();
   if (!TM.built) return;
   if (TM.focus) fitIds(SP.filter((x) => x.board === TM.focus).map((x) => x.id));
-  else animateTo({ k: 1, x: 0, y: 0 });
+  else TM.pz.animateTo({ k: 1, x: 0, y: 0 });
   mapIntoView();
 }
 async function showOnMap(id) {
@@ -1330,9 +1350,8 @@ async function showOnMap(id) {
   if (TM.focus && SPM.get(id).board !== TM.focus) TM.focus = null;
   TM.sel = id;
   renderTroutTab();
-  const x = SPM.get(id), L = window.TROUT_LAND, [px, py] = TM.pts.get(id);
-  const k = Math.max(2.5, Math.min(10, L.h / (rangePx(x) * 4.5)));
-  animateTo({ k, x: L.w / 2 - px * k, y: L.h / 2 - py * k });
+  const x = SPM.get(id), [px, py] = TM.pts.get(id);
+  TM.pz.centerOn(px, py, Math.max(2.5, Math.min(10, window.TROUT_LAND.h / (rangePx(x) * 4.5))));
   mapIntoView();
 }
 
@@ -1406,8 +1425,14 @@ function renderChecklist() {
 }
 
 /* Species sheet */
-function fishSvg(x, caught) {
-  const slash = x.group === "cutthroat" ? `<path d="M104,163 C124,172 146,178 166,180" fill="none" stroke="#7A2430" stroke-width="5" stroke-linecap="round"/>` : "";
+// One generic trout stands in for every species until its own illustration is added
+// (drop <species-id>.png into trout-art/ and rebuild; see README).
+const ART = window.TROUT_ART || {};
+function fishArt(x, caught) {
+  if (ART[x.id]) return `<img class="tm-fish tm-art" src="${esc(ART[x.id])}" alt="${esc("Illustration of a " + x.name)}">`;
+  return fishSvg(caught);
+}
+function fishSvg(caught) {
   const spots = [[196,118],[252,131],[300,140],[352,146],[398,151],[444,154],[490,158],[536,160],[582,163],[628,165],[672,167],[228,104],[284,110],[330,116],[376,120],[420,124],[466,127],[512,130],[558,133],[604,137],[650,141],[318,166],[414,176],[506,181],[598,186],[740,120],[748,185]]
     .map(([cx, cy]) => `<ellipse cx="${cx}" cy="${cy}" rx="4.6" ry="3.3"/>`).join("");
   return `<svg class="tm-fish" viewBox="40 40 780 215" aria-hidden="true">
@@ -1425,7 +1450,7 @@ function fishSvg(x, caught) {
       <path d="M62,150 C78,160 94,167 116,171" stroke="#4A564E" stroke-width="1.4"/>
       <path d="M142,156 C300,145 500,147 692,154" stroke="#4A564E" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round"/>
     </g>
-    ${slash}<circle cx="96" cy="139" r="6.5" fill="#1E2A22"/><g fill="#1E2A22" opacity=".45">${spots}</g>
+    <circle cx="96" cy="139" r="6.5" fill="#1E2A22"/><g fill="#1E2A22" opacity=".45">${spots}</g>
   </svg>`;
 }
 function speciesSheetMarkup(id) {
@@ -1459,7 +1484,7 @@ function updateSpeciesSheet() {
     : isExtinct(x) ? "Extinct" : "Not yet";
   const counts_ = isExtinct(x) ? "Shown, not countable" : isForm(x) ? "A form: logged as a sub-entry, not counted in the total" : isOptional(x) ? "Optional: logged, not counted in the total" : "Counts toward your life list";
   const flag = isForm(x) ? `<span class="tm-flag form">Form</span>` : isExtinct(x) ? `<span class="tm-flag extinct">Extinct</span>` : isOptional(x) ? `<span class="tm-flag optional">Optional</span>` : "";
-  head.innerHTML = `${fishSvg(x, got)}
+  head.innerHTML = `${fishArt(x, got)}
     <div class="tv-kind"><span class="kind fish">Tier ${roman(x.tier)} · ${esc(tierName(x.tier))}</span>${flag}</div>
     <h2 class="tv-title">${esc(x.name)}</h2>
     <p class="tv-when">${esc(x.sci)}</p>
@@ -1544,6 +1569,319 @@ async function saveMapImage() {
   }, "image/png");
 }
 
+/* ---------- Stocking tab ---------- */
+// TWRA's trout stocking schedule (src/stocking-tn.js, loaded with the tab) for Tennessee clubs:
+// a state map with every stocked water, filters, and a list sorted by the next stocking.
+const SK = {
+  data: null, loading: null, built: false, narrow: null, pz: null, svg: null, proj: null, pins: [], cities: [], tcol: {},
+  when: "upcoming", sort: "soon", q: "", regions: new Set(), types: new Set(), sel: null,
+};
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const stockOk = () => { const c = club(); return !!c && c.state === "TN" && kinds() !== "hunt"; };
+const evEnd = (e) => (e[1] === "week" ? addDays(e[0], 5) : e[0]);   // "week of" a Sunday: within five days
+const dayGap = (a, b) => Math.round((parseD(a) - parseD(b)) / 864e5);
+function loadStocking() {
+  if (window.STOCKING) return Promise.resolve();
+  if (!SK.loading) SK.loading = new Promise((res, rej) => {
+    const el = document.createElement("script");
+    el.src = "/stocking-tn.js";
+    el.onload = () => (window.STOCKING ? res() : rej(new Error("empty")));
+    el.onerror = () => { SK.loading = null; el.remove(); rej(new Error("load")); };
+    document.head.appendChild(el);
+  });
+  return SK.loading;
+}
+async function ensureStocking() {
+  if (SK.data) return true;
+  try { await loadStocking(); }
+  catch (e) {
+    const m = $("#sk-map-msg");
+    if (m) m.innerHTML = `The schedule didn't load. <button class="linkbtn" type="button" data-act="sk-retry">Try again</button>`;
+    return false;
+  }
+  const D = window.STOCKING;
+  const order = ["Tailwater", "Delayed Harvest", "Reservoir", "Weekly", "Seasonal", "Winter"];
+  D.waters.forEach((L, i) => {
+    L.id = i;
+    L.water = (L.name.includes(" / ") ? L.name.split(" / ").pop() : L.name).replace(/\s*\(.*?\)\s*/g, " ").trim();
+    L.primary = order.find((t) => L.types.includes(t)) || L.types[0];
+    L.ev.sort((a, b) => a[0].localeCompare(b[0]));
+  });
+  SK.tcol = Object.fromEntries(D.types.map((t) => [t[0], t[2]]));
+  SK.data = D;
+  $("#sk-regions").innerHTML = Object.entries(D.regions).map(([k, v]) => `<button class="chip" type="button" data-skr="${k}" aria-pressed="false">${esc(v)}</button>`).join("");
+  $("#sk-types").innerHTML = D.types.map(([k, lab, col]) => `<button class="chip" type="button" data-skt="${esc(k)}" aria-pressed="false"><span class="sk-dot" style="background:${col}"></span>${esc(lab)}</button>`).join("");
+  $("#sk-legend").innerHTML = D.types.map(([, lab, col]) => `<span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="${col}" stroke="#FFFDF8" stroke-width="1.5"/></svg>${esc(lab)}</span>`).join("")
+    + `<span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="#7A2430" stroke-width="1.6"/></svg>Stocked within 7 days</span>`;
+  $("#sk-lede").innerHTML = `${esc(D.agency)}'s trout stocking schedule for the ${esc(D.season)} season, every stocked water on one map. Tap a water for its dates, or post a trip there.`;
+  $("#sk-note").innerHTML = `Pins are approximate. "Week of" dates are Sundays; the truck comes within five days. Weather and water levels move stockings, so <a href="${esc(D.source)}" target="_blank" rel="noopener">check ${esc(D.agency)}</a> before you drive.`;
+  return true;
+}
+function milesFromClub(L) {
+  const c = club(); if (!c) return null;
+  const r = 3958.8, p1 = c.lat * RAD, p2 = L.lat * RAD, dp = (L.lat - c.lat) * RAD, dl = (L.lon - c.lon) * RAD;
+  const a = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
+  return Math.round(2 * r * Math.asin(Math.sqrt(a)));
+}
+// The stockings of L that fall in the chosen window (and type filter); month-only waters count
+// when one of their months does.
+function skWindow(L, t0) {
+  const ev = L.ev.filter((e) => !SK.types.size || SK.types.has(e[2]));
+  const mons = L.months.filter((m) => !SK.types.size || SK.types.has(m[0]));
+  if (SK.when === "all") return { ok: ev.length > 0 || mons.length > 0 || !SK.types.size, ev };
+  const end = SK.when === "upcoming" ? addDays(t0, 400) : addDays(t0, +SK.when);
+  const inw = ev.filter((e) => evEnd(e) >= t0 && e[0] <= end);
+  let mon = false;
+  if (mons.length) {
+    const a = parseD(t0);
+    for (let d = new Date(a.getFullYear(), a.getMonth(), 1); ymd(d) <= end && !mon; d = new Date(d.getFullYear(), d.getMonth() + 1, 1)) {
+      mon = mons.some((m) => m[1].includes(d.getMonth() + 1));
+    }
+  }
+  return { ok: inw.length > 0 || mon, ev: inw };
+}
+const skNext = (L, t0, ev = L.ev) => ev.find((e) => evEnd(e) >= t0) || null;
+const skSoon = (L, t0) => L.ev.some((e) => evEnd(e) >= t0 && e[0] <= addDays(t0, 7));
+function skVisible(t0) {
+  const q = SK.q.trim().toLowerCase();
+  return SK.data.waters.map((L) => {
+    if (SK.regions.size && !SK.regions.has(String(L.region))) return null;
+    if (SK.types.size && !L.types.some((t) => SK.types.has(t))) return null;
+    if (q && !(L.name + " " + L.county + " " + L.water).toLowerCase().includes(q)) return null;
+    const w = skWindow(L, t0);
+    if (!w.ok) return null;
+    return { L, next: skNext(L, t0, w.ev), n: w.ev.filter((e) => evEnd(e) >= t0).length, mi: milesFromClub(L) };
+  }).filter(Boolean);
+}
+// Stocking months as runs around the year: [1,2,3,4,11,12] reads "Nov–Apr".
+function monthsText(L) {
+  const set = new Set(L.months.flatMap((m) => m[1]));
+  if (set.size >= 12) return "All year";
+  if (!set.size) return "";
+  let start = 1;
+  while (!(set.has(start) && !set.has(((start + 10) % 12) + 1))) start = (start % 12) + 1;   // a month that opens a run
+  const runs = [];
+  for (let i = 0, m = start; i < 12; i++, m = (m % 12) + 1) {
+    if (!set.has(m)) continue;
+    const prev = ((m + 10) % 12) + 1;
+    if (runs.length && set.has(prev) && i > 0) runs[runs.length - 1][1] = m; else runs.push([m, m]);
+  }
+  return runs.map(([a, b]) => (a === b ? MON[a - 1] : MON[a - 1] + "–" + MON[b - 1])).join(", ");
+}
+function whenText(e, t0) {
+  if (!e) return "";
+  if (e[1] === "week") {
+    if (e[0] <= t0) return "This week";
+    const g = dayGap(e[0], t0);
+    return g <= 6 ? "Next week" : `In ${g} days`;
+  }
+  const g = dayGap(e[0], t0);
+  return g === 0 ? "Today" : g === 1 ? "Tomorrow" : `In ${g} days`;
+}
+const evLabel = (e) => (e[1] === "week" ? "Week of " : "") + fmtD(e[0], { weekday: e[1] === "week" ? undefined : "short", month: "short", day: "numeric" });
+
+function renderStockingTab() {
+  if (!SK.data) {
+    $("#sk-list").innerHTML = `<li class="loading">Loading the schedule…</li>`;
+    ensureStocking().then((ok) => { if (ok) scheduleRender(); });
+    return;
+  }
+  const t0 = todayStr(), D = SK.data;
+  if (!SK.built) skBuild();
+  const week = D.waters.flatMap((L) => L.ev.filter((e) => evEnd(e) >= t0 && e[0] <= addDays(t0, 7)).map((e) => ({ L, e })));
+  const near = [...week].sort((a, b) => milesFromClub(a.L) - milesFromClub(b.L))[0];
+  setHTML($("#sk-score"), `<div class="tm-big">${week.length}</div>
+    <div class="tm-score-r"><span class="tm-cap">Stockings in the next 7 days</span>
+      <span class="tm-sub">${near ? `Closest to the club: <button class="linkbtn" type="button" data-skw="${near.L.id}">${esc(near.L.name)}</button>, ${esc(evLabel(near.e))}, ${milesFromClub(near.L)} miles away.` : "Nothing on the schedule this week."} ${D.waters.length} waters on the ${esc(D.season)} schedule.</span></div>`);
+  const vis = skVisible(t0);
+  if (SK.sort === "near") vis.sort((a, b) => (a.mi ?? 9e9) - (b.mi ?? 9e9) || a.L.name.localeCompare(b.L.name));
+  else vis.sort((a, b) => (a.next ? a.next[0] : "9999").localeCompare(b.next ? b.next[0] : "9999") || a.L.name.localeCompare(b.L.name));
+  const nEv = vis.reduce((sum, v) => sum + v.n, 0);
+  $("#sk-count").textContent = `${vis.length} ${vis.length === 1 ? "water" : "waters"} · ${nEv} dated ${nEv === 1 ? "stocking" : "stockings"}`;
+  setHTML($("#sk-list"), vis.length ? vis.map((v) => skRow(v, t0)).join("") : `<li class="tm-empty">No waters match. Try a longer window or fewer filters.</li>`);
+  document.querySelectorAll("[data-sks]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.sks === SK.sort)));
+  document.querySelectorAll("[data-skr]").forEach((b) => b.setAttribute("aria-pressed", String(SK.regions.has(b.dataset.skr))));
+  document.querySelectorAll("[data-skt]").forEach((b) => b.setAttribute("aria-pressed", String(SK.types.has(b.dataset.skt))));
+  skPaint(new Set(vis.map((v) => v.L.id)), t0);
+}
+function skRow({ L, next, mi }, t0) {
+  const stamp = next
+    ? `<span class="stamp" aria-hidden="true"><span class="${next[1] === "week" ? "wk" : "dow"}">${next[1] === "week" ? "Week of" : esc(fmtD(next[0], { weekday: "short" }))}</span><span class="dnum">${esc(fmtD(next[0], { day: "numeric" }))}</span><span class="mon">${esc(fmtD(next[0], { month: "short" }))}</span></span>`
+    : `<span class="stamp" aria-hidden="true"><span class="dow">${L.months.length ? "Monthly" : "Done"}</span></span>`;
+  const rel = next ? whenText(next, t0) : L.months.length ? `Monthly, ${monthsText(L)}` : "Done for the season";
+  const soon = next && next[0] <= addDays(t0, 7);
+  const types = L.types.map((t) => `<span class="sk-dot" style="background:${SK.tcol[t] || "#999"}"></span>${esc(t)}`).join(" · ");
+  return `<li><button class="sk-row ${L.id === SK.sel ? "sel" : ""}" type="button" data-skw="${L.id}" aria-label="${esc(L.name + ", " + (next ? evLabel(next) : rel))}">
+    ${stamp}
+    <span class="tmain"><span class="sk-nm">${esc(L.name)}</span><span class="tm-meta">${esc(L.county)} Co. · ${types} · ${esc(L.species.join(", "))}</span></span>
+    <span class="sk-side"><span class="sk-rel ${soon ? "soon" : ""}">${esc(rel)}</span>${mi != null ? `<span class="sk-mi">${mi} mi</span>` : ""}</span>
+  </button></li>`;
+}
+
+/* Stocking map: a plain projection of Tennessee (it's small enough that a cosine-scaled
+   equirectangular map reads right). On phones the map is taller than the state and opens zoomed
+   in on the club, so pins are big enough to tap. */
+function skBuild() {
+  const D = SK.data, host = $("#sk-map");
+  const narrow = host.clientWidth < 640;
+  const B = { x0: -90.45, x1: -81.5, y0: 34.85, y1: 36.8 }, K = Math.cos(35.8 * RAD);
+  const W = 960, sc = W / ((B.x1 - B.x0) * K), Hc = (B.y1 - B.y0) * sc;
+  const VH = narrow ? Math.round(W * 0.66) : Math.round(Hc), oy = (VH - Hc) / 2;
+  SK.proj = (lon, lat) => [(lon - B.x0) * K * sc, oy + (B.y1 - lat) * sc];
+  const line = (pts) => "M" + pts.map(([lon, lat]) => SK.proj(lon, lat).map((v) => v.toFixed(1)).join(",")).join("L");
+  const state = line(D.outline) + "Z";
+  let grat = "";
+  for (let lon = -90; lon <= -82; lon++) grat += line([[lon, B.y0], [lon, B.y1]]);
+  for (let lat = 35; lat <= 36.5; lat += 0.5) grat += line([[B.x0, lat], [B.x1, lat]]);
+  const c = club(), [ccx, ccy] = c ? SK.proj(c.lon, c.lat) : [0, 0];
+  const pins = D.waters.map((L) => { const [x, y] = SK.proj(L.lon, L.lat); return `<circle class="sk-ring" data-w="${L.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8" fill="none" stroke="#7A2430" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`; }).join("")
+    + D.waters.map((L) => { const [x, y] = SK.proj(L.lon, L.lat); return `<circle class="sk-pin" data-w="${L.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${SK.tcol[L.primary]}" stroke="#FFFDF8" stroke-width="1.3" vector-effect="non-scaling-stroke"/>`; }).join("");
+  const cities = D.cities.map(([n, lat, lon]) => { const [x, y] = SK.proj(lon, lat); return `<g class="sk-city" data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="#1E2A22"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${esc(n)}</text></g>`; }).join("");
+  const old = $("#sk-svg"); if (old) old.remove();
+  host.insertAdjacentHTML("afterbegin", `<svg id="sk-svg" viewBox="0 0 ${W} ${VH}" role="img" aria-label="Map of Tennessee's stocked trout waters. The list below has every water.">
+    <defs><clipPath id="sk-clip"><path d="${state}"/></clipPath></defs>
+    <rect width="${W}" height="${VH}" fill="#E7EDE8"/>
+    <g id="sk-z">
+      <path d="${state}" fill="#FBF7EC" stroke="#1F4D3A" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+      <path d="${grat}" fill="none" stroke="#D8CDB4" stroke-width="0.6" stroke-dasharray="2 3" vector-effect="non-scaling-stroke" clip-path="url(#sk-clip)"/>
+      <g id="sk-pins">${pins}</g>
+      <g id="sk-cities" font-family="'EB Garamond', Georgia, serif" font-style="italic" fill="#4A564E" stroke="#FBF7EC" paint-order="stroke" stroke-linejoin="round" pointer-events="none">${cities}</g>
+      ${c ? `<path id="sk-club" data-x="${ccx.toFixed(1)}" data-y="${ccy.toFixed(1)}" fill="#9C7A3C" stroke="#FFFDF8" stroke-width="1.2" vector-effect="non-scaling-stroke" pointer-events="none"/>` : ""}
+    </g>
+  </svg>`);
+  const m = $("#sk-map-msg"); if (m) m.remove();
+  $("#sk-ctl").hidden = false;
+  SK.svg = $("#sk-svg"); SK.narrow = narrow; SK.built = true; SK.H = VH; SK.Hc = Hc;
+  SK.pins = [...SK.svg.querySelectorAll(".sk-pin")]; SK.rings = [...SK.svg.querySelectorAll(".sk-ring")];
+  SK.pz = makePanZoom(SK.svg, $("#sk-z"), W, VH, {
+    maxK: 30, onZoom: skZoomed, onHover: skHover, onLeave: skHideTip,
+    onTap: (e) => { const id = skHit(e.clientX, e.clientY, e.pointerType === "mouse" ? 12 : 22); if (id != null) { skHideTip(); openWater(id); } },
+  });
+  skHome(false);
+}
+// The opening view: the whole state on wide screens; on phones, filled to height around the club.
+function skHome(animate) {
+  if (!SK.pz) return;
+  let z = { k: 1, x: 0, y: 0 };
+  if (SK.narrow) {
+    const c = club(), k = SK.H / SK.Hc, [cx, cy] = c ? SK.proj(Math.max(-89, Math.min(-82.5, c.lon)), c.lat) : [480, SK.H / 2];
+    z = { k, x: 480 - cx * k, y: SK.H / 2 - cy * k };
+  }
+  if (animate) SK.pz.animateTo(z); else SK.pz.set(z);
+}
+function skZoomed(pz) {
+  const u = pz.unit(); if (!u) return;
+  const big = SK.narrow ? 1.2 : 1;
+  SK.pins.forEach((el) => el.setAttribute("r", ((+el.dataset.w === SK.sel ? 7.5 : 5) * big * u).toFixed(3)));
+  SK.rings.forEach((el) => el.setAttribute("r", (9.5 * big * u).toFixed(3)));
+  const cg = $("#sk-cities");
+  cg.setAttribute("font-size", (13 * u).toFixed(3)); cg.setAttribute("stroke-width", (3 * u).toFixed(3));
+  cg.querySelectorAll(".sk-city").forEach((g) => {
+    g.querySelector("circle").setAttribute("r", (2.4 * u).toFixed(3));
+    const t = g.querySelector("text");
+    t.setAttribute("x", (+g.dataset.x + 5 * u).toFixed(2)); t.setAttribute("y", (+g.dataset.y - 4 * u).toFixed(2));
+  });
+  const cl = $("#sk-club");
+  if (cl) { const x = +cl.dataset.x, y = +cl.dataset.y, r = 7 * u; cl.setAttribute("d", `M${x},${y - r}L${x + r},${y}L${x},${y + r}L${x - r},${y}Z`); }
+}
+function skPaint(visible, t0) {
+  if (!SK.built) return;
+  const L = SK.data.waters;
+  SK.pins.forEach((el) => {
+    const id = +el.dataset.w, on = visible.has(id);
+    el.setAttribute("opacity", on ? 1 : 0.15);
+    el.setAttribute("stroke", id === SK.sel ? "#1E2A22" : "#FFFDF8");
+    el.setAttribute("stroke-width", id === SK.sel ? 2.4 : 1.3);
+  });
+  SK.rings.forEach((el) => { const id = +el.dataset.w; el.setAttribute("display", visible.has(id) && skSoon(L[id], t0) ? "inline" : "none"); });
+  // Matching pins draw on top of the dimmed ones.
+  const g = $("#sk-pins");
+  SK.pins.filter((el) => visible.has(+el.dataset.w)).forEach((el) => g.appendChild(el));
+  const sel = SK.pins.find((el) => +el.dataset.w === SK.sel); if (sel) g.appendChild(sel);
+  SK.pz.apply();
+}
+function skHit(cx, cy, tol) {
+  const t0 = todayStr(), vis = new Set(skVisible(t0).map((v) => v.L.id));
+  let best = null, bd = tol;
+  SK.data.waters.forEach((L) => {
+    const [px, py] = SK.proj(L.lon, L.lat), [sx, sy] = SK.pz.screenOf(px, py);
+    const d = Math.hypot(sx - cx, sy - cy) * (vis.has(L.id) ? 1 : 1.8);
+    if (d < bd) { bd = d; best = L.id; }
+  });
+  return best;
+}
+function skHideTip() { const t = $("#sk-tip"); if (t) t.hidden = true; if (SK.svg) SK.svg.style.cursor = ""; }
+function skHover(e) {
+  const id = skHit(e.clientX, e.clientY, 12), tip = $("#sk-tip");
+  if (id == null) { skHideTip(); return; }
+  const L = SK.data.waters[id], t0 = todayStr(), n = skNext(L, t0), box = $("#sk-map").getBoundingClientRect();
+  tip.textContent = L.name + " · " + (n ? evLabel(n) : L.months.length ? "monthly" : "done for the season");
+  tip.style.left = (e.clientX - box.left) + "px"; tip.style.top = (e.clientY - box.top) + "px";
+  tip.hidden = false; SK.svg.style.cursor = "pointer";
+}
+function openWater(id) {
+  SK.sel = id;
+  if (S.tab === "stocking") renderStockingTab();
+  openSheet("water", { w: id });
+}
+function waterSheetMarkup(id) {
+  const D = SK.data, L = D && D.waters[id];
+  if (!L) return sheetTop("Stocking") + `<div class="sh-scroll"><p class="muted">That water isn't on the schedule.</p></div>`;
+  const t0 = todayStr(), next = skNext(L, t0), mi = milesFromClub(L);
+  const pills = L.types.map((t) => `<span class="sk-pill" style="background:${SK.tcol[t] || "#4A564E"}">${esc(t)}</span>`).join("");
+  let nextBox;
+  if (next) nextBox = `<div class="sk-next"><span class="tm-cap">Next stocking</span><b>${esc(evLabel(next))}</b><span class="muted">${esc(whenText(next, t0))}${next[1] === "week" ? ". The truck comes within five days of that Sunday." : "."}</span></div>`;
+  else if (L.months.length) nextBox = `<div class="sk-next"><span class="tm-cap">Stocked monthly</span><b>${esc(monthsText(L))}</b></div>`;
+  else nextBox = `<div class="sk-next"><span class="tm-cap">Next stocking</span><b>None left this season</b></div>`;
+  const byType = {};
+  L.ev.forEach((e) => (byType[e[2]] = byType[e[2]] || []).push(e));
+  const sched = L.types.map((t) => {
+    const ev = byType[t] || [], mons = L.months.filter((m) => m[0] === t), tbd = L.tbd.filter((x) => x[0] === t);
+    if (!ev.length && !mons.length && !tbd.length) return "";
+    return `<section class="sh-sec"><h3>${esc(t)}${ev.length && ev[0][1] === "week" ? " · week of" : ""}</h3><div class="sk-dates">
+      ${ev.map((e) => `<span class="${evEnd(e) < t0 ? "past" : e === next ? "nx" : ""}">${esc(fmtD(e[0], { month: "short", day: "numeric", year: e[0].slice(0, 4) !== t0.slice(0, 4) ? "numeric" : undefined }))}</span>`).join("")}
+      ${mons.map((m) => m[1].map((x) => `<span>${MON[x - 1]}</span>`).join("")).join("")}
+      ${tbd.map((x) => `<span>To be set: ${esc(x[1])}</span>`).join("")}
+    </div></section>`;
+  }).join("");
+  const gm = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(L.name.replace(/ TW /, " Tailwater ") + ", " + L.county.split("/")[0] + " County, Tennessee");
+  return sheetTop("Stocking") + `<div class="sh-scroll">
+    <div style="display:grid;gap:12px">
+      <div>${pills}</div>
+      <h2 class="tv-title">${esc(L.name)}</h2>
+      <p class="tv-when">${esc(L.county)} County · ${esc(D.regions[L.region] || "")}${mi != null ? ` · ${mi} miles from the club` : ""}</p>
+      ${nextBox}
+      <dl class="facts"><div><dt>Species</dt><dd>${esc(L.species.join(", "))}</dd></div><div><dt>Region</dt><dd>${esc(D.agency)} Region ${esc(L.region)}</dd></div></dl>
+      <div class="host-tools">
+        ${S.readOnly ? "" : `<button class="btn primary small" type="button" data-act="sk-post" data-w="${L.id}">Post a trip here</button>`}
+        <button class="btn ghost small" type="button" data-act="sk-show" data-w="${L.id}">Show on the map</button>
+        <a class="btn ghost small" href="${esc(gm)}" target="_blank" rel="noopener">Google Maps</a>
+      </div>
+    </div>
+    ${sched}
+    <p class="hint">Pin placement is approximate. Schedules change with weather and water levels, so <a href="${esc(D.source)}" target="_blank" rel="noopener">check ${esc(D.agency)}</a> before you drive.</p>
+  </div>`;
+}
+// A trip for the next stocking: the day itself, or the Saturday after a "week of" stocking.
+function skPostTrip(id) {
+  const L = SK.data.waters[id], t0 = todayStr(), n = skNext(L, t0);
+  let day = n ? (n[1] === "week" ? addDays(n[0], 6) : n[0]) : addDays(t0, 1);
+  if (day <= t0) day = addDays(t0, 1);
+  openSheet("form", { day, water: L.water });
+}
+async function skShow(id) {
+  closeSheet();
+  if (S.tab !== "stocking") goTab("stocking");
+  for (let i = 0; i < 40 && !SK.built; i++) await sleep(100);
+  if (!SK.built) return;
+  SK.sel = id;
+  renderStockingTab();
+  const L = SK.data.waters[id], [px, py] = SK.proj(L.lon, L.lat);
+  SK.pz.centerOn(px, py, Math.max(SK.pz.Z.k, SK.narrow ? 6 : 5));
+  const el = $("#sk-map"), r = el.getBoundingClientRect();
+  if (r.top < 60 || r.bottom > window.innerHeight) el.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+}
+
 /* ---------- invite ---------- */
 // The club password is stored hashed on the server, so the invite can't fill it in. Whoever
 // types it here has it remembered on this device so the button in the header is one tap next time.
@@ -1601,9 +1939,11 @@ function renderBanner(v) {
 }
 function renderTabs() {
   const fishOk = kinds() !== "hunt";
-  if (!fishOk && (S.tab === "flies" || S.tab === "trout")) S.tab = "upcoming";
+  if (!fishOk && (S.tab === "flies" || S.tab === "trout")) S.tab = "calendar";
   $("#t-flies").hidden = !fishOk;
   $("#t-trout").hidden = !fishOk;
+  if (!stockOk() && S.tab === "stocking") S.tab = "calendar";
+  $("#t-stocking").hidden = !stockOk();
   document.querySelectorAll(".tab[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === S.tab)));
   const tl = $(".tablist"), cur = $("#t-" + S.tab);
   if (tl && cur && tl.scrollWidth > tl.clientWidth) {
@@ -1611,8 +1951,8 @@ function renderTabs() {
     if (l < tl.scrollLeft || r > tl.scrollLeft + tl.clientWidth) tl.scrollLeft = Math.max(0, l - 16);
   }
   TABS.forEach((t) => { $("#v-" + t).hidden = t !== S.tab; });
-  $("#filters").hidden = S.tab === "flies" || S.tab === "trout";
-  const vh = $("#view-h"), vt = { upcoming: "Forthcoming Fixtures", logbook: "The Logbook", trout: "Trout of the World" }[S.tab];
+  $("#filters").hidden = S.tab !== "calendar";
+  const vh = $("#view-h"), vt = { stocking: "The Stocking Ledger", trout: "Trout of the World" }[S.tab];
   vh.hidden = !vt; if (vt) vh.textContent = vt;
   $("#kind-chips").hidden = kinds() !== "both";
   document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === S.filter)));
@@ -1635,11 +1975,10 @@ function renderAll() {
   else if (v === "gate") renderGate();
   else if (v === "club") {
     renderTabs();
-    if (S.tab === "upcoming") renderUpcoming();
-    else if (S.tab === "calendar") renderCalendar();
-    else if (S.tab === "logbook") renderLogbook();
+    if (S.tab === "calendar") renderCalendar();
     else if (S.tab === "flies") renderFliesTab();
     else if (S.tab === "trout") renderTroutTab();
+    else if (S.tab === "stocking") renderStockingTab();
   }
   renderBanner(v);
   if (S.sheet && S.sheet.mode === "trip") updateTripSheet();
@@ -1664,7 +2003,8 @@ function openSheet(mode, data = {}) {
   S.sheet = { mode, ...data };
   const body = $("#sheet-body");
   if (mode === "trip") body.innerHTML = tripSheetSkeleton(data.id);
-  else if (mode === "form") body.innerHTML = tripFormMarkup(data.id ? S.trips.get(data.id) : null, data.day);
+  else if (mode === "form") body.innerHTML = tripFormMarkup(data.id ? S.trips.get(data.id) : null, data.day, data.water);
+  else if (mode === "water") body.innerHTML = waterSheetMarkup(data.w);
   else if (mode === "club") body.innerHTML = clubSheetMarkup();
   else if (mode === "new") body.innerHTML = newClubMarkup();
   else if (mode === "created") body.innerHTML = createdMarkup(data);
@@ -1831,7 +2171,7 @@ function chatText(t) {
 }
 
 /* Trip form */
-function tripFormMarkup(t, day) {
+function tripFormMarkup(t, day, water) {
   const ck = kinds();
   const k = t ? (t.kind === "hunt" ? "hunt" : "fish") : (ck === "hunt" ? "hunt" : "fish");
   const date = t ? t.date : (day || addDays(todayStr(), 1));
@@ -1842,7 +2182,7 @@ function tripFormMarkup(t, day) {
         <input type="radio" name="kind" id="k-fish" value="fish" ${k === "fish" ? "checked" : ""}><label for="k-fish" class="fish">Fishing</label>
         <input type="radio" name="kind" id="k-hunt" value="hunt" ${k === "hunt" ? "checked" : ""}><label for="k-hunt" class="hunt">Hunting</label>
       </div>
-      <label>Where<input id="f-water" list="waters" maxlength="80" required placeholder="${WHERE_PH[k]}" value="${esc(t?.water || "")}"></label>
+      <label>Where<input id="f-water" list="waters" maxlength="80" required placeholder="${WHERE_PH[k]}" value="${esc(t?.water || water || "")}"></label>
       <label>Trip name <span class="sub">Optional. Defaults to where you're going.</span><input id="f-title" maxlength="80" placeholder="e.g. Morning wade, lower river" value="${esc(t?.title || "")}"></label>
       <div class="row2">
         <label>Date<input id="f-date" type="date" required value="${esc(date)}"></label>
@@ -2055,6 +2395,16 @@ document.addEventListener("click", async (e) => {
   if (trip) { openSheet("trip", { id: trip.dataset.trip }); return; }
   const sp = e.target.closest(".tm-row[data-sp]");
   if (sp) { openSheet("species", { sp: sp.dataset.sp }); return; }
+  const skw = e.target.closest("[data-skw]");
+  if (skw) { openWater(+skw.dataset.skw); return; }
+  const skf = e.target.closest("[data-skr],[data-skt]");
+  if (skf) {
+    const set = skf.dataset.skr ? SK.regions : SK.types, v = skf.dataset.skr || skf.dataset.skt;
+    if (set.has(v)) set.delete(v); else set.add(v);
+    renderStockingTab(); return;
+  }
+  const sks = e.target.closest("[data-sks]");
+  if (sks) { SK.sort = sks.dataset.sks; renderStockingTab(); return; }
   const tb = e.target.closest("[data-tmb]");
   if (tb) { focusBoard(tb.dataset.tmb); return; }
   const tf = e.target.closest("[data-tmf]");
@@ -2082,7 +2432,6 @@ document.addEventListener("click", async (e) => {
     case "post-day": openSheet("form", { day: a.dataset.day }); break;
     case "new-club": openSheet("new"); break;
     case "club": openSheet("club"); break;
-    case "tab-flies": goTab("flies"); break;
     case "fp-dismiss": S.fpNote = ""; scheduleRender(); break;
     case "edit": openSheet("form", { id: a.dataset.trip }); break;
     case "back": openSheet("trip", { id: a.dataset.trip }); break;
@@ -2096,9 +2445,15 @@ document.addEventListener("click", async (e) => {
     case "invite": openSheet("invite"); break;
     case "inv-copy": { const pw = ($("#inv-pw") || {}).value || ""; copyText($("#inv-text").value, $("#inv-tools"), pw.trim() ? "Invite copied. Paste it into a text." : "Invite copied. Send the password separately."); break; }
     case "inv-share": { try { await navigator.share({ title: club().name, text: $("#inv-text").value }); } catch (err) { /* closed the share sheet */ } break; }
-    case "tm-zin": zoomStep(2); break;
-    case "tm-zout": zoomStep(0.5); break;
-    case "tm-world": TM.sel = null; if (TM.focus) { TM.focus = null; renderTroutTab(); } else paintMap(); animateTo({ k: 1, x: 0, y: 0 }); break;
+    case "sk-zin": if (SK.pz) SK.pz.zoomStep(2); break;
+    case "sk-zout": if (SK.pz) SK.pz.zoomStep(0.5); break;
+    case "sk-all": if (!SK.pz) break; SK.sel = null; renderStockingTab(); skHome(true); break;
+    case "sk-retry": ensureStocking().then((ok) => { if (ok) scheduleRender(); }); break;
+    case "sk-post": closeSheet(); skPostTrip(+a.dataset.w); break;
+    case "sk-show": await skShow(+a.dataset.w); break;
+    case "tm-zin": if (TM.pz) TM.pz.zoomStep(2); break;
+    case "tm-zout": if (TM.pz) TM.pz.zoomStep(0.5); break;
+    case "tm-world": if (!TM.pz) break; TM.sel = null; if (TM.focus) { TM.focus = null; renderTroutTab(); } else paintMap(); TM.pz.animateTo({ k: 1, x: 0, y: 0 }); break;
     case "tm-unfocus": focusBoard(TM.focus); break;
     case "tm-retry": ensureTroutMap(); break;
     case "tm-save": await saveMapImage(); break;
@@ -2121,10 +2476,20 @@ dlg().addEventListener("close", () => { S.sheet = null; });
 $("#mine-toggle").addEventListener("change", (e) => { S.mine = e.target.checked; scheduleRender(); });
 document.addEventListener("input", (e) => {
   if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
+  else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockingTab(); }
+  else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockingTab(); }
   else if (e.target.id === "inv-pw") updateInvite();
 });
 let tmResize = 0;
-window.addEventListener("resize", () => { clearTimeout(tmResize); tmResize = setTimeout(() => { if (TM.built && S.tab === "trout") applyZoom(); }, 120); });
+window.addEventListener("resize", () => {
+  clearTimeout(tmResize);
+  tmResize = setTimeout(() => {
+    if (TM.built && S.tab === "trout") applyZoom();
+    if (SK.built && S.tab === "stocking") {
+      if (($("#sk-map").clientWidth < 640) !== SK.narrow) { SK.built = false; renderStockingTab(); } else SK.pz.apply();
+    }
+  }, 120);
+});
 
 document.addEventListener("submit", async (e) => {
   const id = e.target.id;
@@ -2362,7 +2727,7 @@ async function boot() {
   loadSessions();
   const h = (location.hash || "").slice(1);
   let want = null, wantTab = null, wantTrip = null, m;
-  if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
+  if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout|stocking))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
   else if ((m = /^trip-([a-z0-9-]{1,80})\.([a-z0-9]{1,40})$/.exec(h))) { want = m[1]; wantTrip = m[2]; }
   else if ((m = /^key-([a-z0-9-]{1,80})\.([A-Za-z0-9_-]{20,100})$/.exec(h))) {
     // A sign-in link from another device: keep the token, then drop it from the address bar.
@@ -2370,11 +2735,14 @@ async function boot() {
     S.sessions[want] = { memberId: "", token: m[2] };
     saveSessions();
   }
+  // Short links: /trout and /stocking open that tab in your club (or in the club you join next).
+  const path = (/^\/(trout|stocking)\/?$/.exec(location.pathname) || [])[1];
+  if (path && !wantTab) { wantTab = path; S.wantTab = path; }
   renderAll();
   await loadDirectory();
   S.booting = false;
   const last = lastClub();
-  const start = want || (last && S.sessions[last] ? last : null);
+  const start = want || (last && S.sessions[last] ? last : null) || (path ? Object.keys(S.sessions).find((id) => S.clubs.has(id)) || null : null);
   enterClub(start, { tab: wantTab });
   startPolling();
   if (wantTrip) {

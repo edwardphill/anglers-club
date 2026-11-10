@@ -9,10 +9,12 @@ Fishing and hunting trip calendars for clubs in any city. Anyone can start a clu
 - add trips to Google Calendar or copy a ready-made group text
 - send an invite (link plus password) from the Invite button at the top of the club
 
-Each club also has two tools built in:
+Each club also has these tabs:
 
+- **Calendar**: every trip by day, with the next trip shown when a day is empty.
+- **Stocking** (Tennessee clubs): TWRA's trout stocking schedule on a map of the state, filterable by window, region and water type, sorted by the next stocking or by distance from the club. Each water opens its dates and a "Post a trip here" button. The schedule is `src/stocking-tn.js`; refresh it when TWRA posts a new season. `/stocking` opens this tab.
 - **Fly Picker**: what's hatching on a given water and date.
-- **Trout Map**: a clickable world chart of all 115 entries on the Trout Species Map checklist (README v2, Appendix A). Each member logs catches (date, optional water name, private note) and the range fills in. Progress shows overall (81 countable species), by tier and by regional board, and the chart saves as a PNG. A member's life list is private to them, and no coordinates are stored.
+- **Trout Map**: a clickable world chart of all 115 entries on the Trout Species Map checklist (README v2, Appendix A). Each member logs catches (date, optional water name, private note) and the range fills in. Progress shows overall (81 countable species), by tier and by regional board, and the chart saves as a PNG. A member's life list is private to them, and no coordinates are stored. Every species shows a generic trout until its illustration is added to `trout-art/` (see the README there). `/trout` opens this tab.
 
 ## How it's built
 

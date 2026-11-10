@@ -32,7 +32,8 @@ http.createServer(async (req, res) => {
     };
     return routes[m[1]](vreq, vres);
   }
-  const file = join(root, "public", url.pathname === "/" ? "index.html" : url.pathname);
+  const page = ["/", "/trout", "/stocking"].includes(url.pathname.replace(/(.)\/$/, "$1"));   // vercel.json rewrites
+  const file = join(root, "public", page ? "index.html" : url.pathname);
   if (!existsSync(file)) { res.statusCode = 404; return res.end("Not found"); }
   const type = { html: "text/html; charset=utf-8", js: "text/javascript; charset=utf-8", json: "application/json" }[file.split(".").pop()];
   res.setHeader("Content-Type", type || "application/octet-stream");
