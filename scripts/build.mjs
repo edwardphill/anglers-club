@@ -1,5 +1,6 @@
 // Assembles public/index.html from src/club.html, the embedded Fly Picker and the Trout Map
-// checklist, and copies the Trout Map's coastlines to public/trout-land.js.
+// checklist, and copies the Trout Map's coastlines to public/trout-land.js and the Stocking
+// tab's schedule to public/tn-stocking.js.
 // Run after editing anything under src/: npm run build
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -51,4 +52,6 @@ mkdirSync(join(root, "public"), { recursive: true });
 writeFileSync(join(root, "public/index.html"), html);
 // The Trout Map's coastlines load with that tab, not with the page.
 copyFileSync(join(root, "src/trout-land.js"), join(root, "public/trout-land.js"));
+// So does the Stocking tab's schedule.
+copyFileSync(join(root, "src/tn-stocking.js"), join(root, "public/tn-stocking.js"));
 console.log(`public/index.html: ${(html.length / 1024).toFixed(0)} KB`);

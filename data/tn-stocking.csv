@@ -1,0 +1,714 @@
+REGION,COUNTY,LOCATION,TYPE,STOCKING DAY,STOCKING WEEK,STOCKING MONTHS,SPECIES
+1,Caroll,McKenzie City Park,Winter,12/9/2026,,,Rainbow Trout
+1,Caroll,McKenzie City Park,Winter,1/13/2027,,,Rainbow Trout
+1,Caroll,McKenzie City Park,Winter,TBD 12/2027,,,Rainbow Trout
+1,Gibson,Milan City Pond,Winter,12/9/2026,,,Rainbow Trout
+1,Gibson,Milan City Pond,Winter,1/13/2027,,,Rainbow Trout
+1,Gibson,Milan City Pond,Winter,TBD 12/2027,,,Rainbow Trout
+1,Henderson,Beech Lake,Winter,12/8/2026,,,Rainbow Trout
+1,Henderson,Beech Lake,Winter,1/13/2027,,,Rainbow Trout
+1,Henderson,Beech Lake,Winter,TBD 12/2027,,,Rainbow Trout
+1,Henry,Paris City Park,Winter,12/9/2026,,,Rainbow Trout
+1,Henry,Paris City Park,Winter,1/13/2027,,,Rainbow Trout
+1,Henry,Paris City Park,Winter,TBD 12/2027,,,Rainbow Trout
+1,Houston,Hurricane Creek,Seasonal,,2/21/2027,,Rainbow Trout
+1,Houston,Hurricane Creek,Seasonal,,3/21/2027,,Rainbow Trout
+1,Houston,Hurricane Creek,Seasonal,,4/18/2027,,Rainbow Trout
+1,Houston,Whiteoak Creek,Seasonal,,2/21/2027,,Rainbow Trout
+1,Houston,Whiteoak Creek,Seasonal,,3/21/2027,,Rainbow Trout
+1,Houston,Whiteoak Creek,Seasonal,,4/18/2027,,Rainbow Trout
+1,Humphreys,Hurricane Creek,Seasonal,,2/21/2027,,Rainbow Trout
+1,Humphreys,Hurricane Creek,Seasonal,,3/28/2027,,Rainbow Trout
+1,Humphreys,Hurricane Creek,Seasonal,,4/18/2027,,Rainbow Trout
+1,Madison,Lake Graham,Winter,12/11/2026,,,Rainbow Trout
+1,Madison,Lake Graham,Winter,1/14/2027,,,Rainbow Trout
+1,Madison,Lake Graham,Winter,TBD 12/2027,,,Rainbow Trout
+1,Obion,Union City Reelfoot Packing Site,Winter,12/9/2026,,,Rainbow Trout
+1,Obion,Union City Reelfoot Packing Site,Winter,1/13/2027,,,Rainbow Trout
+1,Obion,Union City Reelfoot Packing Site,Winter,TBD 12/2027,,,Rainbow Trout
+1,Perry,Cane Creek,Seasonal,,2/21/2027,,Rainbow Trout
+1,Perry,Cane Creek,Seasonal,,3/28/2027,,Rainbow Trout
+1,Perry,Cane Creek,Seasonal,,4/25/2027,,Rainbow Trout
+1,Shelby,Cameron Brown Lake,Winter,12/8/2026,,,Rainbow Trout
+1,Shelby,Cameron Brown Lake,Winter,1/12/2027,,,Rainbow Trout
+1,Shelby,Cameron Brown Lake,Winter,TBD 12/2027,,,Rainbow Trout
+1,Shelby,Edmund-Orgill Park,Winter,12/8/2026,,,Rainbow Trout
+1,Shelby,Edmund-Orgill Park,Winter,1/12/2027,,,Rainbow Trout
+1,Shelby,Edmund-Orgill Park,Winter,TBD 12/2027,,,Rainbow Trout
+1,Shelby,Johnson Park Lake,Winter,12/10/2026,,,Rainbow Trout
+1,Shelby,Johnson Park Lake,Winter,1/14/2027,,,Rainbow Trout
+1,Shelby,Johnson Park Lake,Winter,TBD 12/2027,,,Rainbow Trout
+1,Shelby,Shelby Farms,Winter,12/8/2026,,,Rainbow Trout
+1,Shelby,Shelby Farms,Winter,1/12/2027,,,Rainbow Trout
+1,Shelby,Shelby Farms,Winter,TBD 12/2027,,,Rainbow Trout
+1,Shelby,Yale Road Park,Winter,12/10/2026,,,Rainbow Trout
+1,Shelby,Yale Road Park,Winter,1/14/2027,,,Rainbow Trout
+1,Shelby,Yale Road Park,Winter,TBD 12/2027,,,Rainbow Trout
+1,Stewart,Standing Rock Creek,Seasonal,,2/21/2027,,Rainbow Trout
+1,Stewart,Standing Rock Creek,Seasonal,,3/21/2027,,Rainbow Trout
+1,Stewart,Standing Rock Creek,Seasonal,,4/18/2027,,Rainbow Trout
+1,Tipton,Fairway Estates Pond (Covington),Winter,12/10/2026,,,Rainbow Trout
+1,Tipton,Fairway Estates Pond (Covington),Winter,1/14/2027,,,Rainbow Trout
+1,Tipton,Fairway Estates Pond (Covington),Winter,TBD 12/2027,,,Rainbow Trout
+1,Tipton,Valentine Park,Winter,12/10/2026,,,Rainbow Trout
+1,Tipton,Valentine Park,Winter,1/14/2027,,,Rainbow Trout
+1,Tipton,Valentine Park,Winter,TBD 12/2027,,,Rainbow Trout
+1,Weakley,Martin City Pond,Winter,12/9/2026,,,Rainbow Trout
+1,Weakley,Martin City Pond,Winter,1/13/2027,,,Rainbow Trout
+1,Weakley,Martin City Pond,Winter,TBD 12/2027,,,Rainbow Trout
+2,Coffee/Bedford,Normandy TW / Duck River,Tailwater,,,"J, F, M, A, N, D",Rainbow Trout
+2,Franklin/Moore,Tims Ford TW / Elk River,Tailwater,,,"M, A, M, J, J, A, S, O, N, D","Rainbow, Brown, Brook Trout"
+2,Cheatham,L.L. Burns Park / Kingston Springs Lake,Winter,12/4/2026,,,Rainbow Trout
+2,Cheatham,L.L. Burns Park / Kingston Springs Lake,Winter,2/11/2027,,,Rainbow Trout
+2,Cheatham,L.L. Burns Park / Kingston Springs Lake,Winter,TBD 12/2027,,,Rainbow Trout
+2,Davidson,J. Percy Priest TW / Stones River,Winter,12/4/2026,,,Rainbow Trout
+2,Davidson,J. Percy Priest TW / Stones River,Winter,1/8/2027,,,Rainbow Trout
+2,Davidson,J. Percy Priest TW / Stones River,Winter,2/5/2027,,,Rainbow Trout
+2,Davidson,J. Percy Priest TW / Stones River,Winter,TBD 12/2027,,,Rainbow Trout
+2,Davidson,Cedar Hill Park Pond,Winter,12/4/2026,,,Rainbow Trout
+2,Davidson,Cedar Hill Park Pond,Winter,1/8/2027,,,Rainbow Trout
+2,Davidson,Cedar Hill Park Pond,Winter,2/5/2027,,,Rainbow Trout
+2,Davidson,Cedar Hill Park Pond,Winter,TBD 12/2027,,,Rainbow Trout
+2,Davidson,Marrowbone Lake,Winter,12/3/2026,,,Rainbow Trout
+2,Davidson,Marrowbone Lake,Winter,2/12/2027,,,Rainbow Trout
+2,Davidson,Marrowbone Lake,Winter,TBD 12/2027,,,Rainbow Trout
+2,Davidson,Shelby Bottoms,Winter,12/1/2026,,,Rainbow Trout
+2,Davidson,Shelby Bottoms,Winter,1/21/2027,,,Rainbow Trout
+2,Davidson,Shelby Bottoms,Winter,2/26/2027,,,Rainbow Trout
+2,Davidson,Shelby Bottoms,Winter,TBD 12/2027,,,Rainbow Trout
+2,Dickson,Acorn Lake (Montgomery Bell SP),Delayed Harvest,,12/6/2026,,Rainbow Trout
+2,Dickson,Acorn Lake (Montgomery Bell SP),Delayed Harvest,,2/7/2027,,Rainbow Trout
+2,Dickson,Acorn Lake (Montgomery Bell SP),Delayed Harvest,,TBD 12/2027,,Rainbow Trout
+2,Dickson,J.D. Buckner Park,Winter,12/10/2026,,,Rainbow Trout
+2,Dickson,J.D. Buckner Park,Winter,2/11/2027,,,Rainbow Trout
+2,Dickson,J.D. Buckner Park,Winter,TBD 12/2027,,,Rainbow Trout
+2,Franklin,Cowan City Park,Winter,12/1/2026,,,Rainbow Trout
+2,Franklin,Cowan City Park,Winter,1/19/2027,,,Rainbow Trout
+2,Franklin,Cowan City Park,Winter,2/18/2027,,,Rainbow Trout
+2,Franklin,Cowan City Park,Winter,TBD 12/2027,,,Rainbow Trout
+2,Hickman,Cane Creek,Seasonal,,2/21/2027,,Rainbow Trout
+2,Hickman,Cane Creek,Seasonal,,3/28/2027,,Rainbow Trout
+2,Hickman,Cane Creek,Seasonal,,4/25/2027,,Rainbow Trout
+2,Hickman,Mill Creek,Seasonal,,2/21/2027,,Rainbow Trout
+2,Hickman,Mill Creek,Seasonal,,3/28/2027,,Rainbow Trout
+2,Hickman,Mill Creek,Seasonal,,4/25/2027,,Rainbow Trout
+2,Lawrence,East Fork Shoal Creek,Seasonal,,2/14/2027,,Rainbow Trout
+2,Lawrence,East Fork Shoal Creek,Seasonal,,3/7/2027,,Rainbow Trout
+2,Lawrence,East Fork Shoal Creek,Seasonal,,4/4/2027,,Rainbow Trout
+2,Lawrence,East Fork Shoal Creek,Seasonal,,5/9/2027,,Rainbow Trout
+2,Lawrence,East Fork Shoal Creek,Seasonal,,5/30/2027,,Rainbow Trout
+2,Lawrence,Little Buffalo River,Seasonal,,3/7/2027,,Rainbow Trout
+2,Lawrence,Little Buffalo River,Seasonal,,4/4/2027,,Rainbow Trout
+2,Lawrence,Little Buffalo River,Seasonal,,5/9/2027,,Rainbow Trout
+2,Lawrence,Little Buffalo River,Seasonal,,5/30/2027,,Rainbow Trout
+2,Lincoln,Stone Bridge Park,Winter,12/9/2026,,,Rainbow Trout
+2,Lincoln,Stone Bridge Park,Winter,2/4/2027,,,Rainbow Trout
+2,Lincoln,Stone Bridge Park,Winter,TBD 12/2027,,,Rainbow Trout
+2,Macon,Salt Lick Creek,Seasonal,,2/28/2027,,Rainbow Trout
+2,Macon,Salt Lick Creek,Seasonal,,3/28/2027,,Rainbow Trout
+2,Macon,Lafayette City Park,Winter,12/3/2026,,,Rainbow Trout
+2,Macon,Lafayette City Park,Winter,1/28/2027,,,Rainbow Trout
+2,Macon,Lafayette City Park,Winter,TBD 12/2027,,,Rainbow Trout
+2,Marshall,Big Rock Greenway,Winter,1/14/2027,,,Rainbow Trout
+2,Marshall,Big Rock Greenway,Winter,2/26/2027,,,Rainbow Trout
+2,Maury,McCutcheon Creek,Winter,12/11/2026,,,Rainbow Trout
+2,Maury,McCutcheon Creek,Winter,1/22/2027,,,Rainbow Trout
+2,Maury,McCutcheon Creek,Winter,2/19/2027,,,Rainbow Trout
+2,Maury,McCutcheon Creek,Winter,TBD 12/2027,,,Rainbow Trout
+2,Montgomery,Billy Dunlop Park,Winter,12/9/2026,,,Rainbow Trout
+2,Montgomery,Billy Dunlop Park,Winter,2/4/2027,,,Rainbow Trout
+2,Montgomery,Billy Dunlop Park,Winter,TBD 12/2027,,,Rainbow Trout
+2,Montgomery,Fort Campbell Streams,Seasonal,,4/18/2027,,Rainbow Trout
+2,Montgomery,Fort Campbell Streams,Seasonal,,5/16/2027,,Rainbow Trout
+2,Montgomery,Fort Campbell Streams,Seasonal,,6/20/2027,,Rainbow Trout
+2,Montgomery,Fort Campbell Streams,Seasonal,,7/11/2027,,Rainbow Trout
+2,Montgomery,Fort Campbell Streams,Seasonal,,8/22/2027,,Rainbow Trout
+2,Robertson,Sulphur Fork Creek,Winter,12/3/2026,,,Rainbow Trout
+2,Robertson,Sulphur Fork Creek,Winter,1/27/2027,,,Rainbow Trout
+2,Robertson,Sulphur Fork Creek,Winter,2/25/2027,,,Rainbow Trout
+2,Robertson,Sulphur Fork Creek,Winter,TBD 12/2027,,,Rainbow Trout
+2,Rutherford,Nice Mill,Winter,12/11/2026,,,Rainbow Trout
+2,Rutherford,Nice Mill,Winter,1/15/2027,,,Rainbow Trout
+2,Rutherford,Nice Mill,Winter,2/12/2027,,,Rainbow Trout
+2,Rutherford,Nice Mill,Winter,TBD 12/2027,,,Rainbow Trout
+2,Rutherford,W. Fork Stones River - Manson Pike Trailhead,Winter,12/2/2026,,,Rainbow Trout
+2,Rutherford,W. Fork Stones River - Manson Pike Trailhead,Winter,1/28/2027,,,Rainbow Trout
+2,Rutherford,W. Fork Stones River - Manson Pike Trailhead,Winter,2/26/2027,,,Rainbow Trout
+2,Rutherford,W. Fork Stones River - Manson Pike Trailhead,Winter,TBD 12/2027,,,Rainbow Trout
+2,Williamson,Harpeth River at Eastern Flank Battle Park,Winter,12/11/2026,,,Rainbow Trout
+2,Williamson,Harpeth River at Eastern Flank Battle Park,Winter,1/22/2027,,,Rainbow Trout
+2,Williamson,Harpeth River at Eastern Flank Battle Park,Winter,2/19/2027,,,Rainbow Trout
+2,Williamson,Harpeth River at Eastern Flank Battle Park,Winter,TBD 12/2027,,,Rainbow Trout
+2,Wilson,Don Fox Park Community Park,Winter,12/8/2026,,,Rainbow Trout
+2,Wilson,Don Fox Park Community Park,Winter,2/10/2027,,,Rainbow Trout
+2,Wilson,Don Fox Park Community Park,Winter,TBD 12/2027,,,Rainbow Trout
+3,Clay,Dale Hollow TW / Obey River,Tailwater,,,"J, F, M, A, M, J, J, A, S, O, N, D","Rainbow, Brown Trout"
+3,Clay,Dale Hollow Reservoir,Reservoir,,,"F, A","Rainbow, Brown Trout"
+3,DeKalb/Smith,Center Hill TW / Caney Fork River,Tailwater,,,"M, A, M, J, J, A, S, O, N, D","Rainbow, Brown, Cutthroat, Brook Trout"
+3,Monroe,Tellico Reservoir,Reservoir,,,"F, D",Rainbow Trout
+3,Polk,Apalachia TW / Hiwassee River,Tailwater,,,"M, A, M, J, J, A","Rainbow, Brown, Brook Trout"
+3,Polk,Apalachia TW / Hiwassee River,Delayed Harvest,,,"F, O, N",Rainbow Trout
+3,Polk,Parksville (Ocoee #1) TW / Ocoee River,Tailwater,,,"M, A, M",Rainbow Trout
+3,Cumberland,Sequatchie River,Seasonal,,3/21/2027,,Rainbow Trout
+3,Cumberland,Sequatchie River,Seasonal,,4/18/2027,,Rainbow Trout
+3,Cumberland,Sequatchie River,Seasonal,,5/16/2027,,Rainbow Trout
+3,Cumberland,Cumberland Mountain State Park,Winter,1/7/2027,,,Rainbow Trout
+3,Cumberland,Cumberland Mountain State Park,Winter,2/17/2027,,,Rainbow Trout
+3,DeKalb,Pine Creek,Seasonal,,2/21/2027,,Rainbow Trout
+3,DeKalb,Pine Creek,Seasonal,,3/21/2027,,Rainbow Trout
+3,DeKalb,Pine Creek,Seasonal,,4/18/2027,,Rainbow Trout
+3,Fentress,Wolf River,Seasonal,,3/7/2027,,Rainbow Trout
+3,Fentress,Wolf River,Seasonal,,4/11/2027,,Rainbow Trout
+3,Fentress,Wolf River,Seasonal,,5/9/2027,,Rainbow Trout
+3,Grundy,Collins River,Seasonal,,2/28/2027,,Rainbow Trout
+3,Grundy,Collins River,Seasonal,,4/4/2027,,Rainbow Trout
+3,Grundy,Collins River,Seasonal,,5/9/2027,,Rainbow Trout
+3,Grundy,Grundy Lake #4 / Fiery Gizzard SP,Winter,12/1/2026,,,Rainbow Trout
+3,Grundy,Grundy Lake #4 / Fiery Gizzard SP,Winter,1/5/2027,,,Rainbow Trout
+3,Grundy,Grundy Lake #4 / Fiery Gizzard SP,Winter,2/9/2027,,,Rainbow Trout
+3,Grundy,Grundy Lake #4 / Fiery Gizzard SP,Winter,TBD 12/2027,,,Rainbow Trout
+3,Grundy,Grundy Lake #4 / Fiery Gizzard SP,Seasonal,,3/14/2027,,Rainbow Trout
+3,Grundy,Grundy Lake #4 / Fiery Gizzard SP,Seasonal,,4/11/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Delayed Harvest,,11/1/2026,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Delayed Harvest,,11/29/2026,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Delayed Harvest,,1/3/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Delayed Harvest,,1/31/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Seasonal,,2/21/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Seasonal,,3/14/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Seasonal,,5/9/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Delayed Harvest,,10/31/2027,,Rainbow Trout
+3,Hamilton,Big Soddy Creek,Delayed Harvest,,11/28/2027,,Rainbow Trout
+3,Hamilton,Dickert Pond / Camp Jordan,Winter,12/1/2026,,,Rainbow Trout
+3,Hamilton,Dickert Pond / Camp Jordan,Winter,12/30/2026,,,Rainbow Trout
+3,Hamilton,Dickert Pond / Camp Jordan,Winter,2/3/2027,,,Rainbow Trout
+3,Hamilton,Dickert Pond / Camp Jordan,Winter,TBD 12/2027,,,Rainbow Trout
+3,Hamilton,Lake Junior,Winter,12/30/2026,,,Rainbow Trout
+3,Hamilton,Lake Junior,Winter,2/3/2027,,,Rainbow Trout
+3,Hamilton,Lake Junior,Winter,TBD 12/2027,,,Rainbow Trout
+3,Hamilton,N. Chickamauga Creek,Seasonal,,11/1/2026,,Rainbow Trout
+3,Hamilton,N. Chickamauga Creek,Seasonal,,2/21/2027,,Rainbow Trout
+3,Hamilton,N. Chickamauga Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Hamilton,N. Chickamauga Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Hamilton,N. Chickamauga Creek,Seasonal,,10/31/2027,,Rainbow Trout
+3,Marion,Little Sequatchie River,Seasonal,,3/14/2027,,Rainbow Trout
+3,Marion,Little Sequatchie River,Seasonal,,4/11/2027,,Rainbow Trout
+3,Marion,Little Sequatchie River,Seasonal,,5/9/2027,,Rainbow Trout
+3,Marion,Pocket Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Marion,Pocket Creek,Seasonal,,5/9/2027,,Rainbow Trout
+3,McMinn,Athens City Park Pond,Winter,1/7/2027,,,Rainbow Trout
+3,McMinn,Athens City Park Pond,Winter,2/17/2027,,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,2/21/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,3/7/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,3/14/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,3/21/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,4/4/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,4/18/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,5/2/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,5/9/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,5/16/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,5/23/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,5/30/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,6/6/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,6/13/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,6/20/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,6/27/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,7/4/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,7/12/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,7/19/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,7/26/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,8/1/2027,,Rainbow Trout
+3,Monroe,Citico Creek,Seasonal,,8/8/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,11/8/2026,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,11/22/2026,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,12/6/2026,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,2/21/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,2/28/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,3/7/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,3/14/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,3/21/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,3/28/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,4/4/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,4/11/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,4/18/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,4/25/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,5/2/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,5/9/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,5/16/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,5/23/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,5/30/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,6/6/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,6/13/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,6/20/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,6/27/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,7/4/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,9/26/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,10/10/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,10/24/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,11/7/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,11/21/2027,,Rainbow Trout
+3,Monroe,Green Cove Pond,Seasonal,,12/5/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,11/8/2026,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,11/22/2026,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,12/6/2026,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,1/24/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,2/21/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,2/28/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,3/7/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,3/14/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,3/21/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,3/28/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,4/4/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,4/11/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,4/18/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,4/25/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,5/2/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,5/9/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,5/16/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,5/23/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,5/30/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,6/6/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,6/13/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,6/20/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,6/27/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,7/4/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,7/11/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,7/18/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,7/25/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,8/1/2027,,Rainbow Trout
+3,Monroe,Tellico River,Seasonal,,8/8/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,9/26/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,10/10/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,10/24/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,11/7/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,11/21/2027,,Rainbow Trout
+3,Monroe,Tellico River,Delayed Harvest,,12/5/2027,,Rainbow Trout
+3,Morgan,Flat Fork Creek,Seasonal,,2/14/2027,,Rainbow Trout
+3,Morgan,Flat Fork Creek,Seasonal,,3/7/2027,,Rainbow Trout
+3,Morgan,Flat Fork Creek,Seasonal,,3/14/2027,,Rainbow Trout
+3,Morgan,Flat Fork Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Overton,Mill Creek (Standing Stone State Park),Seasonal,,2/28/2027,,Rainbow Trout
+3,Overton,Mill Creek (Standing Stone State Park),Seasonal,,3/28/2027,,Rainbow Trout
+3,Overton,Mill Creek (Standing Stone State Park),Seasonal,,4/25/2027,,Rainbow Trout
+3,Pickett,Pickett Lake,Seasonal,,1/24/2027,,Rainbow Trout
+3,Pickett,Pickett Lake,Seasonal,,2/21/2027,,Rainbow Trout
+3,Pickett,Pickett Lake,Seasonal,,3/14/2027,,Rainbow Trout
+3,Pickett,Pickett Lake,Seasonal,,4/4/2027,,Rainbow Trout
+3,Pickett,Pickett Lake,Seasonal,,5/2/2027,,Rainbow Trout
+3,Polk,McKamy Lake,Seasonal,,11/29/2026,,Rainbow Trout
+3,Polk,McKamy Lake,Seasonal,,2/14/2027,,Rainbow Trout
+3,Polk,McKamy Lake,Seasonal,,4/11/2027,,Rainbow Trout
+3,Polk,McKamy Lake,Seasonal,,11/28/2027,,Rainbow Trout
+3,Polk,Goforth Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Polk,Goforth Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Polk,Goforth Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Polk,Greasy Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Polk,Greasy Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Polk,Greasy Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,11/1/2026,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,11/29/2026,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,1/31/2027,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,10/31/2027,,Rainbow Trout
+3,Polk,Spring Creek,Seasonal,,11/28/2027,,Rainbow Trout
+3,Polk,Tumbling Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Polk,Tumbling Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Polk,Tumbling Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Putnam,Calfkiller River,Seasonal,,3/21/2027,,Rainbow Trout
+3,Putnam,Calfkiller River,Seasonal,,4/18/2027,,Rainbow Trout
+3,Putnam,Calfkiller River,Seasonal,,5/16/2027,,Rainbow Trout
+3,Putnam,Cane Creek Park,Winter,12/9/2026,,,Rainbow Trout
+3,Putnam,Cane Creek Park,Winter,1/20/2027,,,Rainbow Trout
+3,Putnam,Cane Creek Park,Winter,TBD 12/2027,,,Rainbow Trout
+3,Rhea,Piney River,Seasonal,,2/21/2027,,Rainbow Trout
+3,Rhea,Piney River,Seasonal,,3/28/2027,,Rainbow Trout
+3,Rhea,Piney River,Seasonal,,4/11/2027,,Rainbow Trout
+3,Roane,Indian Creek (NEW),Seasonal,,2/14/2027,,Rainbow Trout
+3,Roane,Indian Creek (NEW),Seasonal,,3/7/2027,,Rainbow Trout
+3,Roane,Indian Creek (NEW),Seasonal,,4/11/2027,,Rainbow Trout
+3,Sequatchie,Coops Creek,Seasonal,,3/21/2027,,Rainbow Trout
+3,Sequatchie,Coops Creek,Seasonal,,4/18/2027,,Rainbow Trout
+3,Sequatchie,Coops Creek,Seasonal,,5/16/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (lower),Seasonal,,3/7/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (lower),Seasonal,,4/11/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (lower),Seasonal,,5/16/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (Fall Creek Falls State Park),Seasonal,,2/21/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (Fall Creek Falls State Park),Seasonal,,3/14/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (Fall Creek Falls State Park),Seasonal,,4/18/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (Fall Creek Falls State Park),Seasonal,,5/16/2027,,Rainbow Trout
+3,Van Buren,Cane Creek (Fall Creek Falls State Park),Seasonal,,10/24/2027,,Rainbow Trout
+3,Van Buren,Laurel Creek,Seasonal,,3/7/2027,,Rainbow Trout
+3,Van Buren,Laurel Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Van Buren,Laurel Creek,Seasonal,,5/16/2027,,Rainbow Trout
+3,Van Buren,Rocky River,Seasonal,,3/7/2027,,Rainbow Trout
+3,Van Buren,Rocky River,Seasonal,,4/11/2027,,Rainbow Trout
+3,Van Buren,Rocky River,Seasonal,,5/16/2027,,Rainbow Trout
+3,Warren,Charles Creek,Seasonal,,3/14/2027,,Rainbow Trout
+3,Warren,Charles Creek,Seasonal,,4/11/2027,,Rainbow Trout
+3,Warren,Charles Creek,Seasonal,,5/9/2027,,Rainbow Trout
+3,Warren,N Barren Fork Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Warren,N Barren Fork Creek,Seasonal,,3/28/2027,,Rainbow Trout
+3,Warren,N Barren Fork Creek,Seasonal,,4/25/2027,,Rainbow Trout
+3,Warren,Barren Fork River,Seasonal,,3/14/2027,,Rainbow Trout
+3,Warren,Barren Fork River,Seasonal,,4/11/2027,,Rainbow Trout
+3,Warren,Barren Fork River,Seasonal,,5/9/2027,,Rainbow Trout
+3,Warren,Upper Hills Creek,Seasonal,,2/28/2027,,Rainbow Trout
+3,Warren,Upper Hills Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Sullivan,S. Holston Reservoir,Reservoir,,,"J, F","Rainbow, Lake Trout"
+4,Sullivan,S. Holston TW / S. Fork Holston River,Tailwater,,,"M, A, M, J, J, A, S",Rainbow Trout
+4,Sullivan/Washington,Boone TW / S. Fork Holston River,Tailwater,,,"M, A, N, D","Rainbow, Brown, Cutthroat, Brook Trout"
+4,Sullivan,Ft. Patrick Henry TW / S. Fork Holston River,Tailwater,,,"M, A, D","Rainbow, Brown Trout"
+4,Carter,Watauga Reservoir,Reservoir,,,"J, F","Rainbow, Lake Trout"
+4,Carter,Wilbur Reservoir,Reservoir,,,"M, A, M, J, J",Rainbow Trout
+4,Carter/Washington,Wilbur Tailwater / Watauga River,Tailwater,,,"M, A, M, J, J, A, S",Rainbow Trout
+4,Jefferson/Grainger,Cherokee TW / Holston River,Tailwater,,,"J, F, M, A, N, D","Rainbow, Brown Trout"
+4,Anderson,Norris Tailwater / Clinch River,Tailwater,,,"M, A, M, J, J, A, S","Rainbow, Brown Trout"
+4,Blount/Monroe,Calderwood Reservoir,Reservoir,,,"N, D",Rainbow Trout
+4,Blount/Monroe,Chilhowee Reservoir,Reservoir,,,"F, N, D",Rainbow Trout
+4,Blount,Little River,Seasonal,,11/8/2026,,Rainbow Trout
+4,Blount,Little River,Seasonal,,2/21/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,3/7/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,3/21/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,4/4/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,4/18/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,5/2/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,5/16/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,5/30/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,10/24/2027,,Rainbow Trout
+4,Blount,Little River,Seasonal,,11/7/2027,,Rainbow Trout
+4,Blount,Pistol Creek/Greenbelt Lake,Winter,11/23/2026,,,Rainbow Trout
+4,Blount,Pistol Creek/Greenbelt Lake,Winter,12/15/2026,,,Rainbow Trout
+4,Blount,Pistol Creek/Greenbelt Lake,Winter,1/21/2027,,,Rainbow Trout
+4,Blount,Pistol Creek/Greenbelt Lake,Winter,TBD 11/2027,,,Rainbow Trout
+4,Blount,Pistol Creek/Greenbelt Lake,Winter,TBD 12/2027,,,Rainbow Trout
+4,Campbell,Laurel Fork,Seasonal,,2/28/2027,,Rainbow Trout
+4,Campbell,Laurel Fork,Seasonal,,3/28/2027,,Rainbow Trout
+4,Campbell,Tackett Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Campbell,Tackett Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,2/28/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,3/14/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,3/28/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,4/11/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,4/25/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,5/9/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,5/23/2027,,Rainbow Trout
+4,Carter,Doe River,Seasonal,,6/6/2027,,Rainbow Trout
+4,Carter,Doe River,Delayed Harvest,,9/26/2027,,Rainbow Trout
+4,Carter,Doe River,Delayed Harvest,,10/24/2027,,Rainbow Trout
+4,Carter,Doe River,Delayed Harvest,,11/21/2027,,Rainbow Trout
+4,Carter,Doe River,Delayed Harvest,,12/19/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,2/28/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,3/14/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,3/28/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,4/11/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,4/25/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,5/9/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,5/23/2027,,Rainbow Trout
+4,Carter,Laurel Fork,Seasonal,,6/6/2027,,Rainbow Trout
+4,Carter,Stony Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Carter,Stony Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Carter,Stony Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Carter,Stony Creek,Seasonal,,5/30/2027,,Rainbow Trout
+4,Claiborne,Gap Creek,Seasonal,,2/14/2027,,Rainbow Trout
+4,Claiborne,Gap Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Claiborne,Gap Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Claiborne,Indian Creek,Seasonal,,2/14/2027,,Rainbow Trout
+4,Claiborne,Indian Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Claiborne,Indian Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Claiborne,Indian Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Claiborne,Indian Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Claiborne,Station Creek,Seasonal,,2/14/2027,,Rainbow Trout
+4,Claiborne,Station Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Claiborne,Station Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Claiborne,Station Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Claiborne,Station Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Cocke,Brush Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Cocke,Brush Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Cocke,Brush Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Cocke,Brush Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Cocke,Brush Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,5/9/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,6/6/2027,,Rainbow Trout
+4,Cocke,Cosby Creek,Seasonal,,6/20/2027,,Rainbow Trout
+4,Cocke,Gulf Fork Big Creek,Seasonal,,2/21/2027,,Rainbow Trout
+4,Cocke,Gulf Fork Big Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Cocke,Gulf Fork Big Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Cocke,Gulf Fork Big Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Cocke,Gulf Fork Big Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Cocke,Trail Fork Big Creek,Seasonal,,2/21/2027,,Rainbow Trout
+4,Cocke,Trail Fork Big Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Cocke,Trail Fork Big Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Cocke,Trail Fork Big Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Cocke,Trail Fork Big Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,2/7/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,2/14/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,2/21/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,5/9/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,5/30/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,6/6/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,6/13/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,6/20/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,6/27/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,7/4/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,7/11/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,7/18/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,7/25/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,8/1/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,8/8/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,8/15/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Seasonal,,8/22/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Delayed Harvest,,9/26/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Delayed Harvest,,10/24/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Delayed Harvest,,11/21/2027,,Rainbow Trout
+4,Grainger,Buffalo Creek,Delayed Harvest,,12/19/2027,,Rainbow Trout
+4,Grainger,Puncheon Camp Creek,Seasonal,,2/7/2027,,Rainbow Trout
+4,Grainger,Puncheon Camp Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Grainger,Puncheon Camp Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Grainger,Puncheon Camp Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,3/7/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,3/21/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,4/4/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,4/18/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,5/2/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,10/10/2027,,Rainbow Trout
+4,Greene,Dillard Ponds,Seasonal,,10/24/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,5/9/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Greene,Horse Creek,Seasonal,,6/6/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,5/30/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,6/13/2027,,Rainbow Trout
+4,Greene,Paint Creek,Seasonal,,6/27/2027,,Rainbow Trout
+4,Greene,Paint Creek,Delayed Harvest,,9/26/2027,,Rainbow Trout
+4,Greene,Paint Creek,Delayed Harvest,,10/24/2027,,Rainbow Trout
+4,Greene,Paint Creek,Delayed Harvest,,11/21/2027,,Rainbow Trout
+4,Greene,Paint Creek,Delayed Harvest,,12/19/2027,,Rainbow Trout
+4,Hamblen,Panther Creek,Seasonal,,2/7/2027,,Rainbow Trout
+4,Hamblen,Panther Creek,Seasonal,,2/21/2027,,Rainbow Trout
+4,Hamblen,Panther Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Hamblen,Panther Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Hamblen,Panther Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Hamblen,Panther Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Hancock,Mantooth Pond,Seasonal,,4/25/2027,,Rainbow Trout
+4,Hancock,Mantooth Pond,Seasonal,,10/17/2027,,Rainbow Trout
+4,Hancock,Richardson 'Byrd' Creek,Seasonal,,2/7/2027,,Rainbow Trout
+4,Hancock,Richardson 'Byrd' Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Hancock,Richardson 'Byrd' Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Hancock,Richardson 'Byrd' Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Hawkins,Alexander Creek,Seasonal,,2/14/2027,,Rainbow Trout
+4,Hawkins,Alexander Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Hawkins,Alexander Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Hawkins,Alexander Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Hawkins,Big Creek,Seasonal,,2/14/2027,,Rainbow Trout
+4,Hawkins,Big Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Hawkins,Big Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Hawkins,Big Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,11/20/2026,,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,12/14/2026,,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,1/20/2027,,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,2/17/2027,,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,2/24/2027,,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,TBD 11/2027,,,Rainbow Trout
+4,Jefferson,Mossy Creek,Winter,TBD 12/2027,,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,3/21/2026,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Johnson,Doe Creek,Seasonal,,5/30/2027,,Rainbow Trout
+4,Johnson,Forge Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Johnson,Forge Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Johnson,Forge Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Johnson,Forge Creek,Seasonal,,5/30/2027,,Rainbow Trout
+4,Johnson,Goose Creek / Town Creek,Seasonal,,3/7/2027,,Rainbow Trout
+4,Johnson,Goose Creek / Town Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Johnson,Goose Creek / Town Creek,Seasonal,,4/4/2027,,Rainbow Trout
+4,Johnson,Goose Creek / Town Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Johnson,Goose Creek / Town Creek,Seasonal,,5/2/2027,,Rainbow Trout
+4,Johnson,Goose Creek / Town Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Johnson,Laurel Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Johnson,Laurel Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Johnson,Laurel Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Johnson,Laurel Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Johnson,Laurel Creek,Seasonal,,6/20/2027,,Rainbow Trout
+4,Johnson,Beaverdam Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Johnson,Beaverdam Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Johnson,Beaverdam Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Johnson,Beaverdam Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Johnson,Beaverdam Creek,Seasonal,,6/20/2027,,Rainbow Trout
+4,Johnson,Ralph Stout Park Pond,Winter,11/23/2026,,,Rainbow Trout
+4,Johnson,Ralph Stout Park Pond,Winter,12/14/2026,,,Rainbow Trout
+4,Johnson,Ralph Stout Park Pond,Winter,1/4/2027,,,Rainbow Trout
+4,Johnson,Ralph Stout Park Pond,Winter,TBD 11/2027,,,Rainbow Trout
+4,Johnson,Ralph Stout Park Pond,Winter,TBD 12/2027,,,Rainbow Trout
+4,Johnson,Upper Roan Creek,Seasonal,,3/21/2027,,Rainbow Trout
+4,Johnson,Upper Roan Creek,Seasonal,,4/18/2027,,Rainbow Trout
+4,Johnson,Upper Roan Creek,Seasonal,,5/16/2027,,Rainbow Trout
+4,Johnson,Upper Roan Creek,Seasonal,,6/13/2027,,Rainbow Trout
+4,Knox,Fountain City Lake,Winter,11/24/2026,,,Rainbow Trout
+4,Knox,Fountain City Lake,Winter,12/16/2026,,,Rainbow Trout
+4,Knox,Fountain City Lake,Winter,1/22/2027,,,Rainbow Trout
+4,Knox,Fountain City Lake,Winter,TBD 11/2027,,,Rainbow Trout
+4,Knox,Fountain City Lake,Winter,TBD 12/2027,,,Rainbow Trout
+4,Scott,Oneida City Park Lake,Winter,12/17/2026,,,Rainbow Trout
+4,Scott,Oneida City Park Lake,Seasonal,,2/14/2027,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/5/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/12/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/19/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/26/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/3/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/10/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/17/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/24/2026,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,1/7/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,1/14/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,1/21/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,1/28/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,2/4/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,2/11/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,2/18/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,2/25/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,3/4/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,3/11/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,3/18/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,3/25/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,4/1/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,4/8/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,4/15/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,4/22/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,4/29/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,5/6/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,5/13/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,5/20/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,5/27/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,6/3/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,6/10/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,6/17/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,6/24/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,7/1/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,7/8/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,7/15/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,7/22/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,7/29/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,8/5/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,8/12/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,8/19/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,8/26/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,9/2/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,9/9/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,9/16/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,9/23/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,9/30/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,10/7/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,10/14/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,10/21/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,10/28/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/4/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/11/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/18/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Weekly,11/25/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/2/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/9/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/16/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/23/2027,,,Rainbow Trout
+4,Sevier,Gatlinburg Streams,Delayed Harvest,12/30/2027,,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,11/8/2026,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,2/14/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,2/28/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,3/14/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,3/28/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,4/11/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,4/25/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,5/9/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,5/23/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,10/24/2027,,Rainbow Trout
+4,Sevier,Mid. Prong Little Pigeon River,Seasonal,,11/7/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,2/14/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,2/28/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,3/14/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,3/28/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,4/11/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,4/25/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,5/9/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,5/23/2027,,Rainbow Trout
+4,Sevier,W. Prong Little Pigeon R. (Pigeon Forge),Seasonal,,10/24/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,5/9/2027,,Rainbow Trout
+4,Unicoi,Clark Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Unicoi,Fishery Park Pond,Seasonal,,10/31/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,5/9/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,6/6/2027,,Rainbow Trout
+4,Unicoi,North Indian Creek,Seasonal,,6/20/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,3/7/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,3/14/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,3/21/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,3/28/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,4/4/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,4/11/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,4/18/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,4/25/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,5/2/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,5/9/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,5/16/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,5/23/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,5/30/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,6/6/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,6/13/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,6/20/2027,,Rainbow Trout
+4,Unicoi,Rocky Fork,Seasonal,,6/27/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,2/28/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,3/14/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,3/28/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,4/11/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,4/25/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,5/9/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,5/23/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,6/6/2027,,Rainbow Trout
+4,Unicoi,South Indian Creek,Seasonal,,6/20/2027,,Rainbow Trout
