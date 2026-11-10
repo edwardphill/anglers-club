@@ -3,20 +3,6 @@
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "public",
-  "rewrites": [
-    {
-      "source": "/trout",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/stocking",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/plan",
-      "destination": "/index.html"
-    }
-  ],
   "functions": {
     "api/plan.js": {
       "maxDuration": 60,
