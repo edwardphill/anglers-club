@@ -11,7 +11,8 @@ export default route(["GET"], async (req) => {
 
   const [clubs, members, trips, rsvps, comments, reports, catches] = await Promise.all([
     q("select * from clubs where id = $1", [clubId]),
-    q("select id, handle, role, at from members where club_id = $1 order by at", [clubId]),
+    q(`select m.id, m.handle, m.role, m.at, u.picture, u.name as gname from members m left join users u on u.id = m.user_id
+       where m.club_id = $1 and m.role <> 'removed' order by m.at`, [clubId]),
     q(
       `select id, kind, water, title, date, time, meet, seats, cond, notes, host_id, canceled, at
        from trips where club_id = $1 order by date, time limit 3000`,
@@ -26,8 +27,8 @@ export default route(["GET"], async (req) => {
 
   return {
     club: clubOut(clubs[0]),
-    me: { id: me.id, role: me.role },
-    members: members.map((m) => ({ id: m.id, handle: m.handle, role: m.role, at: m.at })),
+    me: { id: me.id, role: me.role, email: me.user.email },
+    members: members.map((m) => ({ id: m.id, handle: m.handle || "", name: m.gname || "", picture: m.picture || "", role: m.role, at: m.at })),
     trips: trips.map((t) => ({
       id: t.id, kind: t.kind, water: t.water, title: t.title, date: t.date, time: t.time, meet: t.meet,
       seats: t.seats, cond: t.cond, notes: t.notes, hostId: t.host_id, canceled: t.canceled, at: t.at,

@@ -1,26 +1,26 @@
-// POST /api/join { club, password, handle }: checks the club password and signs the person in.
-import { route, readBody, clientIp, str, HttpError } from "../lib/http.js";
+// POST /api/join { club, handle }: joins a club as the signed-in user. Any Google account can join;
+// someone the organizer removed can't come back.
+import { route, readBody, str, HttpError } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { checkPassword, newId, newToken, sha, limit } from "../lib/auth.js";
+import { requireUser, newId, limit, firstName } from "../lib/auth.js";
 
 export default route(["POST"], async (req) => {
   await ensureSchema();
+  const user = await requireUser(req);
   const b = readBody(req);
   const clubId = str(b.club, 80);
-  const [club] = await q("select id, pw_hash from clubs where id = $1", [clubId]);
+  const [club] = await q("select id from clubs where id = $1", [clubId]);
   if (!club) throw new HttpError(404, "That club isn't here anymore.");
-  if (!club.pw_hash) throw new HttpError(403, "This club isn't taking new members yet. Ask the organizer to set a password.");
-
-  await limit(`join:${clientIp(req)}:${clubId}`, 8, 15 * 60e3, "Too many password tries. Wait 15 minutes and try again.");
-  if (!checkPassword(b.password, club.pw_hash)) {
-    throw new HttpError(403, "That password doesn't match. Check the organizer's text, or ask them for it.");
-  }
-
+  const [had] = await q("select id, role from members where club_id = $1 and user_id = $2", [clubId, user.id]);
+  if (had && had.role === "removed") throw new HttpError(403, "The organizer removed you from this club.");
+  if (had) return { memberId: had.id };
+  await limit(`join:${user.id}`, 30, 60 * 60e3, "That's a lot of clubs in an hour. Try again later.");
   const memberId = newId("m");
-  const token = newToken();
   await q(
-    `insert into members (id, club_id, handle, role, token_hash, at) values ($1, $2, $3, 'member', $4, $5)`,
-    [memberId, clubId, str(b.handle, 30), sha(token), Date.now()],
+    `insert into members (id, club_id, handle, role, user_id, at) values ($1, $2, $3, 'member', $4, $5)
+     on conflict (club_id, user_id) where user_id is not null do nothing`,
+    [memberId, clubId, str(b.handle, 30) || firstName(user.name), user.id, Date.now()],
   );
-  return { session: { clubId, memberId, token } };
+  const [m] = await q("select id from members where club_id = $1 and user_id = $2", [clubId, user.id]);
+  return { memberId: m.id };
 });

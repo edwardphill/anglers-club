@@ -96,6 +96,8 @@ main.wrap{padding-block:28px 80px;display:grid;gap:20px}
 .gate{padding:24px 26px;display:grid;gap:18px;max-width:580px}
 .gate-h{display:flex;align-items:center;gap:16px}
 .gate-h h2{font-size:1.75rem}
+.g-btn{min-height:44px}
+.signout-line{color:var(--muted);font-size:.98rem;padding-inline:2px}
 
 /* Heading and filters */
 .view-h{font-style:italic;font-size:clamp(1.9rem,4.5vw,2.5rem);line-height:1.1}
@@ -443,6 +445,15 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
   <div id="banner" class="banner" hidden></div>
   <p class="loading" id="v-loading">Loading clubs…</p>
 
+  <section id="v-signin" hidden>
+    <div class="gate signin">
+      <div class="gate-h"><span class="patch lg" aria-hidden="true"><span>AC</span></span>
+        <div><h2>Sign in to your club</h2><p class="muted">Trip calendars, a trip planner, the stocking schedule and a trout life list for fishing clubs, city by city.</p></div></div>
+      <div id="g-btn" class="g-btn"></div>
+      <p class="err" id="si-err" aria-live="polite"></p>
+      <p class="hint">Sign in with your Google account. Your Google name and photo show on trips so the crew knows who's coming.</p>
+    </div>
+  </section>
   <section id="v-home" class="home" hidden></section>
   <section id="v-gate" hidden></section>
 
@@ -632,12 +643,13 @@ const NO_WRITE = "You can look around but can't change anything. Ask the person 
 /* ---------- state ---------- */
 const S = {
   db: null, user: null, me: { id: null, role: "" },
-  readOnly: false, connected: false, booting: true, sessions: {}, poll: 0, loadSeq: 0,
-  clubs: new Map(), clubsLoaded: false, myClubs: [],
+  readOnly: false, connected: false, booting: true, poll: 0, loadSeq: 0,
+  auth: null, gcid: "", mine: new Map(), removed: new Set(), pendingClub: null, pendingTrip: null,
+  clubs: new Map(), clubsLoaded: false,
   clubId: null, unsubs: [],
   trips: new Map(), rsvps: [], comments: [], reports: [], catches: [], catchIdx: null, members: new Map(), loaded: { trips: false, members: false },
-  profiles: {}, wantTab: null, tab: "calendar", filter: "all", mine: false, cal: null, calSel: null, sheet: null,
-  fp: null, fpClub: null, fpNote: "", lastInvite: "",
+  profiles: {}, wantTab: null, tab: "calendar", filter: "all", onlyMine: false, cal: null, calSel: null, sheet: null,
+  fp: null, fpClub: null, fpNote: "",
 };
 
 /* ---------- helpers ---------- */
@@ -729,9 +741,7 @@ function normClub(id, v) {
     lat: Number.isFinite(v.lat) ? v.lat : (sd ? sd[1] : 36.16),
     lon: Number.isFinite(v.lon) ? v.lon : (sd ? sd[2] : -86.78),
     region: FP_REGION[v.region] ? v.region : (sd ? sd[4] : "south"),
-    pwHash: v.hasPassword ? "set" : "",
     ownerId: typeof v.ownerId === "string" ? v.ownerId : "",
-    claimable: v.claimable === true,
     at: typeof v.at === "number" ? v.at : 0,
   };
 }
@@ -743,7 +753,7 @@ function who(id) {
 }
 function av(id, cls = "") {
   const p = S.profiles[id];
-  if (p && p.avatarUrl) return `<img class="av ${cls}" src="${esc(p.avatarUrl)}" alt="">`;
+  if (p && p.avatarUrl) return `<img class="av ${cls}" src="${esc(p.avatarUrl)}" alt="" referrerpolicy="no-referrer">`;
   return `<span class="av txt ${cls}">${esc(who(id).slice(0, 1).toUpperCase())}</span>`;
 }
 const youTag = (id) => (id && id === S.me.id ? " (you)" : "");
@@ -778,31 +788,40 @@ const isMine = (t) => S.me.id && (t.hostId === S.me.id || !!myRsvp(t));
 const canManage = (t) => !S.readOnly && (t.hostId === S.me.id || isClubOwner());
 function passes(t) {
   if (kinds() === "both" && S.filter !== "all" && t.kind !== S.filter) return false;
-  if (S.mine && !isMine(t)) return false;
+  if (S.onlyMine && !isMine(t)) return false;
   return true;
 }
 const byWhen = (a, b) => (a.date + (a.time || "99")).localeCompare(b.date + (b.time || "99"));
 
 /* ---------- server ---------- */
-// Each device keeps one sign-in per club: { clubId: { memberId, token } }.
-const SESS_KEY = "nac-sessions", LAST_KEY = "nac-last";
-function loadSessions() {
-  try { const v = JSON.parse(localStorage.getItem(SESS_KEY) || "{}"); if (v && typeof v === "object") S.sessions = v; } catch (e) {}
-  S.myClubs = Object.keys(S.sessions);
+// Sign-in is Google: the server trades a Google ID token for a session token kept on this device.
+// "nac-sessions" holds per-club tokens from the password days; they're sent once at sign-in so
+// those memberships carry over to the Google account.
+const AUTH_KEY = "nac-auth", SESS_KEY = "nac-sessions", LAST_KEY = "nac-last";
+function loadAuth() { try { const v = JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); if (v && v.token) S.auth = v; } catch (e) {} }
+function saveAuth() { try { if (S.auth) localStorage.setItem(AUTH_KEY, JSON.stringify(S.auth)); else localStorage.removeItem(AUTH_KEY); } catch (e) {} }
+function legacySessions() {
+  try {
+    const v = JSON.parse(localStorage.getItem(SESS_KEY) || "{}") || {};
+    return Object.entries(v).filter(([, x]) => x && x.token).map(([club, x]) => ({ club, token: x.token }));
+  } catch (e) { return []; }
 }
-function saveSessions() {
-  S.myClubs = Object.keys(S.sessions);
-  try { localStorage.setItem(SESS_KEY, JSON.stringify(S.sessions)); } catch (e) {}
+function dropLegacy(clubs) {
+  try {
+    const v = JSON.parse(localStorage.getItem(SESS_KEY) || "{}") || {};
+    clubs.forEach((c) => delete v[c]);
+    if (Object.keys(v).length) localStorage.setItem(SESS_KEY, JSON.stringify(v)); else localStorage.removeItem(SESS_KEY);
+  } catch (e) {}
 }
 function saveProfile() { try { localStorage.setItem(LAST_KEY, S.clubId || ""); } catch (e) {} }
 function lastClub() { try { return localStorage.getItem(LAST_KEY) || null; } catch (e) { return null; } }
-const session = (cid = S.clubId) => (cid && S.sessions[cid]) || null;
+const authToken = () => (S.auth && S.auth.token) || "";
+const myName = () => (S.auth && S.auth.user && S.auth.user.name) || "";
 
-async function api(path, { method = "GET", body, auth } = {}) {
+async function api(path, { method = "GET", body } = {}) {
   const headers = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
-  const sess = auth ? session(auth) : null;
-  if (sess) headers.Authorization = "Bearer " + sess.token;
+  if (authToken()) headers.Authorization = "Bearer " + authToken();
   let res;
   try {
     res = await fetch("/api/" + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
@@ -814,26 +833,93 @@ async function api(path, { method = "GET", body, auth } = {}) {
   if (!res.ok) { const err = new Error(data.error || "Something went wrong. Try again."); err.status = res.status; throw err; }
   return data;
 }
-function signedOut(cid) {
-  delete S.sessions[cid]; saveSessions();
-  if (S.clubId === cid) {
-    S.me = { id: null, role: "" }; S.members = new Map();
-    closeSheet(); scheduleRender();
-  }
+// The session ended (signed out elsewhere, or expired): back to the sign-in screen.
+function signedOutAll(msg) {
+  S.auth = null; saveAuth();
+  S.mine = new Map(); S.removed = new Set(); S.clubs = new Map(); S.clubsLoaded = false;
+  S.me = { id: null, role: "" }; S.members = new Map();
+  closeSheet();
+  if (S.clubId) S.pendingClub = S.clubId;
+  if (msg) toast(msg);
+  scheduleRender();
+}
+// No longer a member of this club (left, or removed): show the club's join page.
+function notMember(cid) {
+  S.mine.delete(cid);
+  if (S.clubId === cid) { S.me = { id: null, role: "" }; S.members = new Map(); closeSheet(); }
+  loadDirectory();
 }
 // Every change goes through here: send it, then reload the club so the page matches the server.
 async function act(type, data, okMsg) {
   const cid = S.clubId;
   try {
-    const out = await api("action", { method: "POST", body: { club: cid, type, data }, auth: cid });
+    const out = await api("action", { method: "POST", body: { club: cid, type, data } });
     if (okMsg) toast(okMsg);
     await loadClub(cid);
     return out || {};
   } catch (e) {
-    if (e.status === 401) { signedOut(cid); toast(e.message); return null; }
+    if (e.status === 401) { signedOutAll(e.message); return null; }
     toast(e.message);
+    if (e.status === 403 && /join/i.test(e.message)) notMember(cid);
     if (e.status === 404 || e.status === 409) loadClub(cid);
     return null;
+  }
+}
+
+/* Google's sign-in button */
+function loadGsi() {
+  if (window.google && google.accounts && google.accounts.id) return Promise.resolve();
+  if (!S.gsiLoading) S.gsiLoading = new Promise((res, rej) => {
+    const el = document.createElement("script");
+    el.src = "https://accounts.google.com/gsi/client"; el.async = true;
+    el.onload = () => res();
+    el.onerror = () => { S.gsiLoading = null; el.remove(); rej(new Error("gsi")); };
+    document.head.appendChild(el);
+  });
+  return S.gsiLoading;
+}
+async function renderSignin() {
+  const box = $("#g-btn");
+  if (!S.gcid) { box.innerHTML = `<p class="muted">Google sign-in isn't switched on yet. The organizer adds GOOGLE_CLIENT_ID in Vercel and redeploys.</p>`; return; }
+  if (box.dataset.ready === S.gcid && box.childElementCount) return;
+  try { await loadGsi(); }
+  catch (e) { box.innerHTML = `<p class="err">Google sign-in didn't load. Check your connection and reload the page.</p>`; return; }
+  google.accounts.id.initialize({ client_id: S.gcid, callback: onGoogle, cancel_on_tap_outside: true, use_fedcm_for_prompt: true });
+  box.innerHTML = "";
+  google.accounts.id.renderButton(box, { type: "standard", theme: "outline", size: "large", text: "signin_with", shape: "rectangular", logo_alignment: "left", width: 280 });
+  box.dataset.ready = S.gcid;
+  try { google.accounts.id.prompt(); } catch (e) {}
+}
+async function onGoogle(resp) {
+  const err = $("#si-err"); if (err) err.textContent = "";
+  try {
+    const out = await api("auth", { method: "POST", body: { type: "google", credential: resp && resp.credential, link: legacySessions() } });
+    S.auth = { token: out.token, user: out.user }; saveAuth();
+    dropLegacy(out.linked || []);
+    toast("Signed in as " + (out.user.name || out.user.email));
+    await loadDirectory();
+    afterSignIn();
+  } catch (e) { if (err) err.textContent = e.message; else toast(e.message); }
+}
+async function signOut() {
+  try { await api("auth", { method: "POST", body: { type: "signout" } }); } catch (e) {}
+  try { if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch (e) {}
+  signedOutAll("Signed out");
+  enterClub(null);
+}
+// Where to go once signed in: the club or trip a link pointed at, else the last club you opened.
+function afterSignIn() {
+  const last = lastClub();
+  const start = S.pendingClub || (last && S.mine.has(last) ? last : null) || ((S.wantTab || S.mine.size === 1) ? [...S.mine.keys()][0] || null : null);
+  const trip = S.pendingTrip;
+  S.pendingClub = null; S.pendingTrip = null;
+  enterClub(start && S.clubs.has(start) ? start : null);
+  if (trip && start) {
+    const tryOpen = (n) => {
+      if (S.clubId === start && isMember() && S.trips.has(trip)) openSheet("trip", { id: trip });
+      else if (n > 0) setTimeout(() => tryOpen(n - 1), 400);
+    };
+    tryOpen(20);
   }
 }
 
@@ -855,7 +941,7 @@ function enterClub(cid, opts = {}) {
   S.unsubs.forEach((u) => { try { u(); } catch (e) {} });
   S.unsubs = [];
   S.clubId = cid || null;
-  S.me = { id: (session(S.clubId) || {}).memberId || null, role: "" };
+  S.me = { id: (S.mine.get(S.clubId) || {}).memberId || null, role: "" };
   S.loadSeq++;
   S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.catches = []; S.catchIdx = null; S.members = new Map();
   S.loaded = { trips: false, members: false };
@@ -864,9 +950,9 @@ function enterClub(cid, opts = {}) {
   const want = OLD_TABS[opts.tab] || opts.tab || S.wantTab;
   S.tab = want && TABS.includes(want) ? want : "calendar";
   if (S.clubId) S.wantTab = null;
-  S.filter = "all"; S.mine = false; S.cal = null; S.calSel = null; S.fpNote = "";
+  S.filter = "all"; S.onlyMine = false; S.cal = null; S.calSel = null; S.fpNote = "";
   const mt = $("#mine-toggle"); if (mt) mt.checked = false;
-  if (S.clubId && session(S.clubId)) loadClub(S.clubId);
+  if (S.clubId && S.mine.has(S.clubId)) loadClub(S.clubId);
   saveProfile();
   setHash();
   window.scrollTo(0, 0);
@@ -934,10 +1020,11 @@ function emptyState(title, body, withBtn) {
 function currentView() {
   if (S.booting) return "boot";
   if (!S.connected) return "off";
-  if (!S.clubId) return "home";
+  if (!S.auth) return "signin";
   if (!S.clubsLoaded) return "boot";
+  if (!S.clubId) return "home";
   if (!club()) return "home";
-  if (!session(S.clubId)) return "gate";
+  if (!S.mine.has(S.clubId)) return "gate";
   if (!S.loaded.members) return "boot";
   return isMember() ? "club" : "gate";
 }
@@ -956,27 +1043,28 @@ function renderHeader(v) {
 function renderHome() {
   const el = $("#v-home");
   if (!S.clubsLoaded) { el.innerHTML = `<p class="loading">Loading clubs…</p>`; return; }
-  const mine = S.myClubs.map((id) => S.clubs.get(id)).filter(Boolean);
-  const others = [...S.clubs.values()].filter((c) => !S.myClubs.includes(c.id))
+  const mine = [...S.mine.keys()].map((id) => S.clubs.get(id)).filter(Boolean);
+  const others = [...S.clubs.values()].filter((c) => !S.mine.has(c.id) && !S.removed.has(c.id))
     .sort((a, b) => (a.state + a.city + a.name).localeCompare(b.state + b.city + b.name));
   let html = "";
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
-  if (!S.readOnly) html += `<section class="start"><div><h2>Start a club for your city</h2><p>Pick your city, set a club password, and text it to your crew. A trip calendar with RSVPs and one thread per trip, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
+  if (!S.readOnly) html += `<section class="start"><div><h2>Start a club for your city</h2><p>Pick your city and text the link to your crew. They sign in with Google and tap Join. A trip calendar with RSVPs and one thread per trip, the Trip Planner, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
   html += `<section class="home-sec"><h2 class="home-h">${mine.length ? "Other clubs" : "Find your club"}</h2>${others.length
     ? `<ul class="rows">${others.map((c) => clubRow(c, "Join")).join("")}</ul>`
     : `<p class="muted" style="padding-inline:2px">${S.clubs.size ? "You're in every club so far." : "No clubs yet. Start the first one."}</p>`}</section>`;
+  const u = S.auth && S.auth.user;
+  if (u) html += `<p class="signout-line">Signed in as ${esc(u.name || u.email)}${u.name && u.email ? ` (${esc(u.email)})` : ""}. <button class="linkbtn" type="button" data-act="signout">Sign out</button></p>`;
   el.innerHTML = html;
 }
 function renderGate() {
   const c = club(), el = $("#v-gate");
   let body;
-  if (!c.pwHash) body = `<p class="muted">This club isn't taking new members yet. Ask the organizer to set a club password.</p>`;
+  if (S.removed.has(c.id)) body = `<p class="muted">The organizer removed you from this club.</p>`;
   else body = `<form class="f" id="gate-form" autocomplete="off" novalidate>
-      <p class="hint">Members only. Enter the club password from the organizer's text.</p>
-      <label>Club password<input id="g-pw" type="password" autocomplete="off" maxlength="60" required></label>
-      <label>Your name <span class="sub">How you'll show up on trips. Nicknames welcome.</span><input id="g-name" maxlength="30" placeholder="${esc(S.profiles[S.me.id]?.name || "e.g. Hutch")}"></label>
+      <p class="hint">Members see the club's trips, threads and reports. Join to see them and RSVP.</p>
+      <label>Your name in the club <span class="sub">How you'll show up on trips. Nicknames welcome.</span><input id="g-name" maxlength="30" value="${esc(myName().split(/\s+/)[0] || "")}" placeholder="e.g. Hutch"></label>
       <p class="err" id="g-err" aria-live="polite"></p>
-      <div class="form-acts"><button class="btn primary" type="submit">Join club</button></div>
+      <div class="form-acts"><button class="btn primary" type="submit">Join ${esc(c.name)}</button></div>
     </form>`;
   el.innerHTML = `<div class="gate">
     <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true">${esc(c.state || "··")}</span><div><h2>${esc(c.name)}</h2><p class="muted">${esc([c.city && c.state ? c.city + ", " + c.state : c.city, KINDS_LABEL[c.kinds]].filter(Boolean).join(" · "))}</p></div></div>
@@ -1705,8 +1793,8 @@ function tpPaint(it) {
 async function tpAsk(question) {
   question = String(question || "").trim();
   if (!question || TP.busy) return;
-  const cid = S.clubId, sess = session(cid);
-  if (!sess) return;
+  const cid = S.clubId;
+  if (!authToken()) return;
   const history = TP.items.filter((x) => x.a && !x.error && !x.busy).slice(0, 2).reverse().map((x) => ({ q: x.q, a: x.a.slice(0, 2500) }));
   const it = { id: nid("p"), q: question, a: "", cites: [], at: Date.now(), busy: true, status: "Thinking" };
   TP.items.unshift(it); TP.busy = true;
@@ -1715,13 +1803,14 @@ async function tpAsk(question) {
   try {
     const res = await fetch("/api/plan", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + sess.token },
+      headers: { "Content-Type": "application/json", Authorization: "Bearer " + authToken() },
       body: JSON.stringify({ club: cid, question, history }),
     });
     if (!res.ok) {
       let d = {}; try { d = await res.json(); } catch (e) {}
       it.error = d.error || "Something went wrong. Try again.";
-      if (res.status === 401) signedOut(cid);
+      if (res.status === 401) signedOutAll(it.error);
+      if (res.status === 403) notMember(cid);
     } else {
       const reader = res.body.getReader(), dec = new TextDecoder();
       let buf = "";
@@ -2065,56 +2154,28 @@ async function skShow(id) {
 }
 
 /* ---------- invite ---------- */
-// The club password is stored hashed on the server, so the invite can't fill it in. Whoever
-// types it here has it remembered on this device so the button in the header is one tap next time.
-const INV_KEY = "nac-invite";
-function rememberedPw(cid) { try { return (JSON.parse(localStorage.getItem(INV_KEY) || "{}") || {})[cid] || ""; } catch (e) { return ""; } }
-function rememberPw(cid, pw) {
-  try {
-    const m = JSON.parse(localStorage.getItem(INV_KEY) || "{}") || {};
-    if (pw) m[cid] = pw; else delete m[cid];
-    localStorage.setItem(INV_KEY, JSON.stringify(m));
-  } catch (e) {}
-}
 const smsHref = (text) => "sms:?&body=" + encodeURIComponent(text);
 function inviteSheetMarkup() {
   const c = club();
   if (!c) return sheetTop("Invite") + `<div class="sh-scroll"></div>`;
-  const pw = rememberedPw(c.id), text = inviteText(c, pw);
+  const text = inviteText(c);
   return sheetTop("Invite") + `<div class="sh-scroll"><div style="display:grid;gap:18px">
     <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true"><span>${esc(crestOf(c.name))}</span></span>
-      <div><h2 style="font-size:1.55rem">Invite someone to ${esc(c.name)}</h2><p class="muted">The link opens the club. The password lets them in.</p></div></div>
-    <form class="f" id="inv-form" autocomplete="off" novalidate>
-      <label>Club password <span class="sub">Type it once to put it in the text, or leave it blank and send it separately. It's remembered on this device.</span>
-        <input id="inv-pw" maxlength="60" value="${esc(pw)}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Leave blank to send it separately"></label>
-    </form>
+      <div><h2 style="font-size:1.55rem">Invite someone to ${esc(c.name)}</h2><p class="muted">They open the link, sign in with Google and tap Join.</p></div></div>
     <textarea class="copybox" id="inv-text" rows="4" readonly aria-label="Invite text">${esc(text)}</textarea>
     <div class="tool-row" id="inv-tools">
       <button class="btn primary small" type="button" data-act="inv-copy">Copy invite</button>
       <a class="btn ghost small" id="inv-sms" href="${esc(smsHref(text))}">Open Messages</a>
       ${navigator.share ? `<button class="btn ghost small" type="button" data-act="inv-share">Share…</button>` : ""}
     </div>
-    <p class="hint">${isClubOwner()
-      ? `The site stores the password scrambled, so it can't fill it in for you. Lost it? <button class="linkbtn" type="button" data-act="club">Set a new one in club settings</button>.`
-      : "Don't have the password? Ask the organizer."}</p>
   </div></div>`;
 }
-function updateInvite() {
-  const c = club(), inp = $("#inv-pw");
-  if (!c || !inp) return;
-  const pw = inp.value.trim(), text = inviteText(c, pw);
-  $("#inv-text").value = text;
-  $("#inv-sms").setAttribute("href", smsHref(text));
-  rememberPw(c.id, pw);
-}
-
 /* ---------- render loop ---------- */
 function renderBanner(v) {
   const b = $("#banner");
   let msg = "", btn = "";
   if (v === "off") msg = "Can't reach the club server right now. Check your connection and reload the page.";
   else if (v !== "boot" && S.readOnly) msg = NO_WRITE;
-  else if (v === "club" && isClubOwner() && !club().pwHash) { msg = "Set a club password so your crew can join."; btn = `<button class="btn ghost small" type="button" data-act="club">Set password</button>`; }
   else if (v === "club" && !S.members.get(S.me.id)?.handle && !S.profiles[S.me.id]?.name) { msg = "Add your name so people know who's coming."; btn = `<button class="btn ghost small" type="button" data-act="club">Add name</button>`; }
   b.hidden = !msg;
   if (msg) b.innerHTML = `<span>${esc(msg)}</span>${btn}`;
@@ -2151,11 +2212,13 @@ function renderAll() {
   const v = currentView();
   renderHeader(v);
   $("#v-loading").hidden = v !== "boot";
+  $("#v-signin").hidden = v !== "signin";
   $("#v-home").hidden = v !== "home";
   $("#v-gate").hidden = v !== "gate";
   $("#v-club").hidden = v !== "club";
   $("#tabsbar").hidden = v !== "club";
-  if (v === "home") renderHome();
+  if (v === "signin") renderSignin();
+  else if (v === "home") renderHome();
   else if (v === "gate") renderGate();
   else if (v === "club") {
     renderTabs();
@@ -2493,23 +2556,22 @@ function newClubMarkup() {
   return sheetTop("New club") + `<div class="sh-scroll">
     <form class="f" id="new-form" autocomplete="off" novalidate>
       <h2 style="font-size:1.4rem">Start a club</h2>
-      <p class="hint">You'll be the organizer. Members join with the club password you set here.</p>
+      <p class="hint">You'll be the organizer. Anyone you send the link to signs in with Google and taps Join.</p>
       ${clubFields(null, true)}
-      <label>Club password <span class="sub">Members type this once to join. Not case-sensitive.</span><input name="pw" maxlength="60" required placeholder="e.g. riffle"></label>
-      <label>Your name in the club<input name="handle" maxlength="30" placeholder="${esc(S.profiles[S.me.id]?.name || "e.g. Hutch")}"></label>
+      <label>Your name in the club<input name="handle" maxlength="30" value="${esc(myName().split(/\s+/)[0] || "")}" placeholder="e.g. Hutch"></label>
       <p class="err" id="n-err" aria-live="polite"></p>
       <div class="form-acts"><button class="btn primary" type="submit">Start club</button><button class="btn ghost" type="button" data-act="close">Cancel</button></div>
     </form></div>`;
 }
-function inviteText(c, pw) {
-  return [`Join the ${c.name} to see trips and RSVP:`, clubLink(c), pw ? `Club password: ${pw}` : "Ask me for the club password."].join("\n");
+function inviteText(c) {
+  return [`Join the ${c.name} to see trips and RSVP:`, clubLink(c), "Sign in with Google and tap Join."].join("\n");
 }
 function createdMarkup(d) {
   const c = S.clubs.get(d.id) || d.club;
   return sheetTop("Club ready") + `<div class="sh-scroll">
     <div style="display:grid;gap:14px">
       <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true">${esc(c.state)}</span><div><h2 style="font-size:1.4rem">${esc(c.name)} is live</h2><p class="muted">${esc(c.city)}, ${esc(c.state)}</p></div></div>
-      <p>Text this to your crew. They open the link, enter the password once, and they're in.</p>
+      <p>Text this to your crew. They open the link, sign in with Google and tap Join.</p>
       <textarea class="copybox" id="created-text" rows="4" readonly aria-label="Invite text">${esc(d.invite)}</textarea>
       <div class="form-acts"><button class="btn primary" type="button" data-act="copy-created">Copy invite</button><button class="btn ghost" type="button" data-act="close">Open the club</button></div>
     </div></div>`;
@@ -2528,23 +2590,14 @@ function clubSheetMarkup() {
       <div class="form-acts"><button class="btn primary" type="submit">Save name</button></div>
     </form>
     <section class="sh-sec"><h3>Invite people</h3>
-      <p class="hint">Send the link and the club password. The Invite button at the top of the club does the same.</p>
+      <p class="hint">Send the club link. The Invite button at the top of the club does the same.</p>
       <div class="tool-row"><button class="btn ghost small" type="button" data-act="invite">Write an invite</button></div>
     </section>
-    <section class="sh-sec"><h3>Your other devices</h3>
-      <p class="hint">Open this link on your phone or laptop to sign in there as you, without the password. Keep it to yourself.</p>
-      <div class="tool-row"><button class="btn ghost small" type="button" data-act="copy-device">Copy my sign-in link</button></div>
-      <div id="device-out"></div>
+    <section class="sh-sec"><h3>Your account</h3>
+      <p class="hint">Signed in with Google as ${esc(myName() || "you")}${S.auth && S.auth.user && S.auth.user.email ? ` (${esc(S.auth.user.email)})` : ""}.</p>
+      <div class="tool-row"><button class="btn ghost small" type="button" data-act="signout">Sign out</button></div>
     </section>
-    ${owner ? `<form class="f sh-sec" id="pw-form" autocomplete="off">
-      <h3>Club password</h3>
-      <p class="hint">${c.pwHash ? "Changing it keeps everyone who already joined." : "No password yet, so nobody can join. Set one to open the club."}</p>
-      <label>New password<input id="p-pw" maxlength="60" required></label>
-      <p class="err" id="p-err" aria-live="polite"></p>
-      <div class="form-acts"><button class="btn primary" type="submit">${c.pwHash ? "Change password" : "Set password"}</button></div>
-      <div id="pw-out"></div>
-    </form>
-    <form class="f sh-sec" id="club-form" autocomplete="off" novalidate>
+    ${owner ? `<form class="f sh-sec" id="club-form" autocomplete="off" novalidate>
       <h3>Club details</h3>
       ${clubFields(c, false)}
       <p class="err" id="c-err" aria-live="polite"></p>
@@ -2552,7 +2605,7 @@ function clubSheetMarkup() {
     </form>` : ""}
     <section class="sh-sec"><h3 id="mem-h">Members</h3><ul class="roster" id="mem-list"></ul></section>
     ${!owner ? `<section class="sh-sec"><div class="form-acts"><button class="btn danger" type="button" data-act="ask-leave">Leave club</button></div>
-      <div class="confirm" id="leave-confirm" hidden>Leave ${esc(c.name)}? You'll need the password to rejoin. <button class="btn danger solid small" type="button" data-act="do-leave">Leave</button><button class="btn ghost small" type="button" data-act="no-leave">Stay</button></div></section>` : ""}
+      <div class="confirm" id="leave-confirm" hidden>Leave ${esc(c.name)}? You can rejoin anytime. <button class="btn danger solid small" type="button" data-act="do-leave">Leave</button><button class="btn ghost small" type="button" data-act="no-leave">Stay</button></div></section>` : ""}
   </div>`;
 }
 function updateMembersList() {
@@ -2598,7 +2651,7 @@ document.addEventListener("click", async (e) => {
   const tf = e.target.closest("[data-tmf]");
   if (tf) { TM.filter = tf.dataset.tmf; document.querySelectorAll("[data-tmf]").forEach((b) => b.setAttribute("aria-pressed", String(b === tf))); renderChecklist(); return; }
   const cr = e.target.closest(".club-row[data-club]");
-  if (cr) { enterClub(cr.dataset.club, { save: S.myClubs.includes(cr.dataset.club) }); return; }
+  if (cr) { enterClub(cr.dataset.club); return; }
   const r = e.target.closest("[data-rsvp]");
   if (r) { await setRsvp(r.dataset.rsvp); return; }
   if (e.target.closest("#post-btn")) { openSheet("form", {}); return; }
@@ -2631,7 +2684,8 @@ document.addEventListener("click", async (e) => {
     case "no-delete": $("#del-confirm").hidden = true; break;
     case "do-delete": if (t) await deleteTrip(t); break;
     case "invite": openSheet("invite"); break;
-    case "inv-copy": { const pw = ($("#inv-pw") || {}).value || ""; copyText($("#inv-text").value, $("#inv-tools"), pw.trim() ? "Invite copied. Paste it into a text." : "Invite copied. Send the password separately."); break; }
+    case "inv-copy": copyText($("#inv-text").value, $("#inv-tools"), "Invite copied. Paste it into a text."); break;
+    case "signout": closeSheet(); await signOut(); break;
     case "inv-share": { try { await navigator.share({ title: club().name, text: $("#inv-text").value }); } catch (err) { /* closed the share sheet */ } break; }
     case "tp-del": TP.items = TP.items.filter((x) => x.id !== a.dataset.tp || x.busy); tpSave(); renderPlanner(); break;
     case "tp-again": { const x = TP.items.find((y) => y.id === a.dataset.tp); if (x) tpAsk(x.q); break; }
@@ -2649,11 +2703,9 @@ document.addEventListener("click", async (e) => {
     case "tm-save": await saveMapImage(); break;
     case "tm-show": await showOnMap(a.dataset.sp); break;
     case "tm-del": await act("catch.delete", { id: a.dataset.k }, "Catch removed"); break;
-    case "copy-device": { const sv = session(); if (sv) copyText(APP_URL + "#key-" + S.clubId + "." + sv.token, $("#device-out"), "Sign-in link copied. Open it on your other device."); break; }
     case "copy-announce": copyText($("#announce-text").value, $("#announce"), "Copied. Paste it into your group text."); break;
     case "done-announce": { const el = $("#announce"); if (el) el.remove(); if (S.sheet) S.sheet.justPosted = false; break; }
     case "copy-created": copyText($("#created-text").value, null, "Copied. Paste it into your group text."); break;
-    case "copy-pw-invite": copyText(S.lastInvite, $("#pw-out"), "Copied. Paste it into your group text."); break;
     case "ask-leave": $("#leave-confirm").hidden = false; break;
     case "no-leave": $("#leave-confirm").hidden = true; break;
     case "do-leave": await leaveClub(); break;
@@ -2663,7 +2715,7 @@ document.addEventListener("click", async (e) => {
 });
 dlg().addEventListener("cancel", (e) => { e.preventDefault(); closeSheet(); });
 dlg().addEventListener("close", () => { S.sheet = null; });
-$("#mine-toggle").addEventListener("change", (e) => { S.mine = e.target.checked; scheduleRender(); });
+$("#mine-toggle").addEventListener("change", (e) => { S.onlyMine = e.target.checked; scheduleRender(); });
 document.addEventListener("keydown", (e) => {
   if (e.target.id === "tp-q" && e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); tpAsk(e.target.value); }
 });
@@ -2671,7 +2723,6 @@ document.addEventListener("input", (e) => {
   if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
   else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockingTab(); }
   else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockingTab(); }
-  else if (e.target.id === "inv-pw") updateInvite();
 });
 let tmResize = 0;
 window.addEventListener("resize", () => {
@@ -2686,9 +2737,8 @@ window.addEventListener("resize", () => {
 
 document.addEventListener("submit", async (e) => {
   const id = e.target.id;
-  if (id === "inv-form") { e.preventDefault(); return; }
   if (id === "tp-form") { e.preventDefault(); tpAsk($("#tp-q").value); return; }
-  if (!["cm-form", "rep-form", "me-form", "gate-form", "new-form", "pw-form", "club-form", "catch-form"].includes(id)) return;
+  if (!["cm-form", "rep-form", "me-form", "gate-form", "new-form", "club-form", "catch-form"].includes(id)) return;
   e.preventDefault();
   const btn = e.target.querySelector("button[type=submit]");
   if (btn && btn.disabled) return;
@@ -2699,7 +2749,6 @@ document.addEventListener("submit", async (e) => {
     else if (id === "me-form") await submitHandle();
     else if (id === "gate-form") await submitJoin();
     else if (id === "new-form") await submitNewClub(e.target);
-    else if (id === "pw-form") await submitPassword();
     else if (id === "club-form") await submitClubDetails(e.target);
     else if (id === "catch-form") await submitCatch();
   } finally { if (btn && btn.isConnected) btn.disabled = false; }
@@ -2724,22 +2773,21 @@ async function submitHandle() {
 }
 async function submitJoin() {
   const c = club(); if (!c) return;
-  const pw = $("#g-pw").value, err = $("#g-err");
-  if (!pw.trim()) { err.textContent = "Enter the club password."; return; }
+  const err = $("#g-err");
   try {
-    const out = await api("join", { method: "POST", body: { club: c.id, password: pw, handle: $("#g-name").value.trim() } });
-    S.sessions[c.id] = { memberId: out.session.memberId, token: out.session.token };
-    saveSessions();
+    const out = await api("join", { method: "POST", body: { club: c.id, handle: $("#g-name").value.trim() } });
+    S.mine.set(c.id, { memberId: out.memberId, role: "member" });
     toast("You're in. Welcome to " + c.name + ".");
     enterClub(c.id, { tab: S.tab });
-  } catch (e) { err.textContent = e.message; }
+  } catch (e) {
+    if (e.status === 401) { signedOutAll(e.message); return; }
+    err.textContent = e.message;
+  }
 }
 async function submitNewClub(form) {
   const err = $("#n-err");
   const r = readClubFields(form);
   if (r.err) { err.textContent = r.err; r.focus && r.focus.focus(); return; }
-  const pw = form.elements.namedItem("pw").value;
-  if (pw.trim().length < 3) { err.textContent = "Pick a club password of at least 3 characters."; form.elements.namedItem("pw").focus(); return; }
   const dupe = [...S.clubs.values()].find((c) => c.state === r.data.state && c.city.trim().toLowerCase() === r.data.city.toLowerCase());
   const dupeKey = r.data.city.toLowerCase() + "|" + r.data.state;
   if (dupe && form.dataset.dupOk !== dupeKey) {
@@ -2749,29 +2797,14 @@ async function submitNewClub(form) {
   }
   err.textContent = "";
   try {
-    const out = await api("clubs", { method: "POST", body: { ...r.data, password: pw, handle: form.elements.namedItem("handle").value.trim() } });
+    const out = await api("clubs", { method: "POST", body: { ...r.data, handle: form.elements.namedItem("handle").value.trim() } });
     const c = normClub(out.club.id, out.club);
     S.clubs.set(c.id, c);
-    S.sessions[c.id] = { memberId: out.session.memberId, token: out.session.token };
-    saveSessions();
+    S.mine.set(c.id, { memberId: out.memberId, role: "owner" });
     enterClub(c.id);
-    rememberPw(c.id, pw.trim());
-    openSheet("created", { id: c.id, club: c, invite: inviteText(c, pw.trim()) });
+    openSheet("created", { id: c.id, club: c, invite: inviteText(c) });
     loadDirectory();
   } catch (e) { err.textContent = e.message; }
-}
-async function submitPassword() {
-  const c = club(); if (!c || !isClubOwner()) return;
-  const pw = $("#p-pw").value, err = $("#p-err");
-  if (pw.trim().length < 3) { err.textContent = "Use at least 3 characters."; return; }
-  err.textContent = "";
-  const ok = await act("club.password", { password: pw }, "Password saved");
-  if (!ok) return;
-  S.lastInvite = inviteText(c, pw.trim());
-  rememberPw(c.id, pw.trim());
-  const input = $("#p-pw"); if (input) input.value = "";
-  const out = $("#pw-out");
-  if (out) out.innerHTML = `<div style="display:grid;gap:8px;margin-top:4px"><p class="hint">Invite text with the new password:</p><textarea class="copybox" rows="4" readonly aria-label="Invite text">${esc(S.lastInvite)}</textarea><div><button class="btn ghost small" type="button" data-act="copy-pw-invite">Copy invite</button></div></div>`;
 }
 async function submitClubDetails(form) {
   const c = club(); if (!c || !isClubOwner()) return;
@@ -2785,7 +2818,7 @@ async function leaveClub() {
   const c = club(); if (!c) return;
   const ok = await act("member.leave", {}, "You left " + c.name);
   if (!ok) return;
-  delete S.sessions[c.id]; saveSessions();
+  S.mine.delete(c.id);
   closeSheet();
   enterClub(null);
 }
@@ -2816,28 +2849,33 @@ function calShift(n) { let { y, m } = S.cal; m += n; if (m < 0) { m = 11; y--; }
 
 /* ---------- data ---------- */
 async function loadDirectory() {
+  if (!S.auth) { scheduleRender(); return; }
   try {
     const out = await api("clubs");
     S.clubs = new Map(out.clubs.map((c) => [c.id, normClub(c.id, c)]));
+    S.mine = new Map((out.mine || []).map((m) => [m.club, { memberId: m.memberId, role: m.role }]));
+    S.removed = new Set(out.removed || []);
     S.clubsLoaded = true; S.connected = true;
     if (S.clubId && !S.clubs.has(S.clubId)) { toast("That club isn't here anymore."); enterClub(null); }
+    else if (S.clubId && S.mine.has(S.clubId) && !S.loaded.members) loadClub(S.clubId);
   } catch (e) {
+    if (e.status === 401) { signedOutAll(e.message); return; }
     if (!S.clubsLoaded) S.connected = false;
     else toast(e.message);
   }
   scheduleRender();
 }
 async function loadClub(cid) {
-  if (!cid || !session(cid)) return;
+  if (!cid || !S.mine.has(cid)) return;
   const seq = ++S.loadSeq;
   try {
-    const out = await api("state?club=" + encodeURIComponent(cid), { auth: cid });
+    const out = await api("state?club=" + encodeURIComponent(cid));
     if (S.clubId !== cid || seq !== S.loadSeq) return;
     const c = normClub(out.club.id, out.club);
     S.clubs.set(c.id, c);
     S.me = { id: out.me.id, role: out.me.role };
-    if (S.sessions[cid] && S.sessions[cid].memberId !== out.me.id) { S.sessions[cid].memberId = out.me.id; saveSessions(); }
-    S.members = new Map(out.members.map((m) => [m.id, { handle: m.handle, role: m.role, at: m.at }]));
+    S.members = new Map(out.members.map((m) => [m.id, { handle: m.handle || m.name.split(/\s+/)[0] || "", role: m.role, at: m.at }]));
+    S.profiles = Object.fromEntries(out.members.map((m) => [m.id, { name: m.name, avatarUrl: m.picture }]));
     S.trips = new Map(out.trips.map((t) => [t.id, { ...t, seats: typeof t.seats === "number" ? t.seats : null, kind: t.kind === "hunt" ? "hunt" : "fish" }]));
     S.rsvps = out.rsvps; S.comments = out.comments; S.reports = out.reports;
     S.catches = Array.isArray(out.catches) ? out.catches : []; S.catchIdx = null;
@@ -2846,7 +2884,8 @@ async function loadClub(cid) {
     scheduleRender();
   } catch (e) {
     if (S.clubId !== cid) return;
-    if (e.status === 401) { signedOut(cid); toast(e.message); return; }
+    if (e.status === 401) { signedOutAll(e.message); return; }
+    if (e.status === 403) { notMember(cid); return; }
     if (!S.loaded.members) { S.connected = false; scheduleRender(); }
   }
 }
@@ -2856,6 +2895,7 @@ function startPolling() {
   S.poll = setInterval(() => { if (document.visibilityState === "visible" && S.clubId) loadClub(S.clubId); }, 20000);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
+    if (!S.auth) return;
     if (S.clubId) loadClub(S.clubId); else loadDirectory();
   });
 }
@@ -2918,34 +2958,27 @@ window.addEventListener("resize", () => { clearTimeout(topoT); topoT = setTimeou
 /* ---------- boot ---------- */
 async function boot() {
   try { drawTopo(); } catch (e) { /* decoration only */ }
-  loadSessions();
+  loadAuth();
   const h = (location.hash || "").slice(1);
   let want = null, wantTab = null, wantTrip = null, m;
   if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout|stocking|planner))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
   else if ((m = /^trip-([a-z0-9-]{1,80})\.([a-z0-9]{1,40})$/.exec(h))) { want = m[1]; wantTrip = m[2]; }
-  else if ((m = /^key-([a-z0-9-]{1,80})\.([A-Za-z0-9_-]{20,100})$/.exec(h))) {
-    // A sign-in link from another device: keep the token, then drop it from the address bar.
-    want = m[1];
-    S.sessions[want] = { memberId: "", token: m[2] };
-    saveSessions();
-  }
-  // Short links: /trout and /stocking open that tab in your club (or in the club you join next).
+  // Short links: /trout, /stocking and /plan open that tab in your club (or the club you join next).
   const path = { trout: "trout", stocking: "stocking", plan: "planner" }[(/^\/(trout|stocking|plan)\/?$/.exec(location.pathname) || [])[1]];
-  if (path && !wantTab) { wantTab = path; S.wantTab = path; }
+  if (path && !wantTab) wantTab = path;
+  if (wantTab) S.wantTab = OLD_TABS[wantTab] || wantTab;
+  S.pendingClub = want; S.pendingTrip = wantTrip;
   renderAll();
-  await loadDirectory();
+  try {
+    const a = await api("auth");
+    S.gcid = a.googleClientId || ""; S.connected = true;
+    if (S.auth && !a.user) { S.auth = null; saveAuth(); }
+    else if (S.auth && a.user) { S.auth.user = a.user; saveAuth(); }
+  } catch (e) { S.connected = false; }
+  if (S.auth) await loadDirectory();
   S.booting = false;
-  const last = lastClub();
-  const start = want || (last && S.sessions[last] ? last : null) || (path ? Object.keys(S.sessions).find((id) => S.clubs.has(id)) || null : null);
-  enterClub(start, { tab: wantTab });
+  if (S.auth) afterSignIn(); else { try { history.replaceState(null, "", "/" + location.hash); } catch (e) {} scheduleRender(); }
   startPolling();
-  if (wantTrip) {
-    const tryOpen = (n) => {
-      if (S.clubId === want && isMember() && S.trips.has(wantTrip)) openSheet("trip", { id: wantTrip });
-      else if (n > 0) setTimeout(() => tryOpen(n - 1), 400);
-    };
-    tryOpen(20);
-  }
 }
 boot();
 })();

@@ -5,16 +5,25 @@ import { readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { usePsql } from "./pg-adapter.mjs";
+import { fakeGoogle } from "./google-test.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 usePsql((process.env.PGTEST || "").split(" ").filter(Boolean));
+// TEST_GOOGLE=1 swaps Google for a local test key; /test/google-token mints sign-in tokens for it.
+const G = process.env.TEST_GOOGLE ? fakeGoogle() : null;
+if (G) { process.env.GOOGLE_CLIENT_ID = G.clientId; globalThis.__nacJwks = G.jwks; }
 const routes = {};
-for (const name of ["health", "clubs", "join", "state", "action", "plan"]) {
+for (const name of ["health", "auth", "clubs", "join", "state", "action", "plan"]) {
   routes[name] = (await import(`../api/${name}.js`)).default;
 }
 
 http.createServer(async (req, res) => {
   const url = new URL(req.url, "http://localhost");
+  if (G && url.pathname === "/test/google-token") {
+    const p = Object.fromEntries(url.searchParams);
+    res.setHeader("Content-Type", "text/plain");
+    return res.end(G.mint({ sub: p.sub, name: p.name, email: p.email || `${p.sub}@example.com`, picture: p.picture || "" }));
+  }
   const m = /^\/api\/([a-z]+)$/.exec(url.pathname);
   if (m && routes[m[1]]) {
     let raw = "";

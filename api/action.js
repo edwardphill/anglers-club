@@ -1,7 +1,7 @@
 // POST /api/action { club, type, data }: every change a signed-in member makes.
 import { route, readBody, str, HttpError } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { requireMember, hashPassword, newId, limit } from "../lib/auth.js";
+import { requireMember, newId, limit } from "../lib/auth.js";
 import { clubInput, tripInput } from "../lib/clubs.js";
 
 const NOT_ALLOWED = "Only the trip's host or the club organizer can do that.";
@@ -140,7 +140,9 @@ export default route(["POST"], async (req) => {
       ownerOnly();
       const id = str(p.id, 40);
       if (id === me.id) throw new HttpError(400, "You can't remove yourself.");
-      await q("delete from members where id = $1 and club_id = $2", [id, clubId]);
+      // Someone signed in with Google stays on the list as removed, so they can't just rejoin.
+      await q("update members set role = 'removed' where id = $1 and club_id = $2 and user_id is not null and role <> 'owner'", [id, clubId]);
+      await q("delete from members where id = $1 and club_id = $2 and user_id is null and role <> 'owner'", [id, clubId]);
       return {};
     }
 
@@ -152,14 +154,6 @@ export default route(["POST"], async (req) => {
          where id = $1`,
         [clubId, d.name, d.city, d.state, d.kinds, JSON.stringify(d.waters), d.tz, d.lat, d.lon, d.region],
       );
-      return {};
-    }
-
-    case "club.password": {
-      ownerOnly();
-      const pw = typeof p.password === "string" ? p.password : "";
-      if (pw.trim().length < 3) throw new HttpError(400, "Use at least 3 characters.");
-      await q("update clubs set pw_hash = $2 where id = $1", [clubId, hashPassword(pw)]);
       return {};
     }
 
