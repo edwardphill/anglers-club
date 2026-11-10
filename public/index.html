@@ -365,6 +365,46 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .tm-catches .cm-h b{font-size:1.05rem}
 .tm-empty{color:var(--muted);font-style:italic;padding:14px 4px}
 
+/* Stocking tab: TWRA's trout stocking schedule on a Tennessee chart */
+.sk{display:grid;gap:22px}
+.sk-tools{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:end}
+.sk-tools label{display:grid;gap:4px;font:500 .64rem/1.3 var(--caps);letter-spacing:.2em;color:var(--brass-ink)}
+.sk-tools .tm-search{max-width:none}
+.sk-tools select{background:var(--paper);border:1px solid var(--hair);border-bottom-color:var(--muted);padding:9px 10px;font:400 1rem var(--body);letter-spacing:0;color:var(--ink);min-width:0}
+.sk-q{flex:1 1 230px}.sk-w{flex:1 1 200px}.sk-n{flex:0 1 180px}
+.sk-filt{display:grid;gap:8px}
+.sk-filt .row{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px}
+.sk-filt .lab{font:500 .64rem/1.3 var(--caps);letter-spacing:.2em;color:var(--brass-ink);min-width:70px}
+.sk-filt .chips{gap:4px 18px}
+.chip .sk-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.sk-map svg{display:block;width:100%;height:auto;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.sk-map svg.zoomed{touch-action:none;cursor:grab}
+.sk-map svg.dragging{cursor:grabbing}
+.sk-map .tm-loading{aspect-ratio:1000/330}
+.sk-tip{white-space:normal;width:max-content;max-width:260px;font-style:normal;text-align:center}
+.sk-tip b{font:600 1rem/1.2 var(--serif);display:block}
+.sk-tip span{font-style:italic;opacity:.85;font-size:.92rem}
+.sk-list .rows{border-bottom-width:1px}
+.sk-row{display:grid;grid-template-columns:58px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;text-align:left;background:none;border:0;padding:10px 6px;cursor:pointer;color:inherit}
+@media (hover:hover){.sk-row:hover{background:var(--paper)}}
+.sk-date{text-align:center;border:1px solid var(--brass);background:var(--paper);padding:4px 0 3px;line-height:1}
+.sk-date .m{display:block;font:500 .6rem/1 var(--caps);letter-spacing:.16em;color:var(--oxblood)}
+.sk-date .d{display:block;font:600 1.45rem/1.05 var(--serif);font-variant-numeric:lining-nums}
+.sk-date .w{display:block;font:italic 400 .72rem/1 var(--body);color:var(--muted)}
+.sk-date.none .d{font:italic 400 .9rem/1.6 var(--body);color:var(--muted)}
+.sk-nm{font:600 1.15rem/1.25 var(--serif);overflow-wrap:anywhere}
+.sk-meta{color:var(--muted);font-size:.95rem}
+.sk-in{font-style:italic;font-size:.95rem;color:var(--green);white-space:nowrap}
+.sk-more{padding:14px 4px 0}
+.sk-tags{display:flex;flex-wrap:wrap;gap:6px}
+.sk-tag{font:500 .6rem/1 var(--caps);letter-spacing:.14em;padding:4px 7px 3px;border:1px solid currentColor}
+.sk-next{border-left:3px solid var(--oxblood);background:var(--oxblood-wash);padding:10px 14px}
+.sk-next b{font:600 1.35rem/1.2 var(--serif)}
+.sk-dates{display:flex;flex-wrap:wrap;gap:6px}
+.sk-dates span{border:1px solid var(--hair);background:var(--ground);padding:2px 8px;font-size:.95rem;font-variant-numeric:lining-nums}
+.sk-dates span.past{color:var(--muted);text-decoration:line-through;background:none}
+.sk-dates span.wk{border-style:dashed}
+
 #toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);background:var(--ink);color:var(--ground);font:italic 400 1.05rem/1.3 var(--body);padding:11px 20px;max-width:calc(100% - 32px);text-align:center;z-index:30;pointer-events:none;opacity:0}
 #toast.show{opacity:1}
 @media (prefers-reduced-motion:no-preference){#toast{transition:opacity .2s}}
@@ -400,6 +440,7 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
       <button class="tab" role="tab" id="t-logbook" data-tab="logbook" aria-selected="false">Logbook</button>
       <button class="tab" role="tab" id="t-flies" data-tab="flies" aria-selected="false"><span class="long">Fly Picker</span><span class="short">Flies</span></button>
       <button class="tab" role="tab" id="t-trout" data-tab="trout" aria-selected="false"><span class="long">Trout Map</span><span class="short">Trout</span></button>
+      <button class="tab" role="tab" id="t-stock" data-tab="stock" aria-selected="false"><span class="long">Stocking</span><span class="short">Stocking</span></button>
     </div>
     <button class="me" id="me-btn" type="button" aria-label="Club settings and your name"></button>
   </div>
@@ -487,6 +528,40 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
               <input class="tm-search" id="tm-q" type="search" placeholder="Find a species, river or region" aria-label="Find a species" autocomplete="off">
             </div>
             <div id="tm-list"></div>
+          </section>
+        </div>
+      </div>
+      <div id="v-stock" role="tabpanel" aria-labelledby="t-stock" hidden>
+        <div class="sk">
+          <p class="tm-lede">TWRA's trout stocking schedule for Tennessee, every water on one chart. Filter by river, region or timing, tap a pin for its dates, then post a trip for the day the truck comes.</p>
+          <div class="sk-tools">
+            <label class="sk-q">Search<input class="tm-search" id="sk-q" type="search" placeholder="A water, river or county" autocomplete="off"></label>
+            <label class="sk-w">River or water<select id="sk-water"><option value="">All waters</option></select></label>
+            <label class="sk-n">When<select id="sk-when">
+              <option value="all">Whole season</option>
+              <option value="7">Next 7 days</option>
+              <option value="14">Next 14 days</option>
+              <option value="30">Next 30 days</option>
+              <option value="up">Anything upcoming</option>
+            </select></label>
+          </div>
+          <div class="sk-filt" id="sk-filt"></div>
+          <div>
+            <div class="tm-map sk-map" id="sk-map">
+              <div class="tm-loading" id="sk-map-msg">Drawing the chart…</div>
+              <div class="tm-ctl" id="sk-ctl" hidden>
+                <button class="icon-btn" type="button" data-act="sk-zin" aria-label="Zoom in">+</button>
+                <button class="icon-btn" type="button" data-act="sk-zout" aria-label="Zoom out">−</button>
+                <button class="icon-btn world" type="button" data-act="sk-all" aria-label="Show the whole state">ALL</button>
+              </div>
+              <div class="tm-tip sk-tip" id="sk-tip" hidden></div>
+            </div>
+            <div class="tm-foot"><div class="tm-legend" id="sk-legend" aria-label="Map key"></div></div>
+            <p class="tm-note">Pinch, scroll with Ctrl, or use + to zoom. Pins are placed by hand and can be a few miles off. Stockings move with weather and water levels, so check TWRA before a long drive.</p>
+          </div>
+          <section class="sk-list">
+            <div class="tm-sec-h"><h2>The stocking ledger</h2><span class="hint" id="sk-count"></span></div>
+            <div id="sk-list"></div>
           </section>
         </div>
       </div>
@@ -1630,7 +1705,7 @@ const COND_PH = { fish: "e.g. No generation till 2 PM", hunt: "e.g. Youth weeken
 const WHERE_PH = { fish: "e.g. the river or lake", hunt: "e.g. the WMA or lease" };
 const COUNT_LABEL = { fish: "Fish landed", hunt: "Harvest" };
 const WORKED_LABEL = { fish: "Flies that worked", hunt: "What worked" };
-const TABS = ["upcoming", "calendar", "logbook", "flies", "trout"];
+const TABS = ["upcoming", "calendar", "logbook", "flies", "trout", "stock"];
 const NO_WRITE = "You can look around but can't change anything. Ask the person who shared this page for edit access.";
 
 /* ---------- state ---------- */
@@ -2509,6 +2584,327 @@ function renderChecklist() {
   setHTML(el, html + "</ul>");
 }
 
+/* ---------- Stocking tab ---------- */
+// TWRA's trout stocking schedule, from src/tn-stocking.js (built by scripts/make_tn_stocking.py),
+// loads with the tab from /tn-stocking.js. The chart is a plain projection of Tennessee, so the
+// page needs no map library: lon scaled by cos(36°), a hand-traced state line, a few towns.
+const SK_REGIONS = { 1: "West", 2: "Middle", 3: "Plateau", 4: "East" };
+const SK_REGION_LONG = { 1: "Region 1 · West", 2: "Region 2 · Middle", 3: "Region 3 · Cumberland Plateau", 4: "Region 4 · East" };
+const SK_TYPES = [["Winter", "Winter", "#2C6A99", "City and park ponds, winter only"], ["Seasonal", "Seasonal", "#1F4D3A", "Streams, spring and summer"],
+  ["Delayed Harvest", "Delayed Harvest", "#B8682E", "Catch and release until the season opens"], ["Tailwater", "Tailwater", "#7A2430", "Below the dams, most of the year"],
+  ["Reservoir", "Reservoir", "#5D4F8F", "Big lakes"], ["Weekly", "Weekly", "#9C7A3C", "Gatlinburg's town streams"]];
+const SK_COL = Object.fromEntries(SK_TYPES.map((t) => [t[0], t[2]]));
+const SK_PRIMARY = ["Tailwater", "Delayed Harvest", "Reservoir", "Weekly", "Seasonal", "Winter"];
+const SK_SPECIES = ["Rainbow", "Brown", "Brook", "Cutthroat", "Lake"];
+const MON3 = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+const SK_W = 1000, SK_B = { x0: -90.45, x1: -81.5, y0: 34.9, y1: 36.78 }, SK_K = Math.cos(36 * RAD);
+const SK_SC = SK_W / ((SK_B.x1 - SK_B.x0) * SK_K), SK_H = Math.round((SK_B.y1 - SK_B.y0) * SK_SC);
+const skProj = (lon, lat) => [(lon - SK_B.x0) * SK_K * SK_SC, (SK_B.y1 - lat) * SK_SC];
+// The state line, traced at roughly county-line precision: Kentucky and Virginia on top, the
+// Blue Ridge on the east, the 35th parallel below, and the Mississippi on the west.
+const SK_TN = [[-89.53,36.5],[-88.05,36.5],[-88.05,36.68],[-87.85,36.65],[-87.3,36.64],[-86.5,36.64],[-86,36.63],[-85.5,36.62],[-85,36.61],[-84.5,36.6],[-83.68,36.6],[-83,36.59],[-82.3,36.59],[-81.68,36.59],[-81.73,36.34],[-81.92,36.23],[-82.03,36.12],[-82.41,36.08],[-82.61,35.95],[-82.78,35.97],[-82.96,35.8],[-83.25,35.7],[-83.5,35.56],[-83.88,35.52],[-84.02,35.42],[-84.03,35.29],[-84.29,35.22],[-84.32,35],[-85.6,34.99],[-87,35],[-88.2,35],[-90.31,35],[-90.1,35.12],[-90.07,35.43],[-89.93,35.63],[-89.71,35.78],[-89.71,35.98],[-89.59,36.1],[-89.55,36.25],[-89.53,36.4]];
+const SK_TOWNS = [["Memphis", 35.149, -90.049], ["Jackson", 35.615, -88.814], ["Clarksville", 36.53, -87.36], ["Nashville", 36.162, -86.781], ["Murfreesboro", 35.846, -86.39],
+  ["Cookeville", 36.163, -85.5], ["Chattanooga", 35.046, -85.309], ["Knoxville", 35.961, -83.921], ["Johnson City", 36.313, -82.353]];
+const SK = {
+  loading: null, built: false, building: false, svg: null, zg: null, W: [], WM: new Map(), pts: new Map(),
+  q: "", water: "", when: "all", reg: new Set(), typ: new Set(), spc: new Set(), all: false,
+  Z: { k: 1, x: 0, y: 0 }, ppu: 0, ptr: new Map(), drag: null, anim: 0, sel: null,
+};
+function loadStocking() {
+  if (window.TN_STOCKING) return Promise.resolve();
+  if (!SK.loading) SK.loading = new Promise((res, rej) => {
+    const el = document.createElement("script");
+    el.src = "/tn-stocking.js";
+    el.onload = () => (window.TN_STOCKING ? res() : rej(new Error("empty")));
+    el.onerror = () => { SK.loading = null; el.remove(); rej(new Error("load")); };
+    document.head.appendChild(el);
+  });
+  return SK.loading;
+}
+function skPrep() {
+  if (SK.W.length) return;
+  SK.W = window.TN_STOCKING.waters.map((w) => ({
+    ...w,
+    river: (w.n.includes(" / ") ? w.n.split(" / ").pop() : w.n).replace(/\s*\(.*?\)\s*/g, " ").trim(),
+    p: SK_PRIMARY.find((t) => w.t.includes(t)) || w.t[0],
+  }));
+  SK.W.forEach((w) => { SK.WM.set(w.id, w); SK.pts.set(w.id, skProj(w.lon, w.lat)); });
+}
+// Dates are YYYY-MM-DD strings, so they compare as text.
+const skDays = (a, b) => Math.round((parseD(b) - parseD(a)) / 864e5);
+function skNext(w, ev) { const t0 = todayStr(); return (ev || w.ev).find((e) => e[0] >= t0) || null; }
+function skMonthsAhead(w, types, n) {
+  // Month-only schedules (tailwaters, reservoirs): does a stocking month fall in the next n days?
+  const t0 = parseD(todayStr()), end = new Date(+t0 + n * 864e5), want = new Set();
+  for (let d = new Date(t0.getFullYear(), t0.getMonth(), 1); d <= end && want.size < 12; d.setMonth(d.getMonth() + 1)) want.add(d.getMonth() + 1);
+  return w.mo.some((m) => (!types.size || types.has(m[0])) && m[1].some((x) => want.has(x)));
+}
+function skNextMonth(w) {
+  const all = [...new Set(w.mo.flatMap((m) => m[1]))].sort((a, b) => a - b), cur = parseD(todayStr()).getMonth() + 1;
+  return all.length ? all.find((m) => m >= cur) || all[0] : 0;
+}
+function skVisible() {
+  const t0 = todayStr(), q = SK.q.trim().toLowerCase();
+  return SK.W.map((w) => {
+    if (SK.reg.size && !SK.reg.has(w.r)) return null;
+    if (SK.typ.size && !w.t.some((t) => SK.typ.has(t))) return null;
+    if (SK.spc.size && ![...SK.spc].every((s) => w.sp.includes(s))) return null;
+    if (SK.water && w.river !== SK.water) return null;
+    if (q && !(w.n + " " + w.c + " " + w.river).toLowerCase().includes(q)) return null;
+    let ev = w.ev.filter((e) => !SK.typ.size || SK.typ.has(e[2]));
+    if (SK.when !== "all") {
+      const n = SK.when === "up" ? 400 : +SK.when, end = addDays(t0, n);
+      ev = ev.filter((e) => e[0] >= t0 && e[0] <= end);
+      if (!ev.length && !skMonthsAhead(w, SK.typ, n)) return null;
+    }
+    return { w, next: skNext(w, ev), n: ev.filter((e) => e[0] >= t0).length };
+  }).filter(Boolean);
+}
+const skSoon = (w) => { const t0 = todayStr(), end = addDays(t0, 7); return w.ev.some((e) => e[0] >= t0 && e[0] <= end); };
+function skWhenText(w) {
+  const n = skNext(w), t0 = todayStr();
+  if (n) { const d = skDays(t0, n[0]); return (n[1] === "w" ? "Week of " : "") + fmtD(n[0], { month: "short", day: "numeric" }) + " · " + (d === 0 ? "today" : d === 1 ? "tomorrow" : "in " + d + " days"); }
+  if (w.mo.length) return "Next: " + MON3[skNextMonth(w) - 1] + " (stocked monthly)";
+  const last = [...w.ev].reverse().find((e) => e[0] < t0);
+  return last ? "Last stocked " + fmtD(last[0], { month: "short", day: "numeric", year: "numeric" }) : "No dates listed";
+}
+
+async function ensureStocking() {
+  if (SK.built || SK.building) return;
+  SK.building = true;
+  const msg = $("#sk-map-msg");
+  if (msg) msg.textContent = "Drawing the chart…";
+  try {
+    await loadStocking();
+    skPrep();
+    skFilters();
+    skBuildMap();
+    SK.built = true;
+    if (msg) msg.remove();
+    $("#sk-ctl").hidden = false;
+    renderStockTab();
+  } catch (e) {
+    console.error(e);
+    if (msg) msg.innerHTML = `The chart didn't load. <button class="linkbtn" type="button" data-act="sk-retry">Try again</button>`;
+  } finally { SK.building = false; }
+}
+function skFilters() {
+  const rivers = [...new Set(SK.W.map((w) => w.river))].sort((a, b) => a.localeCompare(b));
+  $("#sk-water").insertAdjacentHTML("beforeend", rivers.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join(""));
+  const grp = (lab, key, items) => `<div class="row"><span class="lab">${lab}</span><div class="chips" role="group" aria-label="${lab}">${items.map(([v, t, col]) =>
+    `<button class="chip" type="button" data-sk="${key}" data-v="${esc(v)}" aria-pressed="false">${col ? `<span class="sk-dot" style="background:${col}"></span>` : ""}${esc(t)}</button>`).join("")}</div></div>`;
+  $("#sk-filt").innerHTML = grp("Region", "reg", Object.entries(SK_REGIONS)) + grp("Water", "typ", SK_TYPES) + grp("Species", "spc", SK_SPECIES.map((s) => [s, s]));
+  $("#sk-legend").innerHTML = SK_TYPES.map((t) => `<span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="${t[2]}" stroke="#FFFDF8" stroke-width="1.5"/></svg>${esc(t[1])}</span>`).join("") +
+    `<span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="#7A2430" stroke-width="1.6"/></svg>Stocked in the next 7 days</span>`;
+}
+function skBuildMap() {
+  const line = (pts) => pts.map((p, i) => (i ? "L" : "M") + p.map((v) => v.toFixed(1)).join(",")).join("");
+  const state = line(SK_TN.map((p) => skProj(p[0], p[1]))) + "Z";
+  let grat = "";
+  for (let lon = -90; lon <= -82; lon++) grat += line([skProj(lon, SK_B.y0), skProj(lon, SK_B.y1)]);
+  for (let lat = 35; lat <= 36.5; lat += 0.5) grat += line([skProj(SK_B.x0, lat), skProj(SK_B.x1, lat)]);
+  const towns = SK_TOWNS.map(([n, lat, lon]) => { const [x, y] = skProj(lon, lat); return `<g data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2.4" fill="#4A564E"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${esc(n)}</text></g>`; }).join("");
+  const order = [...SK.W].sort((a, b) => SK_PRIMARY.indexOf(b.p) - SK_PRIMARY.indexOf(a.p));   // tailwaters on top
+  const pins = order.map((w) => { const [x, y] = SK.pts.get(w.id); return `<circle data-sk-w="${esc(w.id)}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5" fill="${SK_COL[w.p]}" stroke="#FFFDF8" vector-effect="non-scaling-stroke"/>`; }).join("");
+  const rings = order.map((w) => { const [x, y] = SK.pts.get(w.id); return `<circle data-sk-r="${esc(w.id)}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8" fill="none" stroke="#7A2430" stroke-width="1.5" vector-effect="non-scaling-stroke" visibility="hidden"/>`; }).join("");
+  $("#sk-map").insertAdjacentHTML("afterbegin", `<svg id="sk-svg" viewBox="0 0 ${SK_W} ${SK_H}" role="img" aria-label="Map of Tennessee trout stocking waters. The ledger below lists every water.">
+    <defs><clipPath id="sk-clip"><path d="${state}"/></clipPath></defs>
+    <rect width="${SK_W}" height="${SK_H}" fill="#E7EDE8"/>
+    <g id="sk-z">
+      <path d="${state}" fill="#FBF7EC"/>
+      <path d="${grat}" fill="none" stroke="#D9D0BA" stroke-width="0.6" stroke-dasharray="2 3" vector-effect="non-scaling-stroke" clip-path="url(#sk-clip)"/>
+      <path d="${state}" fill="none" stroke="#9C7A3C" stroke-width="1.2" stroke-linejoin="round" vector-effect="non-scaling-stroke"/>
+      <g id="sk-towns" font-family="'EB Garamond', Georgia, serif" font-style="italic" fill="#4A564E" stroke="#FBF7EC" paint-order="stroke" stroke-linejoin="round">${towns}</g>
+      <g id="sk-rings">${rings}</g>
+      <g id="sk-pins">${pins}</g>
+      <circle id="sk-sel" r="9" fill="none" stroke="#1E2A22" stroke-width="2" vector-effect="non-scaling-stroke" visibility="hidden"/>
+    </g>
+  </svg>`);
+  SK.svg = $("#sk-svg"); SK.zg = $("#sk-z");
+  skWire();
+}
+function skPaint(ids) {
+  if (!SK.built) return;
+  SK.svg.querySelectorAll("#sk-pins circle").forEach((el) => {
+    const on = ids.has(el.dataset.skW);
+    el.setAttribute("opacity", on ? 1 : 0.16);
+    if (on) el.parentNode.appendChild(el);   // filtered-in pins draw on top
+  });
+  SK.svg.querySelectorAll("#sk-rings circle").forEach((el) => el.setAttribute("visibility", ids.has(el.dataset.skR) && skSoon(SK.WM.get(el.dataset.skR)) ? "visible" : "hidden"));
+  const s = $("#sk-sel");
+  if (SK.sel && SK.pts.has(SK.sel)) { const [x, y] = SK.pts.get(SK.sel); s.setAttribute("cx", x); s.setAttribute("cy", y); s.setAttribute("visibility", "visible"); }
+  else s.setAttribute("visibility", "hidden");
+  skZoom();
+}
+function skZoom() {
+  if (!SK.built) return;
+  const { k, x, y } = SK.Z;
+  SK.zg.setAttribute("transform", `translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${k.toFixed(4)})`);
+  SK.svg.classList.toggle("zoomed", k > 1.01);
+  const w = SK.svg.getBoundingClientRect().width;
+  if (w) SK.ppu = w / SK_W;
+  if (!SK.ppu) return;
+  const u = 1 / (SK.ppu * k), r = (SK.ppu * SK_W < 600 ? 4.2 : 6) * u;
+  SK.svg.querySelectorAll("#sk-pins circle").forEach((el) => el.setAttribute("r", r.toFixed(3)));
+  SK.svg.querySelectorAll("#sk-rings circle").forEach((el) => el.setAttribute("r", (r * 1.75).toFixed(3)));
+  $("#sk-sel").setAttribute("r", (r * 1.9).toFixed(3));
+  const tg = $("#sk-towns");
+  tg.setAttribute("font-size", (13 * u).toFixed(3)); tg.setAttribute("stroke-width", (3 * u).toFixed(3));
+  tg.querySelectorAll("g").forEach((g) => {
+    g.querySelector("circle").setAttribute("r", (2.4 * u).toFixed(3));
+    const t = g.querySelector("text"); t.setAttribute("x", (+g.dataset.x + 5 * u).toFixed(2)); t.setAttribute("y", (+g.dataset.y - 4 * u).toFixed(2));
+  });
+}
+function skClamp(z) { const k = Math.max(1, Math.min(30, z.k)); return { k, x: Math.min(0, Math.max(SK_W - SK_W * k, z.x)), y: Math.min(0, Math.max(SK_H - SK_H * k, z.y)) }; }
+function skAnimate(t) {
+  if (!SK.built) return;
+  t = skClamp(t);
+  cancelAnimationFrame(SK.anim);
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) { SK.Z = t; skZoom(); return; }
+  const a = { ...SK.Z }, ca = [(SK_W / 2 - a.x) / a.k, (SK_H / 2 - a.y) / a.k], cb = [(SK_W / 2 - t.x) / t.k, (SK_H / 2 - t.y) / t.k], t0 = performance.now();
+  const step = (now) => {
+    let p = Math.min(1, (now - t0) / 460);
+    p = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+    const k = a.k * Math.pow(t.k / a.k, p), cx = ca[0] + (cb[0] - ca[0]) * p, cy = ca[1] + (cb[1] - ca[1]) * p;
+    SK.Z = p >= 1 ? t : skClamp({ k, x: SK_W / 2 - cx * k, y: SK_H / 2 - cy * k });
+    skZoom();
+    if (p < 1) SK.anim = requestAnimationFrame(step);
+  };
+  SK.anim = requestAnimationFrame(step);
+}
+function skStep(f) { const { k, x, y } = SK.Z, c = [(SK_W / 2 - x) / k, (SK_H / 2 - y) / k], nk = k * f; skAnimate({ k: nk, x: SK_W / 2 - c[0] * nk, y: SK_H / 2 - c[1] * nk }); }
+function skFly(id, k) { const [px, py] = SK.pts.get(id); k = Math.max(SK.Z.k, k); skAnimate({ k, x: SK_W / 2 - px * k, y: SK_H / 2 - py * k }); }
+function skPt(cx, cy) { const r = SK.svg.getBoundingClientRect(); return [(cx - r.left) * SK_W / r.width, (cy - r.top) * SK_H / r.height]; }
+function skHit(cx, cy, tol, ids) {
+  const r = SK.svg.getBoundingClientRect(), s = r.width / SK_W, { k, x, y } = SK.Z;
+  let best = null, bd = tol;
+  SK.W.forEach((w) => {
+    const [px, py] = SK.pts.get(w.id), d = Math.hypot(r.left + (px * k + x) * s - cx, r.top + (py * k + y) * s - cy) * (ids && !ids.has(w.id) ? 1.8 : 1);
+    if (d < bd) { bd = d; best = w.id; }
+  });
+  return best;
+}
+function skHideTip() { const t = $("#sk-tip"); if (t) t.hidden = true; if (SK.svg) SK.svg.style.cursor = ""; }
+function skWire() {
+  const svg = SK.svg, visIds = () => new Set(skVisible().map((v) => v.w.id));
+  const mid = (p, q) => skPt((p.x + q.x) / 2, (p.y + q.y) / 2);
+  svg.addEventListener("pointerdown", (e) => {
+    if (e.pointerType === "mouse" && e.button !== 0) return;
+    cancelAnimationFrame(SK.anim);
+    SK.ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (SK.ptr.size === 1) SK.drag = { id: e.pointerId, sx: e.clientX, sy: e.clientY, moved: false, z: { ...SK.Z } };
+    else if (SK.ptr.size === 2) { const [p, q] = [...SK.ptr.values()]; SK.drag = { pinch: true, d0: Math.max(10, Math.hypot(p.x - q.x, p.y - q.y)), m0: mid(p, q), z: { ...SK.Z }, moved: true }; skHideTip(); }
+  });
+  svg.addEventListener("pointermove", (e) => {
+    if (!SK.ptr.has(e.pointerId)) {
+      if (e.pointerType !== "mouse") return;
+      const id = skHit(e.clientX, e.clientY, 11, visIds()), tip = $("#sk-tip");
+      if (!id) { skHideTip(); return; }
+      const w = SK.WM.get(id), box = $("#sk-map").getBoundingClientRect();
+      tip.innerHTML = `<b>${esc(w.n)}</b><span>${esc(skWhenText(w))}</span>`;
+      tip.style.left = (e.clientX - box.left) + "px"; tip.style.top = (e.clientY - box.top) + "px";
+      tip.hidden = false; svg.style.cursor = "pointer";
+      return;
+    }
+    SK.ptr.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    const d = SK.drag;
+    if (!d) return;
+    if (d.pinch) {
+      if (SK.ptr.size < 2) return;
+      const [p, q] = [...SK.ptr.values()], m = mid(p, q), k = Math.max(1, Math.min(30, d.z.k * Math.hypot(p.x - q.x, p.y - q.y) / d.d0));
+      const mp = [(d.m0[0] - d.z.x) / d.z.k, (d.m0[1] - d.z.y) / d.z.k];
+      SK.Z = skClamp({ k, x: m[0] - mp[0] * k, y: m[1] - mp[1] * k }); skZoom(); return;
+    }
+    const dx = e.clientX - d.sx, dy = e.clientY - d.sy;
+    if (!d.moved) {
+      if (Math.hypot(dx, dy) < 6) return;
+      d.moved = true; skHideTip();
+      if (SK.Z.k > 1.01) { try { svg.setPointerCapture(e.pointerId); } catch (_) {} svg.classList.add("dragging"); }
+    }
+    if (d.z.k > 1.01) { const s = SK_W / svg.getBoundingClientRect().width; SK.Z = skClamp({ k: d.z.k, x: d.z.x + dx * s, y: d.z.y + dy * s }); skZoom(); }
+  });
+  const end = (e) => {
+    if (!SK.ptr.has(e.pointerId)) return;
+    SK.ptr.delete(e.pointerId);
+    const d = SK.drag;
+    if (e.type === "pointerup" && d && !d.pinch && !d.moved && d.id === e.pointerId) {
+      const id = skHit(e.clientX, e.clientY, e.pointerType === "mouse" ? 11 : 20, visIds());
+      if (id) { skHideTip(); skOpen(id); }
+    }
+    if (!SK.ptr.size) { SK.drag = null; svg.classList.remove("dragging"); }
+    else if (d && d.pinch) { const [id, p] = [...SK.ptr.entries()][0]; SK.drag = { id, sx: p.x, sy: p.y, moved: true, z: { ...SK.Z } }; }
+  };
+  svg.addEventListener("pointerup", end);
+  svg.addEventListener("pointercancel", end);
+  svg.addEventListener("pointerleave", (e) => { if (e.pointerType === "mouse") skHideTip(); });
+  svg.addEventListener("wheel", (e) => {
+    if (!e.ctrlKey && SK.Z.k <= 1.001) return;
+    e.preventDefault();
+    const [px, py] = skPt(e.clientX, e.clientY), { k, x, y } = SK.Z;
+    const nk = Math.max(1, Math.min(30, k * Math.exp(-e.deltaY * (e.ctrlKey ? 0.012 : 0.0025) * (e.deltaMode === 1 ? 16 : 1))));
+    SK.Z = skClamp({ k: nk, x: px - (px - x) * (nk / k), y: py - (py - y) * (nk / k) }); skZoom();
+  }, { passive: false });
+}
+function skOpen(id) { SK.sel = id; SK.all = false; openSheet("stock", { sk: id }); renderStockTab(); }
+
+function renderStockTab() {
+  if (!SK.built) { ensureStocking(); return; }
+  const vis = skVisible(), ids = new Set(vis.map((v) => v.w.id)), t0 = todayStr();
+  document.querySelectorAll("[data-sk]").forEach((b) => {
+    const set = SK[b.dataset.sk], v = b.dataset.sk === "reg" ? +b.dataset.v : b.dataset.v;
+    b.setAttribute("aria-pressed", String(set.has(v)));
+  });
+  vis.sort((a, b) => (a.next ? a.next[0] : "9999") .localeCompare(b.next ? b.next[0] : "9999") || a.w.n.localeCompare(b.w.n));
+  const n = vis.reduce((s, v) => s + v.n, 0), filtered = vis.length !== SK.W.length;
+  $("#sk-count").textContent = `${vis.length} water${vis.length === 1 ? "" : "s"} · ${n} dated stocking${n === 1 ? "" : "s"} ${SK.when === "all" ? "still to come" : "in that window"}` + (filtered ? "" : "");
+  const el = $("#sk-list");
+  if (!vis.length) setHTML(el, `<p class="tm-empty">Nothing matches. <button class="linkbtn" type="button" data-act="sk-clear">Clear the filters</button></p>`);
+  else setHTML(el, `<ul class="rows">${vis.map(({ w, next }) => {
+    const d = next ? skDays(t0, next[0]) : null;
+    const box = next
+      ? `<span class="sk-date"><span class="m">${MON3[parseD(next[0]).getMonth()]}</span><span class="d">${parseD(next[0]).getDate()}</span>${next[1] === "w" ? `<span class="w">week of</span>` : ""}</span>`
+      : `<span class="sk-date none"><span class="d">${w.mo.length ? "monthly" : "done"}</span></span>`;
+    const when = next ? (d === 0 ? "Today" : d === 1 ? "Tomorrow" : d < 15 ? "In " + d + " days" : "") : w.mo.length ? "Next: " + MON3[skNextMonth(w) - 1] : "";
+    return `<li><button class="sk-row" type="button" data-skw="${esc(w.id)}">${box}<span><span class="sk-nm">${esc(w.n)}</span><br><span class="sk-meta">${esc(w.c)} County · ${esc(w.t.join(", "))} · ${esc(w.sp.join(", "))}</span></span><span class="sk-in">${esc(when)}</span></button></li>`;
+  }).join("")}</ul>`);
+  skPaint(ids);
+}
+function stockSheetMarkup(id) {
+  const w = SK.WM.get(id);
+  if (!w) return sheetTop("Stocking") + `<div class="sh-scroll"><p class="muted">That water isn't on the schedule.</p></div>`;
+  const t0 = todayStr(), next = skNext(w);
+  const tags = w.t.map((t) => `<span class="sk-tag" style="color:${SK_COL[t]}">${esc(t)}</span>`).join("");
+  let head;
+  if (next) { const d = skDays(t0, next[0]); head = `<div class="sk-next"><span class="tm-cap">Next stocking</span><br><b>${next[1] === "w" ? "Week of " : ""}${esc(fmtD(next[0], { weekday: next[1] === "w" ? undefined : "long", month: "long", day: "numeric" }))}</b><br><span class="muted">${d === 0 ? "Today" : d === 1 ? "Tomorrow" : "In " + d + " days"}</span></div>`; }
+  else if (w.mo.length) head = `<div class="sk-next"><span class="tm-cap">Stocked monthly</span><br><b>Next: ${MON3[skNextMonth(w) - 1]}</b><br><span class="muted">TWRA lists months, not days, for this water.</span></div>`;
+  else head = `<div class="sk-next"><span class="tm-cap">Season</span><br><b>No more dated stockings</b></div>`;
+  const secs = w.t.map((t) => {
+    const ev = w.ev.filter((e) => e[2] === t), mo = w.mo.filter((m) => m[0] === t), tbd = w.tbd.filter((x) => x[0] === t);
+    if (!ev.length && !mo.length && !tbd.length) return "";
+    const up = ev.filter((e) => e[0] >= t0), long = ev.length > 12 && !SK.all;
+    const shown = long ? up.slice(0, 8) : ev;
+    const chips = shown.map((e) => `<span class="${e[0] < t0 ? "past" : ""} ${e[1] === "w" ? "wk" : ""}">${esc(fmtD(e[0], { month: "short", day: "numeric", year: e[0].slice(0, 4) === t0.slice(0, 4) ? undefined : "numeric" }))}</span>`).join("")
+      + mo.map((m) => m[1].map((x) => `<span>${MON3[x - 1]}</span>`).join("")).join("") + tbd.map((x) => `<span>TBD ${esc(x[1])}</span>`).join("");
+    return `<section class="sh-sec"><h3>${esc(t)}${ev.length && ev[0][1] === "w" ? " · weeks of" : ""}</h3><div class="sk-dates">${chips}</div>${long ? `<p><button class="linkbtn" type="button" data-act="sk-alldates">Show all ${ev.length} dates</button></p>` : ""}</section>`;
+  }).join("");
+  const maps = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(w.n.replace(/ TW /, " Tailwater ") + ", " + w.c.split("/")[0] + " County, Tennessee");
+  const canPost = !S.readOnly && isMember();
+  return sheetTop("Stocking · " + SK_REGION_LONG[w.r]) + `<div class="sh-scroll">
+    <div style="display:grid;gap:10px"><h2 style="font-size:1.8rem">${esc(w.n)}</h2><p class="muted">${esc(w.c)} County · ${esc(w.sp.join(", "))} trout</p><div class="sk-tags">${tags}</div></div>
+    ${head}
+    <div class="tool-row">${canPost ? `<button class="btn primary small" type="button" data-act="sk-post">${next ? "Post a trip for that day" : "Post a trip here"}</button>` : ""}<a class="btn ghost small" href="${maps}" target="_blank" rel="noopener">Open in Google Maps</a><button class="btn ghost small" type="button" data-act="sk-show">Show on the map</button></div>
+    ${secs}
+    <p class="hint">Dashed dates are stocking weeks, not exact days. Struck-through dates have passed. TWRA moves stockings for weather and water levels.</p>
+  </div>`;
+}
+function skPost() {
+  const w = SK.WM.get(S.sheet && S.sheet.sk), t0 = todayStr();
+  if (!w) return;
+  const n = skNext(w), day = n && n[0] >= t0 ? n[0] : undefined;
+  openSheet("form", day ? { day } : {});
+  const f = $("#f-water"); if (f && !f.value) f.value = w.n;
+}
+
 /* Species sheet */
 function fishSvg(x, caught) {
   const slash = x.group === "cutthroat" ? `<path d="M104,163 C124,172 146,178 166,180" fill="none" stroke="#7A2430" stroke-width="5" stroke-linecap="round"/>` : "";
@@ -2705,9 +3101,10 @@ function renderBanner(v) {
 }
 function renderTabs() {
   const fishOk = kinds() !== "hunt";
-  if (!fishOk && (S.tab === "flies" || S.tab === "trout")) S.tab = "upcoming";
+  if (!fishOk && (S.tab === "flies" || S.tab === "trout" || S.tab === "stock")) S.tab = "upcoming";
   $("#t-flies").hidden = !fishOk;
   $("#t-trout").hidden = !fishOk;
+  $("#t-stock").hidden = !fishOk;
   document.querySelectorAll(".tab[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === S.tab)));
   const tl = $(".tablist"), cur = $("#t-" + S.tab);
   if (tl && cur && tl.scrollWidth > tl.clientWidth) {
@@ -2715,8 +3112,8 @@ function renderTabs() {
     if (l < tl.scrollLeft || r > tl.scrollLeft + tl.clientWidth) tl.scrollLeft = Math.max(0, l - 16);
   }
   TABS.forEach((t) => { $("#v-" + t).hidden = t !== S.tab; });
-  $("#filters").hidden = S.tab === "flies" || S.tab === "trout";
-  const vh = $("#view-h"), vt = { upcoming: "Forthcoming Fixtures", logbook: "The Logbook", trout: "Trout of the World" }[S.tab];
+  $("#filters").hidden = S.tab === "flies" || S.tab === "trout" || S.tab === "stock";
+  const vh = $("#view-h"), vt = { upcoming: "Forthcoming Fixtures", logbook: "The Logbook", trout: "Trout of the World", stock: "Tennessee Trout Stocking" }[S.tab];
   vh.hidden = !vt; if (vt) vh.textContent = vt;
   $("#kind-chips").hidden = kinds() !== "both";
   document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === S.filter)));
@@ -2744,6 +3141,7 @@ function renderAll() {
     else if (S.tab === "logbook") renderLogbook();
     else if (S.tab === "flies") renderFliesTab();
     else if (S.tab === "trout") renderTroutTab();
+    else if (S.tab === "stock") renderStockTab();
   }
   renderBanner(v);
   if (S.sheet && S.sheet.mode === "trip") updateTripSheet();
@@ -2774,6 +3172,7 @@ function openSheet(mode, data = {}) {
   else if (mode === "created") body.innerHTML = createdMarkup(data);
   else if (mode === "species") body.innerHTML = speciesSheetMarkup(data.sp);
   else if (mode === "invite") body.innerHTML = inviteSheetMarkup();
+  else if (mode === "stock") body.innerHTML = stockSheetMarkup(data.sk);
   if (!dlg().open) { try { dlg().showModal(); } catch (e) { dlg().setAttribute("open", ""); } }
   const sc = $(".sh-scroll", body); if (sc) sc.scrollTop = 0;
   if (mode === "trip") updateTripSheet();
@@ -3161,6 +3560,10 @@ document.addEventListener("click", async (e) => {
   if (sp) { openSheet("species", { sp: sp.dataset.sp }); return; }
   const tb = e.target.closest("[data-tmb]");
   if (tb) { focusBoard(tb.dataset.tmb); return; }
+  const skw = e.target.closest(".sk-row[data-skw]");
+  if (skw) { skOpen(skw.dataset.skw); return; }
+  const skc = e.target.closest("[data-sk]");
+  if (skc) { const set = SK[skc.dataset.sk], v = skc.dataset.sk === "reg" ? +skc.dataset.v : skc.dataset.v; if (set.has(v)) set.delete(v); else set.add(v); renderStockTab(); return; }
   const tf = e.target.closest("[data-tmf]");
   if (tf) { TM.filter = tf.dataset.tmf; document.querySelectorAll("[data-tmf]").forEach((b) => b.setAttribute("aria-pressed", String(b === tf))); renderChecklist(); return; }
   const cr = e.target.closest(".club-row[data-club]");
@@ -3200,6 +3603,14 @@ document.addEventListener("click", async (e) => {
     case "invite": openSheet("invite"); break;
     case "inv-copy": { const pw = ($("#inv-pw") || {}).value || ""; copyText($("#inv-text").value, $("#inv-tools"), pw.trim() ? "Invite copied. Paste it into a text." : "Invite copied. Send the password separately."); break; }
     case "inv-share": { try { await navigator.share({ title: club().name, text: $("#inv-text").value }); } catch (err) { /* closed the share sheet */ } break; }
+    case "sk-zin": skStep(2); break;
+    case "sk-zout": skStep(0.5); break;
+    case "sk-all": SK.sel = null; skPaint(new Set(skVisible().map((v) => v.w.id))); skAnimate({ k: 1, x: 0, y: 0 }); break;
+    case "sk-retry": ensureStocking(); break;
+    case "sk-clear": SK.q = ""; SK.water = ""; SK.when = "all"; SK.reg.clear(); SK.typ.clear(); SK.spc.clear(); $("#sk-q").value = ""; $("#sk-water").value = ""; $("#sk-when").value = "all"; renderStockTab(); break;
+    case "sk-alldates": SK.all = true; openSheet("stock", { sk: S.sheet.sk }); break;
+    case "sk-post": skPost(); break;
+    case "sk-show": { const id = S.sheet && S.sheet.sk; closeSheet(); if (id) { SK.sel = id; renderStockTab(); skFly(id, 6); const m = $("#sk-map"); if (m) m.scrollIntoView({ block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" }); } break; }
     case "tm-zin": zoomStep(2); break;
     case "tm-zout": zoomStep(0.5); break;
     case "tm-world": TM.sel = null; if (TM.focus) { TM.focus = null; renderTroutTab(); } else paintMap(); animateTo({ k: 1, x: 0, y: 0 }); break;
@@ -3225,10 +3636,15 @@ dlg().addEventListener("close", () => { S.sheet = null; });
 $("#mine-toggle").addEventListener("change", (e) => { S.mine = e.target.checked; scheduleRender(); });
 document.addEventListener("input", (e) => {
   if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
+  else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockTab(); }
   else if (e.target.id === "inv-pw") updateInvite();
 });
+document.addEventListener("change", (e) => {
+  if (e.target.id === "sk-water") { SK.water = e.target.value; renderStockTab(); }
+  else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockTab(); }
+});
 let tmResize = 0;
-window.addEventListener("resize", () => { clearTimeout(tmResize); tmResize = setTimeout(() => { if (TM.built && S.tab === "trout") applyZoom(); }, 120); });
+window.addEventListener("resize", () => { clearTimeout(tmResize); tmResize = setTimeout(() => { if (TM.built && S.tab === "trout") applyZoom(); if (SK.built && S.tab === "stock") skZoom(); }, 120); });
 
 document.addEventListener("submit", async (e) => {
   const id = e.target.id;
@@ -3466,7 +3882,7 @@ async function boot() {
   loadSessions();
   const h = (location.hash || "").slice(1);
   let want = null, wantTab = null, wantTrip = null, m;
-  if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
+  if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout|stock))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
   else if ((m = /^trip-([a-z0-9-]{1,80})\.([a-z0-9]{1,40})$/.exec(h))) { want = m[1]; wantTrip = m[2]; }
   else if ((m = /^key-([a-z0-9-]{1,80})\.([A-Za-z0-9_-]{20,100})$/.exec(h))) {
     // A sign-in link from another device: keep the token, then drop it from the address bar.

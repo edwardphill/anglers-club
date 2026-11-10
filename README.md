@@ -9,15 +9,17 @@ Fishing and hunting trip calendars for clubs in any city. Anyone can start a clu
 - add trips to Google Calendar or copy a ready-made group text
 - send an invite (link plus password) from the Invite button at the top of the club
 
-Each club also has two tools built in:
+Each fishing club also has three tools built in:
 
 - **Fly Picker**: what's hatching on a given water and date.
 - **Trout Map**: a clickable world chart of all 115 entries on the Trout Species Map checklist (README v2, Appendix A). Each member logs catches (date, optional water name, private note) and the range fills in. Progress shows overall (81 countable species), by tier and by regional board, and the chart saves as a PNG. A member's life list is private to them, and no coordinates are stored.
+- **Stocking**: TWRA's 2026–27 Tennessee trout stocking schedule on a zoomable state chart. All 141 waters can be filtered by river, region, water type, species and timing (next 7, 14 or 30 days). Hover a pin for its next stocking. Tap one for every date, and post a trip for the day the truck comes.
 
 ## How it's built
 
 - `public/index.html`: the whole site, one page. It is generated; edit `src/` and run `npm run build`.
 - `src/club.html`: the page source. `src/trout-species.js` is the Trout Map checklist with approximate range circles; `src/trout-land.js` is the chart's coastlines and borders, already projected (Natural Earth 1:110m, public domain), and loads only when the tab opens. `scripts/make_trout_land.mjs` regenerates it. `src/flypicker/` holds the embedded Fly Picker, built from the main branch of [edwardphill/fly-picker](https://github.com/edwardphill/fly-picker). To pull in Fly Picker changes, run `python3 scripts/sync_flypicker.py ../fly-picker`, then `npm run build`.
+- `src/tn-stocking.js` is the Stocking tab's schedule and loads only when the tab opens. It is generated from `data/tn-stocking.csv` (TWRA's schedule, one row per stocking) and `data/tn-stocking-pins.csv` (a hand-placed pin for each water). For a new schedule, run `python3 scripts/make_tn_stocking.py schedule.numbers` (or a `.csv` with the same columns), then `npm run build`. The script stops if a water has no pin, so add a row to the pins file first.
 - `api/`: Vercel serverless functions.
   - `GET /api/clubs` lists clubs. `POST /api/clubs` starts one.
   - `POST /api/join` checks a club password.
