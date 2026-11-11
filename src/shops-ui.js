@@ -1,9 +1,9 @@
-// Fly shops in the page: the "From the shops" card in the Fly Picker's results, and one panel with
-// Messages, Shops and My shop. Inlined by scripts/build.mjs after the club script, so it can use the
+// Fly shops and guides in the page: the "From the shops" and "Guides" cards in the Fly Picker's results, and one panel with
+// Messages, Shops, Guides, My shop and the guide's own page. Inlined by scripts/build.mjs after the club script, so it can use the
 // page's own helpers (api, esc, S, toast, ensureIdentity, myName, todayStr, DATA).
 (function () {
   "use strict";
-  const SH = { tab: "messages", thread: null, threads: [], msgs: [], shops: null, mine: null, compose: null, draft: null, err: "", note: "", busy: false, unread: 0, last: null };
+  const SH = { tab: "messages", thread: null, threads: [], msgs: [], shops: null, guides: null, myGuide: null, mine: null, compose: null, draft: null, err: "", note: "", busy: false, unread: 0, last: null };
   let dlgEl = null, poll = null, badgeTimer = null, btn = null, cache = {};
 
   const sget = (op, q) => api("shops?" + new URLSearchParams({ op, ...(q || {}) }).toString());
@@ -13,18 +13,21 @@
   const rivers = () => (typeof DATA !== "undefined" && DATA.rivers ? Object.entries(DATA.rivers).map(([k, r]) => [k, r.name]) : []);
   const ageText = (d) => (d <= 0 ? "today" : d === 1 ? "yesterday" : d + " days ago");
   const where = (s) => [s.city, s.state].filter(Boolean).join(", ");
+  const TRIPS = { wade: "Wade trips", float: "Float trips", beginner: "Beginner lessons", family: "Kids and families", multiday: "Multi-day trips" };
+  const igUrl = (h) => "https://www.instagram.com/" + encodeURIComponent(h) + "/";
+  const igLinks = (hs) => (hs || []).map((h) => `<a href="${esc(igUrl(h))}" target="_blank" rel="noopener nofollow">@${esc(h)}</a>`).join(", ");
   const fliesText = (fl) => (fl || []).map((f) => f.name + (f.size ? " " + f.size : "")).join(", ");
 
   const css = `
-.sx-btn{font:500 .72rem/1 var(--caps);letter-spacing:.14em;text-transform:uppercase;background:none;border:1px solid var(--ink);color:var(--ink);padding:9px 12px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;flex:none}
+.sx-btn{font:500 .85rem/1 var(--caps);letter-spacing:0;background:var(--paper);border:1px solid var(--hair);border-radius:8px;color:var(--ink);padding:9px 12px;cursor:pointer;display:inline-flex;gap:8px;align-items:center;flex:none}
 .sx-btn:hover{border-color:var(--green);color:var(--green)}
 .sx-dot{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--oxblood);color:#fff;font:600 .68rem/1 var(--body);letter-spacing:0}
 .sx-tabs{display:flex;gap:18px;border-bottom:1px solid var(--hair);padding:0 22px;flex:none}
-.sx-tab{background:none;border:0;border-bottom:2px solid transparent;padding:12px 0 9px;font:500 .72rem/1 var(--caps);letter-spacing:.16em;color:var(--muted);cursor:pointer}
+.sx-tab{background:none;border:0;border-bottom:2px solid transparent;padding:12px 0 9px;font:500 .88rem/1 var(--caps);letter-spacing:0;color:var(--muted);cursor:pointer}
 .sx-tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink)}
 .sx-row{display:grid;grid-template-columns:1fr auto;gap:4px 12px;align-items:baseline;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--hair);padding:12px 0;cursor:pointer;color:var(--ink)}
 .sx-row:hover{background:var(--green-wash)}
-.sx-row .t{font:600 1.12rem/1.2 var(--serif)}
+.sx-row .t{font:600 1rem/1.25 var(--serif)}
 .sx-row .s{grid-column:1;color:var(--muted);font-size:.95rem}
 .sx-row .w{grid-column:2;grid-row:1;color:var(--muted);font-size:.85rem}
 .sx-bubbles{display:grid;gap:10px;align-content:start}
@@ -57,8 +60,8 @@
   async function open(tab, opts) {
     opts = opts || {};
     SH.err = ""; SH.note = "";
-    if (opts.compose || tab === "messages" || tab === "mine") {
-      const ok = await ensureIdentity(tab === "mine" ? "Sign in to manage your shop. Use the Google address the shop's invite was sent to." : "Add your name to message a shop. It's saved on this device.");
+    if (opts.compose || tab === "messages" || tab === "mine" || tab === "gprofile") {
+      const ok = await ensureIdentity(tab === "mine" ? "Sign in to manage your shop. Use the Google address the shop's invite was sent to." : tab === "gprofile" ? "Add your name to start your guide page. You'll sign in with Google to publish it." : "Add your name to message a shop or guide. It's saved on this device.");
       if (!ok) return;
     }
     SH.tab = tab; SH.thread = null; SH.compose = opts.compose || null; SH.draft = null;
@@ -71,11 +74,13 @@
   async function load() {
     try {
       if (signedIn()) {
-        const [t, m] = await Promise.all([sget("threads"), sget("mine")]);
-        SH.threads = t.threads; SH.mine = m;
+        const [t, m, g] = await Promise.all([sget("threads"), sget("mine"), sget("myguide")]);
+        SH.threads = t.threads; SH.mine = m; SH.myGuide = g;
         SH.unread = t.threads.filter((x) => x.unread).length; setBadge();
       }
-      if (SH.tab === "shops" || SH.compose) SH.shops = (await sget("shops")).shops;
+      const toGuide = SH.compose && SH.compose.kind === "guide";
+      if (SH.tab === "shops" || SH.tab === "gprofile" || (SH.compose && !toGuide)) SH.shops = (await sget("shops")).shops;
+      if (SH.tab === "guides" || toGuide) SH.guides = (await sget("guides")).guides;
     } catch (e) { SH.err = e.message; }
     paint();
   }
@@ -84,8 +89,9 @@
   function top() {
     const hasShop = SH.mine && (SH.mine.shops.length || SH.mine.admin);
     const tab = (k, label, extra) => `<button class="sx-tab" type="button" role="tab" data-sx="tab" data-tab="${k}" aria-selected="${SH.tab === k}">${label}${extra || ""}</button>`;
-    return `<div class="sh-top"><span class="lab">Fly shops</span><button class="icon-btn" type="button" data-sx="close" aria-label="Close">×</button></div>
-      <div class="sx-tabs" role="tablist">${tab("messages", "Messages", SH.unread ? ` <span class="sx-dot">${SH.unread}</span>` : "")}${tab("shops", "Shops")}${hasShop ? tab("mine", "My shop") : ""}</div>`;
+    const hasGuide = SH.myGuide && SH.myGuide.guide;
+    return `<div class="sh-top"><span class="lab">Shops and guides</span><button class="icon-btn" type="button" data-sx="close" aria-label="Close">×</button></div>
+      <div class="sx-tabs" role="tablist">${tab("messages", "Messages", SH.unread ? ` <span class="sx-dot">${SH.unread}</span>` : "")}${tab("shops", "Shops")}${tab("guides", "Guides")}${hasShop ? tab("mine", "My shop") : ""}${tab("gprofile", hasGuide ? "My guide page" : "I'm a guide")}</div>`;
   }
 
   function paint() {
@@ -96,17 +102,20 @@
     else if (SH.thread) inner = threadView();
     else if (SH.tab === "messages") inner = messagesView();
     else if (SH.tab === "shops") inner = shopsView();
+    else if (SH.tab === "guides") inner = guidesView();
+    else if (SH.tab === "gprofile") inner = guideFormView();
     else inner = mineView();
     el.innerHTML = top() + `<div class="sh-scroll">${SH.err ? `<p class="err" role="alert">${esc(SH.err)}</p>` : ""}${SH.note ? `<p class="sx-ok" role="status">${esc(SH.note)}</p>` : ""}${inner}</div>`;
     const sc = el.querySelector(".sh-scroll"); if (sc) sc.scrollTop = SH.thread ? sc.scrollHeight : y;
+    const gb = el.querySelector("#gd-g"); if (gb && typeof renderGoogleButton === "function") renderGoogleButton(gb);
   }
 
   function messagesView() {
-    if (!signedIn()) return `<p class="muted">Add your name to message a shop.</p>`;
-    if (!SH.threads.length) return `<p class="muted">No conversations yet. Ask a shop about its river report from the <button class="linkish" type="button" data-sx="tab" data-tab="shops">Shops</button> tab or the Fly Picker.</p>`;
+    if (!signedIn()) return `<p class="muted">Add your name to message a shop or guide.</p>`;
+    if (!SH.threads.length) return `<p class="muted">No conversations yet. Ask a shop about its river report from the <button class="linkish" type="button" data-sx="tab" data-tab="shops">Shops</button> tab or the Fly Picker, or message a guide from the <button class="linkish" type="button" data-sx="tab" data-tab="guides">Guides</button> tab.</p>`;
     return `<div>${SH.threads.map((t) => `<button class="sx-row" type="button" data-sx="thread" data-id="${esc(t.id)}">
       <span class="t">${esc(t.side === "shop" ? t.from + " → " + t.shop.name : t.shop.name)}${t.unread ? ` <span class="sx-dot" aria-label="unread">•</span>` : ""}</span>
-      <span class="w">${esc(ago(t.last))}</span><span class="s">${esc(t.subject)}${t.status === "closed" ? " · closed" : ""}</span></button>`).join("")}</div>`;
+      <span class="w">${esc(ago(t.last))}</span><span class="s">${esc(t.subject)}${t.kind === "guide" ? " · guide" : ""}${t.status === "closed" ? " · closed" : ""}</span></button>`).join("")}</div>`;
   }
 
   function threadView() {
@@ -127,9 +136,9 @@
   function composeView() {
     const c = SH.compose, s = c.shop;
     return `<div class="tool-row"><button class="btn ghost small" type="button" data-sx="back">← Back</button></div>
-      <div><h2 style="font-size:1.4rem">Message ${esc(s ? s.name : "the shop")}</h2>
+      <div><h2 style="font-size:1.4rem">Message ${esc(s ? s.name : c.kind === "guide" ? "the guide" : "the shop")}</h2>
         <p class="muted">${c.report ? esc(c.report.title) + " · " : ""}Replies come back here. Nobody's email or phone number is shared.</p></div>
-      <form class="f" id="sx-new" autocomplete="off"><label>Your message<textarea id="sx-new-text" rows="5" maxlength="2000" required placeholder="${c.report ? "e.g. Is the " + esc((c.report.hatches || [])[0] || "evening hatch") + " still going?" : "What would you like to ask?"}"></textarea></label>
+      <form class="f" id="sx-new" autocomplete="off"><label>Your message<textarea id="sx-new-text" rows="5" maxlength="2000" required placeholder="${c.report ? "e.g. Is the " + esc((c.report.hatches || [])[0] || "evening hatch") + " still going?" : c.kind === "guide" ? "e.g. Are you open this Saturday for two people on the float?" : "What would you like to ask?"}"></textarea></label>
         <div class="form-acts"><button class="btn primary" type="submit">Send</button></div></form>`;
   }
 
@@ -142,6 +151,69 @@
         ${s.about ? `<p>${esc(s.about)}</p>` : ""}
         ${s.rivers.length ? `<p class="muted">Covers ${esc(s.rivers.map(riverName).join(", "))}</p>` : ""}
         <div class="tool-row"><button class="btn primary small" type="button" data-sx="msg-shop" data-slug="${esc(s.slug)}">Message</button></div></div>`).join("")}</div>`;
+  }
+
+  // ---------- Guides ----------
+  function guideCard(g, withMsg) {
+    const rv = (g.rivers || []).map(riverName), places = [...rv, g.waters].filter(Boolean).join(", ");
+    const shopsTxt = (g.shops || []).map((x) => x.listed ? `<a href="/shops/${esc(x.slug)}">${esc(x.name)}</a>` : esc(x.name)).join(", ");
+    const tr = (g.trips || []).map((k) => TRIPS[k]).filter(Boolean).join(", ");
+    return `<div class="sx-card" style="margin-bottom:10px"><div><h3 style="font-size:1.2rem"><a href="/guides/${esc(g.slug)}">${esc(g.name)}</a></h3>
+      <p class="muted">${esc(where(g))}${g.instagrams.length ? (where(g) ? " · " : "") + igLinks(g.instagrams) : ""}</p></div>
+      <p>${esc(g.about)}</p>
+      ${places ? `<p class="muted">Guides on ${esc(places)}${tr ? " · " + esc(tr) : ""}</p>` : tr ? `<p class="muted">${esc(tr)}</p>` : ""}
+      ${shopsTxt ? `<p class="muted">Works with ${shopsTxt}</p>` : ""}
+      ${g.years || g.credentials ? `<p class="muted">${esc([g.years ? g.years + " years guiding" : "", g.credentials].filter(Boolean).join(" · "))} (self-reported)</p>` : ""}
+      ${withMsg ? `<div class="tool-row"><button class="btn primary small" type="button" data-sx="msg-guide" data-slug="${esc(g.slug)}">Message</button></div>` : ""}</div>`;
+  }
+
+  function guidesView() {
+    if (!SH.guides) return `<p class="muted">Loading guides…</p>`;
+    const mine = SH.myGuide && SH.myGuide.guide;
+    const intro = `<p class="hint">Guides list themselves here: where they guide, their Instagram, and the shops they work with. Message one to ask about a trip. They aren't verified by Anglers Club, so check the Instagram and ask the shop.</p>`;
+    const cta = mine ? "" : `<div class="tool-row"><button class="btn ghost small" type="button" data-sx="tab" data-tab="gprofile">I'm a guide: add my page</button></div>`;
+    if (!SH.guides.length) return intro + `<p class="muted">No guides are listed yet.</p>` + cta;
+    return intro + `<div>${SH.guides.map((g) => guideCard(g, !(mine && mine.id === g.id))).join("")}</div>` + cta;
+  }
+
+  const csvIg = (v) => String(v || "").split(/[\s,]+/).map((x) => x.trim()).filter(Boolean);
+  function guideFormView() {
+    const m = SH.myGuide;
+    if (!m) return `<p class="muted">Loading…</p>`;
+    if (!m.google) {
+      return `<p class="hint">Guide pages need a Google sign-in, so your page is tied to an account you can always get back into. Your name stays the same.</p>
+        <div id="gd-g" class="g-btn"></div>${S.gcid ? "" : `<p class="muted">Google sign-in isn't set up on this site yet.</p>`}`;
+    }
+    const g = m.guide || { name: "", city: "", state: "", website: "", instagrams: [], about: "", rivers: [], waters: "", trips: [], years: null, credentials: "", shops: [], status: "active" };
+    const listed = new Set((g.shops || []).filter((x) => x.listed).map((x) => x.slug));
+    const other = (g.shops || []).filter((x) => !x.listed).map((x) => [x.name, x.instagram ? "@" + x.instagram : ""].filter(Boolean).join(" | ")).join("\n");
+    const status = g.status === "paused" ? `<p class="hint">Your page is paused: it's off the site and nobody can start a message.</p>` : g.status === "hidden" ? `<p class="err">The site admin has hidden your page.</p>` : "";
+    let html = status;
+    html += `<form class="f" data-sx-form="guide_save" autocomplete="off">
+      <h2 style="font-size:1.4rem">${m.guide ? "Your guide page" : "Add yourself as a guide"}</h2>
+      ${m.guide ? `<p class="muted"><a href="/guides/${esc(g.slug)}">Public page</a></p>` : `<p class="hint">Anglers can find you in the Trip Planner, the Guides tab and a page search engines can read, and message you here. No email or phone number is shared.</p>`}
+      <label>Name or outfit<input name="name" maxlength="80" value="${esc(g.name)}" required></label>
+      <div class="sx-grid"><label>City<input name="city" maxlength="60" value="${esc(g.city)}"></label><label>State<input name="state" maxlength="2" value="${esc(g.state)}" placeholder="TN"></label></div>
+      <label>About your trips<span class="sub">A few sentences: what you run, who it's for, what's included.</span><textarea name="about" rows="4" maxlength="700" required>${esc(g.about)}</textarea></label>
+      <div class="lab-like"><span class="sub">Rivers you guide</span>${riverChecks(g.rivers)}</div>
+      <label>Other waters<span class="sub">Anything not listed above.</span><input name="waters" maxlength="160" value="${esc(g.waters)}"></label>
+      <div class="lab-like"><span class="sub">Trips</span><div class="sx-rivers">${Object.entries(TRIPS).map(([k, n]) => `<label><input type="checkbox" name="trips" value="${esc(k)}"${(g.trips || []).includes(k) ? " checked" : ""}> ${esc(n)}</label>`).join("")}</div></div>
+      <div class="sx-grid"><label>Website<input name="website" maxlength="200" value="${esc(g.website)}" placeholder="https://"></label>
+        <label>Instagram<span class="sub">Up to three, separated by commas. A profile link works.</span><input name="instagrams" value="${esc((g.instagrams || []).map((h) => "@" + h).join(", "))}"></label></div>
+      <div class="sx-grid"><label>Years guiding<input name="years" inputmode="numeric" maxlength="2" value="${g.years == null ? "" : esc(g.years)}"></label>
+        <label>License or credentials<span class="sub">Shown as self-reported.</span><input name="credentials" maxlength="140" value="${esc(g.credentials)}" placeholder="e.g. TN licensed, insured"></label></div>
+      <div class="lab-like"><span class="sub">Shops you work with</span>${(SH.shops || []).length ? `<div class="sx-rivers">${SH.shops.map((x) => `<label><input type="checkbox" name="shop_slug" value="${esc(x.slug)}"${listed.has(x.slug) ? " checked" : ""}> ${esc(x.name)}</label>`).join("")}</div>` : `<p class="muted">No shops are listed here yet.</p>`}</div>
+      <label>Other shops<span class="sub">One per line: name | Instagram (optional). Shown as not on Anglers Club.</span><textarea name="other_shops" rows="3">${esc(other)}</textarea></label>
+      <div class="form-acts"><button class="btn primary" type="submit">${m.guide ? "Save changes" : "Publish my page"}</button></div></form>`;
+    if (m.guide) {
+      html += `<div class="tool-row">${g.status === "hidden" ? "" : `<button class="btn ghost small" type="button" data-sx="gstatus" data-to="${g.status === "paused" ? "active" : "paused"}">${g.status === "paused" ? "Show my page again" : "Pause my page"}</button>`}
+        <button class="btn ghost small" type="button" data-sx="gdelete">Delete my page</button></div>`;
+    }
+    if (m.admin && m.all) {
+      html += `<section class="sx-card"><h2 style="font-size:1.2rem">All guides (admin)</h2>${m.all.map((x) => `<div class="sx-row" style="cursor:default"><span class="t">${esc(x.name)}</span><span class="w">${esc(x.status)}</span>
+        <span class="s">${esc(where(x))} · <button class="linkish" type="button" data-sx="ghide" data-guide="${esc(x.id)}" data-to="${x.status === "hidden" ? "active" : "hidden"}">${x.status === "hidden" ? "Show" : "Hide"}</button></span></div>`).join("") || `<p class="muted">None yet.</p>`}</section>`;
+    }
+    return html;
   }
 
   // ---------- My shop ----------
@@ -270,7 +342,8 @@
         await openThread(SH.thread.id); return;
       }
       if (form.id === "sx-new") {
-        const out = await spost("thread_start", { shop: SH.compose.slug, report: SH.compose.report ? SH.compose.report.id : "", message: form.querySelector("textarea").value });
+        const to = SH.compose.kind === "guide" ? { guide: SH.compose.slug } : { shop: SH.compose.slug, report: SH.compose.report ? SH.compose.report.id : "" };
+        const out = await spost("thread_start", { ...to, message: form.querySelector("textarea").value });
         SH.compose = null; SH.tab = "messages"; await load(); await openThread(out.id); return;
       }
       if (kind === "shop_create" || kind === "shop_update") {
@@ -279,6 +352,14 @@
         if (body.lat === "") delete body.lat; if (body.lon === "") delete body.lon;
         await spost(kind, body);
         SH.note = kind === "shop_create" ? "Shop listed." : "Saved."; await load(); return;
+      }
+      if (kind === "guide_save") {
+        const other = String(fd.get("other_shops") || "").split("\n").map((l) => l.trim()).filter(Boolean).map((l) => { const [name, instagram] = l.split("|").map((x) => (x || "").trim()); return { name, ...(instagram ? { instagram } : {}) }; });
+        const body = { name: fd.get("name"), city: fd.get("city"), state: fd.get("state"), about: fd.get("about"), rivers: fd.getAll("rivers"), waters: fd.get("waters"), trips: fd.getAll("trips"),
+          website: fd.get("website"), instagrams: csvIg(fd.get("instagrams")), years: fd.get("years"), credentials: fd.get("credentials"),
+          shops: [...fd.getAll("shop_slug").map((slug) => ({ slug })), ...other] };
+        await spost("guide_save", body);
+        SH.note = SH.myGuide && SH.myGuide.guide ? "Saved." : "Published. You're on the Guides tab, in the Trip Planner and on your own page."; SH.guides = null; await load(); return;
       }
       if (kind === "invite") { await spost("invite", { shop: form.dataset.shop, email: fd.get("email") }); SH.note = "Invite saved. They'll see the shop when they sign in with that address."; form.reset(); paint(); return; }
       if (kind === "report_save") {
@@ -313,11 +394,19 @@
     if (a === "photo") return; // handled by change
     try {
       if (a === "close") { dlgEl.close(); }
-      else if (a === "tab") { SH.tab = t.dataset.tab; SH.thread = null; SH.compose = null; SH.draft = null; SH.err = ""; SH.note = ""; paint(); if (SH.tab === "shops" && !SH.shops) load(); }
+      else if (a === "tab") {
+        SH.tab = t.dataset.tab; SH.thread = null; SH.compose = null; SH.draft = null; SH.err = ""; SH.note = "";
+        if (SH.tab === "gprofile" && !(await ensureIdentity("Add your name to start your guide page. You'll sign in with Google to publish it."))) return;
+        paint(); if ((SH.tab === "shops" && !SH.shops) || (SH.tab === "guides" && !SH.guides) || SH.tab === "gprofile") load();
+      }
       else if (a === "back") { SH.thread = null; SH.compose = null; clearInterval(poll); paint(); load(); }
       else if (a === "thread") await openThread(t.dataset.id);
       else if (a === "status") { await spost("thread_status", { id: SH.thread.id, status: t.dataset.to }); await openThread(SH.thread.id); }
       else if (a === "msg-shop") { const s = (SH.shops || []).find((x) => x.slug === t.dataset.slug); if (await ensureIdentity("Add your name to message a shop. It's saved on this device.")) { SH.compose = { slug: t.dataset.slug, shop: s, report: null }; paint(); } }
+      else if (a === "msg-guide") { const g = (SH.guides || []).find((x) => x.slug === t.dataset.slug); if (await ensureIdentity("Add your name to message a guide. It's saved on this device.")) { SH.compose = { kind: "guide", slug: t.dataset.slug, shop: g, report: null }; paint(); } }
+      else if (a === "gstatus") { await spost("guide_status", { status: t.dataset.to }); SH.guides = null; SH.note = t.dataset.to === "paused" ? "Paused." : "Your page is back on the site."; await load(); }
+      else if (a === "ghide") { await spost("guide_status", { guide: t.dataset.guide, status: t.dataset.to }); SH.guides = null; await load(); }
+      else if (a === "gdelete") { if (confirm("Delete your guide page and its messages? This can't be undone.")) { await spost("guide_delete", {}); SH.guides = null; SH.note = "Deleted."; await load(); } }
       else if (a === "cancel-draft") { SH.draft = null; paint(); }
       else if (a === "edit-report") {
         const s = SH.mine.shops.find((x) => x.id === t.dataset.shop), r = s && s.reports.find((x) => x.id === t.dataset.id);
@@ -332,7 +421,7 @@
   // ---------- unread badge ----------
   function setBadge() {
     if (!btn) return;
-    btn.innerHTML = `Shops${SH.unread ? ` <span class="sx-dot" aria-label="${SH.unread} unread">${SH.unread}</span>` : ""}`;
+    btn.innerHTML = `Shops &amp; guides${SH.unread ? ` <span class="sx-dot" aria-label="${SH.unread} unread">${SH.unread}</span>` : ""}`;
   }
   async function refreshUnread() {
     if (!signedIn()) { SH.unread = 0; setBadge(); return; }
@@ -343,7 +432,7 @@
     const show = view === "club" && typeof kinds === "function" && kinds() !== "hunt";
     if (!btn) {
       btn = document.createElement("button");
-      btn.className = "sx-btn"; btn.type = "button"; btn.id = "shop-btn"; btn.textContent = "Shops";
+      btn.className = "sx-btn"; btn.type = "button"; btn.id = "shop-btn"; btn.textContent = "Shops & guides";
       btn.addEventListener("click", () => open(SH.unread ? "messages" : "shops"));
       const me = document.getElementById("me-btn");
       if (me && me.parentNode) me.parentNode.insertBefore(btn, me);
@@ -360,7 +449,7 @@
 #shop-reports h2{margin:0}
 .shr{display:grid;grid-template-columns:120px 1fr;gap:14px;padding-top:14px;border-top:1px solid var(--line,#ddd)}
 .shr:first-of-type{border-top:0;padding-top:0}
-.shr-ph{display:block;background:#f4f1ea}
+.shr-ph{display:block;background:#F4F5F1}
 .shr-ph img{display:block;width:120px;height:120px;object-fit:cover}
 .shr h3{margin:0;font-size:1.08rem}
 .shr p{margin:4px 0}
@@ -412,5 +501,5 @@
     refresh();
   }
 
-  window.NacShops = { open, sync, attachFlyPicker };
+  window.NacShops = { open, sync, attachFlyPicker, refresh: () => { if (dlgEl && dlgEl.open) load(); else refreshUnread(); } };
 })();

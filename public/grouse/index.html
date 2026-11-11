@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ruffed Grouse in Tennessee — A Field Report</title><meta name="description" content="A field report on the range, decline and habitat of ruffed grouse in Tennessee: Christmas Bird Count history, eBird and GBIF sightings on a map, hunting prospects and sources.">
+<link rel="canonical" href="https://angler-club.vercel.app/grouse">
+<meta property="og:type" content="article"><meta property="og:site_name" content="Anglers Club"><meta property="og:title" content="Ruffed Grouse in Tennessee — A Field Report"><meta property="og:description" content="A field report on the range, decline and habitat of ruffed grouse in Tennessee: Christmas Bird Count history, eBird and GBIF sightings on a map, hunting prospects and sources."><meta property="og:url" content="https://angler-club.vercel.app/grouse">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Ruffed Grouse in Tennessee \u2014 A Field Report", "description": "A field report on the range, decline and habitat of ruffed grouse in Tennessee: Christmas Bird Count history, eBird and GBIF sightings on a map, hunting prospects and sources.", "inLanguage": "en-US", "author": {"@type": "Person", "name": "Edward Hill"}, "url": "https://angler-club.vercel.app/grouse", "license": "https://creativecommons.org/licenses/by/4.0/", "about": "Ruffed grouse (Bonasa umbellus) in Tennessee", "isBasedOn": "https://github.com/edwardphill/tn-grouse", "dateModified": "2026-05-25"}</script>
+<style>.nac-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid #d8d4c8;background:#fff;font:500 14px/1.2 Inter,system-ui,sans-serif}.nac-bar a{color:#16181a;text-decoration:none}.nac-bar nav{display:flex;gap:16px;flex-wrap:wrap}.nac-bar nav a{color:#4a4e52}.nac-bar nav a:hover,.nac-bar nav a[aria-current]{color:#16181a;text-decoration:underline}</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  :root{
+    --paper:#fbfaf6;
+    --paper-deep:#f4f1e8;
+    --ink:#16181a;
+    --ink-soft:#4a4e52;
+    --ink-mute:#6f7378;
+    --moss:#2f4a2a;
+    --moss-deep:#1d2e1a;
+    --rust:#a64822;
+    --rust-deep:#7a3416;
+    --gold:#b88a3d;
+    --rule:#d8d4c8;
+    --rule-strong:#1b1d1f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--paper);color:var(--ink);font-family:'Source Serif 4', Charter, Georgia, 'Times New Roman', serif;font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;font-feature-settings:"liga","kern","onum"}
+  body{min-height:100vh}
+
+  /* topographic background — removed in journal style */
+  .topo{display:none}
+
+  .wrap{max-width:1120px;margin:0 auto;padding:64px 32px 96px;position:relative;z-index:1}
+  /* Prose stays narrow even though the wrap is wide — only maps + stats span full width. */
+  .masthead, h1.title, .byline, .abstract, section, footer{max-width:740px;margin-left:auto;margin-right:auto}
+  .stats{max-width:1120px}
+
+  /* ───────── TITLE BLOCK ───────── */
+  .masthead{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--ink-mute);
+    padding-bottom:12px;margin-bottom:32px;border-bottom:1px solid var(--rule);
+    display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  }
+  .masthead .wip{display:none} /* drop the WIP pill */
+
+  h1.title{
+    font-family:'Source Serif 4', Charter, Georgia, serif;
+    font-weight:600;font-style:normal;
+    font-size:clamp(28px,4.2vw,40px);line-height:1.18;letter-spacing:-.005em;
+    margin:0 0 6px;color:var(--ink);
+  }
+  h1.title em{font-style:italic;font-weight:600;color:var(--ink)}
+  .subtitle{
+    font-family:'Source Serif 4', Charter, Georgia, serif;font-size:18px;
+    color:var(--ink-soft);font-style:normal;max-width:none;margin:0;
+    border:none;padding:0;line-height:1.5;
+  }
+  .byline{
+    font-family:'Inter',sans-serif;font-size:13px;color:var(--ink-soft);
+    margin-top:18px;letter-spacing:.01em;
+  }
+  .byline a{color:var(--ink-soft)}
+
+  /* abstract */
+  .abstract{
+    margin:36px 0 48px;padding:20px 0;
+    border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+    font-size:16px;line-height:1.6;color:var(--ink);
+  }
+  .abstract .lbl{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--ink-mute);margin-bottom:8px;font-weight:600;
+  }
+  .abstract p{margin:0;max-width:none}
+  .abstract p + p{margin-top:10px}
+
+  /* ───────── SUMMARY DATA STRIP ───────── */
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:24px;
+    border:none;margin:0 0 56px;
+    padding:0;
+  }
+  .stat{
+    padding:0;border:none;border-left:1px solid var(--rule);padding-left:14px;
+  }
+  .stat:first-child{border-left:none;padding-left:0}
+  .stat .num{
+    font-family:'Source Serif 4', Charter, Georgia, serif;font-weight:600;
+    font-size:26px;line-height:1.1;color:var(--ink);
+    margin-bottom:4px;letter-spacing:-.01em;
+  }
+  .stat .num .pct{color:var(--ink)}
+  .stat .lbl{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;
+    text-transform:none;color:var(--ink-mute);line-height:1.4;
+  }
+  @media(max-width:780px){
+    .stats{grid-template-columns:repeat(2,1fr);gap:18px}
+    .stat{border-left:none;padding-left:0;border-top:1px solid var(--rule);padding-top:10px}
+    .stat:first-child, .stat:nth-child(2){border-top:none;padding-top:0}
+  }
+
+  /* ───────── SECTIONS ───────── */
+  section{margin-bottom:48px;scroll-margin-top:32px}
+  .sec-num{
+    font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.04em;
+    color:var(--ink-mute);text-transform:none;margin-bottom:4px;font-weight:500;
+  }
+  h2{
+    font-family:'Source Serif 4', Charter, Georgia, serif;font-weight:600;
+    font-size:22px;line-height:1.25;color:var(--ink);
+    margin-bottom:16px;letter-spacing:-.005em;
+  }
+  h2 em{color:var(--ink);font-style:italic;font-weight:600}
+  h3{
+    font-family:'Source Serif 4', Charter, Georgia, serif;font-weight:600;
+    font-size:17px;color:var(--ink);margin:24px 0 6px;letter-spacing:0;
+  }
+  p{margin-bottom:12px;max-width:none}
+  p.lead{font-size:17px;line-height:1.6;color:var(--ink);max-width:none;margin-bottom:14px;font-weight:400}
+  a{color:var(--ink);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:2px;text-decoration-color:var(--rule)}
+  a:hover{text-decoration-color:var(--ink)}
+
+  /* blockquote (former pull) */
+  .pull{
+    font-family:'Source Serif 4', Charter, Georgia, serif;font-style:normal;font-weight:400;
+    font-size:15px;line-height:1.55;color:var(--ink-soft);
+    border-left:2px solid var(--rule);padding:0 0 0 16px;
+    margin:18px 0;max-width:none;
+  }
+  .pull cite{display:block;font-size:12px;font-style:normal;font-family:'Inter',sans-serif;
+    text-transform:none;letter-spacing:0;color:var(--ink-mute);margin-top:6px;}
+
+  /* ───────── FIGURE (MAP) ───────── */
+  .hero-map{margin:0 0 56px;padding:0}
+  .map-wrap{
+    background:transparent;border:1px solid var(--rule);
+    padding:20px;margin:0;box-shadow:none;
+  }
+  .fig-caption{
+    font-family:'Inter',sans-serif;font-size:13px;line-height:1.5;
+    color:var(--ink-soft);margin-top:10px;max-width:none;
+  }
+  .fig-caption .fig-label{font-weight:600;color:var(--ink);margin-right:4px}
+  .fig-caption em{font-style:italic}
+
+  /* Leaflet map */
+  .leaflet-map{
+    width:100%;height:560px;border:1px solid var(--rule);
+    background:var(--paper-deep);
+  }
+  .leaflet-map.compact{height:280px}
+  .map-svg{height:auto;max-height:480px}
+  .leaflet-popup-content-wrapper{
+    border-radius:0;background:var(--paper);color:var(--ink);
+    box-shadow:0 2px 8px rgba(0,0,0,.12);
+  }
+  .leaflet-popup-content{
+    font-family:'Inter',sans-serif;font-size:12px;line-height:1.5;margin:10px 12px;
+  }
+  .leaflet-popup-content b{font-family:'Source Serif 4', Charter, Georgia, serif;font-size:13px;font-weight:600;display:block;margin-bottom:2px}
+  .leaflet-popup-content .meta{color:var(--ink-mute);font-size:11px}
+  .leaflet-popup-tip{background:var(--paper)}
+  .leaflet-container a.leaflet-popup-close-button{color:var(--ink-mute)}
+  .leaflet-container{font-family:'Inter',sans-serif}
+  .leaflet-control-attribution{font-size:10px;background:rgba(251,250,246,.85)}
+  .wma-label{
+    font-family:'Inter',sans-serif;font-size:10px;font-weight:600;
+    color:var(--moss-deep);text-shadow:0 0 3px var(--paper),0 0 3px var(--paper),0 0 3px var(--paper);
+    white-space:nowrap;background:transparent;border:none;box-shadow:none;
+  }
+
+  /* TOP controls: year display left, slider right */
+  .map-controls{
+    display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center;
+    padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--rule);
+  }
+  @media(max-width:780px){
+    .map-controls{grid-template-columns:1fr;gap:20px}
+  }
+  .year-block{display:flex;flex-direction:column;gap:4px;min-width:130px}
+  .year-display{
+    font-family:'Source Serif 4', Charter, Georgia, serif;font-weight:600;font-size:32px;line-height:1;
+    color:var(--ink);letter-spacing:-.01em;
+  }
+  .year-meta{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0;text-transform:none;color:var(--ink-mute);line-height:1.4}
+
+  /* slider */
+  .slider-wrap{width:100%}
+  .slider-labels{display:flex;justify-content:space-between;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0;color:var(--ink-mute);margin-bottom:6px}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--ink-mute);
+    outline:none;cursor:pointer;border-radius:0;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:14px;height:14px;border-radius:50%;
+    background:var(--ink);border:none;cursor:grab;
+    box-shadow:none;
+  }
+  input[type=range]::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--ink);border:none;cursor:grab}
+
+  .control-row{
+    display:flex;justify-content:space-between;align-items:center;
+    margin-top:12px;flex-wrap:wrap;gap:10px;
+  }
+  .play-controls{display:flex;gap:6px;align-items:center}
+  .play-btn{
+    background:transparent;color:var(--ink);border:1px solid var(--ink);
+    padding:5px 12px;font-family:'Inter',sans-serif;font-size:12px;
+    letter-spacing:0;text-transform:none;cursor:pointer;font-weight:500;
+  }
+  .play-btn:hover{background:var(--ink);color:var(--paper)}
+  #resetBtn{border-color:var(--ink-mute);color:var(--ink-mute)}
+  #resetBtn:hover{background:var(--ink-mute);color:var(--paper)}
+
+  /* MAP: full-width SVG */
+  .map-svg{width:100%;height:auto;background:transparent;border:none;display:block}
+
+  /* BELOW the map: detections + legend */
+  .map-footer{
+    display:grid;grid-template-columns:1.2fr 1fr;gap:28px;
+    margin-top:18px;padding-top:18px;border-top:1px solid var(--rule);
+  }
+  @media(max-width:780px){
+    .map-footer{grid-template-columns:1fr;gap:18px}
+  }
+  .year-bar{display:flex;flex-direction:column;gap:5px}
+  .year-bar h4, .legend-block h4{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:8px;font-weight:600}
+  .bar-row{display:grid;grid-template-columns:130px 1fr 36px;align-items:center;gap:10px;font-size:13px}
+  .bar-row .name{font-family:'Inter',sans-serif;font-size:12px;color:var(--ink)}
+  .bar-track{height:8px;background:transparent;border:1px solid var(--rule);position:relative;overflow:hidden}
+  .bar-fill{height:100%;background:var(--ink);transition:width .25s ease}
+  .bar-fill.zero{background:transparent}
+  .bar-fill.dash{background:repeating-linear-gradient(45deg,var(--rule) 0,var(--rule) 3px,transparent 3px,transparent 6px)}
+  .bar-val{font-family:'Inter',sans-serif;font-size:12px;text-align:right;color:var(--ink-mute);font-variant-numeric:tabular-nums}
+  .bar-val.hit{color:var(--ink);font-weight:600}
+
+  .legend{display:flex;flex-direction:column;gap:6px;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0;text-transform:none;color:var(--ink-soft)}
+  .legend-dot{width:12px;height:12px;border-radius:50%;background:var(--rust);display:inline-block;vertical-align:middle;margin-right:8px}
+  .legend-dot.zero{background:transparent;border:1px solid var(--ink-mute);width:10px;height:10px}
+  .legend-dot.dash{background:repeating-linear-gradient(45deg,var(--rule) 0,var(--rule) 2px,transparent 2px,transparent 4px);width:12px;height:12px;border-radius:0}
+  .legend-dot.sight{background:var(--gold);border:1.5px solid var(--moss-deep);width:10px;height:10px;transform:rotate(45deg);border-radius:0}
+  .legend-dot.ebird{background:var(--moss);border:1px solid var(--moss-deep);width:9px;height:9px}
+  .legend-dot.gbif{background:#3b5773;border:1px solid #1f3045;width:9px;height:9px}
+  .legend-dot.reintro{background:var(--ink);border:1px solid var(--ink);width:9px;height:9px;border-radius:0}
+  .legend-dot.range{background:rgba(47,74,42,.14);border:1px dashed var(--moss-deep);width:14px;height:10px;border-radius:0}
+
+  .map-meta-line{
+    margin-top:12px;font-family:'Inter',sans-serif;font-size:11px;
+    letter-spacing:0;text-transform:none;color:var(--ink-mute);opacity:1;
+  }
+
+  /* layer toggles */
+  .layer-toggles{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .layer-toggle{
+    background:transparent;color:var(--ink-mute);border:1px solid var(--rule);
+    padding:4px 10px;font-family:'Inter',sans-serif;font-size:11px;
+    letter-spacing:0;text-transform:none;cursor:pointer;font-weight:500;
+    display:inline-flex;align-items:center;gap:7px;
+  }
+  .layer-toggle.on{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .layer-toggle .swatch{width:9px;height:9px;background:var(--gold);display:inline-block}
+  .layer-toggle.on .swatch{background:var(--paper)}
+
+  /* mode toggle (cumulative vs. year-only) — segmented control */
+  .mode-toggle{display:inline-flex;border:1px solid var(--rule);overflow:hidden}
+  .mode-btn{
+    background:transparent;color:var(--ink-mute);border:none;
+    padding:4px 12px;font-family:'Inter',sans-serif;font-size:11px;
+    letter-spacing:0;text-transform:none;cursor:pointer;font-weight:500;
+    border-right:1px solid var(--rule);
+  }
+  .mode-btn:last-child{border-right:none}
+  .mode-btn.on{background:var(--ink);color:var(--paper)}
+  .mode-btn:hover:not(.on){background:var(--paper-deep);color:var(--ink)}
+
+  /* ───────── 2-column flow ───────── */
+  .twocol{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  @media(max-width:780px){.twocol{grid-template-columns:1fr;gap:18px}}
+
+  /* WMA entries — list style, not cards */
+  .wma-grid{display:flex;flex-direction:column;gap:0}
+  .wma{
+    background:transparent;border:none;border-top:1px solid var(--rule);padding:20px 0 4px;
+    position:relative;
+  }
+  .wma:last-child{border-bottom:1px solid var(--rule);padding-bottom:20px}
+  .wma .rank{
+    position:static;background:transparent;color:var(--ink-mute);
+    padding:0;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;font-weight:600;
+    text-transform:uppercase;display:block;margin-bottom:4px;
+  }
+  .wma.top{border-top-color:var(--rule)}
+  .wma.top .rank{color:var(--ink)}
+  .wma h3{margin:0 0 4px;font-size:17px;font-weight:600}
+  .wma .meta{font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0;color:var(--ink-mute);text-transform:none;margin-bottom:10px}
+  .wma p{font-size:15px;margin-bottom:8px;line-height:1.55}
+  .wma ul{font-size:15px;margin-left:18px;margin-bottom:8px}
+  .wma li{margin-bottom:4px}
+
+  /* habitat entries */
+  .habitat-block{background:transparent;padding:0;border:none;margin-bottom:16px}
+  .habitat-block h3{margin-top:0;color:var(--ink);font-style:italic;font-weight:600;font-size:16px}
+  .habitat-block p{font-size:15px;line-height:1.6}
+
+  /* recommendation paragraph — formal in-prose */
+  .rec-callout{
+    background:transparent;color:var(--ink);padding:14px 16px;margin:14px 0 20px;
+    display:block;border:1px solid var(--rule);border-left:3px solid var(--ink);
+    position:static;overflow:visible;
+  }
+  .rec-callout::before{display:none}
+  .rec-callout .badge{
+    font-family:'Inter',sans-serif;font-size:11px;letter-spacing:.04em;
+    text-transform:uppercase;background:transparent;color:var(--ink-mute);
+    padding:0;display:block;white-space:normal;margin-bottom:4px;font-weight:600;
+  }
+  .rec-callout .rec-body h3{
+    color:var(--ink);font-family:'Source Serif 4', Charter, Georgia, serif;font-weight:600;font-size:16px;
+    margin:0 0 4px 0;
+  }
+  .rec-callout .rec-body p{color:var(--ink);margin:0;font-size:15px;max-width:none;line-height:1.55}
+  .rec-callout .rec-body em{color:var(--ink);font-style:italic}
+  @media(max-width:640px){
+    .rec-callout{display:block}
+  }
+
+  /* references list */
+  .links{list-style:none;padding:0}
+  .links li{
+    padding:10px 0;border-bottom:1px solid var(--rule);
+    display:block;
+  }
+  .links li:last-child{border-bottom:none}
+  .links li > div:first-child{margin-bottom:2px}
+  .links .meta{font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0;color:var(--ink-mute);text-transform:none;display:inline-block;margin-left:8px}
+  .links strong{font-weight:600}
+  .links strong a{font-weight:600}
+
+  /* footer */
+  footer{
+    margin-top:72px;padding-top:24px;border-top:1px solid var(--rule);
+    font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0;
+    text-transform:none;color:var(--ink-mute);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  }
+
+  .note{
+    background:transparent;border:none;border-left:2px solid var(--rule);
+    padding:0 0 0 16px;font-size:14px;color:var(--ink-soft);margin:16px 0;
+    font-style:normal;line-height:1.55;
+  }
+  .note strong{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+<div class="nac-bar"><a href="/" style="font-weight:600">Anglers Club</a><nav aria-label="Anglers Club"><a href="/rivers">Rivers</a><a href="/shops">Shops</a><a href="/guides">Guides</a><a href="/dove-fields">Dove fields</a><a href="/grouse" aria-current="page">Grouse</a></nav></div>
+
+<div class="topo"></div>
+<div class="wrap">
+
+  <!-- Masthead -->
+  <div class="masthead">
+    <div>Field Report</div>
+    <div>Tennessee, USA</div>
+    <div>Updated <span id="today">25 May 2026</span></div>
+  </div>
+
+  <h1 class="title">Ruffed Grouse (<em>Bonasa umbellus</em>) in Tennessee: a field report on range, decline, and contemporary habitat</h1>
+  <div class="byline">Edward Hill · <a href="mailto:edward@fisherguiding.com">edward@fisherguiding.com</a></div>
+
+  <!-- Abstract -->
+  <div class="abstract">
+    <div class="lbl">Abstract</div>
+    <p>The ruffed grouse (<em>Bonasa umbellus</em>) reaches the southern limit of its breeding range in Tennessee. Once distributed across East and most of Middle Tennessee, naturally occurring populations are now restricted to the Cumberland Plateau and the higher ridges and mountains of East Tennessee. We synthesize Christmas Bird Count detections across ~46 active Tennessee circles over 1966–2024 — within which ruffed grouse were recorded on only nine occasions, at six circles — together with TWRA Watchable Wildlife range and harvest figures, the Eastern Grouse Working Group's 2020 regional decline assessment (−71% in the Southern Appalachians since 1989), eBird observations from 2016 onward, and recent field sightings to characterize the bird's contemporary distribution and identify the most promising candidate sites for further survey on the Cumberland Plateau.</p>
+  </div>
+
+  <!-- Summary data strip -->
+  <div class="stats">
+    <div class="stat">
+      <div class="num"><span class="pct">−71%</span></div>
+      <div class="lbl">Southern Appalachian decline since 1989 (RGS/EGWG)</div>
+    </div>
+    <div class="stat">
+      <div class="num">9</div>
+      <div class="lbl">CBC detections of ruffed grouse, at only 6 of ~46 active TN circles, 1966–2024</div>
+    </div>
+    <div class="stat">
+      <div class="num">50,000</div>
+      <div class="lbl">Birds harvested by 21,000 hunters, 1989–90 season (<a href="https://www.tnwatchablewildlife.org/details.cfm?sort=aounumber&amp;typename=TENNESSEE'S&amp;uid=09042710125597732&amp;commonname=Ruffed+Grouse" target="_blank">TN Watchable Wildlife</a>)</div>
+    </div>
+    <div class="stat">
+      <div class="num">3</div>
+      <div class="lbl">Daily bag limit, 2025–26 season (Oct 11 – Feb 28)</div>
+    </div>
+  </div>
+
+  <!-- ───────── HERO FIGURE: INTERACTIVE MAP ───────── -->
+  <figure class="hero-map" aria-labelledby="hero-map-caption">
+    <div class="map-wrap">
+      <div class="map-controls">
+        <div class="year-block">
+          <div class="year-display" id="yearDisplay">2021</div>
+          <div class="year-meta" id="yearMeta">Total birds detected: 2</div>
+        </div>
+
+        <div class="slider-wrap">
+          <div class="slider-labels">
+            <span>1966</span>
+            <span>1990</span>
+            <span>2024</span>
+          </div>
+          <input type="range" id="yearSlider" min="1966" max="2024" value="2021" step="1">
+          <div class="control-row">
+            <div class="play-controls">
+              <button class="play-btn" id="playBtn">Play</button>
+              <button class="play-btn" id="resetBtn">Reset</button>
+            </div>
+            <div class="layer-toggles">
+              <button class="layer-toggle on" id="cbcToggle"><span class="swatch"></span>CBC Counts</button>
+              <button class="layer-toggle on" id="sightToggle"><span class="swatch" style="background:var(--gold);transform:rotate(45deg)"></span>Field Sightings</button>
+              <button class="layer-toggle on" id="ebirdToggle" disabled style="opacity:.5"><span class="swatch" style="background:var(--moss);border-radius:50%"></span>eBird <span id="ebirdCount" style="opacity:.7"></span></button>
+              <button class="layer-toggle on" id="gbifToggle" disabled style="opacity:.5"><span class="swatch" style="background:#3b5773;border-radius:50%"></span>GBIF <span id="gbifCount" style="opacity:.7"></span></button>
+            </div>
+          </div>
+          <div class="control-row" style="margin-top:8px;justify-content:flex-end">
+            <div class="mode-toggle" role="group" aria-label="Display mode">
+              <button class="mode-btn on" id="modeCumulative" data-mode="cumulative">Cumulative through year</button>
+              <button class="mode-btn" id="modeYearOnly" data-mode="year-only">Selected year only</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <svg class="map-svg" viewBox="0 60 680 250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#d8d4c8" stroke-width=".5" opacity=".4"/>
+          </pattern>
+          <path id="tn-outline" d="M523.4,80.9L539.6,81.4L555.8,81.4L580.0,81.4L589.9,81.3L609.4,81.2L614.3,81.2L615.4,81.1L617.6,81.3L619.8,81.3L635.6,81.4L656.6,79.0L652.1,89.0L652.7,92.1L652.9,92.8L652.7,93.7L652.8,94.2L653.0,94.9L651.7,100.3L650.4,114.8L646.2,113.9L641.4,115.4L635.7,124.9L625.0,146.0L621.3,145.9L620.0,140.2L613.7,141.2L613.5,141.6L605.4,144.7L603.7,145.9L600.4,150.4L595.2,161.1L593.4,163.2L586.2,163.6L585.6,152.5L580.9,153.9L574.0,163.3L567.0,166.3L564.1,170.0L560.5,187.1L558.1,190.0L550.5,189.8L539.5,197.1L539.3,200.3L525.3,211.4L522.7,216.0L511.1,217.4L502.6,217.8L488.3,231.4L487.7,231.0L484.8,236.1L482.2,245.9L482.5,249.1L483.1,253.2L477.7,259.6L476.0,259.2L469.4,257.1L463.6,262.5L462.3,280.1L456.0,293.9L439.5,293.9L428.2,294.0L425.7,294.0L424.9,294.0L422.2,294.0L415.9,294.0L413.3,294.0L398.7,294.2L395.9,294.2L395.0,294.3L392.5,294.3L390.3,294.4L389.3,294.4L367.7,294.4L348.8,293.9L309.9,293.5L300.3,293.6L295.9,293.5L290.7,293.4L289.5,293.4L281.7,293.4L277.8,293.4L275.9,293.4L267.9,293.1L265.0,293.0L249.5,292.4L244.0,292.2L238.0,292.1L235.1,292.0L217.4,291.9L214.7,291.8L210.5,291.7L203.7,291.6L202.2,291.6L194.0,291.5L174.3,292.9L165.1,292.9L135.5,293.0L109.7,293.1L94.1,293.1L72.9,293.0L58.0,293.1L24.3,292.9L32.7,284.2L36.5,274.5L40.3,276.7L42.2,273.7L41.2,262.5L38.4,258.5L35.3,257.6L34.9,253.2L38.5,252.1L40.1,240.3L34.8,242.8L34.6,236.5L41.5,229.8L42.6,231.7L44.3,228.7L44.8,218.9L51.7,221.8L54.9,206.0L51.5,204.2L50.1,195.3L53.8,191.9L59.9,192.2L68.6,182.0L65.2,179.5L63.4,177.0L64.7,173.7L69.7,173.6L67.3,163.4L69.5,156.7L74.3,145.6L76.7,140.9L74.8,136.2L69.4,126.6L76.9,128.4L80.8,124.2L79.4,123.2L74.6,117.2L75.3,114.9L79.0,115.3L82.0,113.9L82.0,97.1L83.5,94.1L83.9,96.6L85.5,99.5L88.6,96.2L92.0,93.8L94.6,93.4L99.5,93.0L108.0,93.2L113.3,93.4L117.4,93.4L119.9,93.5L131.9,93.4L132.5,93.4L138.3,93.4L150.7,93.6L155.2,93.6L157.2,93.7L159.8,93.7L168.7,93.8L189.0,94.2L190.1,92.0L189.6,80.2L187.7,70.2L203.6,76.2L219.1,75.6L234.0,75.2L240.5,75.1L245.3,75.1L249.0,75.0L257.5,75.0L272.7,74.5L279.1,74.3L283.1,74.1L294.7,73.7L304.3,73.7L304.7,73.7L322.6,75.2L323.1,75.2L324.4,75.4L336.1,76.5L340.6,76.8L371.5,78.5L377.4,78.4L391.7,77.1L405.5,77.7L422.1,79.7L428.0,80.2L485.7,82.0L507.4,82.9L508.9,80.5L523.4,80.9Z"/>
+        </defs>
+        <rect x="0" y="60" width="680" height="250" fill="url(#grid)"/>
+        <use href="#tn-outline" fill="#f4f1e8" stroke="#4a4e52" stroke-width="1"/>
+
+        <text x="595" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" fill="#1d2e1a" opacity=".6">Smokies</text>
+        <text x="80" y="240" font-family="Source Serif 4, Charter, Georgia, serif" font-style="italic" font-size="11" fill="#4a4e52" opacity=".6">West TN</text>
+        <text x="240" y="240" font-family="Source Serif 4, Charter, Georgia, serif" font-style="italic" font-size="11" fill="#4a4e52" opacity=".6">Middle TN</text>
+        <text x="500" y="105" font-family="Source Serif 4, Charter, Georgia, serif" font-style="italic" font-size="11" fill="#4a4e52" opacity=".7">East TN</text>
+
+        <g id="svgCircles"></g>
+        <g id="svgEbird"></g>
+        <g id="svgGbif"></g>
+        <g id="svgSightings"></g>
+        <g id="svgReintro"></g>
+        <g id="svgLabels"></g>
+
+        <g transform="translate(40,90)">
+          <text font-family="Source Serif 4, Charter, Georgia, serif" font-style="italic" font-size="13" fill="#4a4e52" opacity=".7">N ↑</text>
+        </g>
+        <g transform="translate(560,290)">
+          <line x1="0" y1="0" x2="60" y2="0" stroke="#3a4a3e" stroke-width="1.5" opacity=".6"/>
+          <line x1="0" y1="-3" x2="0" y2="3" stroke="#3a4a3e" stroke-width="1.5" opacity=".6"/>
+          <line x1="60" y1="-3" x2="60" y2="3" stroke="#3a4a3e" stroke-width="1.5" opacity=".6"/>
+          <text x="30" y="14" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" fill="#4a4e52" opacity=".75">~50 mi</text>
+        </g>
+      </svg>
+
+      <div class="map-footer">
+        <div class="year-bar" id="yearBar">
+          <h4>Detections this year</h4>
+        </div>
+        <div class="legend-block">
+          <h4>Legend</h4>
+          <div class="legend">
+            <span><span class="legend-dot"></span>CBC bird(s) detected</span>
+            <span><span class="legend-dot zero"></span>Counted, no birds</span>
+            <span><span class="legend-dot dash"></span>No count that year</span>
+            <span><span class="legend-dot sight"></span>Field sighting / reported</span>
+            <span><span class="legend-dot ebird"></span>eBird observation (size ≈ count)</span>
+            <span><span class="legend-dot gbif"></span>GBIF (non-eBird): iNat, GBBC, USGS, museum specimens</span>
+            <span><span class="legend-dot reintro"></span>Reintroduction release (■) and source (□) sites, 1985–86</span>
+          </div>
+          <div class="map-meta-line">Tennessee Audubon CBC, ruffed grouse, 1966–2024.</div>
+        </div>
+      </div>
+    </div>
+    <figcaption class="fig-caption" id="hero-map-caption">
+      <span class="fig-label">Figure 1.</span>
+      Schematic time view: detections of ruffed grouse at the six Tennessee Christmas Bird Count circles where the species was ever recorded (1966–2024). Approximately 46 TN CBC circles were active over this period; the remaining 40 circles, mostly in West and lower-elevation Middle Tennessee, never recorded a ruffed grouse and are omitted from this figure. Field sightings, eBird observations, and GBIF (non-eBird) records — including iNaturalist research-grade observations, Great Backyard Bird Count, USGS Bird Phenology Program records (back to 1921), and museum specimens (back to 1907) — are overlaid. eBird point size scales with the count field (more birds in a single observation → larger circle). Advance the year slider or use the auto-play control to scrub through time. Hover any marker for year and coordinates.
+    </figcaption>
+  </figure>
+
+  <figure class="hero-map" aria-labelledby="detail-map-caption">
+    <div id="detailMap" class="leaflet-map"></div>
+    <figcaption class="fig-caption" id="detail-map-caption">
+      <span class="fig-label">Figure 2.</span>
+      Pan-and-zoom detail map on USGS National Map topographic tiles, with cities, roads, and public-land tinting from the basemap. All ruffed grouse observations (CBC, eBird, field sightings, and GBIF non-eBird sources) are shown together, without time filtering. The 1985–86 reintroduction sites (Kalla and Dimmick 1987) are also overlaid: a filled black square marks the Cuba Landing release on the Western Highland Rim; open squares mark the Bays Mountain Park and HAAP source trapping sites in northeast Tennessee. Candidate Wildlife Management Areas and state forests are outlined as approximate circles sized by acreage. Hover any marker for year and coordinates; click for full detail including dataset and observer.
+    </figcaption>
+  </figure>
+
+  <!-- ───────── RANGE ───────── -->
+  <section id="range">
+    <div class="sec-num">1.</div>
+    <h2>Historical and contemporary range</h2>
+    <p class="lead">
+      The species' historical Tennessee range covered East and most of Middle Tennessee, reaching west into the Western Highland Rim. Naturally occurring populations are now restricted to the Cumberland Plateau and the higher ridges and mountains of East Tennessee.
+    </p>
+    <p>
+      The ruffed grouse breeding range extends from central Alaska across forested Canada and south along the Appalachian Mountains to northern Georgia; Tennessee sits at the southern edge of that range. TWRA's effort to reestablish a population on the Western Highland Rim has been described by the agency as "marginally successful." The most documented attempt was a 1985–86 release of 36 birds at Cuba Landing in Humphreys County, with source birds trapped at Bays Mountain Park and the Holston Army Ammunition Plant in northeast Tennessee. Two breeding-season drumming activity centers were established by spring 1986 and four by spring 1987, indicating short-term persistence on the Western Highland Rim (Kalla and Dimmick 1987). Earlier attempts in 1978 and 1979 failed (White and Dimmick 1978; Jones 1979), largely because release habitats were dominated by pole and sawtimber hardwoods with insufficient young-forest regeneration.
+    </p>
+    <div class="pull">
+      "The Ruffed Grouse is an uncommon permanent resident in East Tennessee and locally uncommon in Middle Tennessee."
+      <cite>TWRA Watchable Wildlife</cite>
+    </div>
+  </section>
+
+  <!-- ───────── INTERACTIVE MAP / SLIDER ───────── -->
+  <section id="numbers">
+    <div class="sec-num">2.</div>
+    <h2>Christmas Bird Count detections, 1966–2024</h2>
+    <p class="lead">
+      The Audubon Christmas Bird Count (CBC) is a citizen-science survey conducted on a fixed 15-mile-diameter circle, by the same observers, every December. Approximately 46 CBC circles have been active in Tennessee at some point between 1966 and 2024, covering West, Middle, and East Tennessee. Across these decades of state-wide counting, ruffed grouse were recorded on just nine occasions, at six circles — all of them on the Cumberland Plateau or in the high ridges and mountains of East Tennessee. The remaining 40 circles never recorded a ruffed grouse on any count, consistent with the species' contraction from its historical range.
+    </p>
+    <p>
+      Figure 1 (above) plots detections by year. Adjust the year slider to inspect individual years; a dashed bar indicates the count was not conducted that year. CBC counts represent winter occurrence and likely undercount a forest game bird that does not flock, but provide a reasonable presence-absence index across decades.
+    </p>
+    <div class="note">
+      <strong>Notes on the data.</strong> CBC circle coordinates are approximate centers of the 15-mile count circle. Allens Bridge is positioned near its sister circle Fish Springs based on shared count codes; the precise center may differ. CBC data source: TWRA Gamebird Reports (1966–2020), updated through 2024 from Audubon CBC public records. Field sightings (gold diamonds) are personal observations and forum-reported locations, included as anecdotal ground-truth rather than survey data.
+    </div>
+  </section>
+
+  <!-- ───────── DECLINE ───────── -->
+  <section id="decline">
+    <div class="sec-num">3.</div>
+    <h2>Regional decline</h2>
+    <p>
+      The Eastern Grouse Working Group's 2020 report, the most rigorous regional assessment available, found that ruffed grouse declined by at least 50% across the eastern United States over the prior two decades, and by 71% in the Southern Appalachians since 1989.
+    </p>
+    <p>
+      The primary driver is loss of young forest. National Forests in the Southern Appalachians currently contain approximately 1.3% young forest (trees 0–20 years old), well below what grouse require. The species depends on a mosaic of forest ages within a single home range, and that mosaic has been largely smoothed away by even-aged maturation and fire suppression.
+    </p>
+    <p>
+      TWRA describes the in-state population as "stable," and this may hold locally on the Plateau. However, stability at a depleted baseline is qualitatively different from a healthy population. The 1989–90 harvest of approximately 50,000 birds by 21,000 hunters (<a href="https://www.tnwatchablewildlife.org/details.cfm?sort=aounumber&amp;typename=TENNESSEE'S&amp;uid=09042710125597732&amp;commonname=Ruffed+Grouse" target="_blank">TN Watchable Wildlife</a>) is unlikely to be matched under current conditions. Hunter flush surveys can also be insensitive to local population declines because hunters return to known productive coverts rather than sampling new ones (Jones et al. 2005); a flat flush rate does not mean a stable population.
+    </p>
+    <div class="pull">
+      "Ruffed grouse have declined 71% since 1989 in the Southern Appalachians. At the same time, National Forests in the Southern Appalachians contain only 1.3% young forests."
+      <cite>Ruffed Grouse Society, Southern Appalachian Region</cite>
+    </div>
+    <h3>Population cycles relevant to interpretation</h3>
+    <p>
+      <em>The hare cycle.</em> In the northern range, grouse populations rise and fall with snowshoe hares on an approximately 8–11-year cycle as predators switch prey. This cycle is weak or absent in Tennessee, but predator pressure on small, fragmented populations remains a factor.
+    </p>
+    <p>
+      <em>The forest succession cycle.</em> A clearcut or controlled burn opens habitat that becomes prime grouse range at 10–20 years post-disturbance and ages out by approximately year 30. Without active management, the habitat clock runs down.
+    </p>
+  </section>
+
+  <!-- ───────── HABITAT ───────── -->
+  <section id="habitat">
+    <div class="sec-num">4.</div>
+    <h2>Habitat requirements</h2>
+    <p class="lead">
+      The species requires three forest age classes within a single home range; the highest-quality habitat occurs where these classes intersect (the "activity center").
+    </p>
+
+    <div class="habitat-block">
+      <h3>The 10–20 year class</h3>
+      <p>Densely stocked young hardwoods or mixed stands with stems of roughly wrist- to arm-thickness. Understory cover that permits a hen with chicks to move through while restricting raptor stoops. Rhododendron, mountain laurel, fruit brambles, blueberry, and farkleberry (<em>Vaccinium arboreum</em>) are indicator species; farkleberry thickets in particular were a dominant cover type at drumming sites on the Western Highland Rim (Kalla and Dimmick 1987), while mountain laurel tends to dominate at Cumberland Plateau sites (Longwitz 1985).</p>
+      <p>Concrete benchmarks from TN studies: understory stem density around drumming logs averaged ~14,800/ha on the Western Highland Rim (Kalla and Dimmick 1987) and ~33,000/ha on the Cumberland Plateau (Longwitz 1985). Overstory basal area at drumming sites ranged 6.3–17 m²/ha across TN; aspen regeneration of 14,000–20,000 stems/ha is the benchmark for prime drumming cover in Minnesota (Gullion 1977).</p>
+    </div>
+
+    <div class="habitat-block">
+      <h3>The 5–15 year class (early successional)</h3>
+      <p>Brushy seedling-sapling stands provide brood habitat. Field edges and openings with herbaceous cover support the insect populations that young birds require during their high-energy first weeks. In Tennessee, this stage is the most scarce and is actively managed on RGS focal areas.</p>
+    </div>
+
+    <div class="habitat-block">
+      <h3>The 25+ year class (mast and drumming)</h3>
+      <p>Mature, predominantly deciduous forest with oak, hickory, and beech provides hard mast through fall and winter. Drumming logs, typically downed trunks of ≥10 inches diameter, are used as display sites in successive springs.</p>
+    </div>
+
+    <h3>Comparative observations from other grouse states</h3>
+    <p><em>Minnesota — the activity center concept.</em> Northern-range research frames grouse habitat as three age classes (0–10 years, 10–25 years, 25+ years) that must coexist within a single home range. The intersection of the three age classes is termed the <em>activity center</em>. The practical implication for Tennessee scouting is that young forest alone is insufficient; the young forest must abut both early-successional cover and mature mast-producing trees.</p>
+    <p><em>Vermont — winter softwoods.</em> In the northern range, grouse dive into snow roosts on cold nights. In Vermont and at lower latitudes, when snow cover is lacking the birds shift to softwood stands (hemlock, spruce, pine) for protective cover and insulation. Tennessee winters rarely deliver deep, persistent snow, so this is relevant: shortleaf pine pockets and hemlock draws adjacent to hardwood feeding areas are probable winter refuges and worth noting on scouting maps.</p>
+
+    <h3>Reading the ground</h3>
+    <p>Edges where age classes meet are productive, particularly where a 10–20 year stand abuts a 25+ stand near water. Logging roads should be walked slowly. Pausing periodically (Hill, J.) pressures held birds to move and reveal themselves with peeps; the pause itself induces movement.</p>
+    <p>Drumming is the single best indicator of a holding population. In the southern Appalachians, drumming runs from mid-March through April and peaks around <strong>9–16 April</strong> — about two weeks earlier than the well-studied Minnesota/Wisconsin window (Jones et al. 2005). Even at peak, only 56–69% of males drum on any given morning; before peak (late March) the figure drops to ~20%. Suspend listening if winds exceed 13 km/h. Audibility radius is approximately 200 m, so a walked transect samples only a ~400 m wide swath. Drumming counts are a defensible <em>index</em> of population trends across years, but not a direct population estimate without supplemental telemetry.</p>
+  </section>
+
+  <!-- ───────── PLACES ───────── -->
+  <section id="places">
+    <div class="sec-num">5.</div>
+    <h2>Candidate field sites</h2>
+    <p class="lead">Four candidate areas on or near the Cumberland Plateau, ranked by current promise; all are within 2–3 hours of Nashville.</p>
+
+    <div class="rec-callout">
+      <div class="badge">Recommendation</div>
+      <div class="rec-body">
+        <h3>Primary recommendation: Catoosa WMA</h3>
+        <p>Catoosa offers approximately 5,000 acres of Plateau hardwoods, contiguous with approximately 4,000 acres at Lone Mountain State Forest, and an active Ruffed Grouse Society burn-and-cut project addressing the regional young-forest deficit. Forum-reported sightings near Lancing fall just to the north. For a single-weekend survey, this is the recommended starting point.</p>
+      </div>
+    </div>
+
+    <div class="wma-grid">
+      <div class="wma top">
+        <div class="rank">Site 1 — primary</div>
+        <h3>Catoosa WMA</h3>
+        <div class="meta">5,000 ac · Cumberland Plateau · 2h 20m from Nashville</div>
+        <p>Adjacent to Lone Mountain State Forest (~9,000 acres of contiguous habitat combined). Hosts a Ruffed Grouse Society habitat burn-and-cut project initiated in 2022. Forum reports of birds nearby in Lancing.</p>
+        <p>Active young-forest management is the single strongest predictor of grouse on the Plateau, and Catoosa has the most of it currently underway.</p>
+      </div>
+
+      <div class="wma top">
+        <div class="rank">Site 2</div>
+        <h3>Lone Mountain State Forest</h3>
+        <div class="meta">4,000 ac · Cumberland Plateau · 2h 45m from Nashville</div>
+        <p>Contiguous with Catoosa and part of the same RGS Dynamic Forest Restoration Block project. Treat as a single survey unit with Catoosa; cross-reference unit boundaries before opening day.</p>
+      </div>
+
+      <div class="wma">
+        <div class="rank">Site 3</div>
+        <h3>Standing Stone State Forest & WMA</h3>
+        <div class="meta">11,000 ac · Cumberland Plateau · 2h 10m from Nashville</div>
+        <p>Historical timber cutting and fire have produced a mixed-age mosaic. Stand-age distribution: 38% in 81+ years, 36% in 61–80 years, 11% in 41–60 years, 7% in 21–40 years, 7% under 20 years. The under-20 fraction is limited but present; the productive search area is where it abuts older stands.</p>
+        <p>Grouse presence currently unconfirmed; promising on paper, requires ground-truthing.</p>
+      </div>
+
+      <div class="wma">
+        <div class="rank">Site 4</div>
+        <h3>Pickett State Forest & WMA</h3>
+        <div class="meta">8,000 ac · Cumberland Plateau · 2h 45m from Nashville</div>
+        <p>Northern Plateau, near the Kentucky line. Requires scouting; potentially holds birds based on habitat type and adjacency to managed lands. Lowest data confidence of the four sites.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── HUNTING ───────── -->
+  <section id="hunting">
+    <div class="sec-num">6.</div>
+    <h2>Season regulations and field tactics</h2>
+    <div class="twocol">
+      <div>
+        <h3>Season (2025–26)</h3>
+        <p>October 11, 2025 – February 28, 2026. Daily bag limit: 3 birds. Statewide.</p>
+        <h3>License</h3>
+        <p>TN resident annual hunting license required. Confirm current pricing and any WMA-specific permits on the TWRA site before going.</p>
+      </div>
+      <div>
+        <h3>Field tactics</h3>
+        <ul style="margin-left:18px;margin-bottom:14px">
+          <li style="margin-bottom:6px">Walk edges where age classes meet. Pure mature timber holds drummers but typically not flushes.</li>
+          <li style="margin-bottom:6px">Pause every 30–40 yards; standing still pressures held birds to move and reveal themselves with peeps (Hill, J.).</li>
+          <li style="margin-bottom:6px">Walk logging roads in early morning for gravel and grit; birds work road edges at first light.</li>
+          <li style="margin-bottom:6px">Listen for drumming in spring along gated forest roads in the half-hour before sunrise; the southern-Appalachian peak is 9–16 April. Suspend if winds exceed 13 km/h. Audibility is ~200 m, so move slowly and cover ground over multiple mornings.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ───────── RESOURCES ───────── -->
+  <section id="resources">
+    <div class="sec-num">7.</div>
+    <h2>References and linked resources</h2>
+
+    <h3 style="margin-top:0">Combined dataset (download)</h3>
+    <ul class="links">
+      <li>
+        <div>
+          <strong><a href="/grouse/data/grouse_observations.csv" download>grouse_observations.csv</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">All three data sources combined into one CSV: CBC detections (1966–2024), eBird observations (2006–2026), and field sightings. Columns: source, date, year, location_name, lat, lng, count, notes. Regenerated by <code>scripts/build_grouse_csv.py</code> when the eBird snapshot refreshes.</div>
+        </div>
+        <span class="meta">CSV</span>
+      </li>
+      <li>
+        <div>
+          <strong><a href="/grouse/data/ebird_grouse_tn.json" download>ebird_grouse_tn.json</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">Raw eBird snapshot (normalized): observations from the eBird API 2.0 for ruffed grouse in TN, deduped by location, date, and count.</div>
+        </div>
+        <span class="meta">JSON</span>
+      </li>
+    </ul>
+
+    <h3>External references</h3>
+    <ul class="links">
+      <li>
+        <div>
+          <strong><a href="https://docs.google.com/document/d/1ungolqaamkR00Lxj-8oG0vwsUTFe2Ws2QPkVzNrE5rs/edit" target="_blank">Tennessee Grouse Field Notes</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">Habitat notes, sightings log, WMA scouting reports, OnX map references.</div>
+        </div>
+        <span class="meta">Google Doc</span>
+      </li>
+      <li>
+        <div>
+          <strong><a href="https://docs.google.com/spreadsheets/d/1yMCrK-RIjpkiTfWyF2tpVh5tIuFqNV_YZ8CKTEN5jYc/edit?gid=816720744" target="_blank">CBC Annual Species Totals (TN, 1966–2024)</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">Source data for the year-slider map above. Six TN Christmas Bird Count circles.</div>
+        </div>
+        <span class="meta">Google Sheet</span>
+      </li>
+      <li>
+        <div>
+          <strong><a href="https://www.tn.gov/twra/hunting/small-game-regulations.html" target="_blank">TWRA Small Game Regulations</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">Official season dates, bag limits, license requirements.</div>
+        </div>
+        <span class="meta">TWRA</span>
+      </li>
+      <li>
+        <div>
+          <strong><a href="https://ruffedgrousesociety.org/featured-habitat-project-dynamic-forest-restoration-on-the-cumberland-plateau-in-tennessee/" target="_blank">RGS Dynamic Forest Restoration — Cumberland Plateau</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">Ruffed Grouse Society's active habitat project at Catoosa / Lone Mountain.</div>
+        </div>
+        <span class="meta">RGS</span>
+      </li>
+      <li>
+        <div>
+          <strong><a href="https://ruffedgrousesociety.org/wp-content/uploads/2021/09/Status-of-Ruffed-Grouse_FINAL-1.pdf" target="_blank">Status of Ruffed Grouse (Eastern Grouse Working Group, 2020)</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">The 71% Southern Appalachian decline figure and regional CBC analysis come from this report.</div>
+        </div>
+        <span class="meta">PDF</span>
+      </li>
+      <li>
+        <div>
+          <strong><a href="https://ebird.org/map/rufgro" target="_blank">eBird Ruffed Grouse Sightings Map</a></strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">Live sighting map; filter to TN for current observations.</div>
+        </div>
+        <span class="meta">eBird</span>
+      </li>
+    </ul>
+
+    <h3>TN-specific scientific literature</h3>
+    <ul class="links">
+      <li>
+        <div>
+          <strong>Kalla, P. I. and R. W. Dimmick (1987). Evaluation of a Ruffed Grouse Reintroduction in Tennessee.</strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px"><em>Proc. Annu. Conf. Southeast. Assoc. Fish and Wildl. Agencies</em> 41:365–372. Source for the Cuba Landing 1985–86 release figures and Western Highland Rim drumming-log characteristics cited in §1 and §4.</div>
+        </div>
+        <span class="meta">SEAFWA</span>
+      </li>
+      <li>
+        <div>
+          <strong>Jones, B. C., C. A. Harper, D. A. Buehler, and G. S. Warburton (2005). Use of Spring Drumming Counts to Index Ruffed Grouse Populations in the Southern Appalachians.</strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px"><em>Proc. Annu. Conf. Southeast. Assoc. Fish and Wildl. Agencies</em> 59:135–143. Source for the 9–16 April drumming peak, the 200 m audibility radius, drumming intensity proportions, and the hunter-flush caveat cited in §3, §4, and §6.</div>
+        </div>
+        <span class="meta">SEAFWA</span>
+      </li>
+      <li>
+        <div>
+          <strong>Dimmick, R. W., J. D. Sole, W. G. Minser, and P. E. Hale (1998). Response of ruffed grouse to forest management in the southern Appalachian Mountains.</strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px"><em>Proc. Annu. Conf. Southeast. Assoc. Fish and Wildl. Agencies</em> 52:294–302. TN-specific study of grouse response to habitat manipulation; referenced as further reading on management response.</div>
+        </div>
+        <span class="meta">SEAFWA</span>
+      </li>
+      <li>
+        <div>
+          <strong>Longwitz, R. J. (1985). Some aspects of the ecology of ruffed grouse in unmanaged hardwood forests of the Cumberland Plateau, Tennessee.</strong>
+          <div style="font-size:13px;color:var(--ink-soft);margin-top:4px">M.S. Thesis, University of Tennessee, Knoxville. Source for the Cumberland Plateau understory density (~33,000 stems/ha) and basal area benchmarks cited in §4.</div>
+        </div>
+        <span class="meta">UT Thesis</span>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    <div>Source and data: <a href="https://github.com/edwardphill/tn-grouse">github.com/edwardphill/tn-grouse</a>. Shown here as part of Anglers Club.</div>
+    <div>Hill, E. (2026). Ruffed grouse in Tennessee: a field report. v0.5.</div>
+    <div>Last updated 25 May 2026.</div>
+  </footer>
+
+</div>
+
+<script>
+// ───────── DATA ─────────
+// CBC circles: name, code, approximate lat/lng (circle center)
+// Coordinate sources: Wikipedia + Google Places. Allens Bridge approximated near Fish Springs (sister code).
+const circles = [
+  { name:"Fish Springs",   code:"82042", lat:36.317, lng:-82.058, x:0, y:0 },
+  { name:"Allens Bridge",  code:"82041", lat:36.260, lng:-82.140, x:0, y:0 }, // approximate
+  { name:"Newfound Gap",   code:"82903", lat:35.611, lng:-83.425, x:0, y:0 },
+  { name:"Tellico",        code:"82902", lat:35.363, lng:-84.294, x:0, y:0 },
+  { name:"Mecca",          code:"82901", lat:35.300, lng:-84.320, x:0, y:0 },
+  { name:"Oliver Springs", code:"82034", lat:36.045, lng:-84.344, x:0, y:0 },
+];
+
+// Annual data parsed from TWRA Gamebird Reports (1966–2024).
+// Values: number = birds counted; null = count not conducted (dash); undefined = no data.
+// Years that don't appear for a circle = circle wasn't running that year.
+const data = {
+  "Fish Springs": {
+    range:[1966,2023],
+    counts:(()=>{
+      // most years 0, with single hit 1972; dashes in 1982, 1988, 1989, 1990, 2020, 2023
+      const c={};
+      for(let y=1966;y<=2023;y++) c[y]=0;
+      c[1972]=1;
+      [1982,1988,1989,1990,2020,2023].forEach(y=>c[y]=null);
+      return c;
+    })()
+  },
+  "Allens Bridge": {
+    range:[1966,2023],
+    counts:(()=>{
+      const c={};
+      for(let y=1966;y<=2023;y++) c[y]=0;
+      c[1985]=1;
+      [1995,1998,2000,2020,2023].forEach(y=>c[y]=null);
+      return c;
+    })()
+  },
+  "Tellico": {
+    range:[1995,2024],
+    counts:(()=>{
+      const c={};
+      for(let y=1995;y<=2024;y++) c[y]=0;
+      c[2005]=1;
+      [1996,2018,2020,2023,2024].forEach(y=>c[y]=null);
+      return c;
+    })()
+  },
+  "Mecca": {
+    range:[1994,2023],
+    counts:(()=>{
+      const c={};
+      for(let y=1994;y<=2023;y++) c[y]=0;
+      c[1997]=1; c[2004]=1; c[2019]=1;
+      [2020,2022,2023].forEach(y=>c[y]=null);
+      return c;
+    })()
+  },
+  "Newfound Gap": {
+    range:[1990,2024],
+    counts:(()=>{
+      const c={};
+      for(let y=1990;y<=2024;y++) c[y]=0;
+      c[2004]=1; c[2021]=2;
+      return c;
+    })()
+  },
+  "Oliver Springs": {
+    range:[1966,2022],
+    counts:(()=>{
+      const c={};
+      for(let y=1966;y<=2022;y++) c[y]=0;
+      c[1969]=1;
+      [2020].forEach(y=>c[y]=null);
+      return c;
+    })()
+  }
+};
+
+// Field sightings: personal observations + forum-reported locations.
+// Year is used to fade in/out as slider scrubs (sightings visible at their year and after).
+const sightings = [
+  { name:"OnX sighting 3/24/25", lat:36.0514, lng:-84.7395, year:2025, note:"Confirmed sighting · near Catoosa WMA" },
+  { name:"Lancing area", lat:36.116,  lng:-84.689,  year:2023, note:"Forum reports of birds · just north of Catoosa" },
+];
+
+// Historical reintroduction-program sites documented by Kalla & Dimmick (1987).
+// Cuba Landing is the 1985–86 release site on the Western Highland Rim;
+// Bays Mountain Park and HAAP were the NE-TN source trapping sites.
+const reintroSites = [
+  { name:"Cuba Landing release (1985–86)", role:"release", lat:35.952, lng:-87.853, year:1985,
+    note:"36 ruffed grouse released; 4 drumming activity centers documented by 1987 (Kalla & Dimmick 1987)" },
+  { name:"Bays Mountain Park (source)",    role:"source",  lat:36.499, lng:-82.621, year:1985,
+    note:"Source trapping site, fall 1985 (Kalla & Dimmick 1987)" },
+  { name:"Holston Army Ammunition Plant (source)", role:"source", lat:36.490, lng:-82.710, year:1986,
+    note:"Source trapping site, late winter 1986 (Kalla & Dimmick 1987)" },
+];
+
+// Candidate Wildlife Management Areas / state forests discussed in section 5.
+// Coordinates are approximate centroids; acres from TWRA / TN State Forests.
+const wmas = [
+  { name:"Catoosa WMA",            lat:36.0514, lng:-84.7395, acres:5000,  note:"Cumberland Plateau · RGS Dynamic Forest Restoration block (2022–)" },
+  { name:"Lone Mountain State Forest", lat:36.166, lng:-84.318, acres:4000,  note:"Cumberland Plateau · contiguous with Catoosa" },
+  { name:"Standing Stone SF & WMA",lat:36.466,  lng:-85.419, acres:11000, note:"Cumberland Plateau · mixed-age mosaic, mostly older stands" },
+  { name:"Pickett SF & WMA",       lat:36.553,  lng:-84.814, acres:8000,  note:"Northern Cumberland Plateau, near KY line" },
+];
+
+// ───────── DOM ─────────
+const slider = document.getElementById('yearSlider');
+const yearDisplay = document.getElementById('yearDisplay');
+const yearMeta = document.getElementById('yearMeta');
+const yearBar = document.getElementById('yearBar');
+const ebirdCountEl = document.getElementById('ebirdCount');
+const playBtn = document.getElementById('playBtn');
+const resetBtn = document.getElementById('resetBtn');
+const cbcToggle = document.getElementById('cbcToggle');
+const sightToggle = document.getElementById('sightToggle');
+const ebirdToggle = document.getElementById('ebirdToggle');
+const gbifToggle = document.getElementById('gbifToggle');
+const gbifCountEl = document.getElementById('gbifCount');
+const svgCirclesG = document.getElementById('svgCircles');
+const svgEbirdG = document.getElementById('svgEbird');
+const svgGbifG = document.getElementById('svgGbif');
+const svgSightingsG = document.getElementById('svgSightings');
+const svgReintroG = document.getElementById('svgReintro');
+const svgLabelsG = document.getElementById('svgLabels');
+
+let showCBC = true;
+let showSightings = true;
+let showEbird = true;
+let showGbif = true;
+let displayMode = 'cumulative';
+let ebirdObservations = [];
+let gbifObservations = [];
+
+// eBird marker radius scales with count (number of birds in a single observation).
+// 1 grouse → 2.8, 2 → 3.6, 3 → 4.4, capped at count=8 to keep outliers in check.
+function ebirdRadius(count){
+  const n = count == null ? 1 : Math.max(1, Math.min(8, count));
+  return 2 + n * 0.8;
+}
+
+// ───────── lat/lng → SVG projection (Figure 1 only) ─────────
+const LON_MIN=-90.3, LON_MAX=-81.6, LAT_MIN=34.98, LAT_MAX=36.68;
+const X_MIN=25, X_MAX=660, Y_MIN=70, Y_MAX=295;
+function svgProj(lng, lat){
+  return [
+    X_MIN + ((lng - LON_MIN) / (LON_MAX - LON_MIN)) * (X_MAX - X_MIN),
+    Y_MAX - ((lat - LAT_MIN) / (LAT_MAX - LAT_MIN)) * (Y_MAX - Y_MIN),
+  ];
+}
+circles.forEach(c => { [c.x, c.y] = svgProj(c.lng, c.lat); });
+sightings.forEach(s => { [s.x, s.y] = svgProj(s.lng, s.lat); });
+
+// Rationalized CBC marker size. eBird points render at r≈3px; a CBC detection
+// of 1 grouse should be modestly larger but not dominate.
+function cbcRadius(val){ return 5 + val * 2; }  // 1→7, 2→9
+
+// ───────── SVG label render (year-aware: hide labels for circles not yet established) ─────────
+const LABEL_OFFSETS = {
+  'Mecca':         [-10,  14, 'end'],
+  'Tellico':       [ 10, -14, 'start'],
+  'Allens Bridge': [-12,  -8, 'end'],
+  'Fish Springs':  [ 12,   4, 'start'],
+  'Newfound Gap':  [ 12,   4, 'start'],
+  'Oliver Springs':[-12,  -8, 'end'],
+};
+function renderSVGLabels(year){
+  svgLabelsG.innerHTML = '';
+  circles.forEach(c => {
+    const d = data[c.name];
+    if(year < d.range[0] || year > d.range[1]) return;
+    const [dx, dy, anchor] = LABEL_OFFSETS[c.name] || [10, -10, 'start'];
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x', c.x + dx);
+    t.setAttribute('y', c.y + dy);
+    t.setAttribute('font-family','Inter, sans-serif');
+    t.setAttribute('font-size','10');
+    t.setAttribute('fill','#16181a');
+    t.setAttribute('text-anchor', anchor);
+    t.textContent = c.name;
+    svgLabelsG.appendChild(t);
+  });
+}
+
+// ───────── SVG renderer (Figure 1, year-filtered) ─────────
+function renderSVG(year){
+  svgCirclesG.innerHTML = '';
+  let total = 0, surveyed = 0;
+
+  circles.forEach(c => {
+    const d = data[c.name];
+    const inRange = year >= d.range[0] && year <= d.range[1];
+    const val = inRange ? d.counts[year] : undefined;
+
+    // CBC circle wasn't established yet at this year — render nothing.
+    if(!inRange) return;
+
+    const baseDot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    baseDot.setAttribute('cx', c.x); baseDot.setAttribute('cy', c.y);
+    baseDot.setAttribute('r', 2.5);
+    baseDot.setAttribute('fill', '#3a4a3e');
+    baseDot.setAttribute('opacity', '.55');
+    svgCirclesG.appendChild(baseDot);
+
+    if(val === undefined) return;
+
+    if(val === null){
+      const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      ring.setAttribute('cx', c.x); ring.setAttribute('cy', c.y);
+      ring.setAttribute('r', 8);
+      ring.setAttribute('fill', 'none');
+      ring.setAttribute('stroke', '#6f7378');
+      ring.setAttribute('stroke-width', '1');
+      ring.setAttribute('stroke-dasharray', '2 2');
+      svgCirclesG.appendChild(ring);
+      surveyed++;
+    } else if(val === 0){
+      const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      ring.setAttribute('cx', c.x); ring.setAttribute('cy', c.y);
+      ring.setAttribute('r', 5);
+      ring.setAttribute('fill', 'none');
+      ring.setAttribute('stroke', '#4a4e52');
+      ring.setAttribute('stroke-width', '1');
+      ring.setAttribute('opacity', '.4');
+      svgCirclesG.appendChild(ring);
+      surveyed++;
+    } else {
+      const r = cbcRadius(val);
+      const main = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      main.setAttribute('cx', c.x); main.setAttribute('cy', c.y);
+      main.setAttribute('r', r);
+      main.setAttribute('fill', '#a64822');
+      main.setAttribute('stroke', '#7a3416');
+      main.setAttribute('stroke-width', '1');
+      main.setAttribute('opacity', '.9');
+      const cbcTitle = document.createElementNS('http://www.w3.org/2000/svg','title');
+      cbcTitle.textContent = `${year} · ${c.lat.toFixed(4)}, ${c.lng.toFixed(4)} · CBC ${c.name} · ${val} grouse detected`;
+      main.appendChild(cbcTitle);
+      svgCirclesG.appendChild(main);
+
+      const nlabel = document.createElementNS('http://www.w3.org/2000/svg','text');
+      nlabel.setAttribute('x', c.x); nlabel.setAttribute('y', c.y + 3);
+      nlabel.setAttribute('font-family','Source Serif 4, Charter, Georgia, serif');
+      nlabel.setAttribute('font-weight','600');
+      nlabel.setAttribute('font-size','9');
+      nlabel.setAttribute('fill','#fbfaf6');
+      nlabel.setAttribute('text-anchor','middle');
+      nlabel.setAttribute('pointer-events','none');
+      nlabel.textContent = val;
+      svgCirclesG.appendChild(nlabel);
+
+      total += val; surveyed++;
+    }
+  });
+  svgCirclesG.style.display = showCBC ? '' : 'none';
+  const activeCircles = circles.filter(c => year >= data[c.name].range[0] && year <= data[c.name].range[1]).length;
+  yearMeta.textContent = activeCircles
+    ? `Total birds detected: ${total} · Circles surveyed: ${surveyed}/${activeCircles}`
+    : `No TN CBC circles active yet (CBC counting in TN began 1966)`;
+
+  // sightings
+  svgSightingsG.innerHTML = '';
+  svgSightingsG.style.display = showSightings ? '' : 'none';
+  sightings.forEach(s => {
+    if(displayMode === 'year-only' ? s.year !== year : year < s.year) return;
+    const half = 5;
+    const diamond = document.createElementNS('http://www.w3.org/2000/svg','polygon');
+    diamond.setAttribute('points', `${s.x},${s.y-half} ${s.x+half},${s.y} ${s.x},${s.y+half} ${s.x-half},${s.y}`);
+    diamond.setAttribute('fill', '#b88a3d');
+    diamond.setAttribute('stroke', '#1d2e1a');
+    diamond.setAttribute('stroke-width', '1');
+    svgSightingsG.appendChild(diamond);
+    const title = document.createElementNS('http://www.w3.org/2000/svg','title');
+    title.textContent = `${s.year} · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)} · ${s.name} · ${s.note}`;
+    diamond.appendChild(title);
+  });
+
+  // eBird dots — radius scales with count
+  svgEbirdG.innerHTML = '';
+  svgEbirdG.style.display = showEbird ? '' : 'none';
+  ebirdObservations.forEach(o => {
+    if(displayMode === 'year-only' ? o.year !== year : o.year > year) return;
+    const [x, y] = svgProj(o.lng, o.lat);
+    const age = displayMode === 'year-only' ? 0 : (year - o.year);
+    const opacity = Math.max(0.22, 1 - age * 0.10);
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+    dot.setAttribute('r', ebirdRadius(o.count));
+    dot.setAttribute('fill', '#2f4a2a');
+    dot.setAttribute('stroke', '#1d2e1a');
+    dot.setAttribute('stroke-width', '.4');
+    dot.setAttribute('opacity', opacity);
+    svgEbirdG.appendChild(dot);
+    const title = document.createElementNS('http://www.w3.org/2000/svg','title');
+    const cnt = o.count == null ? 'present' : `${o.count} bird${o.count===1?'':'s'}`;
+    title.textContent = `${o.year} · ${o.lat.toFixed(4)}, ${o.lng.toFixed(4)} · ${cnt} · ${o.loc || 'unknown'}${o.date ? ' (' + o.date + ')' : ''}`;
+    dot.appendChild(title);
+  });
+
+  // Historical reintroduction sites (Kalla & Dimmick 1987) — appear from 1985 onward.
+  svgReintroG.innerHTML = '';
+  reintroSites.forEach(s => {
+    if(displayMode === 'year-only' ? s.year !== year : year < s.year) return;
+    const [x, y] = svgProj(s.lng, s.lat);
+    const size = 8, half = size / 2;
+    const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    rect.setAttribute('x', x - half); rect.setAttribute('y', y - half);
+    rect.setAttribute('width', size); rect.setAttribute('height', size);
+    rect.setAttribute('stroke', '#16181a');
+    rect.setAttribute('stroke-width', '1.5');
+    rect.setAttribute('fill', s.role === 'release' ? '#16181a' : 'none');
+    svgReintroG.appendChild(rect);
+    const title = document.createElementNS('http://www.w3.org/2000/svg','title');
+    title.textContent = `${s.year} · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)} · ${s.name} · ${s.note}`;
+    rect.appendChild(title);
+  });
+
+  // GBIF dots (non-eBird sources: iNat, GBBC, USGS phenology, museum specimens)
+  svgGbifG.innerHTML = '';
+  svgGbifG.style.display = showGbif ? '' : 'none';
+  gbifObservations.forEach(o => {
+    if(o.year == null) return;
+    if(displayMode === 'year-only' ? o.year !== year : o.year > year) return;
+    const [x, y] = svgProj(o.lng, o.lat);
+    const age = displayMode === 'year-only' ? 0 : (year - o.year);
+    const opacity = Math.max(0.25, 1 - age * 0.08);
+    const dot = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    dot.setAttribute('cx', x); dot.setAttribute('cy', y);
+    dot.setAttribute('r', 3);
+    dot.setAttribute('fill', '#3b5773');
+    dot.setAttribute('stroke', '#1f3045');
+    dot.setAttribute('stroke-width', '.5');
+    dot.setAttribute('opacity', opacity);
+    svgGbifG.appendChild(dot);
+    const title = document.createElementNS('http://www.w3.org/2000/svg','title');
+    title.textContent = `${o.year} · ${o.lat.toFixed(4)}, ${o.lng.toFixed(4)} · ${o.dataset} · ${o.basis}${o.loc ? ' · ' + o.loc : ''}`;
+    dot.appendChild(title);
+  });
+}
+
+function renderYearBar(year){
+  yearBar.innerHTML = '<h4>Detections this year</h4>';
+  circles.forEach(c => {
+    const d = data[c.name];
+    const inRange = year >= d.range[0] && year <= d.range[1];
+    const val = inRange ? d.counts[year] : undefined;
+    let fillClass = '', fillStyle = 'width:0%', valText = '—', valClass = '';
+    if(val === null){ fillClass = 'dash'; fillStyle = 'width:100%'; valText = 'no count'; }
+    else if(val === 0){ fillClass = 'zero'; valText = '0'; }
+    else if(typeof val === 'number' && val > 0){ fillStyle = `width:${val * 50}%`; valText = val; valClass = 'hit'; }
+    const row = document.createElement('div');
+    row.className = 'bar-row';
+    row.innerHTML = `
+      <div class="name">${c.name}</div>
+      <div class="bar-track"><div class="bar-fill ${fillClass}" style="${fillStyle}"></div></div>
+      <div class="bar-val ${valClass}">${valText}</div>
+    `;
+    yearBar.appendChild(row);
+  });
+}
+
+function update(year){
+  yearDisplay.textContent = year;
+  renderSVGLabels(year);
+  renderSVG(year);
+  renderYearBar(year);
+}
+
+// ───────── Leaflet detail map (Figure 2, static — all observations) ─────────
+const detailMap = L.map('detailMap', {
+  center: [35.83, -85.5], zoom: 7, scrollWheelZoom: false,
+}).fitBounds([[34.98, -90.3], [36.68, -81.6]]);
+
+L.tileLayer('https://basemap.nationalmap.gov/arcgis/rest/services/USGSTopo/MapServer/tile/{z}/{y}/{x}', {
+  attribution: 'Tiles &copy; <a href="https://basemap.nationalmap.gov/">USGS National Map</a> · Data: TWRA, eBird',
+  maxZoom: 16,
+}).addTo(detailMap);
+
+const detailCbcGroup       = L.layerGroup().addTo(detailMap);
+const detailSightingsGroup = L.layerGroup().addTo(detailMap);
+const detailEbirdGroup     = L.layerGroup().addTo(detailMap);
+const detailGbifGroup      = L.layerGroup().addTo(detailMap);
+const detailWmaGroup       = L.layerGroup().addTo(detailMap);
+const detailReintroGroup   = L.layerGroup().addTo(detailMap);
+
+// Historical reintroduction markers (always-on on Figure 2)
+reintroSites.forEach(s => {
+  const filled = s.role === 'release';
+  L.marker([s.lat, s.lng], {
+    icon: L.divIcon({
+      html: `<div style="width:12px;height:12px;background:${filled ? '#16181a' : 'transparent'};border:2px solid #16181a;"></div>`,
+      className: '', iconSize:[12,12], iconAnchor:[6,6],
+    }),
+  })
+  .bindPopup(`<b>${s.name}</b><div class="meta">${s.year} · ${s.role === 'release' ? '1985–86 release site' : 'source trapping site'} · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}</div>${s.note}`)
+  .bindTooltip(`${s.year} · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)} · ${s.name}`, {sticky:true})
+  .addTo(detailReintroGroup);
+});
+
+// Approximate WMA polygons (will be swapped for real boundaries if/when available)
+wmas.forEach(w => {
+  const radiusMeters = Math.sqrt((w.acres * 4046.86) / Math.PI);
+  L.circle([w.lat, w.lng], {
+    radius: radiusMeters, color: '#b88a3d', weight: 2,
+    fillColor: '#b88a3d', fillOpacity: 0.12,
+  })
+  .bindPopup(`<b>${w.name}</b><div class="meta">${w.acres.toLocaleString()} ac · candidate field site (approx. boundary)</div>${w.note}`)
+  .bindTooltip(w.name, {permanent:true, direction:'top', className:'wma-label', offset:[0,-6]})
+  .addTo(detailWmaGroup);
+});
+
+function renderDetailMap(){
+  detailCbcGroup.clearLayers();
+  detailSightingsGroup.clearLayers();
+  detailEbirdGroup.clearLayers();
+
+  circles.forEach(c => {
+    const d = data[c.name];
+    const detections = Object.entries(d.counts).filter(([y,v]) => typeof v === 'number' && v > 0);
+    const totalDetected = detections.reduce((s, [y,v]) => s + v, 0);
+    const years = detections.map(([y]) => y).sort();
+
+    const cbcTip = `${c.lat.toFixed(4)}, ${c.lng.toFixed(4)} · CBC ${c.name} · ${totalDetected ? totalDetected + ' grouse, ' + years.join(', ') : 'no detections'}`;
+    L.circleMarker([c.lat, c.lng], {
+      radius: 4, color: '#3a4a3e', weight: 0, fillColor: '#3a4a3e', fillOpacity: 0.65,
+    })
+    .bindPopup(`<b>${c.name} (CBC ${c.code})</b><div class="meta">${totalDetected ? `${totalDetected} grouse detected across ${years.length} year${years.length===1?'':'s'} (${years.join(', ')})` : 'No grouse detected in survey window'}<br>${c.lat.toFixed(4)}, ${c.lng.toFixed(4)}</div>`)
+    .bindTooltip(cbcTip, {sticky:true})
+    .addTo(detailCbcGroup);
+
+    if(totalDetected > 0){
+      const r = cbcRadius(totalDetected);
+      L.circleMarker([c.lat, c.lng], {
+        radius: r, color: '#7a3416', weight: 1.25, fillColor: '#a64822', fillOpacity: 0.75,
+      })
+      .bindTooltip(cbcTip, {sticky:true})
+      .addTo(detailCbcGroup);
+    }
+  });
+
+  sightings.forEach(s => {
+    const tip = `${s.year} · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)} · ${s.name}`;
+    L.marker([s.lat, s.lng], {
+      icon: L.divIcon({
+        html: '<div style="width:12px;height:12px;background:#b88a3d;border:1.5px solid #1d2e1a;transform:rotate(45deg);"></div>',
+        className: '', iconSize:[12,12], iconAnchor:[6,6],
+      }),
+    })
+    .bindPopup(`<b>${s.name}</b><div class="meta">${s.year} · field sighting · ${s.lat.toFixed(4)}, ${s.lng.toFixed(4)}</div>${s.note}`)
+    .bindTooltip(tip, {sticky:true})
+    .addTo(detailSightingsGroup);
+  });
+
+  ebirdObservations.forEach(o => {
+    const cnt = o.count == null ? 'present' : (o.count + ' bird' + (o.count===1?'':'s'));
+    const tip = `${o.year} · ${o.lat.toFixed(4)}, ${o.lng.toFixed(4)} · ${cnt}${o.loc ? ' · ' + o.loc : ''}`;
+    L.circleMarker([o.lat, o.lng], {
+      radius: ebirdRadius(o.count), color: '#1d2e1a', weight: 0.5, fillColor: '#2f4a2a', fillOpacity: 0.7,
+    })
+    .bindPopup(`<b>${o.loc || 'unknown'}</b><div class="meta">${o.date} · ${cnt} · ${o.lat.toFixed(4)}, ${o.lng.toFixed(4)} · eBird</div>`)
+    .bindTooltip(tip, {sticky:true})
+    .addTo(detailEbirdGroup);
+  });
+
+  // GBIF (non-eBird) — slate blue, distinct from moss-green eBird
+  detailGbifGroup.clearLayers();
+  gbifObservations.forEach(o => {
+    if(o.lat == null || o.lng == null) return;
+    const tip = `${o.year || '?'} · ${o.lat.toFixed(4)}, ${o.lng.toFixed(4)} · ${o.dataset} · ${o.basis}`;
+    L.circleMarker([o.lat, o.lng], {
+      radius: 3.5, color: '#1f3045', weight: 0.75, fillColor: '#3b5773', fillOpacity: 0.75,
+    })
+    .bindPopup(`<b>${o.loc || o.dataset}</b><div class="meta">${o.year || '?'} · ${o.basis} · ${o.lat.toFixed(4)}, ${o.lng.toFixed(4)}<br>Dataset: ${o.dataset}${o.recorded_by ? '<br>Recorded by: ' + o.recorded_by : ''}${o.institution ? '<br>Institution: ' + o.institution : ''}${o.url ? '<br><a href="' + o.url + '" target="_blank">source record</a>' : ''}</div>`)
+    .bindTooltip(tip, {sticky:true})
+    .addTo(detailGbifGroup);
+  });
+}
+
+// ───────── layer toggles (drive both maps) ─────────
+cbcToggle.addEventListener('click', () => {
+  showCBC = !showCBC;
+  cbcToggle.classList.toggle('on', showCBC);
+  update(parseInt(slider.value));
+  if(showCBC) detailCbcGroup.addTo(detailMap); else detailMap.removeLayer(detailCbcGroup);
+});
+sightToggle.addEventListener('click', () => {
+  showSightings = !showSightings;
+  sightToggle.classList.toggle('on', showSightings);
+  update(parseInt(slider.value));
+  if(showSightings) detailSightingsGroup.addTo(detailMap); else detailMap.removeLayer(detailSightingsGroup);
+});
+ebirdToggle.addEventListener('click', () => {
+  if(ebirdToggle.disabled) return;
+  showEbird = !showEbird;
+  ebirdToggle.classList.toggle('on', showEbird);
+  update(parseInt(slider.value));
+  if(showEbird) detailEbirdGroup.addTo(detailMap); else detailMap.removeLayer(detailEbirdGroup);
+});
+gbifToggle.addEventListener('click', () => {
+  if(gbifToggle.disabled) return;
+  showGbif = !showGbif;
+  gbifToggle.classList.toggle('on', showGbif);
+  update(parseInt(slider.value));
+  if(showGbif) detailGbifGroup.addTo(detailMap); else detailMap.removeLayer(detailGbifGroup);
+});
+
+// ───── display mode (cumulative vs. year-only) ─────
+document.querySelectorAll('.mode-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    displayMode = btn.dataset.mode;
+    document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('on', b === btn));
+    update(parseInt(slider.value));
+  });
+});
+
+// ───────── eBird snapshot loader ─────────
+async function loadEbirdData(){
+  try {
+    const res = await fetch('/grouse/data/ebird_grouse_tn.json', {cache: 'no-cache'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const payload = await res.json();
+    ebirdObservations = (payload.observations || []).filter(o => o.lat != null && o.lng != null && o.year);
+    ebirdToggle.disabled = false;
+    ebirdToggle.style.opacity = '1';
+    ebirdCountEl.textContent = `(${ebirdObservations.length})`;
+    const maxYear = Math.max(...ebirdObservations.map(o => o.year));
+    if(maxYear > parseInt(slider.max)) slider.max = maxYear;
+    update(parseInt(slider.value));
+    renderDetailMap();
+    console.log(`Loaded ${ebirdObservations.length} eBird observations`);
+  } catch(err){
+    ebirdCountEl.textContent = '(no data)';
+    console.info('eBird snapshot not loaded:', err.message);
+  }
+}
+loadEbirdData();
+
+async function loadGbifData(){
+  try {
+    const res = await fetch('/grouse/data/gbif_grouse_tn.json', {cache: 'no-cache'});
+    if(!res.ok) throw new Error(`HTTP ${res.status}`);
+    const payload = await res.json();
+    gbifObservations = (payload.observations || []).filter(o => o.lat != null && o.lng != null);
+    gbifToggle.disabled = false;
+    gbifToggle.style.opacity = '1';
+    gbifCountEl.textContent = `(${gbifObservations.length})`;
+    // Extend slider min back to earliest GBIF year (e.g. 1907 museum specimen)
+    const yrs = gbifObservations.map(o => o.year).filter(y => y);
+    if(yrs.length){
+      const minYear = Math.min(...yrs);
+      if(minYear < parseInt(slider.min)){
+        slider.min = minYear;
+        // update visible slider tick labels
+        const labels = document.querySelectorAll('.slider-labels span');
+        if(labels.length === 3){
+          labels[0].textContent = minYear;
+          labels[1].textContent = Math.round((minYear + parseInt(slider.max)) / 2);
+          labels[2].textContent = slider.max;
+        }
+      }
+    }
+    update(parseInt(slider.value));
+    renderDetailMap();
+    console.log(`Loaded ${gbifObservations.length} GBIF (non-eBird) observations`);
+  } catch(err){
+    gbifCountEl.textContent = '(no data)';
+    console.info('GBIF snapshot not loaded:', err.message);
+  }
+}
+loadGbifData();
+renderDetailMap();  // initial CBC + sightings + WMAs (eBird/GBIF re-render when data arrives)
+
+slider.addEventListener('input', e => update(parseInt(e.target.value)));
+
+// ───────── auto-play ─────────
+let playInterval = null;
+playBtn.addEventListener('click', () => {
+  if(playInterval){
+    clearInterval(playInterval); playInterval = null;
+    playBtn.textContent = 'Play';
+  } else {
+    playBtn.textContent = 'Pause';
+    let y = parseInt(slider.value);
+    if(y >= parseInt(slider.max)) y = parseInt(slider.min);
+    playInterval = setInterval(() => {
+      y++;
+      if(y > parseInt(slider.max)){
+        clearInterval(playInterval); playInterval = null;
+        playBtn.textContent = 'Play';
+        return;
+      }
+      slider.value = y;
+      update(y);
+    }, 250);
+  }
+});
+
+resetBtn.addEventListener('click', () => {
+  if(playInterval){ clearInterval(playInterval); playInterval = null; playBtn.textContent = 'Play'; }
+  slider.value = parseInt(slider.min);
+  update(parseInt(slider.min));
+});
+
+update(parseInt(slider.value));
+</script>
+</body>
+</html>

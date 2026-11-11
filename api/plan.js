@@ -1,7 +1,7 @@
 // POST /api/plan { club, question, history: [{ q, a }] }: the Trip Planner. Needs a saved name.
 // Errors before the answer starts come back as JSON; the answer itself streams as
 // newline-delimited JSON events (see lib/planner.js).
-import { readBody, str, HttpError } from "../lib/http.js";
+import { readBody, str, HttpError, siteBase } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
 import { requireUser, limit } from "../lib/auth.js";
 import { buildContext, systemPrompt, streamAnswer, todayIn } from "../lib/planner.js";
@@ -28,7 +28,7 @@ export default async function handler(req, res) {
 
     const club = { ...row, waters: Array.isArray(row.waters) ? row.waters : [] };
     const t0 = todayIn(club.tz);
-    const context = await buildContext(club, t0);
+    const context = await buildContext(club, t0, { base: siteBase(req) });
 
     // Earlier questions in this conversation, so follow-ups ("what about Saturday?") make sense.
     const history = (Array.isArray(b.history) ? b.history : []).slice(-2)

@@ -8,8 +8,10 @@
 // GET  /api/shops?op=mine              the signed-in person's shops, invites accepted on sight; {admin}
 // GET  /api/shops?op=threads|thread|unread   conversations (anglers asking shops, and the shops' inbox)
 // GET  /api/shops?photo=<id>           a published report's photo (JPEG); public at /photos/<id>.jpg (vercel.json rewrite)
+// GET  /api/shops?op=guides[&river=]   active guides; ?op=guide&slug= one guide; ?op=myguide the signed-in person's own profile
 // POST /api/shops {op, ...}            shop_create (admin), shop_update, invite, report_photo, report_save,
-//                                      shop_status (admin), report_remove, thread_start, thread_send, thread_read, thread_status
+//                                      shop_status (admin), report_remove, guide_save, guide_status, guide_delete,
+//                                      thread_start (a shop or a guide), thread_send, thread_read, thread_status
 //
 // Photos are read by Claude to draft the report; the shop edits and publishes. A shop's words never act as
 // instructions. Public pages and results only ever show published reports from active shops.
@@ -21,6 +23,7 @@ import {
   RIVERS, LIVE_DAYS, DAY, ymd, ageDays, isLive, slugify, isAdmin, clean, oneLine,
   reportFields, checkReport, draftFromPhoto, drafting, DRAFT_MODEL, shopOut, reportOut, REPORT_COLS,
 } from "../lib/shops.js";
+import { guideFields, guideSlug, guideOut, resolveShops } from "../lib/guides.js";
 
 const MAX_B64 = 2400000;
 const DAILY_DRAFTS_PER_SHOP = 20;
@@ -111,27 +114,35 @@ async function servePhoto(req, res) {
 
 // ---------- reads ----------
 
-// Conversations the person can see: the ones they started as an angler, and their shops' inboxes (a site admin
-// also sees shops still managed by Nina). shop_side says which side of the thread this person is on.
+// Conversations the person can see: the ones they started as an angler, their shops' inboxes (a site admin also sees
+// shops still managed by Nina) and their own guide profile's inbox. shop_side says which side of the thread this person
+// is on. A thread belongs to a shop or to a guide; for a guide thread the "shop" fields carry the guide's name and slug.
 async function threadRows(user, extra = "", params = []) {
-  const side = "(t.shop_id in (select shop_id from shop_members where user_id = $1) or ($2::boolean and s.managed))";
+  const side = `(t.shop_id in (select shop_id from shop_members where user_id = $1) or ($2::boolean and coalesce(s.managed, false))
+     or t.guide_id in (select id from guides where user_id = $1))`;
   return q(
-    `select t.id, t.shop_id, t.report_id, t.from_user, t.from_name, t.subject, t.status, t.last_at, t.buyer_read_at, t.shop_read_at,
-            s.name as shop_name, s.slug as shop_slug, (t.from_user <> $1 and ${side}) as shop_side
-       from shop_threads t join fly_shops s on s.id = t.shop_id
+    `select t.id, t.shop_id, t.guide_id, t.report_id, t.from_user, t.from_name, t.subject, t.status, t.last_at, t.buyer_read_at, t.shop_read_at,
+            coalesce(s.name, g.name) as shop_name, coalesce(s.slug, g.slug) as shop_slug, (t.from_user <> $1 and ${side}) as shop_side
+       from shop_threads t left join fly_shops s on s.id = t.shop_id left join guides g on g.id = t.guide_id
       where (t.from_user = $1 or ${side}) ${extra} order by t.last_at desc limit 60`,
     [user.id, isAdmin(user), ...params],
   );
 }
 
 const threadOut = (t) => ({
-  id: t.id, shop: { id: t.shop_id, slug: t.shop_slug, name: t.shop_name }, reportId: t.report_id || "",
+  id: t.id, kind: t.guide_id ? "guide" : "shop", shop: { id: t.shop_id || t.guide_id, slug: t.shop_slug, name: t.shop_name }, reportId: t.report_id || "",
   side: t.shop_side ? "shop" : "angler", from: t.from_name || "An angler", subject: t.subject, status: t.status, last: Number(t.last_at),
   unread: t.shop_side ? Number(t.last_at) > Number(t.shop_read_at) : Number(t.last_at) > Number(t.buyer_read_at),
 });
 
 async function unreadCount(user) {
   return (await threadRows(user)).filter((t) => threadOut(t).unread).length;
+}
+
+// Guides as the API and pages show them: the shops they list resolved against the listed shops.
+async function guidesOut(rows) {
+  const listed = await q("select slug, name, instagram from fly_shops where status = 'active'");
+  return rows.map((g) => guideOut({ ...g, shops: resolveShops(g.shops, listed) }));
 }
 
 async function read(req, op) {
@@ -173,7 +184,24 @@ async function read(req, op) {
     return { latest: Object.fromEntries(rows.map((r) => [r.river, reportOut(r)])) };
   }
 
+  if (op === "guides") {
+    const river = str(req.query.river, 60);
+    const rows = RIVERS[river]
+      ? await q("select * from guides where status = 'active' and rivers @> jsonb_build_array($1::text) order by name limit 300", [river])
+      : await q("select * from guides where status = 'active' order by name limit 300");
+    return { guides: await guidesOut(rows) };
+  }
+  if (op === "guide") {
+    const [g] = await q("select * from guides where slug = $1 and status = 'active'", [str(req.query.slug, 60).toLowerCase()]);
+    if (!g) throw new HttpError(404, "That guide isn't here.");
+    return { guide: (await guidesOut([g]))[0] };
+  }
+
   const user = await requireUser(req);
+  if (op === "myguide") {
+    const [g] = await q("select * from guides where user_id = $1", [user.id]);
+    return { guide: g ? (await guidesOut([g]))[0] : null, google: !!user.g, admin: isAdmin(user), ...(isAdmin(user) ? { all: await guidesOut(await q("select * from guides order by name limit 300")) } : {}) };
+  }
   if (op === "mine") {
     await claimInvites(user);
     const admin = isAdmin(user);
@@ -334,26 +362,90 @@ async function write(req, op) {
     return { ok: true };
   }
 
+  // ---------- guides: they add themselves ----------
+  if (op === "guide_save") {
+    if (!user.g) throw new HttpError(403, "Sign in with Google to list yourself as a guide. It keeps a profile tied to a real account you can get back into.");
+    const f = guideFields(b);
+    if (f.name.length < 2) throw new HttpError(400, "Add your name or your outfit's name.");
+    if (f.about.length < 20) throw new HttpError(400, "Add a few sentences about the trips you run.");
+    if (!f.rivers.length && !f.waters) throw new HttpError(400, "Say where you guide: pick a river, or list your waters.");
+    const [mine] = await q("select * from guides where user_id = $1", [user.id]);
+    if (!mine) {
+      await limit(`guidenew:${user.id}`, 3, DAY, "That's a lot of new profiles for one day.");
+      await limit(`guidenewip:${ip}`, 10, DAY, "Too many new profiles from here today. Try again tomorrow.");
+    }
+    await limit(`guidesave:${user.id}`, 40, DAY, "That's a lot of changes for one day.");
+    const shopsJson = JSON.stringify(f.shops);
+    if (mine) {
+      await q(
+        `update guides set name = $2, city = $3, state = $4, lat = $5, lon = $6, website = $7, instagrams = $8::jsonb, about = $9,
+                rivers = $10::jsonb, waters = $11, trips = $12::jsonb, years = $13, credentials = $14, shops = $15::jsonb, updated = $16 where id = $1`,
+        [mine.id, f.name, f.city, f.state, f.lat, f.lon, f.website, JSON.stringify(f.instagrams), f.about, JSON.stringify(f.rivers), f.waters, JSON.stringify(f.trips), f.years, f.credentials, shopsJson, now],
+      );
+    } else {
+      let slug = guideSlug(f.name);
+      const [taken] = await q("select 1 as x from guides where slug = $1", [slug]);
+      if (taken) slug = `${slug.slice(0, 35)}-${newId("", 2)}`;
+      await q(
+        `insert into guides (id, slug, user_id, name, city, state, lat, lon, website, instagrams, about, rivers, waters, trips, years, credentials, shops, status, at, updated)
+         values ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10::jsonb, $11, $12::jsonb, $13, $14::jsonb, $15, $16, $17::jsonb, 'active', $18, $18)`,
+        [newId("gd"), slug, user.id, f.name, f.city, f.state, f.lat, f.lon, f.website, JSON.stringify(f.instagrams), f.about, JSON.stringify(f.rivers), f.waters, JSON.stringify(f.trips), f.years, f.credentials, shopsJson, now],
+      );
+    }
+    const [g] = await q("select * from guides where user_id = $1", [user.id]);
+    return { guide: (await guidesOut([g]))[0] };
+  }
+
+  // A guide can pause their own profile and bring it back; the admin can hide any profile, and only the admin lifts that.
+  if (op === "guide_status") {
+    const admin = isAdmin(user);
+    const [g] = admin && b.guide
+      ? await q("select * from guides where id = $1 or slug = $1", [str(b.guide, 80)])
+      : await q("select * from guides where user_id = $1", [user.id]);
+    if (!g) throw new HttpError(404, "That guide isn't here.");
+    const want = ["active", "paused", "hidden"].includes(b.status) ? b.status : "";
+    if (!want) throw new HttpError(400, "That isn't a status.");
+    if (!admin && (want === "hidden" || g.status === "hidden")) throw new HttpError(403, "Only the site admin can do that.");
+    await q("update guides set status = $2, updated = $3 where id = $1", [g.id, want, now]);
+    return { ok: true, status: want };
+  }
+
+  if (op === "guide_delete") {
+    const [g] = await q("select id from guides where user_id = $1", [user.id]);
+    if (!g) throw new HttpError(404, "You don't have a guide profile.");
+    await q("delete from guides where id = $1", [g.id]);
+    return { ok: true };
+  }
+
   if (op === "thread_start") {
-    const s = await shopFor(b.shop);
-    if (s.status !== "active") throw new HttpError(404, "That shop isn't taking messages.");
-    if (await roleIn(user, s.id)) throw new HttpError(400, "That's your own shop.");
+    let s = null, g = null;
+    if (b.guide) {
+      [g] = await q("select * from guides where id = $1 or slug = $1", [str(b.guide, 80)]);
+      if (!g || g.status !== "active") throw new HttpError(404, "That guide isn't taking messages.");
+      if (g.user_id === user.id) throw new HttpError(400, "That's your own profile.");
+    } else {
+      s = await shopFor(b.shop);
+      if (s.status !== "active") throw new HttpError(404, "That shop isn't taking messages.");
+      if (await roleIn(user, s.id)) throw new HttpError(400, "That's your own shop.");
+    }
     const body = clean(b.message, 2000);
     if (!body) throw new HttpError(400, "Write a message first.");
     await limit(`shopmsg:${user.id}`, 10, 60 * 60e3, "You've started a lot of conversations in the last hour. Try again a little later.");
     await limit(`shopmsgip:${ip}`, 40, 60 * 60e3, "Too many messages from here. Try again a little later.");
     let report = null;
-    if (b.report) {
+    if (s && b.report) {
       [report] = await q("select id, title from shop_reports where id = $1 and shop_id = $2 and status = 'live'", [str(b.report, 80), s.id]);
     }
-    const [open] = await q("select id from shop_threads where shop_id = $1 and from_user = $2 and status <> 'closed' order by last_at desc limit 1", [s.id, user.id]);
+    const [open] = g
+      ? await q("select id from shop_threads where guide_id = $1 and from_user = $2 and status <> 'closed' order by last_at desc limit 1", [g.id, user.id])
+      : await q("select id from shop_threads where shop_id = $1 and from_user = $2 and status <> 'closed' order by last_at desc limit 1", [s.id, user.id]);
     let id = open && open.id;
     if (!id) {
       id = newId("thr", 10);
       await q(
-        `insert into shop_threads (id, shop_id, report_id, from_user, from_name, subject, status, at, last_at, buyer_read_at, shop_read_at)
-         values ($1, $2, $3, $4, $5, $6, 'new', $7, $7, $7, 0)`,
-        [id, s.id, report ? report.id : null, user.id, oneLine(user.name, 40), report ? report.title : `Question for ${s.name}`, now],
+        `insert into shop_threads (id, shop_id, guide_id, report_id, from_user, from_name, subject, status, at, last_at, buyer_read_at, shop_read_at)
+         values ($1, $2, $3, $4, $5, $6, $7, 'new', $8, $8, $8, 0)`,
+        [id, s ? s.id : null, g ? g.id : null, report ? report.id : null, user.id, oneLine(user.name, 40), report ? report.title : `Question for ${(g || s).name}`, now],
       );
     }
     await q("insert into shop_messages (thread_id, sender, from_shop, body, at) values ($1, $2, false, $3, $4)", [id, user.id, body, now]);
@@ -365,7 +457,11 @@ async function write(req, op) {
     const [t] = await q("select * from shop_threads where id = $1", [str(b.id, 80)]);
     if (!t) throw new HttpError(404, "That conversation isn't here.");
     const buyer = t.from_user === user.id;
-    const shopSide = !buyer && !!(await roleIn(user, t.shop_id));
+    let shopSide = false;
+    if (!buyer) {
+      if (t.guide_id) { const [own] = await q("select 1 as x from guides where id = $1 and user_id = $2", [t.guide_id, user.id]); shopSide = !!own; }
+      else shopSide = !!(await roleIn(user, t.shop_id));
+    }
     if (!buyer && !shopSide) throw new HttpError(404, "That conversation isn't here.");
     if (op === "thread_read") {
       await q(`update shop_threads set ${buyer ? "buyer_read_at" : "shop_read_at"} = $2 where id = $1`, [t.id, now]);

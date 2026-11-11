@@ -132,33 +132,28 @@ dialog::backdrop{background:rgba(27,39,36,.35)}
 .msg.err{color:var(--bad)}
 .msg.ok{color:var(--strong)}
 @media (prefers-reduced-motion:no-preference){.bar i{transition:width .35s ease}}
-
 :host{display:block;color-scheme:light;
-  --bg:#FBF8F1; --panel:#FFFDF8; --ink:#1E2A22; --muted:#4A564E; --line:#DDD3BE; --field:#FBF8F1;
-  --accent:#1F4D3A; --accent-ink:#FBF8F1; --accent-soft:#E6EEE8; --on:#A9C4B3; --bad:#7A2430;
-  --strong:#1F4D3A; --strong-soft:#E6EEE8; --fair:#7D5F28; --fair-soft:#F5EEDD; --weak:#4A564E; --weak-soft:#EEE8DA;
-  --display:"Cormorant Garamond",Garamond,Georgia,serif;
-  --body:"EB Garamond",Garamond,Georgia,serif;
-  --mono:"EB Garamond",Garamond,Georgia,serif}
-.fp-body{font-size:17px}
-.fp-h{font-weight:600;font-style:italic;font-size:clamp(1.9rem,4.5vw,2.4rem)}
+  --bg:#FAFAF8; --panel:#FFFFFF; --ink:#131815; --muted:#5C6660; --line:#E3E5E0; --field:#FFFFFF;
+  --accent:#116149; --accent-ink:#FFFFFF; --accent-soft:#E7F2EC; --on:#9CC8B4; --bad:#B3382C;
+  --strong:#116149; --strong-soft:#E7F2EC; --fair:#7A5200; --fair-soft:#FFF4DB; --weak:#5C6660; --weak-soft:#EEF0EC;
+  --display:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --body:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace}
+.fp-body{font-size:15px;-webkit-font-smoothing:antialiased}
+.fp-h{font-weight:700;letter-spacing:-.02em;font-size:clamp(1.5rem,4vw,1.9rem)}
 main{max-width:none}
-h1,h2{font-weight:600}
-.card h2{font-size:1.45rem}
-#f,.card{border:1px solid #9C7A3C;border-radius:0;box-shadow:0 0 0 3px var(--panel),0 0 0 4px #9C7A3C}
-ol.flies{gap:0;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
+h1,h2{font-weight:600;letter-spacing:-.01em}
+.card h2{font-size:1.15rem}
+#f,.card{border:1px solid var(--line);border-radius:12px;box-shadow:0 1px 2px rgba(19,24,21,.04)}
+ol.flies{gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .fly{border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;padding:16px 4px}
 .fly:first-child{border-top:0}
-.hrow,.more,.acts button,.filterbar,.filterbar button,.note,.engine{border-radius:0}
-select,input[type=date],input[type=number],input[type=text],textarea{border-radius:0}
-.go,.ghost{font-family:"Cinzel","Times New Roman",serif;font-weight:600;letter-spacing:.14em;font-size:.78rem;border-radius:0;border:1px solid var(--ink)}
-.go{border-color:var(--accent)}
-.seg label{font-family:"Cinzel","Times New Roman",serif;font-size:.66rem;letter-spacing:.12em;border-radius:0}
-.chip,.engine,.status,.pill,.group-label{font-family:"Cinzel","Times New Roman",serif;font-size:.6rem;letter-spacing:.14em;text-transform:none;border-radius:0}
-.summary,.sub,.hmeta,.size,.pct{font-variant-numeric:lining-nums}
-.rank{font-family:var(--display);font-weight:600;font-size:1.55rem;font-variant-numeric:lining-nums}
-.fly-name,.hname{font-size:1.28rem;font-weight:600}
-dialog{border:1px solid var(--ink);border-radius:0}
+.go,.ghost{font-weight:500;font-size:.9rem;letter-spacing:0}
+.go{border:1px solid var(--accent)}
+.ghost{border:1px solid var(--line)}
+.summary,.sub,.hmeta,.size,.pct,.rank{font-variant-numeric:tabular-nums}
+.fly-name,.hname{font-size:1.05rem;font-weight:600}
+dialog{border:1px solid var(--line);border-radius:12px}
 @media (min-width:761px){#f{top:calc(env(safe-area-inset-top,0px) + 62px)}}
 .filterbar{scroll-margin-top:62px}
 </style><div class="fp-body"><main>

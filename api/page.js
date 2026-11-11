@@ -2,24 +2,17 @@
 // shop, a directory of each, sitemap.xml, robots.txt and llms.txt. vercel.json rewrites the clean URLs to
 // /api/page?kind=...; the markup lives in lib/pages.js. Only published reports from active shops appear.
 //
-//   /rivers  /rivers/south-holston  /shops  /shops/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
+//   /rivers  /rivers/south-holston  /shops  /shops/<slug>  /guides  /guides/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
 //   /photos/<id>.jpg is api/shops.js. The dove fields come from data/dove-fields.json, so those pages need no database.
 import { q, ensureSchema } from "../lib/db.js";
-import { str } from "../lib/http.js";
+import { str, siteBase } from "../lib/http.js";
 import { LIVE_DAYS, DAY, ymd, shopOut, reportOut, REPORT_COLS } from "../lib/shops.js";
-import { riverPage, shopPage, riversIndex, shopsIndex, sitemap, robots, llms, riverKey } from "../lib/pages.js";
+import { riverPage, shopPage, riversIndex, shopsIndex, guidePage, guidesIndex, sitemap, robots, llms, riverKey } from "../lib/pages.js";
+import { guideOut, resolveShops } from "../lib/guides.js";
 import { doveIndex, doveFieldPage } from "../lib/dove.js";
 import { doveField } from "../lib/dovedata.js";
 
-// Where the pages say they live (canonical links, sitemap, JSON-LD): SITE_URL, else the production domain
-// Vercel provides, else the host the request came to.
-function baseUrl(req) {
-  const set = process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL : "");
-  if (set) return set.replace(/\/+$/, "");
-  const host = String((req.headers && (req.headers["x-forwarded-host"] || req.headers.host)) || "angler-club.vercel.app").split(",")[0].trim().replace(/[^A-Za-z0-9.:-]/g, "");
-  const local = /^(localhost|127\.0\.0\.1)(:|$)/.test(host);
-  return (local ? "http://" : "https://") + host;
-}
+const baseUrl = siteBase;
 
 const liveCut = (now) => ymd(now - LIVE_DAYS * DAY);
 const FROM = "from shop_reports r join fly_shops s on s.id = r.shop_id";
@@ -40,7 +33,15 @@ async function latestByRiver(now) {
   return Object.fromEntries(rows.map((r) => [r.river, reportOut(r)]));
 }
 
-const notFound = (what) => ({ status: 404, type: "text/html; charset=utf-8", cache: "public, s-maxage=60", body: `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Not found | Anglers Club</title><body style="font:18px Georgia,serif;max-width:560px;margin:60px auto;padding:0 18px"><h1>${what} isn't here</h1><p><a href="/rivers">Rivers</a> · <a href="/shops">Shops</a> · <a href="/">Anglers Club</a></p>` });
+// Active guides, each with the shops they list resolved against the listed shops (so a shop's name can't be misstated).
+async function guidesWhere(sql = "", params = []) {
+  const rows = await q(`select * from guides where status = 'active' ${sql} order by name limit 300`, params);
+  if (!rows.length) return [];
+  const listed = await q("select slug, name, instagram from fly_shops where status = 'active'");
+  return rows.map((g) => guideOut({ ...g, shops: resolveShops(g.shops, listed) }));
+}
+
+const notFound = (what) => ({ status: 404, type: "text/html; charset=utf-8", cache: "public, s-maxage=60", body: `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Not found | Anglers Club</title><body style="font:18px Georgia,serif;max-width:560px;margin:60px auto;padding:0 18px"><h1>${what} isn't here</h1><p><a href="/rivers">Rivers</a> · <a href="/shops">Shops</a> · <a href="/guides">Guides</a> · <a href="/">Anglers Club</a></p>` });
 
 async function build(req) {
   const now = Date.now(), base = baseUrl(req);
@@ -67,25 +68,32 @@ async function build(req) {
     const old = await q(`select ${REPORT_COLS} ${FROM} where r.river = $1 and r.status = 'live' and s.status = 'active' and r.reported_on < $2
           order by r.reported_on desc, r.at desc limit 12`, [key, cut]);
     const shops = await q(`select * from fly_shops s where s.status = 'active' and s.rivers @> jsonb_build_array($1::text) order by s.name limit 20`, [key]);
-    return html(riverPage({ base, key, reports: live.map(reportOut), archive: old.map(reportOut), shops: shops.map(shopOut), now }));
+    const guides = await guidesWhere("and rivers @> jsonb_build_array($1::text)", [key]);
+    return html(riverPage({ base, key, reports: live.map(reportOut), archive: old.map(reportOut), shops: shops.map(shopOut), guides, now }));
   }
   if (kind === "shop") {
     const [s] = await q("select * from fly_shops where slug = $1 and status = 'active'", [str(req.query.slug, 60).toLowerCase()]);
     if (!s) return notFound("That shop");
     const rows = await q(`select ${REPORT_COLS} ${FROM} where r.shop_id = $1 and r.status = 'live' order by r.reported_on desc, r.at desc limit 60`, [s.id]);
-    return html(shopPage({ base, shop: shopOut(s), reports: rows.map(reportOut) }));
+    const guides = await guidesWhere("and shops @> jsonb_build_array(jsonb_build_object('slug', $1::text))", [s.slug]);
+    return html(shopPage({ base, shop: shopOut(s), reports: rows.map(reportOut), guides }));
   }
   if (kind === "rivers") return html(riversIndex({ base, latest: await latestByRiver(now) }));
   if (kind === "shops") return html(shopsIndex({ base, shops: await activeShops() }));
+  if (kind === "guides") return html(guidesIndex({ base, guides: await guidesWhere() }));
+  if (kind === "guide") {
+    const [g] = await guidesWhere("and slug = $1", [str(req.query.slug, 60).toLowerCase()]);
+    return g ? html(guidePage({ base, guide: g })) : notFound("That guide");
+  }
   if (kind === "sitemap") {
     const shops = await activeShops();
     const dates = await q(`select r.river, max(r.reported_on) as d ${FROM} where r.status = 'live' and s.status = 'active' group by r.river`);
-    return { status: 200, type: "application/xml; charset=utf-8", cache: "public, s-maxage=3600", body: sitemap({ base, shops, riverDates: Object.fromEntries(dates.map((r) => [r.river, r.d])) }) };
+    return { status: 200, type: "application/xml; charset=utf-8", cache: "public, s-maxage=3600", body: sitemap({ base, shops, guides: await guidesWhere(), riverDates: Object.fromEntries(dates.map((r) => [r.river, r.d])) }) };
   }
   if (kind === "llms") {
     const shops = await activeShops();
     const latest = await latestByRiver(now);
-    return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: llms({ base, latest, shops }) };
+    return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: llms({ base, latest, shops, guides: await guidesWhere() }) };
   }
   return notFound("That page");
 }

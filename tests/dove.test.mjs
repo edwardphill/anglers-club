@@ -91,7 +91,7 @@ try {
   for (const p of ["/dove-fields/nope", "/dove-fields/constructor", "/dove-fields/__proto__"]) { g = await get(p); assert.equal(g.status, 404, p); assert.match(g.text, /noindex/); }
   g = await get("/dove-fields/"); assert.equal(g.status, 200); ok("unknown fields are 404 with noindex; a trailing slash works");
 
-  assert.ok(h.includes('<nav><a href="/rivers">Rivers</a> &nbsp; <a href="/shops">Shops</a> &nbsp; <a href="/dove-fields">Dove fields</a></nav>')); ok("the site header links to the dove fields");
+  assert.ok(h.includes('<nav><a href="/rivers">Rivers</a> &nbsp; <a href="/shops">Shops</a> &nbsp; <a href="/guides">Guides</a> &nbsp; <a href="/dove-fields">Dove fields</a> &nbsp; <a href="/grouse">Grouse</a></nav>')); ok("the site header links to the dove fields");
 } finally {
   srv.kill();
 }
