@@ -16,10 +16,15 @@
       "source": "/plan",
       "destination": "/index.html"
     },
+    {
+      "source": "/picker",
+      "destination": "/index.html"
+    },
     { "source": "/fly-picker", "destination": "/api/page?kind=flypicker" },
     { "source": "/ai-fly-guide", "destination": "/api/page?kind=aiguide" },
     { "source": "/river-report-tool", "destination": "/api/page?kind=rivertool" },
     { "source": "/for-shops", "destination": "/api/page?kind=forshops" },
+    { "source": "/clubs", "destination": "/api/page?kind=clubs" },
     { "source": "/rivers", "destination": "/api/page?kind=rivers" },
     { "source": "/rivers/:key", "destination": "/api/page?kind=river&key=:key" },
     { "source": "/shops", "destination": "/api/page?kind=shops" },

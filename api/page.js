@@ -7,7 +7,7 @@
 import { q, ensureSchema } from "../lib/db.js";
 import { str, siteBase } from "../lib/http.js";
 import { LIVE_DAYS, DAY, ymd, shopOut, reportOut, REPORT_COLS } from "../lib/shops.js";
-import { flyPickerPage, aiGuidePage, riverReportToolPage, forShopsPage } from "../lib/landing.js";
+import { flyPickerPage, aiGuidePage, riverReportToolPage, forShopsPage, clubsPage } from "../lib/landing.js";
 import { riverPage, shopPage, riversIndex, shopsIndex, guidePage, guidesIndex, sitemap, robots, llms, riverKey } from "../lib/pages.js";
 import { guideOut, resolveShops } from "../lib/guides.js";
 import { doveIndex, doveFieldPage } from "../lib/dove.js";
@@ -54,6 +54,7 @@ async function build(req) {
   if (kind === "flypicker") return html(flyPickerPage({ base }));
   if (kind === "aiguide") return html(aiGuidePage({ base }));
   if (kind === "rivertool") return html(riverReportToolPage({ base }));
+  if (kind === "clubs") return html(clubsPage({ base }));
   if (kind === "forshops") return html(forShopsPage({ base }));
   if (kind === "dove") return html(doveIndex({ base }));
   if (kind === "dovefield") {

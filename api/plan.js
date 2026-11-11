@@ -1,12 +1,15 @@
-// POST /api/plan { club, question, history: [{ q, a }] }: the Trip Planner. Needs a saved name.
+// POST /api/plan { club, place, question, history: [{ q, a }] }: the AI fly guide (the Trip Planner).
+// In a club it needs a saved name and answers from the club's data. With no club it is open to anyone: { place: { state,
+// city? } } stands in for the club, and an anonymous caller is limited by a hash of their address instead of a name.
 // Errors before the answer starts come back as JSON; the answer itself streams as
 // newline-delimited JSON events (see lib/planner.js).
-import { readBody, str, HttpError, siteBase } from "../lib/http.js";
+import { readBody, str, HttpError, siteBase, clientKey } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { requireUser, limit } from "../lib/auth.js";
+import { requireUser, currentUser, limit } from "../lib/auth.js";
+import { publicPlace } from "../lib/places.js";
 import { buildContext, systemPrompt, streamAnswer, todayIn } from "../lib/planner.js";
 
-const NO_KEY = "The Trip Planner isn't switched on yet. The club organizer adds an Anthropic API key in Vercel (Settings, Environment Variables, ANTHROPIC_API_KEY) and redeploys.";
+const NO_KEY = "The AI fly guide isn't switched on yet. The club organizer adds an Anthropic API key in Vercel (Settings, Environment Variables, ANTHROPIC_API_KEY) and redeploys.";
 
 export default async function handler(req, res) {
   const started = Date.now();
@@ -16,17 +19,29 @@ export default async function handler(req, res) {
     await ensureSchema();
     const b = readBody(req);
     const clubId = str(b.club, 80);
-    const user = await requireUser(req);
     const question = str(b.question, 600);
     if (question.length < 3) throw new HttpError(400, "Ask a question first.");
     if (!process.env.ANTHROPIC_API_KEY) throw new HttpError(503, NO_KEY);
-    const [row] = await q("select * from clubs where id = $1", [clubId]);
-    if (!row) throw new HttpError(404, "That club isn't here anymore.");
-    await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of Trip Planner questions for you. It resets tomorrow.");
-    await limit(`plan-club:${clubId}`, 150, 24 * 3600e3, "The club has used its Trip Planner questions for today. They reset tomorrow.");
-    await limit("plan-all", 600, 24 * 3600e3, "The Trip Planner has hit its limit for today. It resets tomorrow.");
+    let club;
+    if (clubId) {
+      const user = await requireUser(req);
+      const [row] = await q("select * from clubs where id = $1", [clubId]);
+      if (!row) throw new HttpError(404, "That club isn't here anymore.");
+      await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of AI fly guide questions for you. It resets tomorrow.");
+      await limit(`plan-club:${clubId}`, 150, 24 * 3600e3, "The club has used its AI fly guide questions for today. They reset tomorrow.");
+      club = { ...row, waters: Array.isArray(row.waters) ? row.waters : [] };
+    } else {
+      // Open to anyone: a state stands in for the club. A named user gets the same daily allowance as in a club;
+      // anyone else is limited by a hash of their address, and everyone in the open shares one daily ceiling.
+      club = publicPlace(b.place);
+      if (!club) throw new HttpError(400, "Pick the state you fish in first.");
+      const user = await currentUser(req);
+      if (user) await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of AI fly guide questions for you. It resets tomorrow.");
+      else await limit(`plan-anon:${clientKey(req)}`, 8, 24 * 3600e3, "That's the day's limit of AI fly guide questions from this device. It resets tomorrow. Add a name to ask more.");
+      await limit("plan-open", 300, 24 * 3600e3, "The AI fly guide has hit its limit for today. It resets tomorrow.");
+    }
+    await limit("plan-all", 600, 24 * 3600e3, "The AI fly guide has hit its limit for today. It resets tomorrow.");
 
-    const club = { ...row, waters: Array.isArray(row.waters) ? row.waters : [] };
     const t0 = todayIn(club.tz);
     const context = await buildContext(club, t0, { base: siteBase(req) });
 
@@ -41,7 +56,7 @@ export default async function handler(req, res) {
     res.setHeader("Content-Type", "application/x-ndjson; charset=utf-8");
     res.setHeader("X-Accel-Buffering", "no");
     const send = (o) => { try { res.write(JSON.stringify(o) + "\n"); } catch {} };
-    send({ t: "status", v: "Checking the hatch chart, the stocking schedule and the club's reports" });
+    send({ t: "status", v: club.id ? "Checking the hatch chart, the stocking schedule and the club's reports" : "Checking the hatch chart, the stocking schedule and recent reports" });
     await streamAnswer({ system: systemPrompt(club, t0), messages, club, send, deadline: started + 56000 });
     send({ t: "done" });
     res.end();

@@ -364,6 +364,9 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .tp-lab{font:500 .66rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink)}
 .tp-ask textarea{width:100%;font:400 1.15rem/1.45 var(--body);background:var(--ground);border:1px solid var(--hair);border-bottom-color:var(--muted);padding:12px 14px;resize:vertical;color:var(--ink)}
 .tp-ask textarea:focus{border-color:var(--ink);outline:none}
+.tp-place{display:flex;flex-wrap:wrap;gap:10px 16px}.tp-place label{display:grid;gap:4px;font:500 .66rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink);flex:1 1 180px}
+.tp-place select,.tp-place input{font:400 1rem/1.3 var(--body);border:1px solid var(--hair);border-radius:8px;background:var(--paper);padding:9px 10px;color:var(--ink);width:100%}
+.tp-place select:focus,.tp-place input:focus{border-color:var(--green);outline:2px solid var(--green-wash)}
 .tp-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
 .tp-ex{display:flex;flex-wrap:wrap;gap:6px 16px;min-width:0}
 .tp-ex button{background:none;border:0;padding:0;color:var(--green);font:400 1rem var(--body);cursor:pointer;text-decoration:underline;text-decoration-color:var(--hair);text-underline-offset:3px;text-align:left}
@@ -546,7 +549,7 @@ header.club .kicker{color:var(--green)}
   <div class="wrap tabs-in">
     <div class="tablist" role="tablist">
       <button class="tab" role="tab" id="t-calendar" data-tab="calendar" aria-selected="true">Calendar</button>
-      <button class="tab" role="tab" id="t-planner" data-tab="planner" aria-selected="false"><span class="long">Trip Planner</span><span class="short">Plan</span></button>
+      <button class="tab" role="tab" id="t-planner" data-tab="planner" aria-selected="false"><span class="long">AI fly guide</span><span class="short">Guide</span></button>
       <button class="tab" role="tab" id="t-stocking" data-tab="stocking" aria-selected="false" hidden>Stocking</button>
       <button class="tab" role="tab" id="t-flies" data-tab="flies" aria-selected="false"><span class="long">Fly Picker</span><span class="short">Flies</span></button>
       <button class="tab" role="tab" id="t-trout" data-tab="trout" aria-selected="false"><span class="long">Trout Map</span><span class="short">Trout</span></button>
@@ -597,8 +600,12 @@ header.club .kicker{color:var(--green)}
       </div>
       <div id="v-planner" role="tabpanel" aria-labelledby="t-planner" hidden>
         <div class="tm">
-          <p class="tm-lede">Ask where and when to go. The planner weighs what's hatching, the stocking schedule, dam generation, the weather and the club's recent reports, and links where each fact came from.</p>
+          <p class="tm-lede" id="tp-lede"></p>
           <form class="tp-ask" id="tp-form" autocomplete="off" novalidate>
+            <div class="tp-place" id="tp-place" hidden>
+              <label>Where you fish <select id="tp-state" aria-label="State"></select></label>
+              <label>Nearest town, optional <input id="tp-city" type="text" maxlength="60" placeholder="e.g. Asheville" autocomplete="off"></label>
+            </div>
             <label class="tp-lab" for="tp-q">Your question</label>
             <textarea id="tp-q" rows="2" maxlength="600"></textarea>
             <div class="tp-row">
@@ -697,7 +704,7 @@ header.club .kicker{color:var(--green)}
     </div>
   </section>
 </main>
-<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
+<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/clubs">Club calendar</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
@@ -744,6 +751,7 @@ const WHERE_PH = { fish: "e.g. the river or lake", hunt: "e.g. the WMA or lease"
 const COUNT_LABEL = { fish: "Fish landed", hunt: "Harvest" };
 const WORKED_LABEL = { fish: "Flies that worked", hunt: "What worked" };
 const TABS = ["calendar", "planner", "stocking", "flies", "trout"];
+const PUBLIC_TABS = ["planner", "stocking", "flies", "trout"];   // these four work with no club
 // Older links named tabs that are gone; they land on the calendar.
 const OLD_TABS = { upcoming: "calendar", logbook: "calendar" };
 const POST_WHY = "Add your name to post a trip. It's saved on this device, so you only do this once.";
@@ -752,7 +760,7 @@ const NO_WRITE = "You can look around but can't change anything. Ask the person 
 /* ---------- state ---------- */
 const S = {
   db: null, user: null, me: { id: null, role: "" },
-  readOnly: false, connected: false, booting: true, poll: 0, loadSeq: 0,
+  readOnly: false, connected: false, booting: true, poll: 0, loadSeq: 0, pub: false, pubTab: null,
   auth: null, gcid: "", mine: new Map(), removed: new Set(), pendingClub: null, pendingTrip: null,
   clubs: new Map(), clubsLoaded: false,
   clubId: null, unsubs: [],
@@ -1099,6 +1107,8 @@ async function signOut() {
 }
 // Where to go once the page has loaded: the club or trip a link pointed at, else the last club you opened.
 function afterBoot() {
+  if (S.wantStart) { S.wantStart = false; setTimeout(async () => { if (!S.readOnly && await ensureIdentity("Add your name to start a club. You'll be its organizer.")) openSheet("new"); }, 0); }
+  if (S.chose || (S.pubTab && S.pub && !S.clubId)) { S.pubTab = null; scheduleRender(); return; }   // a tool link stays on the tool, and a choice made while loading wins
   const last = lastClub();
   const only = S.clubs.size === 1 ? [...S.clubs.keys()][0] : null;
   const start = S.pendingClub || (last && S.clubs.has(last) ? last : null)
@@ -1124,7 +1134,9 @@ function toast(msg) {
 }
 
 /* ---------- navigation ---------- */
+const TOOL_PATH = { flies: "picker", planner: "plan", stocking: "stocking", trout: "trout" };
 function setHash() {
+  if (S.pub && !S.clubId) { try { history.replaceState(null, "", "/" + (TOOL_PATH[S.tab] || "")); } catch (e) {} return; }
   let h = "home";
   if (S.clubId) h = "club-" + S.clubId + (S.tab !== "calendar" ? "." + S.tab : "");
   try { history.replaceState(null, "", "/#" + h); } catch (e) {}
@@ -1133,6 +1145,8 @@ function enterClub(cid, opts = {}) {
   S.unsubs.forEach((u) => { try { u(); } catch (e) {} });
   S.unsubs = [];
   S.clubId = cid || null;
+  S.pub = !cid && !!opts.pub;
+  S.pubTab = null; S.chose = true;   // the person chose where to go; the boot's pending link no longer applies
   S.me = { id: (S.mine.get(S.clubId) || {}).memberId || null, role: "" };
   S.loadSeq++;
   S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.catches = []; S.catchIdx = null; S.members = new Map();
@@ -1141,7 +1155,8 @@ function enterClub(cid, opts = {}) {
   SK.sel = null; SK.built = false;
   const want = OLD_TABS[opts.tab] || opts.tab || S.wantTab;
   S.tab = want && TABS.includes(want) ? want : "calendar";
-  if (S.clubId) S.wantTab = null;
+  if (S.pub && S.tab === "calendar") S.tab = "flies";
+  if (S.clubId || S.pub) S.wantTab = null;
   S.filter = "all"; S.onlyMine = false; S.cal = null; S.calSel = null; S.fpNote = "";
   const mt = $("#mine-toggle"); if (mt) mt.checked = false;
   if (S.clubId) loadClub(S.clubId);
@@ -1210,6 +1225,7 @@ function emptyState(title, body, withBtn) {
 }
 /* ---------- views ---------- */
 function currentView() {
+  if (S.pub && !S.clubId) return "tools";   // the tools open for anyone: no club, no sign-in
   if (S.booting) return "boot";
   if (!S.connected) return "off";
   if (!S.clubsLoaded) return "boot";
@@ -1224,9 +1240,10 @@ function renderHeader(v) {
   const patch = $("#hd-patch");
   patch.hidden = !inClub;
   if (inClub) { patch.className = "patch lg " + c.kinds; patch.innerHTML = `<span>${esc(crestOf(c.name))}</span>${c.at ? `<span class="yr">${new Date(c.at).getFullYear()}</span>` : ""}`; }
-  $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : "AI fly guide · fly picker · shop reports";
+  $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : v === "tools" ? "Open to everyone · no club or sign-in" : "AI fly guide · fly picker · shop reports";
   $("#hd-title").textContent = inClub ? c.name : "Fly AI";
-  $("#home-btn").hidden = !inClub;
+  $("#home-btn").hidden = !inClub && v !== "tools";
+  $("#home-btn").textContent = v === "tools" ? "All tools" : "All clubs";
   $("#invite-btn").hidden = v !== "club";
   $("#start-btn").hidden = true;
   $("#post-btn").hidden = v !== "club" || S.readOnly;
@@ -1234,35 +1251,39 @@ function renderHeader(v) {
 // Each tool has its own color: the card fills with it when selected. Fishing first, hunting second;
 // the Logbook is a small club feature, so it sits last.
 const TOOLS = [
-  { group: "fishing", name: "Fly Picker", text: "The AI fly fishing picker: which flies to tie on, ranked from hatch charts and dated shop and guide reports for your river and date.", tab: "flies", tag: "In your club", c: "#3DDC97", ink: "#0A2A20" },
-  { group: "fishing", name: "AI fly guide", text: "The trip planner: ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "In your club", c: "#0F3D2E", ink: "#FFFFFF" },
+  { group: "fishing", name: "Fly Picker", text: "The AI fly fishing picker: which flies to tie on, ranked from hatch charts and dated shop and guide reports for your river and date.", tab: "flies", tag: "Open to everyone", c: "#3DDC97", ink: "#0A2A20" },
+  { group: "fishing", name: "AI fly guide", text: "The trip planner: ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "Open to everyone", c: "#0F3D2E", ink: "#FFFFFF" },
   { group: "fishing", name: "River report tool", text: "Fly shops photograph the weekly whiteboard. It's transcribed into dated, written river reports that anglers and AI tools can read.", href: "/river-report-tool", tag: "For fly shops", c: "#0E7C66", ink: "#FFFFFF" },
-  { group: "fishing", name: "Stocking calendar", text: "Every stocked water on one map, with the dates of the next stocking.", tab: "stocking", tag: "In your club", c: "#BFD8CB", ink: "#0C1A14" },
-  { group: "fishing", name: "Trout map", text: "A personal life list of every native trout and char, drawn on a world chart.", tab: "trout", tag: "In your club", c: "#1F5F8B", ink: "#FFFFFF" },
+  { group: "fishing", name: "Stocking calendar", text: "Every stocked water on one map, with the dates of the next stocking.", tab: "stocking", tag: "Open to everyone", c: "#BFD8CB", ink: "#0C1A14" },
+  { group: "fishing", name: "Trout map", text: "A personal life list of every native trout and char, drawn on a world chart.", tab: "trout", tag: "Open to everyone", c: "#1F5F8B", ink: "#FFFFFF" },
   { group: "fishing", name: "Fly shops", text: "Weekly river reports from local fly shops, published as dated pages AI tools can read, and a way to message the shop.", href: "/shops", tag: "Public page", c: "#2F5FA8", ink: "#FFFFFF" },
   { group: "fishing", name: "Guides", text: "Local guides by area, with their shops and Instagram. Guides add themselves and take messages.", href: "/guides", tag: "Public page", c: "#4A4FB0", ink: "#FFFFFF" },
   { group: "fishing", name: "Logbook", text: "Past trips keep their catch reports, flies and conditions on the calendar.", tab: "calendar", tag: "In your club", c: "#5B6B62", ink: "#FFFFFF" },
   { group: "hunting", name: "Public TN dove fields", text: "TWRA public dove fields for Regions 1 to 4 on one map, with each field's details.", href: "/dove-fields", tag: "Public page", c: "#9A5B14", ink: "#FFFFFF" },
   { group: "hunting", name: "TN grouse map", text: "A field report on ruffed grouse in Tennessee: range, decline, habitat and sightings on a map.", href: "/grouse", tag: "Public page", c: "#7A3B2E", ink: "#FFFFFF" },
+  { group: "clubs", name: "Club calendar", text: "Start a club for your city: a shared trip calendar with RSVPs, a thread for each trip, catch reports and a trout life list. Text the link to your crew; no passwords.", act: "new-club", tag: "Start a club", c: "#0F3D2E", ink: "#FFFFFF" },
 ];
 const TOOL_GROUPS = [
-  ["fishing", "Fishing", "The public pages open for anyone. The rest live inside a club."],
+  ["fishing", "Fishing", "Every tool here opens for anyone: no club, no sign-in."],
   ["hunting", "Hunting", "Public land and field reports, open for anyone."],
+  ["clubs", "Clubs", "Optional: a shared calendar for your own crew."],
 ];
 function toolsSection() {
   const card = (x) => {
     const inner = `<span class="tool-t">${esc(x.name)}</span><span class="tool-d">${esc(x.text)}</span><span class="tool-tag">${esc(x.tag)}</span>`;
     const st = `style="--tc:${x.c};--tci:${x.ink}"`;
     if (x.href) return `<li><a class="tool" ${st} href="${x.href}">${inner}</a></li>`;
+    if (x.act) return `<li><button class="tool" ${st} type="button" data-act="${x.act}">${inner}</button></li>`;
     return `<li><button class="tool" ${st} type="button" data-tool="${x.tab}">${inner}</button></li>`;
   };
   return TOOL_GROUPS.map(([g, title, hint], i) => `<section class="home-sec"${i === 0 ? ' id="tools"' : ""}><div class="sec-h"><h2 class="home-h">${esc(title)}</h2><p class="hint">${esc(hint)}</p></div><ul class="tools-grid">${TOOLS.filter((x) => x.group === g).map(card).join("")}</ul></section>`).join("");
 }
 function openTool(tab) {
+  if (PUBLIC_TABS.includes(tab)) { enterClub(null, { tab, pub: true }); return; }   // open to everyone
   const mine = [...S.mine.keys()].filter((id) => S.clubs.has(id));
   if (mine.length) { enterClub(mine[0], { tab }); return; }
-  toast("Start a club or open one to use this.");
-  const el = $("#start-club"); if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  toast("Start a club to use the calendar, or open one.");
+  const el = document.querySelector('[data-act="new-club"]'); if (el) el.scrollIntoView({ behavior: "smooth", block: "center" });
 }
 function renderHome() {
   const el = $("#v-home");
@@ -1273,7 +1294,6 @@ function renderHome() {
   let html = `<section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p><p class="hero-links"><a href="/fly-picker">AI fly fishing picker</a> · <a href="/ai-fly-guide">AI fly guide</a> · <a href="/river-report-tool">River report tool</a></p></section>`;
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
   html += toolsSection();
-  if (!S.readOnly) html += `<section class="start" id="start-club"><div><h2>Start a club for your city</h2><p>Pick your city and text the link to your crew. Anyone with the link can read the calendar and add a name to post or RSVP. A trip calendar with RSVPs and one thread per trip, the Trip Planner, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
   html += `<section class="home-sec"><h2 class="home-h">${mine.length ? "Other clubs" : "Find your club"}</h2>${others.length
     ? `<ul class="rows">${others.map((c) => clubRow(c, "Open")).join("")}</ul>`
     : `<p class="muted" style="padding-inline:2px">${S.clubs.size ? "You're in every club so far." : "No clubs yet. Start the first one."}</p>`}</section>`;
@@ -1360,7 +1380,7 @@ function renderFliesTab() {
   const fp = ensureFlyPicker();
   const note = $("#fp-note");
   if (!fp) { note.hidden = false; note.textContent = "The Fly Picker didn't load. Reload the page to try again."; return; }
-  if (S.fpClub !== S.clubId) { S.fpClub = S.clubId; fp.set({ river: "", region: club().region, date: todayStr() }); }
+  if (S.fpClub !== S.clubId) { S.fpClub = S.clubId; fp.set({ river: "", region: (club() && club().region) || "south", date: todayStr() }); }
   note.hidden = !S.fpNote;
   if (S.fpNote) note.innerHTML = `<span>${esc(S.fpNote)}</span><button class="btn ghost small" type="button" data-act="fp-dismiss">Dismiss</button>`;
 }
@@ -1933,11 +1953,20 @@ const genButton = (g) => g ? `<a class="btn ghost small" href="${esc(g.url)}" ta
 /* ---------- Trip Planner tab ---------- */
 // Questions go to /api/plan, which streams the answer back as newline-delimited JSON. The last few
 // questions and answers stay on this device so they're there when you come back.
-const TP = { items: [], club: null, busy: false, paint: 0 };
-const tpKey = () => "nac-planner:" + S.clubId;
+const TP = { items: [], scope: "", busy: false, paint: 0, place: null };
+const tpScope = () => S.clubId || "open";   // the guide opened with no club keeps its own history
+const tpKey = () => "nac-planner:" + tpScope();
+const isOpen = () => !S.clubId;
+// The state (and optionally the city) an open-guide visitor fishes in; remembered on this device.
+function tpPlace() {
+  if (!TP.place) { try { TP.place = JSON.parse(localStorage.getItem("nac-place") || "null"); } catch (e) {} }
+  if (!TP.place || !ST[TP.place.state]) TP.place = { state: "", city: "" };
+  return TP.place;
+}
+function tpSavePlace() { try { localStorage.setItem("nac-place", JSON.stringify(TP.place)); } catch (e) {} }
 function tpLoad() {
-  if (TP.club === S.clubId) return;
-  TP.club = S.clubId; TP.items = [];
+  if (TP.scope === tpScope()) return;
+  TP.scope = tpScope(); TP.items = [];
   try { const v = JSON.parse(localStorage.getItem(tpKey()) || "[]"); if (Array.isArray(v)) TP.items = v.filter((x) => x && x.q).slice(0, 8); } catch (e) {}
 }
 function tpSave() {
@@ -1973,6 +2002,12 @@ function md(src) {
 }
 const hostOf = (u) => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return ""; } };
 function tpExamples() {
+  if (isOpen()) return [
+    "I have tomorrow off. Where should I fish?",
+    "Where should I fish this Saturday?",
+    "What's hatching and what flies should I bring this week?",
+    "Anything stocked within an hour in the next 10 days?",
+  ];
   const c = club(), ws = (c && c.waters) || [];
   const a = ws[0] || "the Elk", b = ws[1] || "the Caney";
   return [
@@ -1991,11 +2026,21 @@ function tpCard(it) {
     ${it.busy ? `<p class="tp-status">${esc(it.status || "Thinking")}</p>` : ""}
     ${it.error ? `<p class="tp-err">${esc(it.error)}</p>` : ""}
     ${src}
-    ${it.busy ? "" : `<div class="tp-foot"><span>Asked ${esc(when)}</span>${it.a && !S.readOnly ? `<button class="linkbtn" type="button" data-act="post">Post a trip</button>` : ""}<button class="linkbtn" type="button" data-act="tp-again" data-tp="${esc(it.id)}">Ask again</button><button class="linkbtn" type="button" data-act="tp-del" data-tp="${esc(it.id)}">Remove</button></div>`}
+    ${it.busy ? "" : `<div class="tp-foot"><span>Asked ${esc(when)}</span>${it.a && !S.readOnly && S.clubId ? `<button class="linkbtn" type="button" data-act="post">Post a trip</button>` : ""}<button class="linkbtn" type="button" data-act="tp-again" data-tp="${esc(it.id)}">Ask again</button><button class="linkbtn" type="button" data-act="tp-del" data-tp="${esc(it.id)}">Remove</button></div>`}
   </article>`;
 }
 function renderPlanner() {
   tpLoad();
+  const open = isOpen(), pl = tpPlace();
+  $("#tp-lede").textContent = open
+    ? "Ask where and when to go. The AI fly guide weighs what's hatching, the stocking schedule, dam generation, the weather and recent shop reports, and links where each fact came from. Open to everyone; no club or name needed."
+    : "Ask where and when to go. The AI fly guide weighs what's hatching, the stocking schedule, dam generation, the weather and the club's recent reports, and links where each fact came from.";
+  const pb = $("#tp-place"); pb.hidden = !open;
+  if (open) {
+    const sel = $("#tp-state");
+    if (!sel.options.length) sel.innerHTML = `<option value="">Choose a state</option>` + Object.entries(ST).sort((a, b) => a[1][0].localeCompare(b[1][0])).map(([k, v]) => `<option value="${k}">${esc(v[0])}</option>`).join("");
+    sel.value = pl.state; const ci = $("#tp-city"); if (document.activeElement !== ci) ci.value = pl.city;
+  }
   const ta = $("#tp-q");
   if (!ta.placeholder) ta.placeholder = tpExamples()[0];
   setHTML($("#tp-ex"), tpExamples().slice(1).map((x) => `<button type="button" data-tpx="${esc(x)}">${esc(x)}</button>`).join(""));
@@ -2015,7 +2060,8 @@ async function tpAsk(question) {
   question = String(question || "").trim();
   if (!question || TP.busy) return;
   const cid = S.clubId;
-  if (!(await ensureIdentity("Add your name to ask the Trip Planner. It's saved on this device, so you only do this once."))) return;
+  if (cid) { if (!(await ensureIdentity("Add your name to ask the AI fly guide. It's saved on this device, so you only do this once."))) return; }
+  else if (!tpPlace().state) { toast("Pick the state you fish in first."); const sel = $("#tp-state"); if (sel) sel.focus(); return; }
   const history = TP.items.filter((x) => x.a && !x.error && !x.busy).slice(0, 2).reverse().map((x) => ({ q: x.q, a: x.a.slice(0, 2500) }));
   const it = { id: nid("p"), q: question, a: "", cites: [], at: Date.now(), busy: true, status: "Thinking" };
   TP.items.unshift(it); TP.busy = true;
@@ -2024,13 +2070,13 @@ async function tpAsk(question) {
   try {
     const res = await fetch("/api/plan", {
       method: "POST",
-      headers: { "Content-Type": "application/json", Authorization: "Bearer " + authToken() },
-      body: JSON.stringify({ club: cid, question, history }),
+      headers: { "Content-Type": "application/json", ...(authToken() ? { Authorization: "Bearer " + authToken() } : {}) },
+      body: JSON.stringify(cid ? { club: cid, question, history } : { place: tpPlace(), question, history }),
     });
     if (!res.ok) {
       let d = {}; try { d = await res.json(); } catch (e) {}
       it.error = d.error || "Something went wrong. Try again.";
-      if (res.status === 401) sessionEnded();
+      if (res.status === 401 && cid) sessionEnded();
     } else {
       const reader = res.body.getReader(), dec = new TextDecoder();
       let buf = "";
@@ -2056,14 +2102,14 @@ async function tpAsk(question) {
   }
   it.busy = false; it.status = ""; TP.busy = false;
   tpSave();
-  if (S.clubId === cid && S.tab === "planner") { $("#tp-out")._html = null; renderPlanner(); }
+  if ((S.clubId || null) === (cid || null) && S.tab === "planner") { $("#tp-out")._html = null; renderPlanner(); }
 }
 
 /* ---------- Stocking tab ---------- */
 // TWRA's trout stocking schedule (src/stocking-tn.js, loaded with the tab) for Tennessee clubs:
 // a state map with every stocked water, filters, and a list sorted by the next stocking.
 const SK = {
-  data: null, loading: null, built: false, narrow: null, pz: null, svg: null, proj: null, pins: [], cities: [], tcol: {},
+  me: null, data: null, loading: null, built: false, narrow: null, pz: null, svg: null, proj: null, pins: [], cities: [], tcol: {},
   when: "upcoming", sort: "soon", q: "", regions: new Set(), types: new Set(), sel: null,
 };
 const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -2103,12 +2149,13 @@ async function ensureStocking() {
   $("#sk-types").innerHTML = D.types.map(([k, lab, col]) => `<button class="chip" type="button" data-skt="${esc(k)}" aria-pressed="false"><span class="sk-dot" style="background:${col}"></span>${esc(lab)}</button>`).join("");
   $("#sk-legend").innerHTML = D.types.map(([, lab, col]) => `<span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="${col}" stroke="#FFFFFF" stroke-width="1.5"/></svg>${esc(lab)}</span>`).join("")
     + `<span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6" fill="none" stroke="#B3382C" stroke-width="1.6"/></svg>Stocked within 7 days</span>`;
-  $("#sk-lede").innerHTML = `${esc(D.agency)}'s trout stocking schedule for the ${esc(D.season)} season, every stocked water on one map. Tap a water for its dates, or post a trip there.`;
   $("#sk-note").innerHTML = `Pins are approximate. "Week of" dates are Sundays; the truck comes within five days. Weather and water levels move stockings, so <a href="${esc(D.source)}" target="_blank" rel="noopener">check ${esc(D.agency)}</a> before you drive.`;
   return true;
 }
+// Where distances are measured from: the club, or, with no club, the spot the visitor shared with "Nearest".
+const homeLL = () => club() || SK.me;
 function milesFromClub(L) {
-  const c = club(); if (!c) return null;
+  const c = homeLL(); if (!c) return null;
   const r = 3958.8, p1 = c.lat * RAD, p2 = L.lat * RAD, dp = (L.lat - c.lat) * RAD, dl = (L.lon - c.lon) * RAD;
   const a = Math.sin(dp / 2) ** 2 + Math.cos(p1) * Math.cos(p2) * Math.sin(dl / 2) ** 2;
   return Math.round(2 * r * Math.asin(Math.sqrt(a)));
@@ -2177,12 +2224,17 @@ function renderStockingTab() {
     return;
   }
   const t0 = todayStr(), D = SK.data;
+  $("#sk-lede").innerHTML = `${esc(D.agency)}'s trout stocking schedule for the ${esc(D.season)} season, every stocked water on one map. Tap a water for its dates${S.clubId ? ", or post a trip there" : ""}. Open to everyone; no club needed.`;
   if (!SK.built) skBuild();
   const week = D.waters.flatMap((L) => L.ev.filter((e) => evEnd(e) >= t0 && e[0] <= addDays(t0, 7)).map((e) => ({ L, e })));
-  const near = [...week].sort((a, b) => milesFromClub(a.L) - milesFromClub(b.L))[0];
+  const home = homeLL();
+  const near = [...week].sort((a, b) => home ? milesFromClub(a.L) - milesFromClub(b.L) : (a.e[0] < b.e[0] ? -1 : a.e[0] > b.e[0] ? 1 : 0))[0];
+  const nearTxt = near && (home
+    ? `Closest to ${club() ? "the club" : "you"}: <button class="linkbtn" type="button" data-skw="${near.L.id}">${esc(near.L.name)}</button>, ${esc(evLabel(near.e))}, ${milesFromClub(near.L)} miles away.`
+    : `Next up: <button class="linkbtn" type="button" data-skw="${near.L.id}">${esc(near.L.name)}</button>, ${esc(evLabel(near.e))}.`);
   setHTML($("#sk-score"), `<div class="tm-big">${week.length}</div>
     <div class="tm-score-r"><span class="tm-cap">Stockings in the next 7 days</span>
-      <span class="tm-sub">${near ? `Closest to the club: <button class="linkbtn" type="button" data-skw="${near.L.id}">${esc(near.L.name)}</button>, ${esc(evLabel(near.e))}, ${milesFromClub(near.L)} miles away.` : "Nothing on the schedule this week."} ${D.waters.length} waters on the ${esc(D.season)} schedule.</span></div>`);
+      <span class="tm-sub">${nearTxt || "Nothing on the schedule this week."} ${D.waters.length} waters on the ${esc(D.season)} schedule.</span></div>`);
   const vis = skVisible(t0);
   if (SK.sort === "near") vis.sort((a, b) => (a.mi ?? 9e9) - (b.mi ?? 9e9) || a.L.name.localeCompare(b.L.name));
   else vis.sort((a, b) => (a.next ? a.next[0] : "9999").localeCompare(b.next ? b.next[0] : "9999") || a.L.name.localeCompare(b.L.name));
@@ -2223,7 +2275,7 @@ function skBuild() {
   let grat = "";
   for (let lon = -90; lon <= -82; lon++) grat += line([[lon, B.y0], [lon, B.y1]]);
   for (let lat = 35; lat <= 36.5; lat += 0.5) grat += line([[B.x0, lat], [B.x1, lat]]);
-  const c = club(), [ccx, ccy] = c ? SK.proj(c.lon, c.lat) : [0, 0];
+  const c = homeLL(), [ccx, ccy] = c ? SK.proj(c.lon, c.lat) : [0, 0];
   const pins = D.waters.map((L) => { const [x, y] = SK.proj(L.lon, L.lat); return `<circle class="sk-ring" data-w="${L.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8" fill="none" stroke="#B3382C" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`; }).join("")
     + D.waters.map((L) => { const [x, y] = SK.proj(L.lon, L.lat); return `<circle class="sk-pin" data-w="${L.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${SK.tcol[L.primary]}" stroke="#FFFFFF" stroke-width="1.3" vector-effect="non-scaling-stroke"/>`; }).join("");
   const cities = D.cities.map(([n, lat, lon]) => { const [x, y] = SK.proj(lon, lat); return `<g class="sk-city" data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="#0C1A14"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${esc(n)}</text></g>`; }).join("");
@@ -2254,7 +2306,7 @@ function skHome(animate) {
   if (!SK.pz) return;
   let z = { k: 1, x: 0, y: 0 };
   if (SK.narrow) {
-    const c = club(), k = SK.H / SK.Hc, [cx, cy] = c ? SK.proj(Math.max(-89, Math.min(-82.5, c.lon)), c.lat) : [480, SK.H / 2];
+    const c = homeLL(), k = SK.H / SK.Hc, [cx, cy] = c ? SK.proj(Math.max(-89, Math.min(-82.5, c.lon)), c.lat) : [480, SK.H / 2];
     z = { k, x: 480 - cx * k, y: SK.H / 2 - cy * k };
   }
   if (animate) SK.pz.animateTo(z); else SK.pz.set(z);
@@ -2339,11 +2391,12 @@ function waterSheetMarkup(id) {
     <div style="display:grid;gap:12px">
       <div>${pills}</div>
       <h2 class="tv-title">${esc(L.name)}</h2>
-      <p class="tv-when">${esc(L.county)} County · ${esc(D.regions[L.region] || "")}${mi != null ? ` · ${mi} miles from the club` : ""}</p>
+      <p class="tv-when">${esc(L.county)} County · ${esc(D.regions[L.region] || "")}${mi != null ? ` · ${mi} miles from ${club() ? "the club" : "you"}` : ""}</p>
       ${nextBox}
       <dl class="facts"><div><dt>Species</dt><dd>${esc(L.species.join(", "))}</dd></div><div><dt>Region</dt><dd>${esc(D.agency)} Region ${esc(L.region)}</dd></div></dl>
       <div class="host-tools">
-        ${S.readOnly ? "" : `<button class="btn primary small" type="button" data-act="sk-post" data-w="${L.id}">Post a trip here</button>`}
+        ${S.readOnly || !S.clubId ? "" : `<button class="btn primary small" type="button" data-act="sk-post" data-w="${L.id}">Post a trip here</button>`}
+        ${S.clubId ? "" : `<button class="btn ghost small" type="button" data-act="sk-ask" data-w="${L.id}">Ask the AI fly guide</button>`}
         <button class="btn ghost small" type="button" data-act="sk-show" data-w="${L.id}">Show on the map</button>
         ${genButton(generationFor(L.name))}
         <a class="btn ghost small" href="${esc(gm)}" target="_blank" rel="noopener">Google Maps</a>
@@ -2359,6 +2412,24 @@ function skPostTrip(id) {
   let day = n ? (n[1] === "week" ? addDays(n[0], 6) : n[0]) : addDays(t0, 1);
   if (day <= t0) day = addDays(t0, 1);
   openSheet("form", { day, water: L.water });
+}
+// With no club there is nothing to measure from, so "Nearest" asks the browser where you are. The position stays on this device.
+function skLocate() {
+  if (!navigator.geolocation) { toast("This browser can't share your location."); return; }
+  toast("Asking your browser for your location…");
+  navigator.geolocation.getCurrentPosition((pos) => {
+    SK.me = { lat: pos.coords.latitude, lon: pos.coords.longitude };
+    SK.sort = "near"; SK.built = false;   // rebuild so the map marks where you are
+    scheduleRender();
+  }, () => toast("Couldn't get your location. Allow it in the browser, or keep sorting by soonest."), { timeout: 10000, maximumAge: 600000 });
+}
+// From a water's sheet, hand the question to the AI fly guide (Tennessee is where the schedule is).
+function skAsk(id) {
+  const L = SK.data.waters[id];
+  closeSheet();
+  if (!S.clubId) { const p = tpPlace(); if (!p.state) { p.state = "TN"; tpSavePlace(); } }
+  goTab("planner");
+  const ta = $("#tp-q"); if (ta) { ta.value = `Should I fish ${L.water} this week? When is it stocked next, and what flies should I bring?`; ta.focus(); }
 }
 async function skShow(id) {
   closeSheet();
@@ -2395,19 +2466,23 @@ function renderBanner(v) {
   const b = $("#banner");
   let msg = "", btn = "";
   if (v === "off") { msg = "Can't reach the club server right now. Check your connection, then try again."; btn = `<button class="btn small" type="button" data-act="retry">Try again</button>`; }
-  else if (v !== "boot" && S.readOnly) msg = NO_WRITE;
+  else if (v !== "boot" && v !== "tools" && S.readOnly) msg = NO_WRITE;
   b.hidden = !msg;
   if (msg) b.innerHTML = `<span>${esc(msg)}</span>${btn}`;
 }
 function renderTabs() {
-  const fishOk = kinds() !== "hunt";
+  const pub = S.pub && !S.clubId;   // the tools opened with no club: no Calendar, nothing tied to a club
+  const fishOk = pub || kinds() !== "hunt";
+  const stockShown = pub || stockOk();
   if (!fishOk && (S.tab === "flies" || S.tab === "trout")) S.tab = "calendar";
+  $("#t-calendar").hidden = pub;
   $("#t-flies").hidden = !fishOk;
   $("#t-trout").hidden = !fishOk;
   $("#t-planner").hidden = !fishOk;
   if (!fishOk && S.tab === "planner") S.tab = "calendar";
-  if (!stockOk() && S.tab === "stocking") S.tab = "calendar";
-  $("#t-stocking").hidden = !stockOk();
+  if (!stockShown && S.tab === "stocking") S.tab = "calendar";
+  $("#t-stocking").hidden = !stockShown;
+  $("#tabsbar").setAttribute("aria-label", pub ? "Fly AI tools" : "Club views");
   document.querySelectorAll(".tab[data-tab]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.tab === S.tab)));
   const tl = $(".tablist"), cur = $("#t-" + S.tab);
   if (tl && cur && tl.scrollWidth > tl.clientWidth) {
@@ -2416,11 +2491,12 @@ function renderTabs() {
   }
   TABS.forEach((t) => { $("#v-" + t).hidden = t !== S.tab; });
   $("#filters").hidden = S.tab !== "calendar";
-  const vh = $("#view-h"), vt = { planner: "The Trip Planner", stocking: "The Stocking Ledger", trout: "Trout of the World" }[S.tab];
+  const vh = $("#view-h"), vt = { planner: "AI fly guide", stocking: "The Stocking Ledger", trout: "Trout of the World" }[S.tab];
   vh.hidden = !vt; if (vt) vh.textContent = vt;
   $("#kind-chips").hidden = kinds() !== "both";
   document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === S.filter)));
   const meBtn = $("#me-btn");
+  meBtn.hidden = pub;
   meBtn.innerHTML = `${S.me.id ? av(S.me.id) : ""}<span>${esc(S.members.get(S.me.id)?.handle || myName() || "Add your name")}</span>`;
   const wl = $("#waters");
   const ws = (club() && club().waters) || [];
@@ -2434,11 +2510,12 @@ function renderAll() {
   if (v !== "boot") { const s = $("#seo-static"); if (s) s.remove(); }   // the crawlable copy of the home page gives way to the app
   $("#v-home").hidden = v !== "home";
   $("#v-gate").hidden = v !== "gate";
-  $("#v-club").hidden = v !== "club";
-  $("#tabsbar").hidden = v !== "club";
+  const inApp = v === "club" || v === "tools";
+  $("#v-club").hidden = !inApp;
+  $("#tabsbar").hidden = !inApp;
   if (v === "home") renderHome();
   else if (v === "gate") renderGate();
-  else if (v === "club") {
+  else if (inApp) {
     renderTabs();
     if (S.tab === "calendar") renderCalendar();
     else if (S.tab === "flies") renderFliesTab();
@@ -2868,7 +2945,10 @@ document.addEventListener("click", async (e) => {
     renderStockingTab(); return;
   }
   const sks = e.target.closest("[data-sks]");
-  if (sks) { SK.sort = sks.dataset.sks; renderStockingTab(); return; }
+  if (sks) {
+    if (sks.dataset.sks === "near" && !homeLL()) { skLocate(); return; }
+    SK.sort = sks.dataset.sks; renderStockingTab(); return;
+  }
   const tb = e.target.closest("[data-tmb]");
   if (tb) { focusBoard(tb.dataset.tmb); return; }
   const tf = e.target.closest("[data-tmf]");
@@ -2922,6 +3002,7 @@ document.addEventListener("click", async (e) => {
     case "sk-all": if (!SK.pz) break; SK.sel = null; renderStockingTab(); skHome(true); break;
     case "sk-retry": ensureStocking().then((ok) => { if (ok) scheduleRender(); }); break;
     case "sk-post": closeSheet(); skPostTrip(+a.dataset.w); break;
+    case "sk-ask": skAsk(+a.dataset.w); break;
     case "sk-show": await skShow(+a.dataset.w); break;
     case "tm-zin": if (TM.pz) TM.pz.zoomStep(2); break;
     case "tm-zout": if (TM.pz) TM.pz.zoomStep(0.5); break;
@@ -2953,7 +3034,10 @@ document.addEventListener("input", (e) => {
   if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
   else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockingTab(); }
   else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockingTab(); }
+  else if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); }
+  else if (e.target.id === "tp-city") { tpPlace().city = e.target.value.slice(0, 60); tpSavePlace(); }
 });
+document.addEventListener("change", (e) => { if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); } });
 let tmResize = 0;
 window.addEventListener("resize", () => {
   clearTimeout(tmResize);
@@ -3187,11 +3271,11 @@ async function boot() {
   let want = null, wantTab = null, wantTrip = null, m;
   if ((m = /^club-([a-z0-9-]{1,80})(?:\.(upcoming|calendar|logbook|flies|trout|stocking|planner))?$/.exec(h))) { want = m[1]; wantTab = m[2] || null; }
   else if ((m = /^trip-([a-z0-9-]{1,80})\.([a-z0-9]{1,40})$/.exec(h))) { want = m[1]; wantTrip = m[2]; }
-  // Short links: /trout, /stocking and /plan open that tab in your club (or the club you join next).
-  const path = { trout: "trout", stocking: "stocking", plan: "planner" }[(/^\/(trout|stocking|plan)\/?$/.exec(location.pathname) || [])[1]];
-  if (path && !wantTab) wantTab = path;
   if (wantTab) S.wantTab = OLD_TABS[wantTab] || wantTab;
-  S.pendingClub = want; S.pendingTrip = wantTrip;
+  // The short links (/picker, /plan, /stocking, /trout) open the tool for anyone, whether or not they have a club.
+  const pubPath = { picker: "flies", plan: "planner", stocking: "stocking", trout: "trout" }[(/^\/(picker|plan|stocking|trout)\/?$/.exec(location.pathname) || [])[1]];
+  if (pubPath && !want) { S.pub = true; S.tab = pubPath; S.wantTab = null; S.pubTab = pubPath; }
+  S.pendingClub = want; S.pendingTrip = wantTrip; S.wantStart = h === "start";   // /#start: the Club calendar page's button
   renderAll();
   try {
     const a = await api("auth");

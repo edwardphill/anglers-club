@@ -33,19 +33,58 @@ ld = {"@context": "https://schema.org", "@type": "Article", "headline": title, "
       "about": "Ruffed grouse (Bonasa umbellus) in Tennessee", "isBasedOn": "https://github.com/edwardphill/tn-grouse",
       **({"dateModified": modified} if modified else {})}
 ld_json = json.dumps(ld).replace("<", "\\u003c").replace(">", "\\u003e").replace("&", "\\u0026")
-CSS = ".nac-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:12px 20px;border-bottom:1px solid #d8d4c8;background:#fff;font:500 14px/1.2 Inter,system-ui,sans-serif}.nac-bar a{color:#16181a;text-decoration:none}.nac-bar nav{display:flex;gap:16px;flex-wrap:wrap}.nac-bar nav a{color:#4a4e52}.nac-bar nav a:hover,.nac-bar nav a[aria-current]{color:#16181a;text-decoration:underline}"
+CSS = r"""
+:root{--paper:#F6F8F6;--paper-deep:#E8F3EE;--ink:#0C1A14;--ink-soft:#33443B;--ink-mute:#55655C;--moss:#0F6B4F;--moss-deep:#0F3D2E;--rule:#DCE4DF;--rule-strong:#0C1A14;--green:#0F6B4F;--deep:#0F3D2E;--hair:#DCE4DF;--sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+html,body{font-family:var(--sans);font-size:16px;line-height:1.6}
+header.site{display:flex;justify-content:space-between;flex-wrap:wrap;align-items:baseline;gap:6px 24px;max-width:1120px;margin:0 auto;padding:18px 32px 14px;border-bottom:1px solid var(--hair);background:var(--paper)}
+header.site a{font:500 .85rem/1.4 var(--sans);color:var(--ink-mute);text-decoration:none}header.site a:hover{color:var(--ink)}
+header.site>a{font-weight:700;font-size:1.02rem;letter-spacing:-.01em;color:var(--ink)}
+header.site>a::after{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--deep);margin-left:6px}
+header.site nav{display:flex;flex-wrap:wrap;gap:4px 16px}
+.wrap{padding-top:40px}
+.masthead,h1.title,.byline,.abstract,section,footer{margin-left:0;margin-right:0}
+h1.title,.subtitle,.stat .num,h2,h3,.pull,.year-display,.leaflet-popup-content b,.rec-callout .rec-body h3{font-family:var(--sans)}
+h1.title{font-weight:700;letter-spacing:-.025em;line-height:1.12}h1.title em{font-weight:700}
+.subtitle{font-size:1.1rem}
+h2{font-size:1.4rem;font-weight:600;letter-spacing:-.02em}h3{font-weight:600;letter-spacing:-.01em}
+.habitat-block h3{font-style:normal;font-size:1.05rem}
+.stat .num{font-weight:700;letter-spacing:-.02em;color:var(--deep)}
+.sec-num,.abstract .lbl,.wma.top .rank{color:var(--green)}
+a{color:var(--green);text-decoration-color:rgba(15,107,79,.35)}a:hover{text-decoration-color:var(--green)}
+.pull,.note{border-left-color:var(--green)}
+.map-wrap{background:#fff;border-radius:10px}
+.leaflet-map{border-radius:10px;overflow:hidden}
+.leaflet-popup-content-wrapper{border-radius:8px}
+.leaflet-control-attribution{background:rgba(246,248,246,.85)}
+.play-btn,#resetBtn{border:1px solid #CAD6CF;border-radius:8px;padding:6px 14px;color:var(--ink)}
+.play-btn:hover,#resetBtn:hover{background:var(--deep);border-color:var(--deep);color:#fff}
+.layer-toggle{border-radius:8px;padding:5px 11px}.layer-toggle.on,.mode-btn.on{background:var(--deep);border-color:var(--deep);color:#fff}
+.mode-toggle{border-radius:8px}.mode-btn:hover:not(.on){background:var(--paper-deep)}
+input[type=range]{height:4px;border-radius:2px;background:var(--rule);accent-color:var(--green)}
+input[type=range]::-webkit-slider-thumb{background:var(--deep)}input[type=range]::-moz-range-thumb{background:var(--deep)}
+.bar-track{border-radius:4px;background:#fff}.bar-fill{background:var(--green)}.bar-val.hit{color:var(--deep)}
+.rec-callout{background:var(--paper-deep);border:1px solid #CFE3DA;border-left:3px solid var(--green);border-radius:8px}
+.rec-callout .badge{color:var(--green)}
+.map-svg text{font-family:var(--sans);font-style:normal}
+.map-svg use{fill:#E8F3EE;stroke:#55655C}
+#grid path{stroke:#DCE4DF}
+footer nav{flex-basis:100%;display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:6px}footer nav a{color:var(--ink-mute);text-decoration:none;white-space:nowrap}footer nav a:hover{color:var(--ink);text-decoration:underline}
+"""
 head = "\n".join([
     f'<meta name="description" content="{desc}">',
     f'<link rel="canonical" href="{base}/grouse">',
     f'<meta property="og:type" content="article"><meta property="og:site_name" content="Fly AI"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{base}/grouse">',
     f'<script type="application/ld+json">{ld_json}</script>',
-    "<style>" + CSS + "</style>",
+    '<meta name="theme-color" content="#F6F8F6"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/apple-touch-icon.png">',
 ]) + "\n"
 html = sub(r"(<title>.*?</title>)", lambda m: m.group(1) + head, html, flags=re.S)
-bar = '''<div class="nac-bar"><a href="/" style="font-weight:600">Fly AI</a><nav aria-label="Fly AI"><a href="/fly-picker">Fly Picker</a><a href="/ai-fly-guide">AI fly guide</a><a href="/for-shops">For shops</a><a href="/rivers">Rivers</a><a href="/shops">Shops</a><a href="/guides">Guides</a><a href="/dove-fields">Dove fields</a><a href="/grouse" aria-current="page">Grouse</a></nav></div>
-'''
+# the report loads a serif; the app is Inter only
+html = sub(r'<link href="https://fonts\.googleapis\.com/css2\?[^"]*"', '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"', html)
+html = sub(r"</head>", lambda m: "<style>" + CSS + "</style>\n</head>", html)
+bar = '''<header class="site"><a href="/">Fly AI</a><nav><a href="/fly-picker">Fly Picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/rivers">Rivers</a> <a href="/shops">Shops</a> <a href="/guides">Guides</a></nav></header>'''
 html = sub(r"(<body[^>]*>)", lambda m: m.group(1) + "\n" + bar, html)
 html = sub(r"(<footer>)", lambda m: m.group(1) + '\n    <div>Source and data: <a href="https://github.com/edwardphill/tn-grouse">github.com/edwardphill/tn-grouse</a>. Shown here as part of Fly AI.</div>', html)
+html = sub(r"(</footer>)", lambda m: '    <nav aria-label="Fly AI pages"><a href="/fly-picker">AI fly fishing picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/for-shops">Fly shop AI discoverability</a> <a href="/rivers">River reports</a> <a href="/shops">Fly shops</a> <a href="/guides">Fly fishing guides</a> <a href="/dove-fields">Public Tennessee dove fields</a> <a href="/grouse">Tennessee grouse map</a></nav>\n  ' + m.group(1), html)
 
 os.makedirs(os.path.join(out, "data"), exist_ok=True)
 open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)
