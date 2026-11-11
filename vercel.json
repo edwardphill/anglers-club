@@ -35,6 +35,9 @@
     },
     "api/page.js": {
       "includeFiles": "data/flypicker.json"
+    },
+    "api/rivers.js": {
+      "includeFiles": "data/flypicker.json"
     }
   },
   "crons": [

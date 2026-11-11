@@ -1198,6 +1198,7 @@ function ensureFlyPicker() {
     S.fp = startFlyPicker(root, fpDefaults());
     S.fpClub = S.clubId;
     if (window.NacShops) window.NacShops.attachFlyPicker(root, S.fp);   // the shops' river reports in the results
+    if (window.NacWaitlist) window.NacWaitlist.attach(root);   // "Request a river" saves to the waitlist
   } catch (e) { console.error(e); S.fp = null; }
   return S.fp;
 }
@@ -3059,6 +3060,7 @@ async function boot() {
   startPolling();
 }
 /*SHOPS_UI*/
+/*WAITLIST_UI*/
 boot();
 })();
 </script>
