@@ -821,9 +821,19 @@ async function api(path, { method = "GET", body } = {}) {
   const headers = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
   if (authToken()) headers.Authorization = "Bearer " + authToken();
+  // A read that stalls (a connection the browser or network has stopped moving) is cut after 10 seconds and
+  // tried once more on a fresh connection; the page used to wait on it forever. Writes are never cut or
+  // repeated, since the server may already have done them.
+  const attempt = async () => {
+    const ctl = method === "GET" && typeof AbortController === "function" ? new AbortController() : null;
+    const timer = ctl ? setTimeout(() => ctl.abort(), 10000) : 0;
+    try {
+      return await fetch("/api/" + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body), signal: ctl ? ctl.signal : undefined });
+    } finally { clearTimeout(timer); }
+  };
   let res;
   try {
-    res = await fetch("/api/" + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body) });
+    try { res = await attempt(); } catch (e) { if (method !== "GET") throw e; res = await attempt(); }
   } catch (e) {
     const err = new Error("Can't reach the club server. Check your connection and try again."); err.status = 0; throw err;
   }
@@ -2231,7 +2241,7 @@ function inviteSheetMarkup() {
 function renderBanner(v) {
   const b = $("#banner");
   let msg = "", btn = "";
-  if (v === "off") msg = "Can't reach the club server right now. Check your connection and reload the page.";
+  if (v === "off") { msg = "Can't reach the club server right now. Check your connection, then try again."; btn = `<button class="btn small" type="button" data-act="retry">Try again</button>`; }
   else if (v !== "boot" && S.readOnly) msg = NO_WRITE;
   b.hidden = !msg;
   if (msg) b.innerHTML = `<span>${esc(msg)}</span>${btn}`;
@@ -2740,6 +2750,7 @@ document.addEventListener("click", async (e) => {
     case "no-delete": $("#del-confirm").hidden = true; break;
     case "do-delete": if (t) await deleteTrip(t); break;
     case "invite": openSheet("invite"); break;
+    case "retry": location.reload(); break;
     case "inv-copy": copyText($("#inv-text").value, $("#inv-tools"), "Invite copied. Paste it into a text."); break;
     case "signout": closeSheet(); await signOut(); break;
     case "ask-signout": $("#signout-confirm").hidden = false; break;
