@@ -55,6 +55,13 @@ assert.ok(h.includes('href="/guides"') && h.includes('href="/fly-picker"'));
 assert.ok(!/Claude|Anthropic|OpenAI|GPT/.test(h), "doesn't name a model vendor");
 ok("the trip planner page states its limits (Tennessee stocking and generation, can be wrong), links guides and the picker, and names no model vendor");
 
+// The way into the tool comes first: a launch card right under each explainer page's title.
+for (const [kind, href] of [["flypicker", "/picker"], ["tripplanner", "/plan"], ["rivertool", "/my-shop"], ["clubs", "/#start"], ["forshops", "/my-shop"]]) {
+  const hh = (await call({ kind })).body;
+  assert.ok(new RegExp(`</h1>\\s*<div class="launch"><a class="cta" href="${href.replace(/[/#]/g, (c) => "\\" + c)}">Open|</h1>\\s*<div class="launch"><a class="cta" href="${href.replace(/[/#]/g, (c) => "\\" + c)}">Start`).test(hh), kind + " opens with the launch card for " + href);
+}
+ok("every explainer page opens with a launch card that goes to the tool itself (the picker, the planner, the shop panel, a new club)");
+
 h = (await call({ kind: "rivertool" })).body;
 assert.ok(/photograph/i.test(h) && /An image alone can't be read/.test(h) && /up to six/.test(h) && /checks every report before it goes live/.test(h), "says what it does, why words matter and who checks");
 assert.ok(/misread a number/.test(h) && /by invitation/.test(h) && h.includes("10 days"), "states its limits");
@@ -88,7 +95,7 @@ assert.ok(/rules engine, not a chatbot/.test(lt) && /Nothing on this site is a g
 assert.ok(lt.includes("## Fishing tools") && lt.includes("## Hunting") && /transcribes it into a written report for each river/.test(lt));
 ok("llms.txt leads with the one-line description, lists the products with links under fishing and hunting, and says what is and isn't a language model");
 
-assert.deepEqual(NAV.slice(0, 3).map((x) => x[0]), ["/fly-picker", "/trip-planner", "/river-report-tool"]);
+assert.deepEqual(NAV.slice(0, 3).map((x) => x[0]), ["/picker", "/plan", "/river-report-tool"]);   // the header opens the tools themselves
 ok("the site header leads with the three tools");
 
 // ---- the home page ----

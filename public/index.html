@@ -374,21 +374,50 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .tm-catches .cm-h b{font-size:1.05rem}
 .tm-empty{color:var(--muted);padding:14px 4px}
 
-/* Trip planner tab */
-.tp-ask{display:grid;gap:10px;background:var(--paper);border:1px solid var(--brass);box-shadow:0 0 0 3px var(--ground),0 0 0 4px var(--brass);padding:16px 18px}
-.tp-lab{font:500 .66rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink)}
-.tp-ask textarea{width:100%;font:400 1.15rem/1.45 var(--body);background:var(--ground);border:1px solid var(--hair);border-bottom-color:var(--muted);padding:12px 14px;resize:vertical;color:var(--ink)}
-.tp-ask textarea:focus{border-color:var(--ink);outline:none}
-.tp-place{display:flex;flex-wrap:wrap;gap:10px 16px}.tp-place label{display:grid;gap:4px;font:500 .66rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink);flex:1 1 180px}
-.tp-place select,.tp-place input{font:400 1rem/1.3 var(--body);border:1px solid var(--hair);border-radius:8px;background:var(--paper);padding:9px 10px;color:var(--ink);width:100%}
+/* Trip planner tab: a chat */
+#v-planner{min-width:0}
+.chat{display:flex;flex-direction:column;width:100%;min-width:0;max-width:100%;height:clamp(460px,calc(100dvh - 250px),780px);border:1px solid var(--hair);border-radius:16px;background:var(--paper);box-shadow:0 1px 2px rgba(12,26,20,.04);overflow:hidden}
+@media (max-width:640px){.chat{height:clamp(420px,calc(100dvh - 330px),780px)}}
+.tp-place{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--hair);background:var(--ground)}
+.tp-place label{display:flex;align-items:center;gap:8px;font:500 .8rem/1.3 var(--sans);color:var(--muted);flex:1 1 200px}
+.tp-place select,.tp-place input{font:400 .95rem/1.3 var(--sans);border:1px solid var(--hair);border-radius:8px;background:var(--paper);padding:7px 9px;color:var(--ink);flex:1;min-width:0}
 .tp-place select:focus,.tp-place input:focus{border-color:var(--green);outline:2px solid var(--green-wash)}
-.tp-row{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px}
-.tp-ex{display:flex;flex-wrap:wrap;gap:6px 16px;min-width:0}
-.tp-ex button{background:none;border:0;padding:0;color:var(--green);font:400 1rem var(--body);cursor:pointer;text-decoration:underline;text-decoration-color:var(--hair);text-underline-offset:3px;text-align:left}
-.tp-list{display:grid;gap:26px}
-.tp-card{border-top:2px solid var(--ink);padding-top:14px;display:grid;gap:12px}
-.tp-q{font:500 1.23rem/1.25 var(--serif);overflow-wrap:anywhere}
-.tp-a{font-size:1.07rem;line-height:1.55;max-width:70ch;overflow-wrap:anywhere}
+.tp-place.need select{border-color:var(--oxblood)}
+.ch-log{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;padding:18px 16px 8px;display:flex;flex-direction:column;gap:18px}
+.ch-turn{display:grid;gap:14px}
+.ch-msg{display:flex;gap:10px;align-items:flex-start;min-width:0}
+.ch-msg.ch-me{justify-content:flex-end}
+.ch-msg .ch-col{display:grid;gap:6px;min-width:0;max-width:min(100%,78ch)}
+.ch-avatar{flex:none;position:relative;width:30px;height:30px;border-radius:9px;background:var(--deep);color:#fff;display:grid;place-items:center;font:700 .9rem/1 var(--sans)}
+.ch-avatar::after{content:"";position:absolute;right:5px;bottom:6px;width:4px;height:4px;border-radius:50%;background:var(--mint)}
+.ch-bubble{padding:10px 14px;border-radius:16px;overflow-wrap:anywhere;font-size:1rem;line-height:1.55}
+.ch-msg.ch-me .ch-bubble{max-width:min(86%,60ch);background:var(--deep);color:#fff;border-bottom-right-radius:5px;white-space:pre-wrap}
+.ch-msg.ch-bot .ch-bubble{background:var(--ground);border:1px solid var(--hair);border-top-left-radius:5px}
+.ch-msg.ch-bot .ch-bubble .md a{color:var(--green)}
+.tp-status{color:var(--muted);font-size:.92rem;margin:6px 0 0}
+.ch-typing{display:inline-flex;gap:4px;align-items:center;height:1.4em}
+.ch-typing i{width:7px;height:7px;border-radius:50%;background:var(--brass);display:block}
+@media (prefers-reduced-motion:no-preference){.ch-typing i{animation:tpbounce 1.1s infinite ease-in-out}.ch-typing i:nth-child(2){animation-delay:.15s}.ch-typing i:nth-child(3){animation-delay:.3s}}
+@keyframes tpbounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-4px);opacity:1}}
+.tp-a{max-width:70ch}
+.tp-err{color:var(--oxblood);margin:0}
+.tp-src{border-top:1px solid var(--hair);margin-top:10px;padding-top:8px;display:grid;gap:5px}
+.tp-src h4{margin:0}
+.tp-src ol{margin:0;padding-left:1.3em;display:grid;gap:2px;font-size:.92rem}
+.tp-src span{color:var(--muted);font-size:.86rem}
+.tp-foot{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:.84rem;color:var(--muted);padding-left:2px}
+.tp-ex{display:flex;gap:8px;min-width:0;max-width:100%;padding:6px 16px 10px;overflow-x:auto;scrollbar-width:none;flex:none}
+.tp-ex::-webkit-scrollbar{display:none}
+.tp-ex:empty{display:none}
+.tp-ex button{flex:none;border:1px solid var(--hair);background:var(--paper);color:var(--ink);border-radius:999px;padding:7px 13px;font:400 .88rem/1.2 var(--sans);cursor:pointer;white-space:nowrap}
+@media (hover:hover){.tp-ex button:hover{border-color:var(--green);color:var(--green);background:var(--green-wash)}}
+.chat-compose{display:flex;gap:8px;align-items:flex-end;padding:10px 12px calc(10px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--hair);background:var(--paper);flex:none}
+.chat-compose textarea{flex:1;min-width:0;resize:none;max-height:140px;font:400 1rem/1.4 var(--sans);color:var(--ink);background:var(--ground);border:1px solid var(--hair);border-radius:22px;padding:10px 16px}
+.chat-compose textarea:focus{border-color:var(--green);outline:2px solid var(--green-wash);background:var(--paper)}
+.chat-send{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--deep);color:#fff;display:grid;place-items:center;cursor:pointer}
+.chat-send:hover{background:var(--deep2)}
+.chat-send:disabled{opacity:.45;cursor:default}
+.chat-send svg{width:20px;height:20px}
 .md>:first-child{margin-top:0}
 .md p,.md ul,.md ol{margin:0 0 .65em}
 .md ul,.md ol{padding-left:1.35em}
@@ -396,15 +425,6 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .md h4{font:500 .72rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink);margin:1em 0 .35em}
 .md strong{font-weight:600}
 .md a{color:var(--green);text-underline-offset:2px}
-.tp-status{color:var(--muted)}
-@media (prefers-reduced-motion:no-preference){.tp-status::after{content:"";display:inline-block;width:1.2em;text-align:left;animation:tpdots 1.2s steps(4) infinite}}
-@keyframes tpdots{0%{content:""}25%{content:"."}50%{content:".."}75%{content:"..."}}
-.tp-err{color:var(--oxblood)}
-.tp-src{border-top:1px solid var(--hair);padding-top:10px;display:grid;gap:6px}
-.tp-src h4{font:500 .64rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink);margin:0}
-.tp-src ol{margin:0;padding-left:1.4em;display:grid;gap:3px;font-size:.98rem}
-.tp-src span{color:var(--muted);font-size:.9rem}
-.tp-foot{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;font-size:.94rem;color:var(--muted)}
 
 /* Stocking tab */
 .sk-filters{display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin-bottom:10px}
@@ -468,7 +488,7 @@ h1,h2,h3{letter-spacing:-.015em}
 .patch .yr{font:500 .56rem/1 var(--label);letter-spacing:.06em;color:var(--brass-ink)}
 
 /* Panels */
-.start,.gate,.tm-map,.tp-ask,.announce{border:1px solid var(--hair);box-shadow:0 1px 2px rgba(12,26,20,.04);border-radius:var(--radius);background:var(--paper)}
+.start,.gate,.tm-map,.announce{border:1px solid var(--hair);box-shadow:0 1px 2px rgba(12,26,20,.04);border-radius:var(--radius);background:var(--paper)}
 .announce{background:var(--green-wash);border-color:#CFE3D8}
 .tm-map{padding:12px}
 .grid-wrap{border:1px solid var(--hair);border-radius:var(--radius)}
@@ -477,12 +497,10 @@ h1,h2,h3{letter-spacing:-.015em}
 .rows{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
 .tm-boards{border-top:1px solid var(--hair)}
 .tm-score{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
-.tp-card{border-top:1px solid var(--hair)}
 dialog.sheet{border-left:1px solid var(--hair);box-shadow:-12px 0 40px rgba(12,26,20,.12)}
 dialog.sheet.name-sheet{border:1px solid var(--hair);box-shadow:0 20px 50px rgba(12,26,20,.18);border-radius:14px}
-.f input:not([type=radio]):not([type=checkbox]),.f select,.f textarea,.tp-ask textarea,.tm-search,.sk-when select,textarea.copybox{border-radius:8px;border-color:var(--hair);background:var(--paper)}
-.tp-ask textarea{font-size:1rem}
-.f input:focus,.f select:focus,.f textarea:focus,.tp-ask textarea:focus,.tm-search:focus{border-color:var(--green);outline:2px solid var(--green-wash)}
+.f input:not([type=radio]):not([type=checkbox]),.f select,.f textarea,.tm-search,.sk-when select,textarea.copybox{border-radius:8px;border-color:var(--hair);background:var(--paper)}
+.f input:focus,.f select:focus,.f textarea:focus,.tm-search:focus{border-color:var(--green);outline:2px solid var(--green-wash)}
 .rep,.tm-catches li,.fp-box,.sk-next,.tm-focus,.fp-note,.banner{border-radius:8px}
 .tm-bar{border-color:var(--hair);border-radius:99px;height:6px}
 .tm-bar i{border-radius:99px}
@@ -495,11 +513,11 @@ details.adv summary{font-style:normal}
 .tm-tip{border-radius:6px;font:500 .85rem/1.25 var(--sans)}
 
 /* Small data labels: monospace, uppercase */
-.kicker,.patch .yr,.group-h span,.stamp .dow,.stamp .mon,.stamp .wk,.tline,.dows span,.sh-top .lab,.sh-sec>h3,.announce h3,.tv-kind,.facts dt,.roster small,.f label,.f .lab,.tm-cap,.tm-tier-h,.tp-lab,.md h4,.tp-src h4,.sk-when,.sk-pill,.tm-flag,.pill,.tag,.tm-ctl .icon-btn.world{font-family:var(--label);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
-.f label,.f .lab,.facts dt,.sh-sec>h3,.tp-lab,.tm-cap,.tp-src h4,.md h4{text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)}
+.kicker,.patch .yr,.group-h span,.stamp .dow,.stamp .mon,.stamp .wk,.tline,.dows span,.sh-top .lab,.sh-sec>h3,.announce h3,.tv-kind,.facts dt,.roster small,.f label,.f .lab,.tm-cap,.tm-tier-h,.md h4,.tp-src h4,.sk-when,.sk-pill,.tm-flag,.pill,.tag,.tm-ctl .icon-btn.world{font-family:var(--label);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.f label,.f .lab,.facts dt,.sh-sec>h3,.tm-cap,.tp-src h4,.md h4{text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)}
 .kicker{font-size:.72rem}
 .tline,.tv-kind{font-size:.68rem}
-.facts dt,.f label,.f .lab,.sh-sec>h3,.announce h3,.tp-lab,.tm-cap,.tm-tier-h,.tp-src h4,.md h4,.sk-when{font-size:.68rem}
+.facts dt,.f label,.f .lab,.sh-sec>h3,.announce h3,.tm-cap,.tm-tier-h,.tp-src h4,.md h4,.sk-when{font-size:.68rem}
 .f label,.f .lab{display:grid}
 .f .sub{text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:.85rem}
 .tm-tier-h em{text-transform:none;font-family:var(--sans);letter-spacing:0;font-style:normal;font-size:.88rem}
@@ -622,21 +640,17 @@ header.club .kicker{color:var(--green)}
         </div>
       </div>
       <div id="v-planner" role="tabpanel" aria-labelledby="t-planner" hidden>
-        <div class="tm">
-          <p class="tm-lede" id="tp-lede"></p>
-          <form class="tp-ask" id="tp-form" autocomplete="off" novalidate>
-            <div class="tp-place" id="tp-place" hidden>
-              <label>Where you fish <select id="tp-state" aria-label="State"></select></label>
-              <label>Nearest town, optional <input id="tp-city" type="text" maxlength="60" placeholder="e.g. Asheville" autocomplete="off"></label>
-            </div>
-            <label class="tp-lab" for="tp-q">Your question</label>
-            <textarea id="tp-q" rows="2" maxlength="600"></textarea>
-            <div class="tp-row">
-              <div class="tp-ex" id="tp-ex" aria-label="Example questions"></div>
-              <button class="btn primary" type="submit" id="tp-go">Ask</button>
-            </div>
+        <div class="chat">
+          <div class="tp-place" id="tp-place" hidden>
+            <label>Fishing in <select id="tp-state" aria-label="State"></select></label>
+            <label>Near <input id="tp-city" type="text" maxlength="60" placeholder="Nearest town, optional" autocomplete="off" aria-label="Nearest town, optional"></label>
+          </div>
+          <div id="tp-out" class="ch-log" role="log" aria-live="polite" aria-label="Conversation with the trip planner"></div>
+          <div class="tp-ex" id="tp-ex" aria-label="Example questions"></div>
+          <form class="chat-compose" id="tp-form" autocomplete="off" novalidate>
+            <textarea id="tp-q" rows="1" maxlength="600" aria-label="Ask the trip planner"></textarea>
+            <button class="chat-send" type="submit" id="tp-go" aria-label="Send"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
           </form>
-          <div id="tp-out" class="tp-list" aria-live="polite"></div>
         </div>
       </div>
       <div id="v-stocking" role="tabpanel" aria-labelledby="t-stocking" hidden>
@@ -2355,6 +2369,7 @@ async function signOut() {
 }
 // Where to go once the page has loaded: the club or trip a link pointed at, else the last club you opened.
 function afterBoot() {
+  if (S.wantShop) { S.wantShop = false; setTimeout(() => { if (window.NacShops) window.NacShops.open("mine"); }, 0); }
   if (S.wantStart) { S.wantStart = false; setTimeout(async () => { if (!S.readOnly && await ensureIdentity("Add your name to start a club. You'll be its organizer.")) openSheet("new"); }, 0); }
   if (S.chose || (S.pubTab && S.pub && !S.clubId)) { S.pubTab = null; scheduleRender(); return; }   // a tool link stays on the tool, and a choice made while loading wins
   const last = lastClub();
@@ -3266,24 +3281,40 @@ function tpExamples() {
     `Anything stocked within an hour in the next 10 days?`,
   ];
 }
+const AVATAR = `<span class="ch-avatar" aria-hidden="true">F</span>`;
+// One exchange: the question as a bubble on the right, the answer on the left with its sources and small actions.
 function tpCard(it) {
   const src = (it.cites || []).length ? `<div class="tp-src"><h4>Sources</h4><ol>${it.cites.map((c) => `<li><a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.title || hostOf(c.url))}</a> <span>${esc(hostOf(c.url))}</span></li>`).join("")}</ol></div>` : "";
   const when = new Date(it.at).toLocaleString("en-US", { weekday: "short", hour: "numeric", minute: "2-digit" });
-  return `<article class="tp-card" data-tp="${esc(it.id)}">
-    <p class="tp-q">${esc(it.q)}</p>
-    ${it.a ? `<div class="tp-a md">${md(it.a)}</div>` : ""}
-    ${it.busy ? `<p class="tp-status">${esc(it.status || "Thinking")}</p>` : ""}
-    ${it.error ? `<p class="tp-err">${esc(it.error)}</p>` : ""}
-    ${src}
-    ${it.busy ? "" : `<div class="tp-foot"><span>Asked ${esc(when)}</span>${it.a && !S.readOnly && S.clubId ? `<button class="linkbtn" type="button" data-act="post">Post a trip</button>` : ""}<button class="linkbtn" type="button" data-act="tp-again" data-tp="${esc(it.id)}">Ask again</button><button class="linkbtn" type="button" data-act="tp-del" data-tp="${esc(it.id)}">Remove</button></div>`}
-  </article>`;
+  const inner = [
+    it.a ? `<div class="tp-a md">${md(it.a)}</div>` : "",
+    it.busy && !it.a ? `<span class="ch-typing" role="img" aria-label="Thinking"><i></i><i></i><i></i></span>` : "",
+    it.busy ? `<p class="tp-status">${esc(it.status || "Thinking")}…</p>` : "",
+    it.error ? `<p class="tp-err">${esc(it.error)}</p>` : "",
+    src,
+  ].join("");
+  const foot = it.busy ? "" : `<div class="tp-foot"><span>${esc(when)}</span>${it.a && !S.readOnly && S.clubId ? `<button class="linkbtn" type="button" data-act="post">Post a trip</button>` : ""}<button class="linkbtn" type="button" data-act="tp-again" data-tp="${esc(it.id)}">Ask again</button><button class="linkbtn" type="button" data-act="tp-del" data-tp="${esc(it.id)}">Remove</button></div>`;
+  return `<div class="ch-turn tp-card" data-tp="${esc(it.id)}">
+    <div class="ch-msg ch-me"><div class="ch-bubble tp-q">${esc(it.q)}</div></div>
+    <div class="ch-msg ch-bot">${AVATAR}<div class="ch-col"><div class="ch-bubble">${inner}</div>${foot}</div></div>
+  </div>`;
+}
+const tpWelcome = (open) => `<div class="ch-msg ch-bot ch-welcome">${AVATAR}<div class="ch-col"><div class="ch-bubble"><p style="margin:0">${open
+  ? "Hi! Ask me where and when to go. I weigh what's hatching, the stocking schedule, dam generation, the weather and recent shop reports, and I link where each fact came from. Pick your state above, then ask. No club or name needed."
+  : "Hi! Ask me where and when to go. I weigh what's hatching, the stocking schedule, dam generation, the weather and your club's recent reports, and I link where each fact came from."}</p></div></div></div>`;
+// Keep the newest message in view, unless the reader has scrolled up to read.
+function tpScroll(force) {
+  const l = $("#tp-out"); if (!l) return;
+  if (force) l._stick = true;
+  if (l._stick !== false) l.scrollTop = l.scrollHeight;
+}
+function tpGrow() {
+  const ta = $("#tp-q"); if (!ta) return;
+  ta.style.height = "auto"; ta.style.height = Math.min(140, ta.scrollHeight + 2) + "px";
 }
 function renderPlanner() {
   tpLoad();
   const open = isOpen(), pl = tpPlace();
-  $("#tp-lede").textContent = open
-    ? "Ask where and when to go. The trip planner weighs what's hatching, the stocking schedule, dam generation, the weather and recent shop reports, and links where each fact came from. Open to everyone; no club or name needed."
-    : "Ask where and when to go. The trip planner weighs what's hatching, the stocking schedule, dam generation, the weather and the club's recent reports, and links where each fact came from.";
   const pb = $("#tp-place"); pb.hidden = !open;
   if (open) {
     const sel = $("#tp-state");
@@ -3291,18 +3322,21 @@ function renderPlanner() {
     sel.value = pl.state; const ci = $("#tp-city"); if (document.activeElement !== ci) ci.value = pl.city;
   }
   const ta = $("#tp-q");
-  if (!ta.placeholder) ta.placeholder = tpExamples()[0];
-  setHTML($("#tp-ex"), tpExamples().slice(1).map((x) => `<button type="button" data-tpx="${esc(x)}">${esc(x)}</button>`).join(""));
+  ta.placeholder = open && !pl.state ? "Pick a state, then ask…" : "Ask where and when to fish…";
+  const log = $("#tp-out");
+  if (!log._wired) { log._wired = true; log.addEventListener("scroll", () => { log._stick = log.scrollHeight - log.scrollTop - log.clientHeight < 90; }, { passive: true }); }
+  setHTML($("#tp-ex"), tpExamples().map((x) => `<button type="button" data-tpx="${esc(x)}">${esc(x)}</button>`).join(""));
   $("#tp-go").disabled = TP.busy;
-  setHTML($("#tp-out"), TP.items.map(tpCard).join(""));
+  setHTML(log, tpWelcome(open) + TP.items.slice().reverse().map(tpCard).join(""));
+  tpGrow(); tpScroll();
 }
-// While an answer streams, repaint just its card, at most once a frame.
+// While an answer streams, repaint just its turn, at most once a frame.
 function tpPaint(it) {
   if (TP.paint) return;
   TP.paint = requestAnimationFrame(() => {
     TP.paint = 0;
     const el = document.querySelector(`.tp-card[data-tp="${it.id}"]`);
-    if (el && S.tab === "planner") { el.outerHTML = tpCard(it); $("#tp-out")._html = null; }
+    if (el && S.tab === "planner") { el.outerHTML = tpCard(it); $("#tp-out")._html = null; tpScroll(); }
   });
 }
 async function tpAsk(question) {
@@ -3310,12 +3344,12 @@ async function tpAsk(question) {
   if (!question || TP.busy) return;
   const cid = S.clubId;
   if (cid) { if (!(await ensureIdentity("Add your name to ask the trip planner. It's saved on this device, so you only do this once."))) return; }
-  else if (!tpPlace().state) { toast("Pick the state you fish in first."); const sel = $("#tp-state"); if (sel) sel.focus(); return; }
+  else if (!tpPlace().state) { toast("Pick the state you fish in first."); const pb = $("#tp-place"); if (pb) pb.classList.add("need"); const sel = $("#tp-state"); if (sel) sel.focus(); return; }
   const history = TP.items.filter((x) => x.a && !x.error && !x.busy).slice(0, 2).reverse().map((x) => ({ q: x.q, a: x.a.slice(0, 2500) }));
   const it = { id: nid("p"), q: question, a: "", cites: [], at: Date.now(), busy: true, status: "Thinking" };
   TP.items.unshift(it); TP.busy = true;
   $("#tp-q").value = "";
-  renderPlanner();
+  renderPlanner(); tpScroll(true);
   try {
     const res = await fetch("/api/plan", {
       method: "POST",
@@ -3678,7 +3712,7 @@ function skAsk(id) {
   closeSheet();
   if (!S.clubId) { const p = tpPlace(); if (!p.state) { p.state = "TN"; tpSavePlace(); } }
   goTab("planner");
-  const ta = $("#tp-q"); if (ta) { ta.value = `Should I fish ${L.water} this week? When is it stocked next, and what flies should I bring?`; ta.focus(); }
+  const ta = $("#tp-q"); if (ta) { ta.value = `Should I fish ${L.water} this week? When is it stocked next, and what flies should I bring?`; tpGrow(); ta.focus(); }
 }
 async function skShow(id) {
   closeSheet();
@@ -4280,13 +4314,14 @@ document.addEventListener("keydown", (e) => {
   if (e.target.id === "tp-q" && e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); tpAsk(e.target.value); }
 });
 document.addEventListener("input", (e) => {
-  if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
+  if (e.target.id === "tp-q") tpGrow();
+  else if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
   else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockingTab(); }
   else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockingTab(); }
   else if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); }
   else if (e.target.id === "tp-city") { tpPlace().city = e.target.value.slice(0, 60); tpSavePlace(); }
 });
-document.addEventListener("change", (e) => { if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); } });
+document.addEventListener("change", (e) => { if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); const pb = $("#tp-place"); if (pb) pb.classList.toggle("need", !e.target.value); const ta = $("#tp-q"); if (ta) ta.placeholder = e.target.value ? "Ask where and when to fish…" : "Pick a state, then ask…"; } });
 let tmResize = 0;
 window.addEventListener("resize", () => {
   clearTimeout(tmResize);
@@ -4522,8 +4557,9 @@ async function boot() {
   else if ((m = /^trip-([a-z0-9-]{1,80})\.([a-z0-9]{1,40})$/.exec(h))) { want = m[1]; wantTrip = m[2]; }
   if (wantTab) S.wantTab = OLD_TABS[wantTab] || wantTab;
   // The short links (/picker, /plan, /stocking, /trout) open the tool for anyone, whether or not they have a club.
-  const pubPath = { picker: "flies", plan: "planner", stocking: "stocking", trout: "trout" }[(/^\/(picker|plan|stocking|trout)\/?$/.exec(location.pathname) || [])[1]];
+  const pubPath = { picker: "flies", plan: "planner", stocking: "stocking", trout: "trout", "my-shop": "flies" }[(/^\/(picker|plan|stocking|trout|my-shop)\/?$/.exec(location.pathname) || [])[1]];
   if (pubPath && !want) { S.pub = true; S.tab = pubPath; S.wantTab = null; S.pubTab = pubPath; }
+  S.wantShop = /^\/my-shop\/?$/.test(location.pathname) && !want;   // /my-shop: the River report tool's button opens the shop panel
   S.pendingClub = want; S.pendingTrip = wantTrip; S.wantStart = h === "start";   // /#start: the Club calendar page's button
   renderAll();
   try {
@@ -5002,7 +5038,7 @@ async function boot() {
     setBadge();
   }
   function sync(view) {
-    const show = view === "club" && typeof kinds === "function" && kinds() !== "hunt";
+    const show = view === "tools" || (view === "club" && typeof kinds === "function" && kinds() !== "hunt");   // also in the tools open to everyone
     if (!btn) {
       btn = document.createElement("button");
       btn.className = "sx-btn"; btn.type = "button"; btn.id = "shop-btn"; btn.textContent = "Shops & guides";

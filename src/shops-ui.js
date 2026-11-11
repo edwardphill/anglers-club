@@ -462,7 +462,7 @@
     setBadge();
   }
   function sync(view) {
-    const show = view === "club" && typeof kinds === "function" && kinds() !== "hunt";
+    const show = view === "tools" || (view === "club" && typeof kinds === "function" && kinds() !== "hunt");   // also in the tools open to everyone
     if (!btn) {
       btn = document.createElement("button");
       btn.className = "sx-btn"; btn.type = "button"; btn.id = "shop-btn"; btn.textContent = "Shops & guides";

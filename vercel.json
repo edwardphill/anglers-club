@@ -23,6 +23,10 @@
       "source": "/picker",
       "destination": "/index.html"
     },
+    {
+      "source": "/my-shop",
+      "destination": "/index.html"
+    },
     { "source": "/fly-picker", "destination": "/api/page?kind=flypicker" },
     { "source": "/trip-planner", "destination": "/api/page?kind=tripplanner" },
     { "source": "/river-report-tool", "destination": "/api/page?kind=rivertool" },
