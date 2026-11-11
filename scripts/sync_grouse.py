@@ -81,10 +81,10 @@ html = sub(r"(<title>.*?</title>)", lambda m: m.group(1) + head, html, flags=re.
 # the report loads a serif; the app is Inter only
 html = sub(r'<link href="https://fonts\.googleapis\.com/css2\?[^"]*"', '<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"', html)
 html = sub(r"</head>", lambda m: "<style>" + CSS + "</style>\n</head>", html)
-bar = '''<header class="site"><a href="/">Fly AI</a><nav><a href="/fly-picker">Fly Picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/rivers">Rivers</a> <a href="/shops">Shops</a> <a href="/guides">Guides</a></nav></header>'''
+bar = '''<header class="site"><a href="/">Fly AI</a><nav><a href="/fly-picker">Fly Picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/rivers">Rivers</a> <a href="/shops">Shops</a> <a href="/guides">Guides</a> <a href="/forum">Forum</a></nav></header>'''
 html = sub(r"(<body[^>]*>)", lambda m: m.group(1) + "\n" + bar, html)
 html = sub(r"(<footer>)", lambda m: m.group(1) + '\n    <div>Source and data: <a href="https://github.com/edwardphill/tn-grouse">github.com/edwardphill/tn-grouse</a>. Shown here as part of Fly AI.</div>', html)
-html = sub(r"(</footer>)", lambda m: '    <nav aria-label="Fly AI pages"><a href="/fly-picker">AI fly fishing picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/for-shops">Fly shop AI discoverability</a> <a href="/rivers">River reports</a> <a href="/shops">Fly shops</a> <a href="/guides">Fly fishing guides</a> <a href="/dove-fields">Public Tennessee dove fields</a> <a href="/grouse">Tennessee grouse map</a></nav>\n  ' + m.group(1), html)
+html = sub(r"(</footer>)", lambda m: '    <nav aria-label="Fly AI pages"><a href="/fly-picker">AI fly fishing picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/clubs">Club calendar</a> <a href="/for-shops">Fly shop AI discoverability</a> <a href="/rivers">River reports</a> <a href="/shops">Fly shops</a> <a href="/guides">Fly fishing guides</a> <a href="/forum">Forum</a> <a href="/dove-fields">Public Tennessee dove fields</a> <a href="/grouse">Tennessee grouse map</a></nav>\n  ' + m.group(1), html)
 
 os.makedirs(os.path.join(out, "data"), exist_ok=True)
 open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)

@@ -2,6 +2,7 @@
 // shop, a directory of each, sitemap.xml, robots.txt and llms.txt. vercel.json rewrites the clean URLs to
 // /api/page?kind=...; the markup lives in lib/pages.js. Only published reports from active shops appear.
 //
+//   /forum  /forum/c/<category>  /forum/t/<slug>-<id>   (the forum; posting is api/forum.js)
 //   /fly-picker  /ai-fly-guide  /for-shops  /rivers  /rivers/south-holston  /shops  /shops/<slug>  /guides  /guides/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
 //   /photos/<id>.jpg is api/shops.js. The dove fields come from data/dove-fields.json, so those pages need no database.
 import { q, ensureSchema } from "../lib/db.js";
@@ -12,6 +13,7 @@ import { riverPage, shopPage, riversIndex, shopsIndex, guidePage, guidesIndex, s
 import { guideOut, resolveShops } from "../lib/guides.js";
 import { doveIndex, doveFieldPage } from "../lib/dove.js";
 import { doveField } from "../lib/dovedata.js";
+import { forumIndex, forumCategory, forumThread, catOf, categoryCounts, listThreads, getThread, recentThreads, idFromKey, threadPath } from "../lib/forum.js";
 
 const baseUrl = siteBase;
 
@@ -48,6 +50,8 @@ async function build(req) {
   const now = Date.now(), base = baseUrl(req);
   const kind = str(req.query && req.query.kind, 20);
   const html = (body) => ({ status: 200, type: "text/html; charset=utf-8", cache: "public, s-maxage=300, stale-while-revalidate=3600", body });
+  // The forum changes by the minute, so its pages are kept only briefly (no stale copy is served while it refreshes).
+  const forumHtml = (body) => ({ status: 200, type: "text/html; charset=utf-8", cache: "public, s-maxage=10", body });
 
   if (kind === "robots") return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: robots(base) };
 
@@ -91,15 +95,35 @@ async function build(req) {
     const [g] = await guidesWhere("and slug = $1", [str(req.query.slug, 60).toLowerCase()]);
     return g ? html(guidePage({ base, guide: g })) : notFound("That guide");
   }
+  if (kind === "forum") {
+    const counts = await categoryCounts();
+    const { threads } = await listThreads({ page: 1 });
+    return forumHtml(forumIndex({ base, counts, latest: threads.slice(0, 15) }));
+  }
+  if (kind === "forumcat") {
+    const cat = catOf(str(req.query.key, 30));
+    if (!cat) return notFound("That forum category");
+    const page = Math.min(500, Math.max(1, parseInt(str(req.query.page, 4), 10) || 1));
+    const { threads, total, pages } = await listThreads({ cat: cat.key, page });
+    return forumHtml(forumCategory({ base, cat, threads, page, pages, total }));
+  }
+  if (kind === "forumthread") {
+    const found = await getThread(idFromKey(str(req.query.key, 100)));
+    if (!found) return notFound("That thread");
+    // The address carries the title; send an old or mistyped one to the right place.
+    const want = threadPath(found.thread);
+    if (want !== "/forum/t/" + str(req.query.key, 100)) return { status: 301, type: "text/html; charset=utf-8", cache: "public, s-maxage=60", location: want, body: "" };
+    return forumHtml(forumThread({ base, thread: found.thread, posts: found.posts }));
+  }
   if (kind === "sitemap") {
     const shops = await activeShops();
     const dates = await q(`select r.river, max(r.reported_on) as d ${FROM} where r.status = 'live' and s.status = 'active' group by r.river`);
-    return { status: 200, type: "application/xml; charset=utf-8", cache: "public, s-maxage=3600", body: sitemap({ base, shops, guides: await guidesWhere(), riverDates: Object.fromEntries(dates.map((r) => [r.river, r.d])) }) };
+    return { status: 200, type: "application/xml; charset=utf-8", cache: "public, s-maxage=3600", body: sitemap({ base, shops, guides: await guidesWhere(), threads: await recentThreads(1000), riverDates: Object.fromEntries(dates.map((r) => [r.river, r.d])) }) };
   }
   if (kind === "llms") {
     const shops = await activeShops();
     const latest = await latestByRiver(now);
-    return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: llms({ base, latest, shops, guides: await guidesWhere() }) };
+    return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: llms({ base, latest, shops, guides: await guidesWhere(), threads: await recentThreads(30) }) };
   }
   return notFound("That page");
 }
@@ -116,6 +140,7 @@ export default async function (req, res) {
   res.statusCode = out.status;
   res.setHeader("Content-Type", out.type);
   res.setHeader("Cache-Control", out.cache);
+  if (out.location) res.setHeader("Location", out.location);
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.end(req.method === "HEAD" ? undefined : out.body);
 }

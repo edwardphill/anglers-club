@@ -582,7 +582,7 @@ header.club .kicker{color:var(--green)}
     <section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p></section>
     <section class="home-sec"><h2 class="home-h">Tools</h2>
       <ul class="tools-grid"><li><a class="tool" href="/fly-picker"><span class="tool-n">01</span><span class="tool-t">AI fly fishing picker</span><span class="tool-d">Which flies to tie on, ranked for your river and date from hatch charts and dated shop and guide reports.</span></a></li><li><a class="tool" href="/ai-fly-guide"><span class="tool-n">02</span><span class="tool-t">AI fly guide</span><span class="tool-d">Ask where and when to fish. The answer weighs hatches, stocking, dam generation, weather and recent reports, and links its sources.</span></a></li><li><a class="tool" href="/river-report-tool"><span class="tool-n">03</span><span class="tool-t">River report tool</span><span class="tool-d">A fly shop photographs its weekly whiteboard; Fly AI transcribes it into a dated, written river report for each river on it, and the shop checks and publishes.</span></a></li><li><a class="tool" href="/clubs"><span class="tool-n">04</span><span class="tool-t">Club calendar</span><span class="tool-d">Start a club for your city: a shared trip calendar with RSVPs, a thread for each trip, catch reports and a trout life list. No passwords.</span></a></li><li><a class="tool" href="/for-shops"><span class="tool-n">05</span><span class="tool-t">Fly shop AI discoverability</span><span class="tool-d">A fly shop's weekly river report, published as plain dated text that search engines and AI tools can read.</span></a></li></ul>
-      <p class="hint">Also: <a href="/rivers">River reports</a> · <a href="/shops">Fly shops</a> · <a href="/guides">Fly fishing guides</a> · <a href="/dove-fields">Public Tennessee dove fields</a> · <a href="/grouse">Tennessee grouse map</a></p>
+      <p class="hint">Also: <a href="/rivers">River reports</a> · <a href="/shops">Fly shops</a> · <a href="/guides">Fly fishing guides</a> · <a href="/forum">Forum</a> · <a href="/dove-fields">Public Tennessee dove fields</a> · <a href="/grouse">Tennessee grouse map</a></p>
     </section>
   </section>
 
@@ -727,7 +727,7 @@ header.club .kicker{color:var(--green)}
     </div>
   </section>
 </main>
-<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/clubs">Club calendar</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
+<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/clubs">Club calendar</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/forum">Forum</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
@@ -2509,11 +2509,13 @@ const TOOLS = [
   { group: "fishing", name: "Logbook", text: "Past trips keep their catch reports, flies and conditions on the calendar.", tab: "calendar", tag: "In your club", c: "#5B6B62", ink: "#FFFFFF" },
   { group: "hunting", name: "Public TN dove fields", text: "TWRA public dove fields for Regions 1 to 4 on one map, with each field's details.", href: "/dove-fields", tag: "Public page", c: "#9A5B14", ink: "#FFFFFF" },
   { group: "hunting", name: "TN grouse map", text: "A field report on ruffed grouse in Tennessee: range, decline, habitat and sightings on a map.", href: "/grouse", tag: "Public page", c: "#7A3B2E", ink: "#FFFFFF" },
+  { group: "community", name: "Forum", text: "Ask about rivers, hatches, flies, gear, hunting and trips, or start a thread. Anyone can read; add a name to post.", href: "/forum", tag: "Open to everyone", c: "#B4532A", ink: "#FFFFFF" },
   { group: "clubs", name: "Club calendar", text: "Start a club for your city: a shared trip calendar with RSVPs, a thread for each trip, catch reports and a trout life list. Text the link to your crew; no passwords.", act: "new-club", tag: "Start a club", c: "#0F3D2E", ink: "#FFFFFF" },
 ];
 const TOOL_GROUPS = [
   ["fishing", "Fishing", "Every tool here opens for anyone: no club, no sign-in."],
   ["hunting", "Hunting", "Public land and field reports, open for anyone."],
+  ["community", "Community", "Threads from other anglers and hunters."],
   ["clubs", "Clubs", "Optional: a shared calendar for your own crew."],
 ];
 function toolsSection() {

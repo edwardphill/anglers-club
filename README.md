@@ -36,6 +36,16 @@ Security and privacy: there are no passwords anywhere. A name becomes a session,
 
 A fly shop's whole job is a photo of its weekly whiteboard (`report_photo` in `api/shops.js`). Claude (`draftFromPhoto` in `lib/shops.js`) transcribes it into one written report for each river on the board (up to six) and describes the photo in a line, because an image alone can't be read by search engines or AI tools. The shop checks the text in the app and publishes; the description is stored on the photo (`shop_photos.alt`) and becomes its alt text and `ImageObject` description, and each report's transcript is shown as visible text. Nothing goes live until the shop publishes, and words written on the board are data, never instructions.
 
+## Forum
+
+`/forum` is open to read, with seven categories (`lib/forumkeys.js`), a thread page at `/forum/t/<title-words>-<id>` and a category page at `/forum/c/<key>` (25 threads a page; page 2 and later are `noindex`). Pages are server-rendered by `api/page.js` from `lib/forum.js`, so crawlers and AI tools see the text, with `DiscussionForumPosting` data, and the threads are in `sitemap.xml` and `llms.txt`. Posting is `api/forum.js`, driven by the small script `public/forum.js` (the pages read fine without it). A name is saved on the device the same way as in the app, so there is nothing new to sign in to.
+
+- Rules: a title of 6 to 120 characters with no link, a first post of 10 to 6000, a reply of 2 to 4000, and at most three links in a post. Text is plain: it is escaped on the way out and links get `rel="nofollow ugc noopener"`.
+- Spam: 5 new threads a day and one a minute for each name, a reply every 10 seconds and 40 an hour, 10 threads and 80 replies a day for each address (new names are free, so the address is limited too), the same post twice is refused, and a hidden form field that only bots fill gets a quiet success and nothing is posted.
+- Reports: each signed-in name can report a post once; three different reporters hide it everywhere (pages, sitemap, `llms.txt`). A person can remove their own post (it is hidden, not erased).
+- Admin: a Google sign-in whose email is in `ADMIN_EMAILS` (the same list as for shops) gets Pin, Lock, Hide and Delete on every post, and a "Reported and hidden" panel on the forum home page to restore or delete. Names are self-declared, so a guest who types "Admin" is not one.
+- Tables `forum_threads`, `forum_posts` and `forum_reports` have row-level security on like the rest. Forum pages are cached for 10 seconds so a new post shows quickly.
+
 ## Look
 
 Off-white ground, thin lines, Inter. Dark green (`--deep`, `--green`) is the accent for buttons, links and kickers; mint is a small highlight. The home page lists the tools under Fishing and Hunting, and each tool has its own color (`TOOLS` in `src/club.html`) that fills the card when it is selected.
@@ -43,7 +53,7 @@ Off-white ground, thin lines, Inter. Dark green (`--deep`, `--green`) is the acc
 ## Discoverability (SEO and GEO)
 
 - `lib/brand.js` holds the product name, home title and description, and the product list. Change words there, not in five places.
-- Crawlable pages, served as HTML by `api/page.js`: `/fly-picker`, `/ai-fly-guide`, `/river-report-tool`, `/for-shops` (`lib/landing.js`), plus `/rivers`, `/shops`, `/guides`, `/dove-fields` and `/grouse`. Each has a canonical link, Open Graph and Twitter cards, and schema.org data; the product pages carry a FAQ that is also in the JSON-LD. The numbers on the picker page come from `data/flypicker.json`, so they can't drift.
+- Crawlable pages, served as HTML by `api/page.js`: `/fly-picker`, `/ai-fly-guide`, `/river-report-tool`, `/for-shops` (`lib/landing.js`), plus `/rivers`, `/shops`, `/guides`, `/forum`, `/dove-fields` and `/grouse`. Each has a canonical link, Open Graph and Twitter cards, and schema.org data; the product pages carry a FAQ that is also in the JSON-LD. The numbers on the picker page come from `data/flypicker.json`, so they can't drift.
 - The home page (`public/index.html`) gets its metadata, JSON-LD and a crawlable copy of the product list at build time (`scripts/build.mjs`); the app removes the copy once it has drawn. Crawlers that don't run JavaScript see only that copy.
 - `/sitemap.xml`, `/robots.txt` (names the search and AI crawlers; remove a name to opt it out) and `/llms.txt` are generated. Bump `LANDING_UPDATED` in `lib/brand.js` when a product page changes.
 - Set `SITE_URL` in Vercel to the real address (a custom domain, once there is one). It sets every canonical link, the sitemap and the JSON-LD. Without it the build falls back to Vercel's production address, then to `https://angler-club.vercel.app`.
