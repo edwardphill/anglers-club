@@ -1193,6 +1193,7 @@ function ensureFlyPicker() {
     root.appendChild(tpl.content.cloneNode(true));
     S.fp = startFlyPicker(root, fpDefaults());
     S.fpClub = S.clubId;
+    if (window.NacShops) window.NacShops.attachFlyPicker(root, S.fp);   // the shops' river reports in the results
   } catch (e) { console.error(e); S.fp = null; }
   return S.fp;
 }
@@ -2297,6 +2298,7 @@ function renderAll() {
     else if (S.tab === "planner") renderPlanner();
   }
   renderBanner(v);
+  if (window.NacShops) window.NacShops.sync(v);
   if (S.sheet && S.sheet.mode === "trip") updateTripSheet();
   if (S.sheet && S.sheet.mode === "species") updateSpeciesSheet();
   if (S.sheet && S.sheet.mode === "club") updateMembersList();
@@ -3052,6 +3054,7 @@ async function boot() {
   afterBoot();
   startPolling();
 }
+/*SHOPS_UI*/
 boot();
 })();
 </script>

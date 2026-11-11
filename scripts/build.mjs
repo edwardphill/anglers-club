@@ -35,6 +35,7 @@ if (existsSync(artDir)) {
 }
 // Dam generation schedules (data/generation.json) are linked from trips, the Stocking tab and the
 // Trip Planner.
+swap("/*SHOPS_UI*/", read("src/shops-ui.js").trimEnd());
 swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() +
   "\nwindow.TROUT_ART = " + JSON.stringify(art) + ";\nwindow.GENERATION = " +
   JSON.stringify(JSON.parse(read("data/generation.json"))) + ";\n</script>");
