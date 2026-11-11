@@ -5,17 +5,22 @@
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { applyLocal } from "./fp-local.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
+
+// The embedded Fly Picker is generated from its own repo; our additions (data/fp-local.json) are
+// applied here so a resync does not drop them. Everything below uses the patched text.
+const FP = applyLocal({ scripts: read("src/flypicker/scripts.html"), template: read("src/flypicker/template.html") });
 
 let page = read("src/club.html");
 const swap = (marker, text) => {
   if (page.split(marker).length !== 2) throw new Error(`Expected exactly one ${marker} in src/club.html`);
   page = page.replace(marker, () => text);
 };
-swap("<!--FP_TEMPLATE-->", read("src/flypicker/template.html").trimEnd());
-swap("<!--FP_SCRIPTS-->", read("src/flypicker/scripts.html").trimEnd());
+swap("<!--FP_TEMPLATE-->", FP.template.trimEnd());
+swap("<!--FP_SCRIPTS-->", FP.scripts.trimEnd());
 // Species illustrations: trout-art/<species-id>.png (or .jpg, .webp, .svg) replaces the generic
 // trout on that species' card. Files are copied to public/trout-art/.
 const artDir = join(root, "trout-art"), art = {};
@@ -76,7 +81,7 @@ writeFileSync(join(root, "public/stocking-tn.js"),
 
 // The Trip Planner runs the Fly Picker's engine on the server: copy its data and engine out of
 // the embedded Fly Picker so the two never drift apart.
-const fp = read("src/flypicker/scripts.html");
+const fp = FP.scripts;
 const dataLine = fp.split("\n").find((l) => l.startsWith("const DATA = "));
 if (!dataLine) throw new Error("Fly Picker data not found in src/flypicker/scripts.html");
 writeFileSync(join(root, "data/flypicker.json"), dataLine.slice("const DATA = ".length).replace(/;\s*$/, "") + "\n");
