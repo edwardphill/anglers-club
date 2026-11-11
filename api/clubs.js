@@ -11,11 +11,11 @@ export default route(["GET", "POST"], async (req) => {
 
   if (req.method === "GET") {
     const user = await currentUser(req);
-    const [rows, mine] = await Promise.all([
-      q(`select c.*, (select count(*)::int from members m where m.club_id = c.id and m.role <> 'removed') as members
-         from clubs c order by c.state, c.city, c.name limit 1000`),
-      user ? q("select club_id, id, role from members where user_id = $1", [user.id]) : [],
-    ]);
+    // One statement at a time: the pooled connection is a single socket, and queued statements on it
+    // gain nothing but a way to hang together.
+    const rows = await q(`select c.*, (select count(*)::int from members m where m.club_id = c.id and m.role <> 'removed') as members
+         from clubs c order by c.state, c.city, c.name limit 1000`);
+    const mine = user ? await q("select club_id, id, role from members where user_id = $1", [user.id]) : [];
     return {
       clubs: rows.map(clubOut),
       mine: mine.filter((m) => m.role !== "removed").map((m) => ({ club: m.club_id, memberId: m.id, role: m.role })),

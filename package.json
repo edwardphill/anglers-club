@@ -5,7 +5,7 @@
   "description": "Fishing and hunting trip calendars for clubs in any city.",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "test": "node tests/api.test.mjs"
+    "test": "node tests/db-stall.test.mjs && node tests/api.test.mjs"
   },
   "dependencies": {
     "postgres": "^3.4.5"

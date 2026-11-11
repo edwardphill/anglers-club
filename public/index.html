@@ -2051,8 +2051,8 @@ async function api(path, { method = "GET", body } = {}) {
   const headers = {};
   if (body !== undefined) headers["Content-Type"] = "application/json";
   if (authToken()) headers.Authorization = "Bearer " + authToken();
-  // A read that stalls (a connection the browser or network has stopped moving) is cut after 10 seconds and
-  // tried once more on a fresh connection; the page used to wait on it forever. Writes are never cut or
+  // A read that stalls (a connection the browser or network has stopped moving) is cut after 10 seconds (or answered with
+  // a 502-504) and tried once more on a fresh connection; the page used to wait on it forever. Writes are never cut or
   // repeated, since the server may already have done them.
   const attempt = async () => {
     const ctl = method === "GET" && typeof AbortController === "function" ? new AbortController() : null;
@@ -2061,9 +2061,13 @@ async function api(path, { method = "GET", body } = {}) {
       return await fetch("/api/" + path, { method, headers, body: body === undefined ? undefined : JSON.stringify(body), signal: ctl ? ctl.signal : undefined });
     } finally { clearTimeout(timer); }
   };
-  let res;
+  let res = null;
   try {
-    try { res = await attempt(); } catch (e) { if (method !== "GET") throw e; res = await attempt(); }
+    try { res = await attempt(); } catch (e) { if (method !== "GET") throw e; }
+    // A read that failed to connect, or that the server gave up on (502-504), gets one more try.
+    if (method === "GET" && (!res || (res.status >= 502 && res.status <= 504))) {
+      try { res = await attempt(); } catch (e) { if (!res) throw e; }
+    }
   } catch (e) {
     const err = new Error("Can't reach the club server. Check your connection and try again."); err.status = 0; throw err;
   }
