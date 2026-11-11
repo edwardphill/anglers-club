@@ -117,12 +117,12 @@ assert.equal(toolGroup("Public TN dove fields"), "hunting"); assert.equal(toolGr
 for (const n of ["Fly Picker", "Trip planner", "River report tool", "Trout map", "Fly shops", "Guides", "Logbook"]) assert.equal(toolGroup(n), "fishing", n);
 const order = [...TOOLS_SRC.matchAll(/name: "([^"]+)"/g)].map((m) => m[1]);
 assert.ok(order.indexOf("Logbook") > order.indexOf("Guides") && order.indexOf("Logbook") === order.indexOf("Guides") + 1, "the Logbook sits at the end of the fishing tools");
-assert.ok(order.indexOf("River report tool") < order.indexOf("Stocking calendar"));
+assert.ok(order.indexOf("Stocking calendar") < order.indexOf("River report tool") && order.indexOf("River report tool") < order.indexOf("Trout map"), "the stocking calendar comes before the river report tool, which no shop uses yet");
 assert.ok(home.includes('"Fishing"') && home.includes('"Hunting"') && /\.tool:hover\{background:var\(--tc\)/.test(home), "two sections, and a selected card fills with its own color");
 assert.equal(toolGroup("Forum"), "community"); assert.equal(toolGroup("Club calendar"), "community");
 assert.ok(home.includes('"Forums and clubs"') && !/group: "clubs"/.test(TOOLS_SRC) && home.indexOf('["hunting", "Hunting"') < home.indexOf('["community", "Forums and clubs"'), "Forum and Club calendar share the third section");
 assert.ok(JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8")).redirects.some((r) => r.source === "/ai-fly-guide" && r.destination === "/trip-planner" && r.permanent), "the old trip planner address redirects for good");
-ok("the home page splits the tools into fishing and hunting (dove and grouse under hunting), lists the river report tool near the top and the Logbook last among the fishing tools, and fills a selected card with its own color");
+ok("the home page splits the tools into fishing and hunting (dove and grouse under hunting), lists the stocking calendar ahead of the river report tool and the Logbook last among the fishing tools, and fills a selected card with its own color");
 
 const png = readFileSync(new URL("../public/og.png", import.meta.url));
 assert.equal(png.readUInt32BE(16), 1200); assert.equal(png.readUInt32BE(20), 630);
