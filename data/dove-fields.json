@@ -2,12 +2,37 @@
   "season": 2026,
   "checked": "2026-11-11",
   "regions": {
+    "1": {
+      "name": "Region 1",
+      "area": "West Tennessee",
+      "slug": "west-tennessee",
+      "source": "https://www.tn.gov/content/tn/twra/hunting/migratory-birds/dove/region-1-dove-fields.html",
+      "pageUpdated": "2026-10-06",
+      "cropsAsOf": "2026-08-27"
+    },
     "2": {
       "name": "Region 2",
       "area": "Middle Tennessee",
       "source": "https://www.tn.gov/content/tn/twra/hunting/migratory-birds/dove/region-2-dove-fields.html",
       "pageUpdated": "2026-10-06",
-      "cropsAsOf": "2026-08-31"
+      "cropsAsOf": "2026-08-31",
+      "slug": "middle-tennessee"
+    },
+    "3": {
+      "name": "Region 3",
+      "area": "Cumberland Plateau",
+      "slug": "cumberland-plateau",
+      "source": "https://www.tn.gov/content/tn/twra/hunting/migratory-birds/dove/region-3-dove-fields.html",
+      "pageUpdated": "2026-10-06",
+      "cropsAsOf": "2026-08-27"
+    },
+    "4": {
+      "name": "Region 4",
+      "area": "East Tennessee",
+      "slug": "east-tennessee",
+      "source": "https://www.tn.gov/content/tn/twra/hunting/migratory-birds/dove/region-4-dove-fields.html",
+      "pageUpdated": "2026-08-27",
+      "cropsAsOf": "2026-08-27"
     }
   },
   "general": [
@@ -18,155 +43,1511 @@
   ],
   "fields": [
     {
-      "slug": "bark-camp-barrens-wma", "region": "2", "name": "Bark Camp Barrens WMA", "type": "wma",
-      "lat": 35.48119, "lon": -85.9733, "address": "Warren Road (1800 block), Manchester, TN 37355", "acres": 100,
-      "crops": ["35 millet, bush hogged", "7 corn", "25 wheat, top sown"],
+      "slug": "bogota",
+      "region": "1",
+      "name": "Bogota",
+      "type": "wma",
+      "lat": 36.13144,
+      "lon": -89.462,
+      "acres": 77,
+      "directions": "Go north on Hwy 78 toward Tiptonville for 7.0 miles. Turn left on Hwy 103 west for 1.2 miles, then left on Barbwire Rd for 2.0 miles. The field is on the right.",
+      "crops": [
+        "77 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Youth hunt September 5, starting at noon (NWTF lunch at 11, registration at 9:30 at the Orange Tent). Regular season from September 6 through the first and second segments.",
+      "rules": [
+        "Youth hunters must be accompanied by a non-hunting adult."
+      ]
+    },
+    {
+      "slug": "big-sandy-wma",
+      "region": "1",
+      "name": "Big Sandy WMA",
+      "type": "wma",
+      "lat": 36.24712,
+      "lon": -88.1219,
+      "acres": 8,
+      "directions": "From Big Sandy take Hwy 69 toward Paris about 1.8 miles. Turn right on Hagler Ridge Rd for 1.3 miles, then right on the gravel road to the parking area on the right.",
+      "crops": [
+        "8 buckwheat, disced"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Closed September 1 to 4. Youth only September 5, starting at noon. Open to all from September 6 for the rest of the first and second segments.",
+      "rules": [
+        "Youths must be accompanied by a non-hunting adult.",
+        "Walk in from the parking area; no driving to the field."
+      ]
+    },
+    {
+      "slug": "camden-wma",
+      "region": "1",
+      "name": "Camden WMA",
+      "type": "wma",
+      "lat": 36.00223,
+      "lon": -88.0178,
+      "acres": 63,
+      "directions": "From Camden take Hwy 70 east toward New Johnsonville. Turn right on Camden Landing Rd (also called Crockett Landing Rd). The field is about a mile down.",
+      "crops": [
+        "43 sunflowers, bush hogged",
+        "20 wheat, burned"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "cypress-pond-refuge",
+      "region": "1",
+      "name": "Cypress Pond Refuge",
+      "type": "wma",
+      "lat": 35.49078,
+      "lon": -87.9844,
+      "acres": 10,
+      "directions": "From Decaturville go east on Hwy 100, turn right on Mt. Carmel Rd, left on Pevahouse Camp Ln, then right on Cypress Pond Cove. Parking is at the end.",
+      "crops": [
+        "10 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": [],
+      "coordNote": "TWRA prints this field's coordinates without a north or west marker (35.49078, -87.9844). We read them as north and west; check the pin against the directions."
+    },
+    {
+      "slug": "eagle-lake-refuge-bomprezzi-unit",
+      "region": "1",
+      "name": "Eagle Lake Refuge: Bomprezzi Unit",
+      "type": "wma",
+      "lat": 35.24042,
+      "lon": -90.0583,
+      "acres": 50,
+      "directions": "From North Watkins off Hwy 51, turn left on Northhaven Dr, left on Circle Rd, left on Benjenstown Rd, then right on Billon Rd. The entrance is in the curve; follow the signs to parking.",
+      "crops": [
+        "50 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": [
+        "The field is about 2 miles from parking. ATVs and UTVs are strongly recommended and allowed only the first week; after that, foot traffic only."
+      ]
+    },
+    {
+      "slug": "harmon-creek-wma",
+      "region": "1",
+      "name": "Harmon Creek WMA",
+      "type": "wma",
+      "lat": 36.14961,
+      "lon": -87.9579,
+      "acres": 8,
+      "directions": "From Camden take Beaverdam Rd and Harmon Creek Rd to Harmon Dock Rd. Turn right; the field is about a mile on the right.",
+      "crops": [
+        "8 corn"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "horns-bluff-refuge",
+      "region": "1",
+      "name": "Horns Bluff Refuge",
+      "type": "wma",
+      "lat": 35.8707,
+      "lon": -89.0836,
+      "acres": 10,
+      "directions": "Off Haul Hay Loop Rd, Humboldt, TN.",
+      "crops": [
+        "10 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "john-tully-wma-fullen-north-tract",
+      "region": "1",
+      "name": "John Tully WMA: Fullen North Tract",
+      "type": "wma",
+      "lat": 35.74094,
+      "lon": -89.7733,
+      "acres": 50,
+      "directions": "Take Hwy 19 west from Hwy 51 and turn left on Jim Fullen Shop Rd. The field is about 3 miles on the left.",
+      "crops": [
+        "50 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Youth hunt September 5, starting at noon. Statewide season after the youth hunt.",
+      "rules": [],
+      "coordNote": "TWRA lists the same coordinates for this field and for Yankee Bar. Check the pin against the directions."
+    },
+    {
+      "slug": "john-tully-wma-yankee-bar",
+      "region": "1",
+      "name": "John Tully WMA: Yankee Bar",
+      "type": "wma",
+      "lat": 35.74094,
+      "lon": -89.7733,
+      "acres": 50,
+      "directions": "Take Hwy 19 west off Hwy 51, turn left on Four Mile Loop, then right on Crutcher Lake Rd. The field is about 2 miles on the left.",
+      "crops": [
+        "50 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": [
+        "ATVs are allowed on opening day only; after that, travel on foot."
+      ],
+      "coordNote": "TWRA lists the same coordinates for this field and for Fullen North Tract. Check the pin against the directions."
+    },
+    {
+      "slug": "moss-island",
+      "region": "1",
+      "name": "Moss Island",
+      "type": "wma",
+      "lat": 35.95696,
+      "lon": -89.630584139,
+      "acres": 65,
+      "directions": "From Dyersburg go west on Hwy 155 to Exit 2, turn left on Hwy 181 south for 12.0 miles, then left on Moss Island Rd for 1.2 miles. The field is on the right.",
+      "crops": [
+        "65 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "natchez-trace-wma",
+      "region": "1",
+      "name": "Natchez Trace WMA",
+      "type": "wma",
+      "lat": 35.68124,
+      "lon": -88.2958,
+      "acres": 16,
+      "directions": "From Lexington take Hwy 412 toward Parsons about 6 miles, turn left on McCall Rd for 3.7 miles, then right onto a gravel road. There are several small fields along it.",
+      "crops": [
+        "16 wheat"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "obion-river-wma",
+      "region": "1",
+      "name": "Obion River WMA",
+      "type": "wma",
+      "lat": 36.22774,
+      "lon": -88.9239,
+      "acres": 23,
+      "directions": "From US 45E/TN 89 in Sharon go west on TN 89 about 5.6 miles. Turn left on Beech Ridge Rd for 1.2 miles. The fields are on the left.",
+      "crops": [
+        "23 wheat, burned"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "parker-branch",
+      "region": "1",
+      "name": "Parker Branch",
+      "type": "wma",
+      "lat": 35.93356,
+      "lon": -88.8924,
+      "acres": 14,
+      "directions": "Off Hwy 186 between Trenton and Gibson.",
+      "crops": [
+        "Four plots of 5, 4, 2 and 3 acres, all sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "reelfoot-wma",
+      "region": "1",
+      "name": "Reelfoot WMA",
+      "type": "wma",
+      "lat": 36.47043,
+      "lon": -89.3099,
+      "acres": 30,
+      "directions": "Take Hwy 22 out of Union City, turn right on Hwy 157, and go half a mile. The field is on the left.",
+      "crops": [
+        "30 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "thorny-cypress",
+      "region": "1",
+      "name": "Thorny Cypress",
+      "type": "wma",
+      "lat": 36.09255755,
+      "lon": -89.53863353,
+      "acres": 41,
+      "directions": "From Dyersburg go west on Hwy 155 toward Caruthersville, MO, to Exit 2. Turn right on Hwy 181, then right on Boothspoint Rd. The field is at the end of the road on the left.",
+      "crops": [
+        "41 millet, burned"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "three-rivers-wma",
+      "region": "1",
+      "name": "Three Rivers WMA",
+      "type": "wma",
+      "lat": 36.27619,
+      "lon": -89.0615,
+      "acres": 27,
+      "directions": "From Reelfoot Ave and US 45W in Union City go south on US 45W for 9.8 miles. Parking is on the west side at the grain bins, just north of the Obion River.",
+      "crops": [
+        "20 sunflowers, bush hogged",
+        "7 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "tigrett-wma",
+      "region": "1",
+      "name": "Tigrett WMA",
+      "type": "wma",
+      "lat": 36.01074,
+      "lon": -89.3492,
+      "acres": 6,
+      "directions": "Take Hwy 412 out of Dyersburg toward Jackson and turn right on Slaughter Pen Rd.",
+      "crops": [
+        "6 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "tumbleweed",
+      "region": "1",
+      "name": "Tumbleweed",
+      "type": "wma",
+      "lat": 36.19775,
+      "lon": -89.5356,
+      "acres": 23,
+      "directions": "Go west on Hwy 155 to Exit 2, turn right on Hwy 181 north for 7.4 miles, then right on Parker Rd for half a mile. The field and parking are on the right.",
+      "crops": [
+        "23 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "white-oak-field-1",
+      "region": "1",
+      "name": "White Oak: Field 1",
+      "type": "wma",
+      "lat": 35.33178,
+      "lon": -88.3205,
+      "acres": 12,
+      "directions": "From Morris Chapel take Pisgah Ln, turn left on McCullough Rd for half a mile, then take the gravel road east off McCullough Rd to parking.",
+      "crops": [
+        "6 sunflowers, bush hogged",
+        "6 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 at noon, with the gate open for the first segment.",
+      "rules": []
+    },
+    {
+      "slug": "white-oak-field-2",
+      "region": "1",
+      "name": "White Oak: Field 2",
+      "type": "wma",
+      "lat": 35.34502,
+      "lon": -88.2649,
+      "acres": 7,
+      "directions": "From Saltillo go west on Hwy 69, south on Bingham Rd, then south on Sulphur Wells Rd for 2.1 miles. Parking is off Sulphur Wells Rd.",
+      "crops": [
+        "7 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 at noon, then the rest of the statewide season.",
+      "rules": []
+    },
+    {
+      "slug": "white-oak-field-3",
+      "region": "1",
+      "name": "White Oak: Field 3",
+      "type": "wma",
+      "lat": 35.35651,
+      "lon": -88.313,
+      "acres": 12,
+      "directions": "From Milledgeville go east on Hwy 69, turn right on Gospel Ln, and keep left at the fork. The field is past the parking lot.",
+      "crops": [
+        "6 sunflowers, bush hogged",
+        "6 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 at noon, then the rest of the statewide season.",
+      "rules": []
+    },
+    {
+      "slug": "wolf-river",
+      "region": "1",
+      "name": "Wolf River",
+      "type": "wma",
+      "lat": 35.02733,
+      "lon": -89.2488,
+      "acres": 30,
+      "directions": "From LaGrange go south on Yager Rd about 1.5 miles. The first field is on the right after you cross the Wolf River.",
+      "crops": [
+        "25 sunflowers, chopped"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "wolf-river-beasley-rd",
+      "region": "1",
+      "name": "Wolf River: Beasley Rd field",
+      "type": "wma",
+      "lat": 35.026,
+      "lon": -89.2544,
+      "acres": 35,
+      "directions": "From LaGrange go south on Yager Rd about 1.5 miles, then turn right on Beasley Rd. The entrance is 150 yards on the right.",
+      "crops": [
+        "20 sunflowers, bush hogged",
+        "5 buckwheat, bush hogged",
+        "10 ragweed, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": [],
+      "note": "TWRA lists this field right after Wolf River without a name. The name here comes from its directions."
+    },
+    {
+      "slug": "henry-county-future-vision-farms",
+      "region": "1",
+      "name": "Henry County: Future Vision Farms",
+      "type": "leased",
+      "lat": 36.39468,
+      "lon": -88.3756,
+      "county": "Henry",
+      "acres": 23,
+      "directions": "From Hwy 641 N go west 4.3 miles, then turn right on Hartsfield Rd for 0.4 miles. The entrance is on the north side.",
+      "crops": [
+        "23 wheat, harvested",
+        "23 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 6.",
+      "rules": [],
+      "note": "TWRA's text also mentions watermelons as the first crop in this field, which doesn't match its wheat listing."
+    },
+    {
+      "slug": "mcnairy-county-fair-farm",
+      "region": "1",
+      "name": "McNairy County: Fair Farm",
+      "type": "leased",
+      "lat": 35.05225,
+      "lon": -88.4215,
+      "county": "McNairy",
+      "address": "535 Tulu Ln",
+      "acres": 28,
+      "directions": "From Michie go east on Hwy 22 and turn right on Tulu Ln. The field is half a mile along, at 535 Tulu Ln.",
+      "crops": [
+        "2 wheat, bush hogged",
+        "26 wheat, top sown",
+        "2 sorghum, bush hogged"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 6.",
+      "rules": [],
+      "note": "TWRA's crop and date text runs together for this field. The dates here are as TWRA lists them."
+    },
+    {
+      "slug": "weakley-county-yeargin-farm",
+      "region": "1",
+      "name": "Weakley County: Yeargin Farm",
+      "type": "leased",
+      "lat": 36.22873,
+      "lon": -88.7137,
+      "county": "Weakley",
+      "acres": 37,
+      "directions": "From US 45E in Greenfield go east on Broad St (TN 54 N) for 7.1 miles, then right on Kester Rd for half a mile to the field parking.",
+      "crops": [
+        "37 corn, harvested",
+        "37 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 6.",
+      "rules": []
+    },
+    {
+      "slug": "bark-camp-barrens-wma",
+      "region": "2",
+      "name": "Bark Camp Barrens WMA",
+      "type": "wma",
+      "lat": 35.48119,
+      "lon": -85.9733,
+      "address": "Warren Road (1800 block), Manchester, TN 37355",
+      "acres": 100,
+      "crops": [
+        "35 millet, bush hogged",
+        "7 corn",
+        "25 wheat, top sown"
+      ],
       "permit": "WMA small game permit",
       "days": "Statewide season, opening at noon September 1. TWRA helps with parking and field access on opening day starting at 9 a.m. Central.",
       "rules": []
     },
     {
-      "slug": "cheatham-wma", "region": "2", "name": "Cheatham WMA", "type": "wma",
-      "lat": 36.19209, "lon": -87.106, "acres": 15,
+      "slug": "cheatham-wma",
+      "region": "2",
+      "name": "Cheatham WMA",
+      "type": "wma",
+      "lat": 36.19209,
+      "lon": -87.106,
+      "acres": 15,
       "directions": "From Ashland City take Hwy 49 west, turn left on Hwy 250 (Petway Rd), left on Griffintown Rd, then left on Headquarters Rd into the WMA. Turn right on Sulfur Creek Rd II.",
-      "crops": ["15 wheat, top sown"],
+      "crops": [
+        "15 wheat, top sown"
+      ],
       "permit": "WMA small game permit",
       "days": "September 1 (noon) through September 28, 2026. First segment only.",
-      "rules": ["Open only for the first dove segment. Small game hunting on this WMA closes the day before, and during, every big game quota hunt."]
+      "rules": [
+        "Open only for the first dove segment. Small game hunting on this WMA closes the day before, and during, every big game quota hunt."
+      ]
     },
     {
-      "slug": "cheatham-lake-wma", "region": "2", "name": "Cheatham Lake WMA", "type": "wma",
-      "lat": 36.28711262, "lon": -87.10862542, "acres": 12,
+      "slug": "cheatham-lake-wma",
+      "region": "2",
+      "name": "Cheatham Lake WMA",
+      "type": "wma",
+      "lat": 36.28711262,
+      "lon": -87.10862542,
+      "acres": 12,
       "directions": "From Ashland City take Hwy 49 south to a sharp right onto Jamestown Rd and bear left onto the WMA. The field and parking are half a mile in from the blacktop.",
-      "crops": ["12 wheat, top sown"],
+      "crops": [
+        "12 wheat, top sown"
+      ],
       "permit": "WMA small game permit",
       "days": "Statewide season, opening at noon September 1.",
-      "rules": ["During late duck season the area is closed to all activities on Mondays, Tuesdays and Fridays."]
+      "rules": [
+        "During late duck season the area is closed to all activities on Mondays, Tuesdays and Fridays."
+      ]
     },
     {
-      "slug": "haley-jaqueth-wma", "region": "2", "name": "Haley Jaqueth WMA", "type": "wma",
-      "lat": 35.7956, "lon": -86.6673, "acres": 27,
+      "slug": "haley-jaqueth-wma",
+      "region": "2",
+      "name": "Haley Jaqueth WMA",
+      "type": "wma",
+      "lat": 35.7956,
+      "lon": -86.6673,
+      "acres": 27,
       "directions": "From I-840 go south on US 31A for 3.6 miles. The field is on the left.",
-      "crops": ["7 sunflower, bush hogged", "20 wheat, top sown"],
+      "crops": [
+        "7 sunflower, bush hogged",
+        "20 wheat, top sown"
+      ],
       "permit": "WMA small game permit",
       "days": "Closed September 1. September 5 is a kids-only hunt all day, with limited morning spots. Open to all ages on September 7 and on Saturdays of the first segment (September 12, 19 and 26; TWRA's page prints the last one as \"26st\").",
-      "rules": ["Juveniles register with the TWRA officer named on TWRA's page (Officer Hayden Cook)."]
+      "rules": [
+        "Juveniles register with the TWRA officer named on TWRA's page (Officer Hayden Cook)."
+      ]
     },
     {
-      "slug": "haynes-bottom-wma", "region": "2", "name": "Haynes Bottom WMA", "type": "wma",
-      "lat": 36.45903, "lon": -87.4816, "address": "4838 Chester Harris Rd", "acres": 14,
+      "slug": "haynes-bottom-wma",
+      "region": "2",
+      "name": "Haynes Bottom WMA",
+      "type": "wma",
+      "lat": 36.45903,
+      "lon": -87.4816,
+      "address": "4838 Chester Harris Rd",
+      "acres": 14,
       "directions": "From Clarksville take Dover Rd west, turn left on Dotsonville Rd, left on Dunbar Rd, then left on Chester Harris Rd. The field is on the right.",
-      "crops": ["14 corn, bush hogged"],
+      "crops": [
+        "14 corn, bush hogged"
+      ],
       "permit": "WMA small game permit",
       "days": "Statewide season, opening at noon September 1.",
       "rules": []
     },
     {
-      "slug": "j-percy-priest-wma", "region": "2", "name": "J Percy Priest WMA", "type": "wma",
-      "lat": 36.02131, "lon": -86.5246, "acres": 40,
+      "slug": "j-percy-priest-wma",
+      "region": "2",
+      "name": "J Percy Priest WMA",
+      "type": "wma",
+      "lat": 36.02131,
+      "lon": -86.5246,
+      "acres": 40,
       "directions": "In LaVergne, turn onto Fergus Rd from Murfreesboro Pike. After 0.9 miles turn right on Jones Mill Rd. After another 0.8 miles turn right onto the gravel road with the Percy Priest WMA sign.",
-      "crops": ["40 wheat, burned"],
+      "crops": [
+        "40 wheat, burned"
+      ],
       "permit": "WMA small game permit",
       "days": "September 1, every Saturday and Sunday after, and Labor Day, in the first and second segments.",
-      "rules": ["Shoot from staked positions only.", "On September 1 positions are assigned by a drawing on site at 10 a.m.", "Be at your staked position when shooting hours start, and check out when you finish."]
+      "rules": [
+        "Shoot from staked positions only.",
+        "On September 1 positions are assigned by a drawing on site at 10 a.m.",
+        "Be at your staked position when shooting hours start, and check out when you finish."
+      ]
     },
     {
-      "slug": "laurel-hill-wma", "region": "2", "name": "Laurel Hill WMA", "type": "wma",
-      "lat": 35.38382, "lon": -87.4713, "address": "Across from 276 Napier Rd, Lawrenceburg, TN 38464", "acres": 65,
-      "crops": ["20 sunflowers, bush hogged", "20 millet, hayed", "wheat, burned"],
+      "slug": "laurel-hill-wma",
+      "region": "2",
+      "name": "Laurel Hill WMA",
+      "type": "wma",
+      "lat": 35.38382,
+      "lon": -87.4713,
+      "address": "Across from 276 Napier Rd, Lawrenceburg, TN 38464",
+      "acres": 65,
+      "crops": [
+        "20 sunflowers, bush hogged",
+        "20 millet, hayed",
+        "wheat, burned"
+      ],
       "permit": "WMA small game permit",
       "days": "Statewide season, opening at noon September 1.",
-      "rules": ["No one may enter the field or save hunting spots until 11 a.m. on opening day."]
+      "rules": [
+        "No one may enter the field or save hunting spots until 11 a.m. on opening day."
+      ]
     },
     {
-      "slug": "mingo-swamp-wma", "region": "2", "name": "Mingo Swamp WMA", "type": "wma",
-      "lat": 35.16306, "lon": -86.2049, "acres": 20,
+      "slug": "mingo-swamp-wma",
+      "region": "2",
+      "name": "Mingo Swamp WMA",
+      "type": "wma",
+      "lat": 35.16306,
+      "lon": -86.2049,
+      "acres": 20,
       "directions": "From Hwy 64 take Mingo Rd 3 miles west. The field is on the left.",
-      "crops": ["8 millet, bush hogged", "8 wheat, top sown", "4 corn"],
+      "crops": [
+        "8 millet, bush hogged",
+        "8 wheat, top sown",
+        "4 corn"
+      ],
       "permit": "WMA small game permit",
       "days": "September 5 is youth only (ages 6 to 16), 30 minutes before sunrise to sunset. Open to all ages from September 6 for the rest of the season.",
-      "rules": ["On September 5 a youth hunter must be accompanied by a non-hunting adult."]
+      "rules": [
+        "On September 5 a youth hunter must be accompanied by a non-hunting adult."
+      ]
     },
     {
-      "slug": "old-hickory-wma", "region": "2", "name": "Old Hickory WMA", "type": "wma",
-      "lat": 36.29849, "lon": -86.3606, "acres": 20,
+      "slug": "old-hickory-wma",
+      "region": "2",
+      "name": "Old Hickory WMA",
+      "type": "wma",
+      "lat": 36.29849,
+      "lon": -86.3606,
+      "acres": 20,
       "directions": "From Lebanon take Coles Ferry Pike to Berea Church Rd, then N Denny Rd. The gate is at the dead end of the road. (TWRA's directions text is partly garbled for this field.)",
-      "crops": ["20 wheat, burned"],
+      "crops": [
+        "20 wheat, burned"
+      ],
       "permit": "WMA small game permit",
       "days": "September 5 is youth only. Open to all ages September 6, then Wednesdays and Fridays through Sundays of the first segment only.",
-      "rules": ["Youth gate opens at 5 a.m. and a handheld drawing for stake positions is at 6 a.m.; the hunt ends at sunset.", "After opening weekend, park at the gate and hunt from staked positions."]
+      "rules": [
+        "Youth gate opens at 5 a.m. and a handheld drawing for stake positions is at 6 a.m.; the hunt ends at sunset.",
+        "After opening weekend, park at the gate and hunt from staked positions."
+      ]
     },
     {
-      "slug": "shelton-ferry-wma", "region": "2", "name": "Shelton Ferry WMA", "type": "wma",
-      "lat": 36.40404, "lon": -87.2779, "acres": 12,
+      "slug": "shelton-ferry-wma",
+      "region": "2",
+      "name": "Shelton Ferry WMA",
+      "type": "wma",
+      "lat": 36.40404,
+      "lon": -87.2779,
+      "acres": 12,
       "directions": "From Charlotte take Hwy 48 north and turn right on Southside Rd. The field is on the right at the corner of Southside Rd and Shelton Ferry Rd.",
-      "crops": ["12 millet, bush hogged"],
+      "crops": [
+        "12 millet, bush hogged"
+      ],
       "permit": "WMA small game permit",
       "days": "Statewide season, opening at noon September 1.",
       "rules": []
     },
     {
-      "slug": "yanahli-wma", "region": "2", "name": "Yanahli WMA", "type": "wma",
-      "lat": 35.56814, "lon": -86.9223, "acres": 45,
+      "slug": "yanahli-wma",
+      "region": "2",
+      "name": "Yanahli WMA",
+      "type": "wma",
+      "lat": 35.56814,
+      "lon": -86.9223,
+      "acres": 45,
       "directions": "Take Highway 50 to Fred White Rd and drive north 1.6 miles. The fields are on the right and the left, just before the boat ramp.",
-      "crops": ["10 sunflowers, bush hogged", "35 wheat, top sown"],
+      "crops": [
+        "10 sunflowers, bush hogged",
+        "35 wheat, top sown"
+      ],
       "permit": "WMA small game permit",
       "days": "Statewide season, opening at noon September 1.",
-      "rules": ["No hunters on the fields until 11 a.m. on September 1.", "No parking in the boat ramp lot on September 1. There is a parking area at each field."]
+      "rules": [
+        "No hunters on the fields until 11 a.m. on September 1.",
+        "No parking in the boat ramp lot on September 1. There is a parking area at each field."
+      ]
     },
     {
-      "slug": "lawrence-county-freeman", "region": "2", "name": "Lawrence County: Freeman", "type": "leased", "county": "Lawrence",
-      "lat": 35.12309, "lon": -87.2051, "acres": 30,
+      "slug": "lawrence-county-freeman",
+      "region": "2",
+      "name": "Lawrence County: Freeman",
+      "type": "leased",
+      "county": "Lawrence",
+      "lat": 35.12309,
+      "lon": -87.2051,
+      "acres": 30,
       "directions": "From Pulaski take Minor Hill Hwy and turn right on Fall River Rd. Follow it to Shannon Creek Rd and turn left, then turn right on Charlie Howell Rd. The field is at the county line on the right.",
-      "crops": ["30 corn, chopped", "30 wheat, top sown"],
+      "crops": [
+        "30 corn, chopped",
+        "30 wheat, top sown"
+      ],
       "permit": "Migratory Bird Permit, unless an exception applies",
       "days": "September 1, 5 and 6.",
       "rules": []
     },
     {
-      "slug": "lawrence-county-mac-old-farm", "region": "2", "name": "Lawrence County: Mac Old Farm", "type": "leased", "county": "Lawrence",
-      "lat": 35.28766, "lon": -87.4112, "acres": 53,
+      "slug": "lawrence-county-mac-old-farm",
+      "region": "2",
+      "name": "Lawrence County: Mac Old Farm",
+      "type": "leased",
+      "county": "Lawrence",
+      "lat": 35.28766,
+      "lon": -87.4112,
+      "acres": 53,
       "directions": "From Braziers One Stop Market (21 Shotwell Rd, Lawrenceburg) travel west on Hwy 64 for about a mile. The field is on the left, off Hwy 64.",
-      "crops": ["40 corn, harvested", "40 wheat, top sown"],
+      "crops": [
+        "40 corn, harvested",
+        "40 wheat, top sown"
+      ],
       "permit": "Migratory Bird Permit, unless an exception applies",
       "days": "September 1, then September 5 through 12.",
       "rules": []
     },
     {
-      "slug": "lincoln-county-williams", "region": "2", "name": "Lincoln County: Williams", "type": "leased", "county": "Lincoln",
-      "lat": 35.23797, "lon": -86.631, "acres": 40,
+      "slug": "lincoln-county-williams",
+      "region": "2",
+      "name": "Lincoln County: Williams",
+      "type": "leased",
+      "county": "Lincoln",
+      "lat": 35.23797,
+      "lon": -86.631,
+      "acres": 40,
       "directions": "From the Lincoln County courthouse take Main Ave N onto US 431 (Lewisburg Hwy) for 5.7 miles. Turn left on S Fishing Ford Rd for 0.9 miles, then left on Williams Rd.",
-      "crops": ["40 millet, hayed", "40 wheat, top sown"],
+      "crops": [
+        "40 millet, hayed",
+        "40 wheat, top sown"
+      ],
       "permit": "Migratory Bird Permit, unless an exception applies",
       "days": "September 1, 5, 6, 12 and 13.",
       "rules": []
     },
     {
-      "slug": "marshall-county-vanhooser", "region": "2", "name": "Marshall County: Vanhooser", "type": "leased", "county": "Marshall",
-      "lat": 35.32025, "lon": -86.837, "acres": 40,
+      "slug": "marshall-county-vanhooser",
+      "region": "2",
+      "name": "Marshall County: Vanhooser",
+      "type": "leased",
+      "county": "Marshall",
+      "lat": 35.32025,
+      "lon": -86.837,
+      "acres": 40,
       "directions": "Take Exit 22 off I-65 and turn left on Hwy 31A North toward Cornersville. Turn right onto Hwy 129 East, follow the signs, and turn right on London Rd. The field is on the right after the sharp right curve.",
-      "crops": ["40 corn, chopped", "40 wheat, top sown"],
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
       "permit": "Migratory Bird Permit, unless an exception applies",
       "days": "September 1, 5 and 6.",
       "rules": []
     },
     {
-      "slug": "maury-county-toombs-farm", "region": "2", "name": "Maury County: Toombs Farm", "type": "leased", "county": "Maury",
-      "lat": 35.51744, "lon": -87.0626, "acres": 40,
+      "slug": "maury-county-toombs-farm",
+      "region": "2",
+      "name": "Maury County: Toombs Farm",
+      "type": "leased",
+      "county": "Maury",
+      "lat": 35.51744,
+      "lon": -87.0626,
+      "acres": 40,
       "directions": "A quarter mile off Hwy 31 on Bigbyville Rd.",
-      "crops": ["40 corn, chopped", "40 wheat, top sown"],
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
       "permit": "Migratory Bird Permit, unless an exception applies",
       "days": "September 7 (youth only, sunrise to noon), September 12 and 13.",
       "rules": []
     },
     {
-      "slug": "wilson-county-bobby-howard", "region": "2", "name": "Wilson County: Bobby Howard", "type": "leased", "county": "Wilson",
-      "lat": 35.96957, "lon": -86.2174, "acres": 40,
+      "slug": "wilson-county-bobby-howard",
+      "region": "2",
+      "name": "Wilson County: Bobby Howard",
+      "type": "leased",
+      "county": "Wilson",
+      "lat": 35.96957,
+      "lon": -86.2174,
+      "acres": 40,
       "directions": "From I-40 take Exit 239 toward Watertown and head south on US 70 East for half a mile. Turn right on Maddow-Simpson Pkwy for 0.4 miles, then left on TN 266 South (Cainsville Rd) for 16 miles. Turn left on Oregon Rd for 2.2 miles and follow the signs to the public field.",
-      "crops": ["40 corn, chopped"],
+      "crops": [
+        "40 corn, chopped"
+      ],
       "permit": "Migratory Bird Permit, unless an exception applies",
       "days": "September 1 (noon), September 5 and 6 (legal shooting hours).",
-      "rules": ["Pick up all trash and shotgun hulls.", "Park only in the designated lot.", "No alcohol. No ATVs or UTVs."]
+      "rules": [
+        "Pick up all trash and shotgun hulls.",
+        "Park only in the designated lot.",
+        "No alcohol. No ATVs or UTVs."
+      ]
+    },
+    {
+      "slug": "bridgestone-firestone-wma",
+      "region": "3",
+      "name": "Bridgestone Firestone WMA",
+      "type": "wma",
+      "lat": 35.819946,
+      "lon": -85.377442,
+      "acres": 19,
+      "directions": "From Sparta take TN-1115 south about 6 miles. Turn left on Old Union Rd and go about 2.5 miles, then right on Hickory Valley Rd for about 2.5 miles to White Cave Rd. Turn left and follow it to the field.",
+      "crops": [
+        "13 sunflowers, bush hogged",
+        "6 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": [],
+      "coordNote": "TWRA prints this point two ways that differ by a digit (35.8199946 and 35.819946). The difference is a few meters."
+    },
+    {
+      "slug": "catoosa-wma",
+      "region": "3",
+      "name": "Catoosa WMA",
+      "type": "wma",
+      "lat": 36.05784,
+      "lon": -84.8578,
+      "acres": 25,
+      "directions": "From I-40 take exit 322 for Peavine Rd and turn north on TN-101 N (Peavine Rd). After 2 miles turn left on Peavine Firetower Rd. Drive 3.9 miles and stay straight onto Otter Creek Rd. The field is on the left in 5.6 miles.",
+      "crops": [
+        "15 wheat, burned",
+        "10 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Opens at noon September 1, with the statewide season.",
+      "rules": []
+    },
+    {
+      "slug": "chickamauga-wma-shelton-bottoms",
+      "region": "3",
+      "name": "Chickamauga WMA: Shelton Bottoms",
+      "type": "wma",
+      "lat": 35.33653,
+      "lon": -84.8221,
+      "county": "McMinn",
+      "acres": 8,
+      "directions": "Lamontville Rd in McMinn County, where Shelton Rd and County Rd 5 meet.",
+      "crops": [
+        "8 wheat, disced"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon).",
+      "rules": []
+    },
+    {
+      "slug": "hiwassee-refuge-blythes-ferry",
+      "region": "3",
+      "name": "Hiwassee Refuge: Blythes Ferry",
+      "type": "wma",
+      "lat": 35.43945,
+      "lon": -84.96168,
+      "county": "Meigs",
+      "acres": 30,
+      "directions": "Take Hwy 58 in Meigs County to Armstrong Ferry Rd and drive until you reach the Hiwassee/Armstrong Ferry WMA.",
+      "crops": [
+        "30 sunflowers, bush hogged",
+        "8 wheat, top sown"
+      ],
+      "permit": "Not listed for this field on TWRA's page. Check with TWRA.",
+      "days": "All hunts run noon to sunset. Youth only September 12; all ages September 1 and 17.",
+      "rules": [
+        "Non-toxic shot only.",
+        "No access by boat."
+      ],
+      "note": "TWRA lists 30 acres total, but the crops listed add up to 38.",
+      "coordNote": "TWRA lists the same point as Armstrong Bend. Check the pin against the directions."
+    },
+    {
+      "slug": "hiwassee-refuge-armstrong-bend",
+      "region": "3",
+      "name": "Hiwassee Refuge: Armstrong Bend",
+      "type": "wma",
+      "lat": 35.43945,
+      "lon": -84.96168,
+      "county": "Meigs",
+      "acres": 5,
+      "directions": "Take Hwy 58 in Meigs County to Armstrong Ferry Rd and drive until you reach the Hiwassee/Armstrong Ferry WMA.",
+      "crops": [
+        "5 buckwheat, disced",
+        "5 wheat, disced"
+      ],
+      "permit": "Not listed for this field on TWRA's page. Check with TWRA.",
+      "days": "All ages September 1 and 17; youth only September 12. Noon to sunset.",
+      "rules": [
+        "Non-toxic shot only.",
+        "No access by boat."
+      ],
+      "coordNote": "TWRA lists the same point as Blythes Ferry. Check the pin against the directions."
+    },
+    {
+      "slug": "hiwassee-refuge-armstrong-ferry",
+      "region": "3",
+      "name": "Hiwassee Refuge: Armstrong Ferry",
+      "type": "wma",
+      "lat": 35.45802,
+      "lon": -84.97328,
+      "county": "Meigs",
+      "acres": 8,
+      "directions": "Take Hwy 58 in Meigs County to Armstrong Ferry Rd and drive until you reach the Hiwassee/Armstrong Ferry WMA.",
+      "crops": [
+        "6 corn, bush hogged",
+        "2 millet, disced"
+      ],
+      "permit": "WMA small game permit",
+      "days": "All ages September 1 and 17; youth only September 12. Noon to sunset.",
+      "rules": [
+        "Non-toxic shot only.",
+        "No access by boat."
+      ]
+    },
+    {
+      "slug": "jackson-swamp-wma",
+      "region": "3",
+      "name": "Jackson Swamp WMA",
+      "type": "wma",
+      "lat": 36.49052,
+      "lon": -85.3002,
+      "directions": "Drive north on Hwy 111 from Livingston about 11 miles. Turn left on Hwy 294 and continue 5.1 miles to Independence Rd (look for the old community center). Turn left, drive 0.4 miles, then turn right into the WMA entrance road.",
+      "crops": [
+        "15 millet, bush hogged",
+        "115 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1, 2026 was by hand-held drawing, for winners only. The drawing was Saturday, August 29, 2026 at the Independence Community Center (sign-up at 4 p.m., drawing at 5 p.m. local). From September 2 the statewide season applies.",
+      "rules": [
+        "Entry on September 1 was by drawing, and you had to be there in person."
+      ],
+      "note": "TWRA lists 30 acres total, but its crop lines add up to 130."
+    },
+    {
+      "slug": "mcglothin-largen-wma",
+      "region": "3",
+      "name": "McGlothin Largen WMA",
+      "type": "wma",
+      "lat": 35.84713,
+      "lon": -84.5578,
+      "acres": 6,
+      "directions": "From Kingston go west on Roane State Hwy to Bowman Bend Rd and follow it to the WMA dove field.",
+      "crops": [
+        "6 millet, burned"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon start) and September 5 (all day).",
+      "rules": [
+        "Avoid firing toward the utility line (power and fiber optic).",
+        "There is a safety zone around the nearby residence."
+      ]
+    },
+    {
+      "slug": "north-chickamauga-creek-wma-hixon-tract",
+      "region": "3",
+      "name": "North Chickamauga Creek WMA: Hixon Tract",
+      "type": "wma",
+      "lat": 35.16791,
+      "lon": -85.2221,
+      "address": "1209 Lower Mill Rd, Hixson, TN",
+      "acres": 8,
+      "directions": "The entrance is next to the bridge.",
+      "crops": [
+        "6 sunflowers, disced",
+        "2 millet, disced"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Opening day, then Tuesdays, Thursdays and Saturdays.",
+      "rules": [],
+      "coordNote": "TWRA prints this longitude garbled (\"W00 -85.2221\"). We read it as -85.2221, which fits the neighboring Rogers Tract. Check the pin against the address."
+    },
+    {
+      "slug": "north-chickamauga-creek-wma-rogers-tract",
+      "region": "3",
+      "name": "North Chickamauga Creek WMA: Rogers Tract",
+      "type": "wma",
+      "lat": 35.164466,
+      "lon": -85.218851,
+      "address": "Lower Mill Rd next to 1207 Lower Mill Rd, Hixson, TN",
+      "acres": 8,
+      "directions": "On Lower Mill Rd, next to 1207 Lower Mill Rd.",
+      "crops": [
+        "8 sunflowers, chopped"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Opening day, then Tuesdays, Thursdays and Saturdays.",
+      "rules": []
+    },
+    {
+      "slug": "north-chickamauga-creek-wma-varner-unit",
+      "region": "3",
+      "name": "North Chickamauga Creek WMA: Varner Unit",
+      "type": "wma",
+      "lat": 35.14011401,
+      "lon": -85.21012602,
+      "address": "5423 Cassandra Smith Rd, Hixson, TN",
+      "acres": 13,
+      "crops": [
+        "13 millet, chopped"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Opening day, then Tuesdays, Thursdays and Saturdays.",
+      "rules": []
+    },
+    {
+      "slug": "pea-ridge-wma",
+      "region": "3",
+      "name": "Pea Ridge WMA",
+      "type": "wma",
+      "lat": 35.93047,
+      "lon": -85.9432,
+      "acres": 13,
+      "directions": "From Smithville head south on Short Mountain Rd for 10.1 miles and take a sharp right on Pea Ridge Rd. Travel 5 miles, turn right on Herman Rd, and go about 0.2 miles to the field on the right.",
+      "crops": [
+        "13 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Open with the statewide season.",
+      "rules": [
+        "Closed during scheduled big game hunts.",
+        "Pick up trash and empty shotgun hulls."
+      ]
+    },
+    {
+      "slug": "prentice-cooper-wma",
+      "region": "3",
+      "name": "Prentice Cooper WMA",
+      "type": "wma",
+      "lat": 35.1536617,
+      "lon": -85.41552829,
+      "acres": 10,
+      "directions": "Take Game Reserve Rd (the main gravel road) past the main entrance and the big game check station for about half a mile. Signs mark the field.",
+      "crops": [
+        "10 millet, burned"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Opens at noon September 1, with the statewide season.",
+      "rules": [
+        "Closed during scheduled big game hunts.",
+        "Pick up empty hulls and trash."
+      ]
+    },
+    {
+      "slug": "tellico-lake-wma-mcghee-carson-unit",
+      "region": "3",
+      "name": "Tellico Lake WMA: McGhee Carson Unit",
+      "type": "wma",
+      "lat": 35.58401,
+      "lon": -84.1926,
+      "acres": 20,
+      "directions": "McGhee Carson Unit of Tellico Lake WMA.",
+      "crops": [
+        "10 corn, bush hogged",
+        "10 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Youth only September 1, 5 and 7. Opens at noon September 1.",
+      "rules": [
+        "Youths must be accompanied by a licensed adult age 21 or older."
+      ]
+    },
+    {
+      "slug": "mcminn-county-farr",
+      "region": "3",
+      "name": "McMinn County: Farr",
+      "type": "leased",
+      "lat": 35.5558,
+      "lon": -84.6138,
+      "county": "McMinn",
+      "acres": 40,
+      "directions": "From I-75 near Athens take the exit onto TN-305 (John Duncan Pkwy) and go west to County Rd 250 (Pond Hill Rd). Go north 3.8 miles to the marked field on the east side.",
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 7.",
+      "rules": [
+        "Park in designated areas only."
+      ]
+    },
+    {
+      "slug": "mcminn-county-wilson",
+      "region": "3",
+      "name": "McMinn County: Wilson",
+      "type": "leased",
+      "lat": 35.34787,
+      "lon": -84.7153,
+      "county": "McMinn",
+      "acres": 40,
+      "directions": "From I-75 take exit 36 and drive toward Charleston on TN-163. At US-11 turn north and go 3.5 miles. The field is on the right.",
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 7.",
+      "rules": []
+    },
+    {
+      "slug": "monroe-county-plemons",
+      "region": "3",
+      "name": "Monroe County: Plemons",
+      "type": "leased",
+      "lat": 35.48419,
+      "lon": -84.393,
+      "county": "Monroe",
+      "acres": 40,
+      "directions": "From Hwy 411 in Madisonville go south 2.8 miles to Maxwell Rd, then about half a mile to the field.",
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 7.",
+      "rules": [
+        "Park across from the field.",
+        "Two residences have safety zone signs; don't shoot toward them."
+      ]
+    },
+    {
+      "slug": "monroe-county-watson-field",
+      "region": "3",
+      "name": "Monroe County: Watson Field",
+      "type": "leased",
+      "lat": 35.65475,
+      "lon": -84.4748,
+      "county": "Monroe",
+      "acres": 40,
+      "directions": "From I-75 take exit 62 onto Oakland Rd (Hwy 382) and go west. Turn onto Pond Creek Rd and drive about 3 miles. The field is on the left.",
+      "crops": [
+        "40 corn, harvested",
+        "40 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 7.",
+      "rules": [
+        "Stay out of the safety zone around nearby houses."
+      ]
+    },
+    {
+      "slug": "white-county-sparkman-farm",
+      "region": "3",
+      "name": "White County: Sparkman Farm",
+      "type": "leased",
+      "lat": 35.87257,
+      "lon": -85.5289,
+      "county": "White",
+      "acres": 42,
+      "directions": "From Sparta drive south on McMinnville Hwy for 4.4 miles. Turn right on Franks Ferry Rd for 1 mile, left on Disneyland Rd for 0.7 miles, then right on Eaton Rd for 0.5 miles. The field is on the right.",
+      "crops": [
+        "42 corn, chopped"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1, 5 and 7.",
+      "rules": [
+        "Don't park in the field if it's wet, and don't block barn stall access.",
+        "Pick up all shells and trash.",
+        "No hunting within 100 yards of a dwelling."
+      ]
+    },
+    {
+      "slug": "buffalo-springs-wma",
+      "region": "4",
+      "name": "Buffalo Springs WMA",
+      "type": "wma",
+      "lat": 36.20937,
+      "lon": -83.5641,
+      "acres": 20,
+      "directions": "Two routes. From Hwy 11 W turn onto Owl Hole Gap Rd, go about 3.5 miles, turn right on Indian Ridge Rd and take the second left. From Hwy 92 S turn onto Owl Hole Gap Rd, go about 4.0 miles, turn left on Indian Ridge Rd and take the second left.",
+      "crops": [
+        "14 sunflowers, chopped",
+        "6 corn, chopped"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1, 5 and 7, then the rest of the statewide season.",
+      "rules": [
+        "Hunters sign in in order of arrival and enter in that order starting at 10 a.m.",
+        "Everyone uses the main entrance from Indian Ridge Rd."
+      ]
+    },
+    {
+      "slug": "chuck-swan-wma",
+      "region": "4",
+      "name": "Chuck Swan WMA",
+      "type": "wma",
+      "lat": 36.28469,
+      "lon": -84.0204,
+      "acres": 9,
+      "directions": "From the Chuck Swan WMA entrance continue on Main Forest Rd to Forks of the River Rd, stay straight, and the field is on the left.",
+      "crops": [
+        "9 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Statewide season, opening at noon September 1.",
+      "rules": []
+    },
+    {
+      "slug": "forks-of-the-river-field-1",
+      "region": "4",
+      "name": "Forks of the River: Field 1",
+      "type": "wma",
+      "lat": 35.95351,
+      "lon": -83.852,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 3,
+      "crops": [
+        "3 sunflowers, chopped",
+        "3 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Youth and adult only on September 1 (noon), 5 and 7. Open to the statewide walk-in season on September 8.",
+      "rules": [
+        "Youth and adult only field."
+      ]
+    },
+    {
+      "slug": "forks-of-the-river-field-2",
+      "region": "4",
+      "name": "Forks of the River: Field 2",
+      "type": "wma",
+      "lat": 35.95344,
+      "lon": -83.8501,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 4,
+      "crops": [
+        "4 sunflowers, chopped",
+        "3 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Youth and adult only on September 1 (noon), 5 and 7. Open to the statewide walk-in season on September 8.",
+      "rules": [
+        "Youth and adult only field."
+      ]
+    },
+    {
+      "slug": "forks-of-the-river-field-3",
+      "region": "4",
+      "name": "Forks of the River: Field 3",
+      "type": "wma",
+      "lat": 35.95376,
+      "lon": -83.8543,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 4,
+      "crops": [
+        "4 sunflowers, chopped",
+        "3 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon), 5 and 7. Statewide walk-in season from September 8.",
+      "rules": []
+    },
+    {
+      "slug": "forks-of-the-river-field-4",
+      "region": "4",
+      "name": "Forks of the River: Field 4",
+      "type": "wma",
+      "lat": 35.95534,
+      "lon": -83.8528,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 4,
+      "crops": [
+        "4 sunflowers, chopped",
+        "3 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon), 5 and 7. Statewide walk-in season from September 8.",
+      "rules": []
+    },
+    {
+      "slug": "forks-of-the-river-field-5",
+      "region": "4",
+      "name": "Forks of the River: Field 5",
+      "type": "wma",
+      "lat": 35.95692,
+      "lon": -83.849,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 8,
+      "crops": [
+        "8 sunflowers, chopped",
+        "8 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon), 5 and 7. Statewide walk-in season from September 8.",
+      "rules": []
+    },
+    {
+      "slug": "forks-of-the-river-field-6",
+      "region": "4",
+      "name": "Forks of the River: Field 6",
+      "type": "wma",
+      "lat": 35.95625,
+      "lon": -83.8474,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 13,
+      "crops": [
+        "13 sunflowers, chopped",
+        "13 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon), 5 and 7. Statewide walk-in season from September 8.",
+      "rules": []
+    },
+    {
+      "slug": "forks-of-the-river-field-8",
+      "region": "4",
+      "name": "Forks of the River: Field 8",
+      "type": "wma",
+      "lat": 35.95529,
+      "lon": -83.85,
+      "address": "3140 McClure Lane, Knoxville, TN 37920",
+      "acres": 3,
+      "crops": [
+        "3 sunflowers, chopped",
+        "3 wheat, top sown"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon), 5 and 7. Statewide walk-in season from September 8.",
+      "rules": [],
+      "note": "TWRA's list has no Field 7."
+    },
+    {
+      "slug": "joachim-bible-refuge",
+      "region": "4",
+      "name": "Joachim Bible Refuge",
+      "type": "wma",
+      "lat": 36.15733,
+      "lon": -83.0846,
+      "acres": 30,
+      "directions": "Take I-81 exit 23 toward Greeneville on Hwy 11E and go 0.6 miles. Turn right on N. Mohawk Rd (it becomes S. Mohawk Rd) and continue 5.6 miles. Turn right on Concord Rd for 0.6 miles, then left on Guy Matthews Lane and follow the signs.",
+      "crops": [
+        "18 wheat, top sown",
+        "5 buckwheat, bush hogged",
+        "4 wheat, burned",
+        "2 sunflowers, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "Opens September 5, 2026, 30 minutes before sunrise.",
+      "rules": [
+        "Youth-only field. One adult may come along and may hunt the entire dove season.",
+        "The refuge closes to all trespass on November 15."
+      ]
+    },
+    {
+      "slug": "kyles-ford-wma",
+      "region": "4",
+      "name": "Kyles Ford WMA",
+      "type": "wma",
+      "lat": 36.579462,
+      "lon": -83.016534,
+      "acres": 30,
+      "directions": "From Rogersville at the 11W and 70N intersection take 70N for 16.5 miles. Turn right on Horton Ford Rd and go 1.6 miles. Parking is on the left.",
+      "crops": [
+        "15 wheat, burned",
+        "5 sunflowers, bush hogged",
+        "5 buckwheat, bush hogged",
+        "5 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1 (noon), then the rest of the statewide season.",
+      "rules": []
+    },
+    {
+      "slug": "lick-creek-bottom-wma",
+      "region": "4",
+      "name": "Lick Creek Bottom WMA",
+      "type": "wma",
+      "lat": 36.15708,
+      "lon": -83.0699,
+      "acres": 20,
+      "directions": "Take I-81 exit 23 toward Greeneville on Hwy 11E and go 0.6 miles. Turn right on N. Mohawk Rd (it becomes S. Mohawk Rd) and continue 6.2 miles. Parking is on the left.",
+      "crops": [
+        "17 wheat, top sown",
+        "5 wheat, burned",
+        "4 buckwheat, bush hogged",
+        "4 millet, bush hogged"
+      ],
+      "permit": "WMA small game permit",
+      "days": "September 1, 2026: youth with one adult until noon, then open to all hunters at noon. TWRA's text then says the field is closed until September 5, and also that it is open to all hunters from noon for the rest of the season, so the schedule is unclear. Confirm with TWRA.",
+      "rules": [
+        "Youth only, with one adult, until noon."
+      ]
+    },
+    {
+      "slug": "greene-county-johnson-field",
+      "region": "4",
+      "name": "Greene County: Johnson Field",
+      "type": "leased",
+      "lat": 36.06984,
+      "lon": -82.928,
+      "county": "Greene",
+      "acres": 35,
+      "directions": "From Greeneville go south on Hwy 70, turn right on West Allens Bridge Rd, cross the river, go 1.7 miles to Waddell Love Rd, and follow the signs.",
+      "crops": [
+        "35 millet, hayed",
+        "35 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": []
+    },
+    {
+      "slug": "greene-county-myers-field",
+      "region": "4",
+      "name": "Greene County: Myers Field",
+      "type": "leased",
+      "lat": 36.25898,
+      "lon": -83.0041,
+      "county": "Greene",
+      "acres": 25,
+      "directions": "From I-81 exit 23 take US-11E north to Greeneville, turn left in half a mile on Gap Creek Rd, go 3.4 miles, and turn right on Berry Short Lane.",
+      "crops": [
+        "20 wheat, top sown",
+        "5 fallow, bush hogged"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": []
+    },
+    {
+      "slug": "greene-county-sutherland-field",
+      "region": "4",
+      "name": "Greene County: Sutherland Field",
+      "type": "leased",
+      "lat": 36.15952,
+      "lon": -82.6545,
+      "county": "Greene",
+      "acres": 30,
+      "directions": "From Greeneville turn right from US-321 N onto TN-107 E (Tusculum bypass) and go about 6.9 miles. Turn left on Painter Rd and go 0.3 miles. The entrance is on the right.",
+      "crops": [
+        "30 corn, chopped",
+        "30 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": [
+        "Park in the designated area.",
+        "No hunting in the safety zone beside the parking area."
+      ],
+      "note": "TWRA's heading says \"Green County\". This is Greene County, like the other Greene fields."
+    },
+    {
+      "slug": "hamblen-county-gilbert-farm",
+      "region": "4",
+      "name": "Hamblen County: Gilbert Farm",
+      "type": "leased",
+      "lat": 36.14585,
+      "lon": -83.2093,
+      "county": "Hamblen",
+      "acres": 30,
+      "directions": "From I-81 exit 12 take TN-160 south 1.4 miles to the field entrance gate on the right.",
+      "crops": [
+        "30 corn, chopped",
+        "30 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": [
+        "The gate opens by 6 a.m.",
+        "No access to the building or the river dam."
+      ]
+    },
+    {
+      "slug": "loudon-county-holt-field",
+      "region": "4",
+      "name": "Loudon County: Holt Field",
+      "type": "leased",
+      "lat": 35.63072,
+      "lon": -84.5162,
+      "county": "Loudon",
+      "acres": 40,
+      "directions": "From I-75 exit 62 (Oakland Rd) turn right (west), go 1.8 miles to Burl Anderson Rd on the left, and follow it to the field.",
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": [
+        "Scouting before the hunt is not permitted on this field because of its location."
+      ],
+      "note": "TWRA's acreage text for this field is garbled. 40 acres is our reading."
+    },
+    {
+      "slug": "loudon-county-robert-watson-field",
+      "region": "4",
+      "name": "Loudon County: Robert Watson Field",
+      "type": "leased",
+      "lat": 35.66692,
+      "lon": -84.4622,
+      "county": "Loudon",
+      "acres": 40,
+      "directions": "From I-75 exit 68 (Pond Creek Rd / Philadelphia) turn right and go 1.7 miles. Turn left on Harris Rd and go 1.5 miles. The field is on the right.",
+      "crops": [
+        "40 corn, chopped",
+        "40 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": []
+    },
+    {
+      "slug": "washington-county-jimmy-rector",
+      "region": "4",
+      "name": "Washington County: Jimmy Rector",
+      "type": "leased",
+      "lat": 36.32435,
+      "lon": -82.617,
+      "county": "Washington",
+      "acres": 30,
+      "directions": "From I-81 exit 50 take TN 93 to Jonesborough and go about 3.6 miles. Turn right on Cherry Hill Rd for 1.6 miles, left on Blackley Creek Rd for 1 mile, right on Glendale for 1 mile, then right on Ducktown Rd. The field is 0.3 miles on the right.",
+      "crops": [
+        "20 corn, chopped",
+        "20 wheat, top sown",
+        "10 fallow, bush hogged"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": [
+        "Park in the designated area and pick up all trash."
+      ]
+    },
+    {
+      "slug": "washington-county-kathy-rector",
+      "region": "4",
+      "name": "Washington County: Kathy Rector",
+      "type": "leased",
+      "lat": 36.32909,
+      "lon": -82.6062,
+      "county": "Washington",
+      "acres": 35,
+      "directions": "From I-81 exit 50 take TN 93 toward Jonesborough, go 1.4 miles, and continue straight on TN 81 for 2.2 miles. Turn right on Cherry Hill Rd for 1.6 miles, then left on Blackley Creek Rd for 1 mile. The field is on the left.",
+      "crops": [
+        "35 corn, chopped",
+        "35 wheat, top sown"
+      ],
+      "permit": "Migratory Bird Permit, unless an exception applies",
+      "days": "September 1 (noon), 5 and 7.",
+      "rules": [
+        "Park in the designated area and pick up all trash."
+      ]
     }
   ]
 }
