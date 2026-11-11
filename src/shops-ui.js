@@ -395,7 +395,7 @@
           <p class="shr-meta">${esc([r.flow, r.clarity, r.tempF != null ? r.tempF + "°F" : ""].filter(Boolean).join(" · "))}</p>
           ${r.flies.length ? `<p><strong>Working:</strong> ${esc(fliesText(r.flies))}</p>` : ""}
           <button class="shr-btn" type="button" data-shr="${esc(r.shop.slug)}|${esc(r.id)}">Message the shop</button></div></article>`).join("")
-        + `<p class="foot">Written by the shops. These don't change the Fly Picker's picks.</p>`;
+        + `<p class="foot">Written by the shops. These don't change the Fly Picker's picks. <a href="/rivers/${esc(key.replace(/_/g, "-"))}">This river's page</a></p>`;
     }
     card.addEventListener("click", async (e) => {
       const b = e.target.closest("[data-shr]"); if (!b) return;

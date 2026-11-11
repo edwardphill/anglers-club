@@ -15,7 +15,15 @@
     {
       "source": "/plan",
       "destination": "/index.html"
-    }
+    },
+    { "source": "/rivers", "destination": "/api/page?kind=rivers" },
+    { "source": "/rivers/:key", "destination": "/api/page?kind=river&key=:key" },
+    { "source": "/shops", "destination": "/api/page?kind=shops" },
+    { "source": "/shops/:slug", "destination": "/api/page?kind=shop&slug=:slug" },
+    { "source": "/sitemap.xml", "destination": "/api/page?kind=sitemap" },
+    { "source": "/robots.txt", "destination": "/api/page?kind=robots" },
+    { "source": "/llms.txt", "destination": "/api/page?kind=llms" },
+    { "source": "/photos/:id", "destination": "/api/shops?photo=:id" }
   ],
   "functions": {
     "api/plan.js": {
@@ -23,6 +31,9 @@
       "includeFiles": "data/**"
     },
     "api/shops.js": {
+      "includeFiles": "data/flypicker.json"
+    },
+    "api/page.js": {
       "includeFiles": "data/flypicker.json"
     }
   },

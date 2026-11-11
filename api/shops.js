@@ -7,7 +7,7 @@
 // GET  /api/shops?op=latest            the newest live report for each river
 // GET  /api/shops?op=mine              the signed-in person's shops, invites accepted on sight; {admin}
 // GET  /api/shops?op=threads|thread|unread   conversations (anglers asking shops, and the shops' inbox)
-// GET  /api/shops?photo=<id>           a published report's photo (JPEG)
+// GET  /api/shops?photo=<id>           a published report's photo (JPEG); public at /photos/<id>.jpg (vercel.json rewrite)
 // POST /api/shops {op, ...}            shop_create (admin), shop_update, invite, report_photo, report_save,
 //                                      shop_status (admin), report_remove, thread_start, thread_send, thread_read, thread_status
 //
@@ -19,34 +19,11 @@ import { requireUser, newId, limit } from "../lib/auth.js";
 import { stripJpeg } from "../lib/jpeg.js";
 import {
   RIVERS, LIVE_DAYS, DAY, ymd, ageDays, isLive, slugify, isAdmin, clean, oneLine,
-  reportFields, checkReport, draftFromPhoto, drafting, DRAFT_MODEL,
+  reportFields, checkReport, draftFromPhoto, drafting, DRAFT_MODEL, shopOut, reportOut, REPORT_COLS,
 } from "../lib/shops.js";
 
 const MAX_B64 = 2400000;
 const DAILY_DRAFTS_PER_SHOP = 20;
-
-// ---------- shapes ----------
-
-const shopOut = (s) => ({
-  id: s.id, slug: s.slug, name: s.name, city: s.city, state: s.state, lat: s.lat, lon: s.lon,
-  website: s.website, instagram: s.instagram, about: s.about, rivers: s.rivers || [], managed: !!s.managed,
-  ...(s.last_report !== undefined ? { lastReport: s.last_report || "" } : {}),
-});
-
-function reportOut(r) {
-  return {
-    id: r.id, river: r.river, riverName: (RIVERS[r.river] || {}).name || r.river,
-    reportedOn: r.reported_on, age: ageDays(r.reported_on), live: isLive(r.reported_on),
-    title: r.title, summary: r.summary, flow: r.flow, clarity: r.clarity, tempF: r.temp_f,
-    hatches: r.hatches || [], flies: r.flies || [], tactics: r.tactics, transcript: r.transcript,
-    photo: r.photo_id ? `/api/shops?photo=${r.photo_id}` : "",
-    ...(r.status ? { status: r.status } : {}),
-    ...(r.shop_slug ? { shop: { slug: r.shop_slug, name: r.shop_name, city: r.shop_city, state: r.shop_state } } : {}),
-  };
-}
-
-const REPORT_COLS = `r.id, r.river, r.reported_on, r.title, r.summary, r.flow, r.clarity, r.temp_f, r.hatches, r.flies,
-  r.tactics, r.transcript, r.photo_id, r.status, s.slug as shop_slug, s.name as shop_name, s.city as shop_city, s.state as shop_state`;
 
 // ---------- who may do what ----------
 
@@ -111,7 +88,7 @@ function shopFields(b) {
 
 async function servePhoto(req, res) {
   await ensureSchema();
-  const id = str(req.query.photo, 80);
+  const id = str(req.query.photo, 80).replace(/\.jpe?g$/i, "");
   const [p] = id
     ? await q(
       `select p.b64 from shop_photos p

@@ -135,7 +135,7 @@ const rep = r.body.id;
 r = await S("shops"); assert.equal(r.body.shops.length, 2); assert.equal(r.body.shops.find((s) => s.id === shop.id).lastReport, today); ok("the shop list shows the newest report date");
 r = await S("shop", { query: { slug: shop.slug } });
 assert.equal(r.body.reports.length, 1); assert.equal(r.body.reports[0].live, true); assert.equal(r.body.reports[0].age, 0);
-assert.equal(r.body.reports[0].photo, `/api/shops?photo=${up.photoId}`); assert.equal(r.body.reports[0].riverName, "South Holston River"); ok("a shop page lists its reports with age and photo");
+assert.equal(r.body.reports[0].photo, `/photos/${up.photoId}.jpg`); assert.equal(r.body.reports[0].riverName, "South Holston River"); ok("a shop page lists its reports with age and photo");
 r = await S("reports", { query: { river: "south_holston" } });
 assert.equal(r.body.reports.length, 1); assert.equal(r.body.reports[0].shop.name, "Cumberland Fly Shop");
 assert.equal((await S("reports", { query: { river: "watauga" } })).body.reports.length, 0);

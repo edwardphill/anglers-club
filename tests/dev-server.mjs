@@ -17,8 +17,24 @@ for (const name of readdirSync(join(root, "api")).filter((f) => f.endsWith(".js"
   routes[name] = (await import(`../api/${name}.js`)).default;
 }
 
+// vercel.json's rewrites, applied the way Vercel does ("/rivers/:key" -> "/api/page?kind=river&key=:key"), so the clean
+// URLs are tested through the same file that ships.
+const rewrites = JSON.parse(readFileSync(join(root, "vercel.json"), "utf8")).rewrites.map((r) => ({
+  re: new RegExp("^" + r.source.replace(/[.+?^${}()|[\]\\]/g, "\\$&").replace(/:([a-z]+)/g, "(?<$1>[^/]+)") + "/?$"), dest: r.destination,
+}));
+function rewrite(url) {
+  for (const r of rewrites) {
+    const m = r.re.exec(url.pathname);
+    if (!m) continue;
+    const d = new URL(r.dest.replace(/:([a-z]+)/g, (_, n) => encodeURIComponent(m.groups[n])), "http://localhost");
+    for (const [k, v] of url.searchParams) if (!d.searchParams.has(k)) d.searchParams.set(k, v);
+    return d;
+  }
+  return url;
+}
+
 http.createServer(async (req, res) => {
-  const url = new URL(req.url, "http://localhost");
+  const url = rewrite(new URL(req.url, "http://localhost"));
   if (G && url.pathname === "/test/google-token") {
     const p = Object.fromEntries(url.searchParams);
     res.setHeader("Content-Type", "text/plain");
@@ -39,8 +55,7 @@ http.createServer(async (req, res) => {
     res.json = (o) => { res.setHeader("Content-Type", "application/json"); res.end(JSON.stringify(o)); };
     return routes[m[1]](vreq, res);
   }
-  const page = ["/", "/trout", "/stocking", "/plan"].includes(url.pathname.replace(/(.)\/$/, "$1"));   // vercel.json rewrites
-  const file = join(root, "public", page ? "index.html" : url.pathname);
+  const file = join(root, "public", url.pathname === "/" ? "index.html" : url.pathname);
   if (!existsSync(file)) { res.statusCode = 404; return res.end("Not found"); }
   const type = { html: "text/html; charset=utf-8", js: "text/javascript; charset=utf-8", json: "application/json" }[file.split(".").pop()];
   res.setHeader("Content-Type", type || "application/octet-stream");

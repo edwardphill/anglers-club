@@ -8,6 +8,7 @@
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%23F5F3E8%22%2F%3E%3Cpath%20d%3D%22M10%2038c6-8%2012-8%2018%200s12%208%2018%200%208-6%208-6%22%20fill%3D%22none%22%20stroke%3D%22%232C6A99%22%20stroke-width%3D%225%22%20stroke-linecap%3D%22round%22%2F%3E%3Cpath%20d%3D%22M32%2010l8%2018H24z%22%20fill%3D%22%23BF4128%22%2F%3E%3C%2Fsvg%3E">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
 <title>Anglers Club</title>
+<meta name="description" content="Trip calendars for fishing and hunting clubs, a Fly Picker for Tennessee and New England rivers, and weekly river reports from local fly shops.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap">
@@ -38,6 +39,8 @@ p{margin:0}
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:var(--green)}
 :focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.pubnav{max-width:1000px;margin:8px auto 36px;padding:0 16px;text-align:center;font:500 .72rem/1.4 "Cinzel",serif;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.pubnav a{color:var(--green);text-decoration:none;border-bottom:1px solid var(--hair)}
 .wrap{max-width:1000px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .muted{color:var(--muted)}
 
@@ -597,6 +600,7 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
     </div>
   </section>
 </main>
+<nav class="pubnav" aria-label="Public pages"><a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a></nav>
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
@@ -4681,7 +4685,7 @@ async function boot() {
           <p class="shr-meta">${esc([r.flow, r.clarity, r.tempF != null ? r.tempF + "°F" : ""].filter(Boolean).join(" · "))}</p>
           ${r.flies.length ? `<p><strong>Working:</strong> ${esc(fliesText(r.flies))}</p>` : ""}
           <button class="shr-btn" type="button" data-shr="${esc(r.shop.slug)}|${esc(r.id)}">Message the shop</button></div></article>`).join("")
-        + `<p class="foot">Written by the shops. These don't change the Fly Picker's picks.</p>`;
+        + `<p class="foot">Written by the shops. These don't change the Fly Picker's picks. <a href="/rivers/${esc(key.replace(/_/g, "-"))}">This river's page</a></p>`;
     }
     card.addEventListener("click", async (e) => {
       const b = e.target.closest("[data-shr]"); if (!b) return;
