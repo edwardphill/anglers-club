@@ -35,6 +35,7 @@
 .sx-b.me{justify-self:end;background:var(--green);color:var(--green-ink);border-color:var(--green)}
 .sx-b small{display:block;opacity:.7;font-size:.78rem;margin-top:3px}
 .sx-ph{max-width:100%;max-height:260px;object-fit:contain;border:1px solid var(--hair);background:var(--ground)}
+.sx-inc label{display:flex;gap:8px;align-items:center;text-transform:none;letter-spacing:0;font-weight:500;color:var(--ink)}
 .sx-card{border:1px solid var(--hair);padding:14px 16px;display:grid;gap:10px;background:var(--paper)}
 .sx-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .sx-rivers{display:flex;flex-wrap:wrap;gap:6px 14px}
@@ -231,14 +232,17 @@
     return html;
   }
 
+  // A weekly whiteboard: nudge when the newest report is more than a week old.
+  const stale = (s) => { const r = s.reports[0]; return !r ? "No report posted yet. " : r.age > 7 ? `Your last report is ${r.age} days old. ` : ""; };
+
   function shopBlock(s) {
     const owner = s.role === "owner" || s.role === "admin";
     const reports = s.reports.map((r) => `<div class="sx-row" style="cursor:default"><span class="t">${esc(r.title)}</span><span class="w">${esc(fmtD(r.reportedOn, { month: "short", day: "numeric" }))}</span>
         <span class="s">${esc(r.riverName)} · ${r.live ? "live in results" : "archived"} · <button class="linkish" type="button" data-sx="edit-report" data-shop="${esc(s.id)}" data-id="${esc(r.id)}">Edit</button> · <button class="linkish" type="button" data-sx="rm-report" data-id="${esc(r.id)}">Remove</button></span></div>`).join("");
     return `<section class="sx-card"><div><h2 style="font-size:1.35rem">${esc(s.name)}</h2>
         <p class="muted">${esc(where(s))} · ${s.role === "admin" ? "listed by you, not claimed yet" : esc(s.role)}${s.status === "hidden" ? " · hidden from the site" : ""} · <a href="/shops/${esc(s.slug)}">public page</a></p></div>
-      <div class="tool-row"><label class="btn primary small" style="cursor:pointer">Post this week's report<input type="file" accept="image/*" hidden data-sx="photo" data-shop="${esc(s.id)}"></label></div>
-      <p class="hint">Photograph the whiteboard or printed report. Nina reads it and drafts the report; you check it before it goes live.${SH.mine.drafting ? "" : " Drafting is off here, so you'll type it in."}</p>
+      <div class="tool-row"><label class="btn primary small" style="cursor:pointer">Photograph this week's whiteboard<input type="file" accept="image/*" hidden data-sx="photo" data-shop="${esc(s.id)}"></label></div>
+      <p class="hint">${stale(s)}That's all it takes. Fly AI writes a report for each river on the board and describes the photo in words, so search engines and AI tools can read it. You check the text before it goes live.${SH.mine.drafting ? "" : " Drafting is off here, so you'll type it in."}</p>
       ${reports ? `<div>${reports}</div>` : `<p class="muted">No reports yet.</p>`}
       ${owner ? `<details><summary>Shop details and people</summary>${detailsForm(s)}</details>` : ""}
       ${SH.mine.admin ? `<div class="tool-row"><button class="btn ghost small" type="button" data-sx="hide" data-shop="${esc(s.id)}" data-to="${s.status === "hidden" ? "active" : "hidden"}">${s.status === "hidden" ? "Show on the site" : "Hide from the site"}</button></div>` : ""}
@@ -273,24 +277,34 @@
       <div class="form-acts"><button class="btn primary small" type="submit">List the shop</button></div></form></section>`;
   }
 
-  function draftView() {
-    const d = SH.draft, f = d.fields;
+  function itemCard(f, i, d) {
+    const multi = d.items.length > 1 && !d.id;
     const flies = (f.flies || []).map((x) => [x.name, x.size || "", x.note || ""].join(" | ")).join("\n");
-    return `<div class="tool-row"><button class="btn ghost small" type="button" data-sx="cancel-draft">← Cancel</button></div>
-      <h2 style="font-size:1.4rem">${d.id ? "Edit the report" : "Check the report"}</h2>
-      ${d.error ? `<p class="hint">${esc(d.error)}</p>` : `<p class="hint">Nina read the photo and filled this in. Fix anything that's off before you publish. Nothing goes live until you do.</p>`}
-      ${d.photo ? `<img class="sx-ph" src="${esc(d.photo)}" alt="Report photo">` : ""}
-      <form class="f" data-sx-form="report_save" autocomplete="off">
-        <div class="sx-grid"><label>River<select name="river" required>${riverOptions(f.river)}</select></label>
-          <label>Report date<input name="reported_on" type="date" value="${esc(f.reported_on || todayStr())}" required></label></div>
-        <label>Headline<input name="title" maxlength="120" value="${esc(f.title)}"></label>
-        <label>Summary<span class="sub">What the report says, in a few sentences. This is the text people and search engines read.</span><textarea name="summary" rows="4" maxlength="1200" required>${esc(f.summary)}</textarea></label>
+    return `<section class="sx-card" data-i="${i}">
+      ${multi ? `<div class="sx-inc"><label><input type="checkbox" name="include"${f.skip ? "" : " checked"}> Publish this report</label></div>` : ""}
+      <div class="sx-grid"><label>River<select name="river">${riverOptions(f.river)}</select></label>
+        <label>Report date<input name="reported_on" type="date" value="${esc(f.reported_on || todayStr())}"></label></div>
+      <label>Headline<input name="title" maxlength="120" value="${esc(f.title)}"></label>
+      <label>Summary<span class="sub">What the report says, in a few sentences. This is the text people and search engines read.</span><textarea name="summary" rows="4" maxlength="1200">${esc(f.summary)}</textarea></label>
+      <details><summary>Flow, hatches, flies and the text from the board</summary>
         <div class="sx-grid"><label>Flow<input name="flow" maxlength="60" value="${esc(f.flow)}" placeholder="e.g. 850 cfs"></label><label>Clarity<input name="clarity" maxlength="60" value="${esc(f.clarity)}" placeholder="e.g. clear"></label></div>
         <div class="sx-grid"><label>Water temp (°F)<input name="temp_f" inputmode="numeric" value="${f.temp_f == null ? "" : esc(f.temp_f)}"></label><label>Hatches<span class="sub">Comma separated</span><input name="hatches" value="${esc((f.hatches || []).join(", "))}"></label></div>
         <label>Flies working<span class="sub">One per line: name | size | note</span><textarea name="flies" rows="4">${esc(flies)}</textarea></label>
         <label>Where and how<textarea name="tactics" rows="2" maxlength="400">${esc(f.tactics)}</textarea></label>
-        <details><summary>Text read from the photo</summary><label><span class="sub">Shown on the public page so the report can be found. Remove anything private.</span><textarea name="transcript" rows="6" maxlength="3000">${esc(f.transcript)}</textarea></label></details>
-        <div class="form-acts"><button class="btn primary" type="submit">${d.id ? "Save changes" : "Publish report"}</button></div></form>`;
+        <label>Text from the board<span class="sub">Shown on the public page, as written. Remove anything private.</span><textarea name="transcript" rows="6" maxlength="3000">${esc(f.transcript)}</textarea></label>
+      </details></section>`;
+  }
+
+  function draftView() {
+    const d = SH.draft, n = d.items.length;
+    return `<div class="tool-row"><button class="btn ghost small" type="button" data-sx="cancel-draft">← Cancel</button></div>
+      <h2 style="font-size:1.4rem">${d.id ? "Edit the report" : n > 1 ? `Check the ${n} reports` : "Check the report"}</h2>
+      ${d.error ? `<p class="hint">${esc(d.error)}</p>` : `<p class="hint">Fly AI read the photo and wrote ${n > 1 ? "a report for each river on it" : "this report"}. Fix anything that's off, then publish. Nothing goes live until you do.</p>`}
+      ${d.photo ? `<img class="sx-ph" src="${esc(d.photo)}" alt="${esc(d.alt || "Report photo")}">` : ""}
+      <form class="f" data-sx-form="report_save" autocomplete="off">
+        ${d.photo ? `<label>The photo, in words<span class="sub">A photo can't be read by search engines or AI tools, so this goes with it as its text description.</span><textarea name="photo_alt" rows="2" maxlength="300">${esc(d.alt || "")}</textarea></label>` : ""}
+        ${d.items.map((f, i) => itemCard(f, i, d)).join("")}
+        <div class="form-acts"><button class="btn primary" type="submit">${d.id ? "Save changes" : n > 1 ? "Publish the reports" : "Publish report"}</button></div></form>`;
   }
 
   // ---------- photo to JPEG ----------
@@ -316,12 +330,12 @@
   async function onPhoto(input) {
     const file = input.files && input.files[0]; if (!file) return;
     const shop = input.dataset.shop;
-    SH.err = ""; SH.note = "Reading the photo…"; paint();
+    SH.err = ""; SH.note = "Reading the photo. This takes a few seconds…"; paint();
     try {
       const img = await toJpeg(file);
       const out = await spost("report_photo", { shop, image: img.b64 });
-      const why = { drafting_off: "Drafting is off, so fill the report in by hand.", not_a_report: "That doesn't look like a fishing report. Fill it in by hand, or try another photo.", upstream_error: "Nina couldn't read it just now. Fill it in by hand.", rate_limited: "Nina is busy. Fill it in by hand.", no_draft: "Nina couldn't read it. Fill it in by hand." }[out.draftError] || "";
-      SH.draft = { shop, photoId: out.photoId, photo: img.url, fields: out.draft || {}, error: why };
+      const why = { drafting_off: "Drafting is off, so fill the report in by hand.", not_a_report: "That doesn't look like a fishing report. Fill it in by hand, or try another photo.", upstream_error: "Fly AI couldn't read it just now. Fill it in by hand.", rate_limited: "Fly AI is busy. Fill it in by hand.", no_draft: "Fly AI couldn't read it. Fill it in by hand." }[out.draftError] || "";
+      SH.draft = { shop, photoId: out.photoId, photo: img.url, alt: out.description || "", items: out.drafts && out.drafts.length ? out.drafts : [{}], error: why };
       SH.note = "";
     } catch (e) { SH.err = e.message; SH.note = ""; }
     paint();
@@ -329,6 +343,14 @@
 
   const lines = (s) => String(s || "").split("\n").map((l) => l.trim()).filter(Boolean).map((l) => { const [name, size, note] = l.split("|").map((x) => (x || "").trim()); return { name, size, note }; });
   const csv = (s) => String(s || "").split(",").map((x) => x.trim()).filter(Boolean);
+
+  // One report card back into the draft's shape (the same keys the API takes), plus whether to skip it.
+  function readItem(sec) {
+    const v = (n) => { const e = sec.querySelector(`[name=${n}]`); return e ? e.value : ""; };
+    const inc = sec.querySelector("[name=include]");
+    return { skip: inc ? !inc.checked : false, river: v("river"), reported_on: v("reported_on"), title: v("title"), summary: v("summary"), flow: v("flow"), clarity: v("clarity"),
+      temp_f: v("temp_f") === "" ? null : Number(v("temp_f")), hatches: csv(v("hatches")), flies: lines(v("flies")), tactics: v("tactics"), transcript: v("transcript") };
+  }
 
   async function onSubmit(e) {
     const form = e.target.closest("form"); if (!form) return;
@@ -363,15 +385,26 @@
       }
       if (kind === "invite") { await spost("invite", { shop: form.dataset.shop, email: fd.get("email") }); SH.note = "Invite saved. They'll see the shop when they sign in with that address."; form.reset(); paint(); return; }
       if (kind === "report_save") {
-        const d = SH.draft;
-        const body = { shop: d.shop, river: fd.get("river"), reported_on: fd.get("reported_on"), title: fd.get("title"), summary: fd.get("summary"),
-          flow: fd.get("flow"), clarity: fd.get("clarity"), temp_f: fd.get("temp_f") === "" ? null : Number(fd.get("temp_f")),
-          hatches: csv(fd.get("hatches")), flies: lines(fd.get("flies")), tactics: fd.get("tactics"), transcript: fd.get("transcript") };
-        if (d.id) body.id = d.id; else if (d.photoId) body.photo_id = d.photoId;
-        await spost("report_save", body);
-        cache = {};
+        const d = SH.draft, alt = d.photo ? String(fd.get("photo_alt") || "") : undefined;
+        const items = [...form.querySelectorAll("[data-i]")].map(readItem);
+        d.alt = alt || ""; d.items = items;
+        const todo = items.filter((x) => !x.skip);
+        if (!todo.length) { SH.err = "Tick at least one report to publish."; paint(); return; }
+        const done = new Set(); let failed = "";
+        for (let i = 0; i < items.length; i++) {
+          if (items[i].skip) continue;
+          const { skip, ...f } = items[i];
+          try {
+            await spost("report_save", { shop: d.shop, ...f, ...(d.id ? { id: d.id } : d.photoId ? { photo_id: d.photoId } : {}), ...(alt !== undefined ? { photo_alt: alt } : {}) });
+            done.add(i);
+          } catch (x) { failed = (items.length > 1 ? (items[i].river && (riverName(items[i].river) + ": ")) || "" : "") + x.message; break; }
+        }
+        if (done.size) cache = {};
+        if (failed) { d.items = items.filter((_, i) => !done.has(i)); SH.err = failed; paint(); return; }
         SH.last = d.photoId ? { shop: d.shop, photoId: d.photoId, photo: d.photo } : null;
-        SH.draft = null; SH.note = d.id ? "Saved." : "Published. It's live in the Fly Picker's results and on your shop's page."; await load(); return;
+        SH.draft = null;
+        SH.note = d.id ? "Saved." : `Published ${done.size === 1 ? "the report" : done.size + " reports"} as text. ${done.size === 1 ? "It's" : "They're"} live in the Fly Picker's results, on the river pages and on your shop's page.`;
+        await load(); return;
       }
     } catch (x) { SH.err = x.message; if (btn2) btn2.disabled = false; paint(); }
   }
@@ -410,7 +443,7 @@
       else if (a === "cancel-draft") { SH.draft = null; paint(); }
       else if (a === "edit-report") {
         const s = SH.mine.shops.find((x) => x.id === t.dataset.shop), r = s && s.reports.find((x) => x.id === t.dataset.id);
-        if (r) { SH.draft = { shop: s.id, id: r.id, photo: r.photo, fields: { river: r.river, reported_on: r.reportedOn, title: r.title, summary: r.summary, flow: r.flow, clarity: r.clarity, temp_f: r.tempF, hatches: r.hatches, flies: r.flies, tactics: r.tactics, transcript: r.transcript } }; paint(); }
+        if (r) { SH.draft = { shop: s.id, id: r.id, photo: r.photo, alt: r.photoAlt || "", items: [{ river: r.river, reported_on: r.reportedOn, title: r.title, summary: r.summary, flow: r.flow, clarity: r.clarity, temp_f: r.tempF, hatches: r.hatches, flies: r.flies, tactics: r.tactics, transcript: r.transcript }] }; paint(); }
       }
       else if (a === "rm-report") { if (confirm("Remove this report from the site?")) { await spost("report_remove", { id: t.dataset.id }); cache = {}; SH.note = "Removed."; await load(); } }
       else if (a === "hide") { await spost("shop_status", { shop: t.dataset.shop, status: t.dataset.to }); cache = {}; await load(); }

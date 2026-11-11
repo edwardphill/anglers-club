@@ -4,19 +4,20 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 <style>
-/* Brand: clean and technical. Off-white ground, white panels, hairline rules, one green accent
-   (fishing) and one red (hunting). Inter for everything; a monospace only for small data labels. */
+/* Brand: clean and technical, in the spirit of RentalTide. Off-white ground, white panels, thin lines everywhere.
+   Dark green is the accent (buttons, links, kickers), mint a small highlight, and each tool has its own color. Inter for everything. */
 :root{
   color-scheme:light;
-  --ground:#FAFAF8; --paper:#FFFFFF; --ink:#131815; --muted:#5C6660; --hair:#E3E5E0;
-  --brass:#8F9892; --brass-ink:#66706A;
-  --green:#116149; --green-ink:#FFFFFF; --green-wash:#E7F2EC;
+  --ground:#F6F8F6; --paper:#FFFFFF; --ink:#0C1A14; --muted:#55655C; --hair:#DCE4DF;
+  --brass:#8DA096; --brass-ink:#55655C;
+  --green:#0F6B4F; --green-ink:#FFFFFF; --green-wash:#E8F3EE;
+  --deep:#0F3D2E; --deep2:#0A2A20; --mint:#3DDC97;
   --oxblood:#B3382C; --oxblood-ink:#FFFFFF; --oxblood-wash:#FBEDEA;
   --warn:#7A5200; --warn-wash:#FFF4DB;
-  --shade:rgba(19,24,21,.34);
+  --shade:rgba(12,26,20,.34);
   --radius:10px;
   --sans:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --label:ui-monospace,"SF Mono","JetBrains Mono",Menlo,Consolas,monospace;
+  --label:var(--sans);
   --caps:var(--sans);
   --serif:var(--sans);
   --body:var(--sans);
@@ -431,8 +432,9 @@ h1,h2,h3{letter-spacing:-.015em}
 .kicker{margin-bottom:6px}
 .btn{font-weight:500;font-size:.88rem;padding:10px 16px;border-radius:8px;letter-spacing:0}
 .btn.small{font-size:.82rem;padding:7px 12px}
-.btn.primary:hover{filter:none;background:#0C4F3B}
-.btn:not(.primary):not(.danger),.icon-btn,.seg button{border-color:#CBD0CA}
+.btn.primary{background:var(--deep);border-color:var(--deep)}
+.btn.primary:hover{filter:none;background:var(--deep2);border-color:var(--deep2)}
+.btn:not(.primary):not(.danger),.icon-btn,.seg button{border-color:#CAD6CF}
 .tab{font-size:.88rem;letter-spacing:0}
 .chip,.seg button,.kindpick label{letter-spacing:0}
 .chip{font-size:.85rem}
@@ -448,7 +450,7 @@ h1,h2,h3{letter-spacing:-.015em}
 .patch .yr{font:500 .56rem/1 var(--label);letter-spacing:.06em;color:var(--brass-ink)}
 
 /* Panels */
-.start,.gate,.tm-map,.tp-ask,.announce{border:1px solid var(--hair);box-shadow:0 1px 2px rgba(19,24,21,.04);border-radius:var(--radius);background:var(--paper)}
+.start,.gate,.tm-map,.tp-ask,.announce{border:1px solid var(--hair);box-shadow:0 1px 2px rgba(12,26,20,.04);border-radius:var(--radius);background:var(--paper)}
 .announce{background:var(--green-wash);border-color:#CFE3D8}
 .tm-map{padding:12px}
 .grid-wrap{border:1px solid var(--hair);border-radius:var(--radius)}
@@ -458,8 +460,8 @@ h1,h2,h3{letter-spacing:-.015em}
 .tm-boards{border-top:1px solid var(--hair)}
 .tm-score{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
 .tp-card{border-top:1px solid var(--hair)}
-dialog.sheet{border-left:1px solid var(--hair);box-shadow:-12px 0 40px rgba(19,24,21,.12)}
-dialog.sheet.name-sheet{border:1px solid var(--hair);box-shadow:0 20px 50px rgba(19,24,21,.18);border-radius:14px}
+dialog.sheet{border-left:1px solid var(--hair);box-shadow:-12px 0 40px rgba(12,26,20,.12)}
+dialog.sheet.name-sheet{border:1px solid var(--hair);box-shadow:0 20px 50px rgba(12,26,20,.18);border-radius:14px}
 .f input:not([type=radio]):not([type=checkbox]),.f select,.f textarea,.tp-ask textarea,.tm-search,.sk-when select,textarea.copybox{border-radius:8px;border-color:var(--hair);background:var(--paper)}
 .tp-ask textarea{font-size:1rem}
 .f input:focus,.f select:focus,.f textarea:focus,.tp-ask textarea:focus,.tm-search:focus{border-color:var(--green);outline:2px solid var(--green-wash)}
@@ -475,7 +477,8 @@ details.adv summary{font-style:normal}
 .tm-tip{border-radius:6px;font:500 .85rem/1.25 var(--sans)}
 
 /* Small data labels: monospace, uppercase */
-.kicker,.patch .yr,.group-h span,.stamp .dow,.stamp .mon,.stamp .wk,.tline,.dows span,.sh-top .lab,.sh-sec>h3,.announce h3,.tv-kind,.facts dt,.roster small,.f label,.f .lab,.tm-cap,.tm-tier-h,.tp-lab,.md h4,.tp-src h4,.sk-when,.sk-pill,.tm-flag,.pill,.tag,.tm-ctl .icon-btn.world{font-family:var(--label);text-transform:uppercase;letter-spacing:.06em;font-weight:500}
+.kicker,.patch .yr,.group-h span,.stamp .dow,.stamp .mon,.stamp .wk,.tline,.dows span,.sh-top .lab,.sh-sec>h3,.announce h3,.tv-kind,.facts dt,.roster small,.f label,.f .lab,.tm-cap,.tm-tier-h,.tp-lab,.md h4,.tp-src h4,.sk-when,.sk-pill,.tm-flag,.pill,.tag,.tm-ctl .icon-btn.world{font-family:var(--label);text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+.f label,.f .lab,.facts dt,.sh-sec>h3,.tp-lab,.tm-cap,.tp-src h4,.md h4{text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted)}
 .kicker{font-size:.72rem}
 .tline,.tv-kind{font-size:.68rem}
 .facts dt,.f label,.f .lab,.sh-sec>h3,.announce h3,.tp-lab,.tm-cap,.tm-tier-h,.tp-src h4,.md h4,.sk-when{font-size:.68rem}
@@ -486,6 +489,14 @@ details.adv summary{font-style:normal}
 .tm-flag,.pill,.sk-pill{border-radius:4px}
 .sk-pill{font-size:.62rem}
 
+/* Header: light, with one thin rule under it. Dark green is the accent, not the theme. */
+header.club{border-bottom:1px solid var(--hair);margin-bottom:8px}
+header.club .club-in{padding-block:30px 24px}
+header.club .club-in::after{display:none}
+header.club .kicker{color:var(--green)}
+/* Thin lines: each section opens with a rule, cards are outlined, not shadowed */
+.home-sec{border-top:1px solid var(--hair);padding-top:22px;margin-top:30px}
+.home-sec:first-of-type{border-top:0}
 /* Home: hero and tools */
 .hero{display:grid;gap:8px;padding:6px 2px 0;max-width:62ch}
 .hero h2{font-size:1.6rem;font-weight:700;letter-spacing:-.025em}
@@ -494,12 +505,22 @@ details.adv summary{font-style:normal}
 .sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding-inline:2px}
 .tools-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .tools-grid>li{display:flex}
-.tool{display:grid;grid-template-rows:auto auto 1fr auto;gap:6px;width:100%;text-align:left;background:var(--paper);border:1px solid var(--hair);border-radius:var(--radius);padding:16px 16px 14px;color:var(--ink);text-decoration:none;cursor:pointer;font:inherit}
-@media (hover:hover){.tool:hover{border-color:var(--green);box-shadow:0 2px 10px rgba(17,97,73,.1)}}
-.tool-n{font:500 .68rem/1 var(--label);letter-spacing:.06em;color:var(--brass-ink)}
-.tool-t{font-weight:600;font-size:1.02rem;letter-spacing:-.01em;line-height:1.25}
-.tool-d{color:var(--muted);font-size:.9rem;line-height:1.5}
-.tool-tag{font:500 .66rem/1 var(--label);text-transform:uppercase;letter-spacing:.06em;color:var(--green);margin-top:4px}
+.tool{--tc:#0F3D2E;--tci:#fff;display:grid;grid-template-rows:auto auto 1fr auto;gap:8px;width:100%;text-align:left;background:var(--paper);border:1px solid var(--hair);border-radius:12px;padding:18px 18px 16px;color:var(--ink);text-decoration:none;cursor:pointer;font:inherit;transition:background-color .15s,border-color .15s,color .15s,transform .15s}
+.tool::before{content:"";width:26px;height:4px;border-radius:99px;background:var(--tc);transition:background-color .15s}
+.tool-t{font-weight:600;font-size:1.05rem;letter-spacing:-.01em;line-height:1.25}
+.tool-d{color:var(--muted);font-size:.9rem;line-height:1.5;transition:color .15s}
+.tool-tag{font:500 .76rem/1 var(--sans);color:var(--muted);margin-top:4px;transition:color .15s}
+/* Selecting a card (hover, keyboard focus, press) fills it with that tool's own color. */
+.tool:focus-visible,.tool:active{background:var(--tc);border-color:var(--tc);color:var(--tci);outline:2px solid var(--ink);outline-offset:2px}
+.tool:focus-visible::before,.tool:active::before{background:var(--tci)}
+.tool:focus-visible .tool-d,.tool:focus-visible .tool-tag,.tool:active .tool-d,.tool:active .tool-tag{color:var(--tci)}
+@media (hover:hover){
+  .tool:hover{background:var(--tc);border-color:var(--tc);color:var(--tci);transform:translateY(-1px)}
+  .tool:hover::before{background:var(--tci)}
+  .tool:hover .tool-d,.tool:hover .tool-tag{color:var(--tci)}
+}
+@media (prefers-reduced-motion:reduce){.tool,.tool::before,.tool-d,.tool-tag{transition:none}.tool:hover{transform:none}}
+.home-sec+.home-sec{margin-top:8px}
 </style>
 <canvas id="topo" aria-hidden="true"></canvas>
 
@@ -645,10 +666,10 @@ details.adv summary{font-style:normal}
             </div>
             <div class="tm-foot">
               <div class="tm-legend" aria-label="Map key">
-                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#116149" stroke="#FFFFFF" stroke-width="1.5"/></svg>Caught</span>
-                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="#FFFFFF" stroke="#8F9892" stroke-width="1.6"/></svg>Still to catch</span>
-                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8" fill="#FFFFFF" stroke="#8F9892" stroke-width="1.3"/></svg>Form</span>
-                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="#FFFFFF" stroke="#5C6660" stroke-width="1.2" stroke-dasharray="2 1.6"/></svg>Extinct</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="5" fill="#0F6B4F" stroke="#FFFFFF" stroke-width="1.5"/></svg>Caught</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="#FFFFFF" stroke="#8DA096" stroke-width="1.6"/></svg>Still to catch</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="2.8" fill="#FFFFFF" stroke="#8DA096" stroke-width="1.3"/></svg>Form</span>
+                <span><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="4.5" fill="#FFFFFF" stroke="#55655C" stroke-width="1.2" stroke-dasharray="2 1.6"/></svg>Extinct</span>
               </div>
               <button class="btn ghost small" type="button" data-act="tm-save">Save map as image</button>
             </div>
@@ -676,7 +697,7 @@ details.adv summary{font-style:normal}
     </div>
   </section>
 </main>
-<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/for-shops">For fly shops</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
+<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
@@ -1210,27 +1231,32 @@ function renderHeader(v) {
   $("#start-btn").hidden = true;
   $("#post-btn").hidden = v !== "club" || S.readOnly;
 }
+// Each tool has its own color: the card fills with it when selected. Fishing first, hunting second;
+// the Logbook is a small club feature, so it sits last.
 const TOOLS = [
-  { name: "Fly Picker", text: "The AI fly fishing picker: which flies to tie on, ranked from hatch charts and dated shop and guide reports for your river and date.", tab: "flies", tag: "In your club" },
-  { name: "Stocking calendar", text: "Every stocked water on one map, with the dates of the next stocking.", tab: "stocking", tag: "In your club" },
-  { name: "Trout map", text: "A personal life list of every native trout and char, drawn on a world chart.", tab: "trout", tag: "In your club" },
-  { name: "Logbook", text: "Past trips keep their catch reports, flies and conditions on the calendar.", tab: "calendar", tag: "In your club" },
-  { name: "AI fly guide", text: "The trip planner: ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "In your club" },
-  { name: "Guides", text: "Local guides by area, with their shops and Instagram. Guides add themselves and take messages.", href: "/guides", tag: "Public page" },
-  { name: "Fly shops", text: "Weekly river reports from local fly shops, published as dated pages AI tools can read, and a way to message the shop.", href: "/shops", tag: "Public page" },
-  { name: "Public TN dove fields", text: "TWRA public dove fields for Regions 1 to 4 on one map, with each field's details.", href: "/dove-fields", tag: "Public page" },
-  { name: "TN grouse map", text: "A field report on ruffed grouse in Tennessee: range, decline, habitat and sightings on a map.", href: "/grouse", tag: "Public page" },
-  { name: "Create a club", text: "A private trip calendar for your crew, with RSVPs and one thread per trip.", act: "new-club", tag: "Start here" },
+  { group: "fishing", name: "Fly Picker", text: "The AI fly fishing picker: which flies to tie on, ranked from hatch charts and dated shop and guide reports for your river and date.", tab: "flies", tag: "In your club", c: "#3DDC97", ink: "#0A2A20" },
+  { group: "fishing", name: "AI fly guide", text: "The trip planner: ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "In your club", c: "#0F3D2E", ink: "#FFFFFF" },
+  { group: "fishing", name: "River report tool", text: "Fly shops photograph the weekly whiteboard. It's transcribed into dated, written river reports that anglers and AI tools can read.", href: "/river-report-tool", tag: "For fly shops", c: "#0E7C66", ink: "#FFFFFF" },
+  { group: "fishing", name: "Stocking calendar", text: "Every stocked water on one map, with the dates of the next stocking.", tab: "stocking", tag: "In your club", c: "#BFD8CB", ink: "#0C1A14" },
+  { group: "fishing", name: "Trout map", text: "A personal life list of every native trout and char, drawn on a world chart.", tab: "trout", tag: "In your club", c: "#1F5F8B", ink: "#FFFFFF" },
+  { group: "fishing", name: "Fly shops", text: "Weekly river reports from local fly shops, published as dated pages AI tools can read, and a way to message the shop.", href: "/shops", tag: "Public page", c: "#2F5FA8", ink: "#FFFFFF" },
+  { group: "fishing", name: "Guides", text: "Local guides by area, with their shops and Instagram. Guides add themselves and take messages.", href: "/guides", tag: "Public page", c: "#4A4FB0", ink: "#FFFFFF" },
+  { group: "fishing", name: "Logbook", text: "Past trips keep their catch reports, flies and conditions on the calendar.", tab: "calendar", tag: "In your club", c: "#5B6B62", ink: "#FFFFFF" },
+  { group: "hunting", name: "Public TN dove fields", text: "TWRA public dove fields for Regions 1 to 4 on one map, with each field's details.", href: "/dove-fields", tag: "Public page", c: "#9A5B14", ink: "#FFFFFF" },
+  { group: "hunting", name: "TN grouse map", text: "A field report on ruffed grouse in Tennessee: range, decline, habitat and sightings on a map.", href: "/grouse", tag: "Public page", c: "#7A3B2E", ink: "#FFFFFF" },
+];
+const TOOL_GROUPS = [
+  ["fishing", "Fishing", "The public pages open for anyone. The rest live inside a club."],
+  ["hunting", "Hunting", "Public land and field reports, open for anyone."],
 ];
 function toolsSection() {
-  const list = TOOLS.filter((x) => !(x.act && S.readOnly));
-  const card = (x, i) => {
-    const inner = `<span class="tool-n">${String(i + 1).padStart(2, "0")}</span><span class="tool-t">${esc(x.name)}</span><span class="tool-d">${esc(x.text)}</span><span class="tool-tag">${esc(x.tag)}</span>`;
-    if (x.href) return `<li><a class="tool" href="${x.href}">${inner}</a></li>`;
-    if (x.act) return `<li><button class="tool" type="button" data-act="${x.act}">${inner}</button></li>`;
-    return `<li><button class="tool" type="button" data-tool="${x.tab}">${inner}</button></li>`;
+  const card = (x) => {
+    const inner = `<span class="tool-t">${esc(x.name)}</span><span class="tool-d">${esc(x.text)}</span><span class="tool-tag">${esc(x.tag)}</span>`;
+    const st = `style="--tc:${x.c};--tci:${x.ink}"`;
+    if (x.href) return `<li><a class="tool" ${st} href="${x.href}">${inner}</a></li>`;
+    return `<li><button class="tool" ${st} type="button" data-tool="${x.tab}">${inner}</button></li>`;
   };
-  return `<section class="home-sec" id="tools"><div class="sec-h"><h2 class="home-h">Tools</h2><p class="hint">The public pages open for anyone. The rest live inside a club.</p></div><ul class="tools-grid">${list.map(card).join("")}</ul></section>`;
+  return TOOL_GROUPS.map(([g, title, hint], i) => `<section class="home-sec"${i === 0 ? ' id="tools"' : ""}><div class="sec-h"><h2 class="home-h">${esc(title)}</h2><p class="hint">${esc(hint)}</p></div><ul class="tools-grid">${TOOLS.filter((x) => x.group === g).map(card).join("")}</ul></section>`).join("");
 }
 function openTool(tab) {
   const mine = [...S.mine.keys()].filter((id) => S.clubs.has(id));
@@ -1244,7 +1270,7 @@ function renderHome() {
   const mine = [...S.mine.keys()].map((id) => S.clubs.get(id)).filter(Boolean);
   const others = [...S.clubs.values()].filter((c) => !S.mine.has(c.id) && !S.removed.has(c.id))
     .sort((a, b) => (a.state + a.city + a.name).localeCompare(b.state + b.city + b.name));
-  let html = `<section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p><p class="hero-links"><a href="/fly-picker">AI fly fishing picker</a> · <a href="/ai-fly-guide">AI fly guide</a> · <a href="/for-shops">For fly shops</a></p></section>`;
+  let html = `<section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p><p class="hero-links"><a href="/fly-picker">AI fly fishing picker</a> · <a href="/ai-fly-guide">AI fly guide</a> · <a href="/river-report-tool">River report tool</a></p></section>`;
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
   html += toolsSection();
   if (!S.readOnly) html += `<section class="start" id="start-club"><div><h2>Start a club for your city</h2><p>Pick your city and text the link to your crew. Anyone with the link can read the calendar and add a name to post or RSVP. A trip calendar with RSVPs and one thread per trip, the Trip Planner, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
@@ -1488,10 +1514,10 @@ const washOf = (x, st) => +(st.tfo * (x.rad >= 6 ? 0.55 : 1)).toFixed(3);
 const spState = (x, idx) => (idx.has(x.id) ? "caught" : isExtinct(x) ? "extinct" : isOptional(x) ? "optional" : "todo");
 // One palette for the chart and the saved image.
 const TM_STYLE = {
-  caught: { tf: "#116149", tfo: 0.26, ts: "#116149", tso: 0.8, dash: "", df: "#116149", ds: "#FFFFFF", dsw: 1.3 },
-  todo: { tf: "#8F9892", tfo: 0.1, ts: "#8F9892", tso: 0.55, dash: "", df: "#FFFFFF", ds: "#8F9892", dsw: 1.5 },
-  optional: { tf: "#8F9892", tfo: 0.05, ts: "#8F9892", tso: 0.45, dash: "3 2", df: "#FFFFFF", ds: "#8F9892", dsw: 1.2 },
-  extinct: { tf: "#5C6660", tfo: 0.04, ts: "#5C6660", tso: 0.5, dash: "3 2", df: "#FFFFFF", ds: "#5C6660", dsw: 1.1 },
+  caught: { tf: "#0F6B4F", tfo: 0.26, ts: "#0F6B4F", tso: 0.8, dash: "", df: "#0F6B4F", ds: "#FFFFFF", dsw: 1.3 },
+  todo: { tf: "#8DA096", tfo: 0.1, ts: "#8DA096", tso: 0.55, dash: "", df: "#FFFFFF", ds: "#8DA096", dsw: 1.5 },
+  optional: { tf: "#8DA096", tfo: 0.05, ts: "#8DA096", tso: 0.45, dash: "3 2", df: "#FFFFFF", ds: "#8DA096", dsw: 1.2 },
+  extinct: { tf: "#55655C", tfo: 0.04, ts: "#55655C", tso: 0.5, dash: "3 2", df: "#FFFFFF", ds: "#55655C", dsw: 1.1 },
 };
 
 /* Projection: Natural Earth 1, constants from the generated land file. */
@@ -1575,10 +1601,10 @@ function buildMap() {
         <path d="${L.borders}" fill="none" stroke="#C9CFCA" stroke-width="0.5" stroke-dasharray="2 2" vector-effect="non-scaling-stroke"/>
         <g id="tm-terr">${terr}</g>
         <g id="tm-dots">${dots}</g>
-        <g id="tm-labels" font-family="Inter, system-ui, sans-serif" fill="#131815" stroke="#F4F5F1" paint-order="stroke" stroke-linejoin="round">${labels}</g>
+        <g id="tm-labels" font-family="Inter, system-ui, sans-serif" fill="#0C1A14" stroke="#F4F5F1" paint-order="stroke" stroke-linejoin="round">${labels}</g>
         <circle id="tm-ring" r="8" fill="none" stroke="#B3382C" stroke-width="2" vector-effect="non-scaling-stroke" visibility="hidden"/>
       </g>
-      <path d="${out}" fill="none" stroke="#8F9892" stroke-width="1" vector-effect="non-scaling-stroke"/>
+      <path d="${out}" fill="none" stroke="#8DA096" stroke-width="1" vector-effect="non-scaling-stroke"/>
     </g>
   </svg>`);
   TM.svg = $("#tm-svg"); TM.zg = $("#tm-z");
@@ -1763,8 +1789,8 @@ function fishSvg(caught) {
   const spots = [[196,118],[252,131],[300,140],[352,146],[398,151],[444,154],[490,158],[536,160],[582,163],[628,165],[672,167],[228,104],[284,110],[330,116],[376,120],[420,124],[466,127],[512,130],[558,133],[604,137],[650,141],[318,166],[414,176],[506,181],[598,186],[740,120],[748,185]]
     .map(([cx, cy]) => `<ellipse cx="${cx}" cy="${cy}" rx="4.6" ry="3.3"/>`).join("");
   return `<svg class="tm-fish" viewBox="40 40 780 215" aria-hidden="true">
-    <path d="M62,150 C110,111 190,90 300,86 C420,82 562,99 700,130 L793,95 C772,147 772,161 793,213 L700,177 C562,204 430,216 320,212 C200,208 110,188 62,150 Z" fill="${caught ? "#116149" : "#8F9892"}" fill-opacity="${caught ? 0.16 : 0.08}"/>
-    <g fill="none" stroke="#131815" stroke-linejoin="round">
+    <path d="M62,150 C110,111 190,90 300,86 C420,82 562,99 700,130 L793,95 C772,147 772,161 793,213 L700,177 C562,204 430,216 320,212 C200,208 110,188 62,150 Z" fill="${caught ? "#0F6B4F" : "#8DA096"}" fill-opacity="${caught ? 0.16 : 0.08}"/>
+    <g fill="none" stroke="#0C1A14" stroke-linejoin="round">
       <path d="M62,150 C110,111 190,90 300,86 C420,82 562,99 700,130" stroke-width="2.4"/>
       <path d="M700,177 C562,204 430,216 320,212 C200,208 110,188 62,150" stroke-width="2.4"/>
       <path d="M700,130 L793,95 C772,147 772,161 793,213 L700,177" stroke-width="1.9"/>
@@ -1773,11 +1799,11 @@ function fishSvg(caught) {
       <path d="M236,196 C258,222 290,234 314,229 C292,215 266,204 248,194" stroke-width="1.9"/>
       <path d="M386,210 C400,238 428,248 450,243 C432,230 410,219 396,208" stroke-width="1.9"/>
       <path d="M540,196 C548,224 570,238 592,235 C577,219 564,205 555,191" stroke-width="1.9"/>
-      <path d="M132,116 C154,146 154,162 134,192" stroke="#5C6660" stroke-width="1.4"/>
-      <path d="M62,150 C78,160 94,167 116,171" stroke="#5C6660" stroke-width="1.4"/>
-      <path d="M142,156 C300,145 500,147 692,154" stroke="#5C6660" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round"/>
+      <path d="M132,116 C154,146 154,162 134,192" stroke="#55655C" stroke-width="1.4"/>
+      <path d="M62,150 C78,160 94,167 116,171" stroke="#55655C" stroke-width="1.4"/>
+      <path d="M142,156 C300,145 500,147 692,154" stroke="#55655C" stroke-width="1.2" stroke-dasharray="1.5 5" stroke-linecap="round"/>
     </g>
-    <circle cx="96" cy="139" r="6.5" fill="#131815"/><g fill="#131815" opacity=".45">${spots}</g>
+    <circle cx="96" cy="139" r="6.5" fill="#0C1A14"/><g fill="#0C1A14" opacity=".45">${spots}</g>
   </svg>`;
 }
 function speciesSheetMarkup(id) {
@@ -1851,14 +1877,14 @@ async function saveMapImage() {
   try { await document.fonts.ready; } catch (e) {}
   g.scale(sc, sc);
   g.fillStyle = "#FFFFFF"; g.fillRect(0, 0, W, H);
-  g.strokeStyle = "#8F9892"; g.lineWidth = 1; g.strokeRect(10.5, 10.5, W - 21, H - 21); g.strokeRect(14.5, 14.5, W - 29, H - 29);
+  g.strokeStyle = "#8DA096"; g.lineWidth = 1; g.strokeRect(10.5, 10.5, W - 21, H - 21); g.strokeRect(14.5, 14.5, W - 29, H - 29);
   const idx = catchIdx(), full = SP.filter(counts), got = full.filter((x) => idx.has(x.id)).length;
   const name = S.members.get(S.me.id)?.handle;
-  g.textAlign = "center"; g.fillStyle = "#66706A"; g.font = "500 12px ui-monospace, Menlo, monospace";
+  g.textAlign = "center"; g.fillStyle = "#55655C"; g.font = "500 12px ui-monospace, Menlo, monospace";
   g.fillText(((club() && club().name) || "Fly AI").toUpperCase(), W / 2, 44);
-  g.fillStyle = "#131815"; g.font = "700 30px Inter, system-ui, sans-serif";
+  g.fillStyle = "#0C1A14"; g.font = "700 30px Inter, system-ui, sans-serif";
   g.fillText((name ? name + "'s" : "My") + " trout life list", W / 2, 80);
-  g.fillStyle = "#5C6660"; g.font = "16px Inter, system-ui, sans-serif";
+  g.fillStyle = "#55655C"; g.font = "16px Inter, system-ui, sans-serif";
   g.fillText(`${got} of ${full.length} species · ${fmtD(todayStr(), { month: "long", day: "numeric", year: "numeric" })}`, W / 2, 101);
   g.save(); g.translate(pad, top);
   g.beginPath(); g.rect(0, 0, L.w, L.h); g.clip();         // the chart's crop, as on screen
@@ -1882,9 +1908,9 @@ async function saveMapImage() {
     g.fillStyle = st.df; g.fill(); g.strokeStyle = st.ds; g.lineWidth = 0.8; g.stroke();
   });
   g.restore();
-  g.strokeStyle = "#8F9892"; g.lineWidth = 0.8; g.stroke(outline);
+  g.strokeStyle = "#8DA096"; g.lineWidth = 0.8; g.stroke(outline);
   g.restore();
-  g.fillStyle = "#5C6660"; g.font = "13px Inter, system-ui, sans-serif";
+  g.fillStyle = "#55655C"; g.font = "13px Inter, system-ui, sans-serif";
   g.fillText("Green: caught. Gray: still to catch. Circles mark native ranges roughly. Coastlines: Natural Earth.", W / 2, H - 26);
   cv.toBlob((blob) => {
     if (!blob) { toast("Couldn't make the image."); return; }
@@ -2200,17 +2226,17 @@ function skBuild() {
   const c = club(), [ccx, ccy] = c ? SK.proj(c.lon, c.lat) : [0, 0];
   const pins = D.waters.map((L) => { const [x, y] = SK.proj(L.lon, L.lat); return `<circle class="sk-ring" data-w="${L.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="8" fill="none" stroke="#B3382C" stroke-width="1.6" vector-effect="non-scaling-stroke"/>`; }).join("")
     + D.waters.map((L) => { const [x, y] = SK.proj(L.lon, L.lat); return `<circle class="sk-pin" data-w="${L.id}" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="4" fill="${SK.tcol[L.primary]}" stroke="#FFFFFF" stroke-width="1.3" vector-effect="non-scaling-stroke"/>`; }).join("");
-  const cities = D.cities.map(([n, lat, lon]) => { const [x, y] = SK.proj(lon, lat); return `<g class="sk-city" data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="#131815"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${esc(n)}</text></g>`; }).join("");
+  const cities = D.cities.map(([n, lat, lon]) => { const [x, y] = SK.proj(lon, lat); return `<g class="sk-city" data-x="${x.toFixed(1)}" data-y="${y.toFixed(1)}"><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="2" fill="#0C1A14"/><text x="${x.toFixed(1)}" y="${y.toFixed(1)}">${esc(n)}</text></g>`; }).join("");
   const old = $("#sk-svg"); if (old) old.remove();
   host.insertAdjacentHTML("afterbegin", `<svg id="sk-svg" viewBox="0 0 ${W} ${VH}" role="img" aria-label="Map of Tennessee's stocked trout waters. The list below has every water.">
     <defs><clipPath id="sk-clip"><path d="${state}"/></clipPath></defs>
     <rect width="${W}" height="${VH}" fill="#E6EDF0"/>
     <g id="sk-z">
-      <path d="${state}" fill="#F4F5F1" stroke="#116149" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
+      <path d="${state}" fill="#F4F5F1" stroke="#0F6B4F" stroke-width="1.4" vector-effect="non-scaling-stroke"/>
       <path d="${grat}" fill="none" stroke="#D3DCE0" stroke-width="0.6" stroke-dasharray="2 3" vector-effect="non-scaling-stroke" clip-path="url(#sk-clip)"/>
       <g id="sk-pins">${pins}</g>
-      <g id="sk-cities" font-family="Inter, system-ui, sans-serif" fill="#5C6660" stroke="#F4F5F1" paint-order="stroke" stroke-linejoin="round" pointer-events="none">${cities}</g>
-      ${c ? `<path id="sk-club" data-x="${ccx.toFixed(1)}" data-y="${ccy.toFixed(1)}" fill="#8F9892" stroke="#FFFFFF" stroke-width="1.2" vector-effect="non-scaling-stroke" pointer-events="none"/>` : ""}
+      <g id="sk-cities" font-family="Inter, system-ui, sans-serif" fill="#55655C" stroke="#F4F5F1" paint-order="stroke" stroke-linejoin="round" pointer-events="none">${cities}</g>
+      ${c ? `<path id="sk-club" data-x="${ccx.toFixed(1)}" data-y="${ccy.toFixed(1)}" fill="#8DA096" stroke="#FFFFFF" stroke-width="1.2" vector-effect="non-scaling-stroke" pointer-events="none"/>` : ""}
     </g>
   </svg>`);
   const m = $("#sk-map-msg"); if (m) m.remove();
@@ -2254,7 +2280,7 @@ function skPaint(visible, t0) {
   SK.pins.forEach((el) => {
     const id = +el.dataset.w, on = visible.has(id);
     el.setAttribute("opacity", on ? 1 : 0.15);
-    el.setAttribute("stroke", id === SK.sel ? "#131815" : "#FFFFFF");
+    el.setAttribute("stroke", id === SK.sel ? "#0C1A14" : "#FFFFFF");
     el.setAttribute("stroke-width", id === SK.sel ? 2.4 : 1.3);
   });
   SK.rings.forEach((el) => { const id = +el.dataset.w; el.setAttribute("display", visible.has(id) && skSoon(L[id], t0) ? "inline" : "none"); });
@@ -2292,7 +2318,7 @@ function waterSheetMarkup(id) {
   const D = SK.data, L = D && D.waters[id];
   if (!L) return sheetTop("Stocking") + `<div class="sh-scroll"><p class="muted">That water isn't on the schedule.</p></div>`;
   const t0 = todayStr(), next = skNext(L, t0), mi = milesFromClub(L);
-  const pills = L.types.map((t) => `<span class="sk-pill" style="background:${SK.tcol[t] || "#5C6660"}">${esc(t)}</span>`).join("");
+  const pills = L.types.map((t) => `<span class="sk-pill" style="background:${SK.tcol[t] || "#55655C"}">${esc(t)}</span>`).join("");
   let nextBox;
   if (next) nextBox = `<div class="sk-next"><span class="tm-cap">Next stocking</span><b>${esc(evLabel(next))}</b><span class="muted">${esc(whenText(next, t0))}${next[1] === "week" ? ". The truck comes within five days of that Sunday." : "."}</span></div>`;
   else if (L.months.length) nextBox = `<div class="sk-next"><span class="tm-cap">Stocked monthly</span><b>${esc(monthsText(L))}</b></div>`;

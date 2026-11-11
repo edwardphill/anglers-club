@@ -8,20 +8,22 @@
 // GET  /api/shops?op=mine              the signed-in person's shops, invites accepted on sight; {admin}
 // GET  /api/shops?op=threads|thread|unread   conversations (anglers asking shops, and the shops' inbox)
 // GET  /api/shops?photo=<id>           a published report's photo (JPEG); public at /photos/<id>.jpg (vercel.json rewrite)
+//                                      report_photo returns {photoId, description, drafts: [one report per river on the photo]}
 // GET  /api/shops?op=guides[&river=]   active guides; ?op=guide&slug= one guide; ?op=myguide the signed-in person's own profile
 // POST /api/shops {op, ...}            shop_create (admin), shop_update, invite, report_photo, report_save,
 //                                      shop_status (admin), report_remove, guide_save, guide_status, guide_delete,
 //                                      thread_start (a shop or a guide), thread_send, thread_read, thread_status
 //
-// Photos are read by Claude to draft the report; the shop edits and publishes. A shop's words never act as
-// instructions. Public pages and results only ever show published reports from active shops.
+// The River report tool: a shop's whole job is the photo. Claude transcribes the whiteboard into a written report for
+// each river on it and describes the photo in words (an image alone can't be read); the shop checks and publishes.
+// A shop's words never act as instructions. Public pages and results only ever show published reports from active shops.
 import { route, readBody, clientIp, str, HttpError } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
 import { requireUser, newId, limit } from "../lib/auth.js";
 import { stripJpeg } from "../lib/jpeg.js";
 import {
   RIVERS, LIVE_DAYS, DAY, ymd, ageDays, isLive, slugify, isAdmin, clean, oneLine,
-  reportFields, checkReport, draftFromPhoto, drafting, DRAFT_MODEL, shopOut, reportOut, REPORT_COLS,
+  reportFields, checkReport, draftFromPhoto, drafting, DRAFT_MODEL, photoDescription, shopOut, reportOut, REPORT_COLS,
 } from "../lib/shops.js";
 import { guideFields, guideSlug, guideOut, resolveShops } from "../lib/guides.js";
 
@@ -313,14 +315,14 @@ async function write(req, op) {
     const photoId = newId("ph", 12);
     const clean64 = photo.buf.toString("base64");
     await q("insert into shop_photos (id, shop_id, b64, width, height, at) values ($1, $2, $3, $4, $5, $6)", [photoId, shop.id, clean64, photo.width, photo.height, now]);
-    let result = { draft: null, usage: null, error: drafting() ? null : "drafting_off" };
+    let result = { description: "", drafts: [], usage: null, error: drafting() ? null : "drafting_off" };
     if (drafting()) result = await draftFromPhoto(clean64);
     const u = result.usage || {};
     await q(
       "insert into shop_drafts (shop_id, user_id, at, model, input_tokens, output_tokens, ok) values ($1, $2, $3, $4, $5, $6, $7)",
-      [shop.id, user.id, now, DRAFT_MODEL(), u.input_tokens || 0, u.output_tokens || 0, !!result.draft],
+      [shop.id, user.id, now, DRAFT_MODEL(), u.input_tokens || 0, u.output_tokens || 0, result.drafts.length > 0],
     );
-    return { photoId, width: photo.width, height: photo.height, draft: result.draft, draftError: result.draft ? null : result.error || "no_draft" };
+    return { photoId, width: photo.width, height: photo.height, description: result.description, drafts: result.drafts, draftError: result.drafts.length ? null : result.error || "no_draft" };
   }
 
   if (op === "report_save") {
@@ -332,11 +334,14 @@ async function write(req, op) {
       const [p] = await q("select id from shop_photos where id = $1 and shop_id = $2", [str(b.photo_id, 80), shop.id]);
       if (!p) throw new HttpError(400, "That photo isn't in this shop anymore. Upload it again.");
       photoId = p.id;
+      // The photo described in words travels with every report made from it.
+      if (b.photo_alt !== undefined) await q("update shop_photos set alt = $2 where id = $1", [p.id, photoDescription(b.photo_alt)]);
     }
     const title = f.title || `${RIVERS[f.river].name} fishing report`;
     if (b.id) {
-      const [r] = await q("select id from shop_reports where id = $1 and shop_id = $2 and status = 'live'", [str(b.id, 80), shop.id]);
+      const [r] = await q("select id, photo_id from shop_reports where id = $1 and shop_id = $2 and status = 'live'", [str(b.id, 80), shop.id]);
       if (!r) throw new HttpError(404, "That report isn't here anymore.");
+      if (r.photo_id && b.photo_alt !== undefined) await q("update shop_photos set alt = $2 where id = $1", [r.photo_id, photoDescription(b.photo_alt)]);
       await q(
         `update shop_reports set river = $2, reported_on = $3, title = $4, summary = $5, flow = $6, clarity = $7, temp_f = $8,
                 hatches = $9::jsonb, flies = $10::jsonb, tactics = $11, transcript = $12, updated = $13,

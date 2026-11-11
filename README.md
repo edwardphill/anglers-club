@@ -32,10 +32,18 @@ Each club also has these tabs:
 
 Security and privacy: there are no passwords anywhere. A name becomes a session, a random token kept on the device; only its hash is stored, and the club knows you by that device. Names are self-declared, so anyone can type any name; a name is not proof of who someone is. Anyone with a club's link can read its calendar, threads, reports and member names (emails and Google profile details are never sent to the page), so keep anything private out of trips. A life list stays private to its owner. Only a trip's host or the club organizer can edit or delete a trip, and only the organizer can change club details or remove members (a removed device can't post again under that name, though a person can still start over with a new one). New names, new clubs, planner questions and posts are rate limited, and the Trip Planner has a daily cap overall. Clearing a browser's site data means a new identity, unless the person added Google, which carries the name and clubs to other devices. Members from the password days are attached to a name the first time that device opens the site.
 
+## River report tool
+
+A fly shop's whole job is a photo of its weekly whiteboard (`report_photo` in `api/shops.js`). Claude (`draftFromPhoto` in `lib/shops.js`) transcribes it into one written report for each river on the board (up to six) and describes the photo in a line, because an image alone can't be read by search engines or AI tools. The shop checks the text in the app and publishes; the description is stored on the photo (`shop_photos.alt`) and becomes its alt text and `ImageObject` description, and each report's transcript is shown as visible text. Nothing goes live until the shop publishes, and words written on the board are data, never instructions.
+
+## Look
+
+Off-white ground, thin lines, Inter. Dark green (`--deep`, `--green`) is the accent for buttons, links and kickers; mint is a small highlight. The home page lists the tools under Fishing and Hunting, and each tool has its own color (`TOOLS` in `src/club.html`) that fills the card when it is selected.
+
 ## Discoverability (SEO and GEO)
 
 - `lib/brand.js` holds the product name, home title and description, and the product list. Change words there, not in five places.
-- Crawlable pages, served as HTML by `api/page.js`: `/fly-picker`, `/ai-fly-guide`, `/for-shops` (`lib/landing.js`), plus `/rivers`, `/shops`, `/guides`, `/dove-fields` and `/grouse`. Each has a canonical link, Open Graph and Twitter cards, and schema.org data; the product pages carry a FAQ that is also in the JSON-LD. The numbers on the picker page come from `data/flypicker.json`, so they can't drift.
+- Crawlable pages, served as HTML by `api/page.js`: `/fly-picker`, `/ai-fly-guide`, `/river-report-tool`, `/for-shops` (`lib/landing.js`), plus `/rivers`, `/shops`, `/guides`, `/dove-fields` and `/grouse`. Each has a canonical link, Open Graph and Twitter cards, and schema.org data; the product pages carry a FAQ that is also in the JSON-LD. The numbers on the picker page come from `data/flypicker.json`, so they can't drift.
 - The home page (`public/index.html`) gets its metadata, JSON-LD and a crawlable copy of the product list at build time (`scripts/build.mjs`); the app removes the copy once it has drawn. Crawlers that don't run JavaScript see only that copy.
 - `/sitemap.xml`, `/robots.txt` (names the search and AI crawlers; remove a name to opt it out) and `/llms.txt` are generated. Bump `LANDING_UPDATED` in `lib/brand.js` when a product page changes.
 - Set `SITE_URL` in Vercel to the real address (a custom domain, once there is one). It sets every canonical link, the sitemap and the JSON-LD. Without it the build falls back to Vercel's production address, then to `https://angler-club.vercel.app`.

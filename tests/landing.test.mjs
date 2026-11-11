@@ -1,4 +1,4 @@
-// The product pages (AI fly fishing picker, AI fly guide, fly shop discoverability), the home page's search metadata, and the
+// The product pages (AI fly fishing picker, AI fly guide, river report tool, fly shop discoverability), the home page's search metadata, and the
 // site-wide discoverability files. These pages need no database. Run: node tests/landing.test.mjs
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -17,7 +17,7 @@ const base = "https://test.example";
 const ld = (html) => JSON.parse(/<script type="application\/ld\+json">(.*?)<\/script>/s.exec(html)[1]);
 let n = 0; const ok = (label) => { n++; console.log("ok", n, label); };
 
-const pages = [["flypicker", "/fly-picker", "AI fly fishing picker"], ["aiguide", "/ai-fly-guide", "AI fly guide"], ["forshops", "/for-shops", "Fly shop AI discoverability"]];
+const pages = [["flypicker", "/fly-picker", "AI fly fishing picker"], ["aiguide", "/ai-fly-guide", "AI fly guide"], ["rivertool", "/river-report-tool", "River report tool"], ["forshops", "/for-shops", "Fly shop AI discoverability"]];
 for (const [kind, path, h1] of pages) {
   const r = await call({ kind }); assert.equal(r.status, 200, kind);
   const h = r.body;
@@ -55,7 +55,16 @@ assert.ok(h.includes('href="/guides"') && h.includes('href="/fly-picker"'));
 assert.ok(!/Claude|Anthropic|OpenAI|GPT/.test(h), "doesn't name a model vendor");
 ok("the AI fly guide page states its limits (Tennessee stocking and generation, can be wrong), links guides and the picker, and names no model vendor");
 
+h = (await call({ kind: "rivertool" })).body;
+assert.ok(/photograph/i.test(h) && /An image alone can't be read/.test(h) && /up to six/.test(h) && /checks every report before it goes live/.test(h), "says what it does, why words matter and who checks");
+assert.ok(/misread a number/.test(h) && /by invitation/.test(h) && h.includes("10 days"), "states its limits");
+assert.ok(h.includes('href="/for-shops"') && h.includes('href="/shops"') && h.includes('href="/rivers/south-holston"'));
+assert.ok(ld(h)["@graph"].some((x) => x["@type"] === "SoftwareApplication" && x.featureList.length >= 4));
+assert.ok(!/Claude|Anthropic|OpenAI|GPT/.test(h), "names no model vendor");
+ok("the river report tool page says what the tool does and why the photo is turned into words, says the shop checks every report and that it can misread a number, and links the shop pages and rivers");
+
 h = (await call({ kind: "forshops" })).body;
+assert.ok(h.includes('href="/river-report-tool"'), "the discoverability page links to the tool");
 assert.ok(/guarantee/i.test(h) && /by invitation/i.test(h) && h.includes('href="/llms.txt"') && h.includes('href="/shops"'));
 assert.ok(h.includes("10 days"), "the 10-day window matches LIVE_DAYS");
 assert.ok(ld(h)["@graph"].some((x) => x["@type"] === "Service"));
@@ -68,18 +77,19 @@ assert.ok(rb.includes("User-agent: *\nAllow: /\nDisallow: /api/") && rb.includes
 ok("robots.txt names the search and AI crawlers, each with the /api/ rule repeated (a named group ignores the * group), and points at the sitemap");
 
 const sm = sitemap({ base, shops: [], guides: [], riverDates: {} });
-for (const p of ["/", "/fly-picker", "/ai-fly-guide", "/for-shops"]) assert.ok(sm.includes(`<loc>${base}${p}</loc>`), p);
+for (const p of ["/", "/fly-picker", "/ai-fly-guide", "/river-report-tool", "/for-shops"]) assert.ok(sm.includes(`<loc>${base}${p}</loc>`), p);
 assert.ok(/<loc>https:\/\/test\.example\/fly-picker<\/loc><lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sm));
-ok("the sitemap lists the home page and the three product pages with a lastmod");
+ok("the sitemap lists the home page and the product pages with a lastmod");
 
 const lt = llms({ base, latest: {}, shops: [], guides: [] });
 assert.ok(lt.startsWith("# Fly AI\n\n> ") && lt.includes(HOME_DESC));
 for (const p of PRODUCTS) assert.ok(lt.includes(`[${p.name}](${base}${p.path})`), p.name);
 assert.ok(/rules engine, not a chatbot/.test(lt) && /Nothing on this site is a guarantee/.test(lt));
-ok("llms.txt leads with the one-line description, lists the three products with links, and says what is and isn't a language model");
+assert.ok(lt.includes("## Fishing tools") && lt.includes("## Hunting") && /transcribes it into a written report for each river/.test(lt));
+ok("llms.txt leads with the one-line description, lists the products with links under fishing and hunting, and says what is and isn't a language model");
 
-assert.deepEqual(NAV.slice(0, 3).map((x) => x[0]), ["/fly-picker", "/ai-fly-guide", "/for-shops"]);
-ok("the site header leads with the three products");
+assert.deepEqual(NAV.slice(0, 3).map((x) => x[0]), ["/fly-picker", "/ai-fly-guide", "/river-report-tool"]);
+ok("the site header leads with the three tools");
 
 // ---- the home page ----
 const home = readFileSync(new URL("../public/index.html", import.meta.url), "utf8");
@@ -93,6 +103,16 @@ assert.ok(home.includes('<section id="seo-static"') && PRODUCTS.every((p) => hom
 assert.ok(home.includes('$("#seo-static")') && home.includes("s.remove()"), "the app removes the static copy once it has drawn");
 assert.ok(!/SEO_HEAD|SEO_STATIC|Cinzel|Garamond/.test(home));
 ok("the home page has the title, one description, a canonical, Open Graph image, WebApplication data, and a crawlable list of the products that the app removes on boot");
+
+const TOOLS_SRC = /const TOOLS = \[(.*?)\n\];/s.exec(home)[1];
+const toolGroup = (name) => (new RegExp(`\\{ group: "(\\w+)", name: "${name}"`).exec(TOOLS_SRC) || [])[1];
+assert.equal(toolGroup("Public TN dove fields"), "hunting"); assert.equal(toolGroup("TN grouse map"), "hunting");
+for (const n of ["Fly Picker", "AI fly guide", "River report tool", "Trout map", "Fly shops", "Guides", "Logbook"]) assert.equal(toolGroup(n), "fishing", n);
+const order = [...TOOLS_SRC.matchAll(/name: "([^"]+)"/g)].map((m) => m[1]);
+assert.ok(order.indexOf("Logbook") > order.indexOf("Guides") && order.indexOf("Logbook") === order.indexOf("Guides") + 1, "the Logbook sits at the end of the fishing tools");
+assert.ok(order.indexOf("River report tool") < order.indexOf("Stocking calendar"));
+assert.ok(home.includes('"Fishing"') && home.includes('"Hunting"') && /\.tool:hover\{background:var\(--tc\)/.test(home), "two sections, and a selected card fills with its own color");
+ok("the home page splits the tools into fishing and hunting (dove and grouse under hunting), lists the river report tool near the top and the Logbook last among the fishing tools, and fills a selected card with its own color");
 
 const png = readFileSync(new URL("../public/og.png", import.meta.url));
 assert.equal(png.readUInt32BE(16), 1200); assert.equal(png.readUInt32BE(20), 630);

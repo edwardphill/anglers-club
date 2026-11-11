@@ -18,6 +18,7 @@
     },
     { "source": "/fly-picker", "destination": "/api/page?kind=flypicker" },
     { "source": "/ai-fly-guide", "destination": "/api/page?kind=aiguide" },
+    { "source": "/river-report-tool", "destination": "/api/page?kind=rivertool" },
     { "source": "/for-shops", "destination": "/api/page?kind=forshops" },
     { "source": "/rivers", "destination": "/api/page?kind=rivers" },
     { "source": "/rivers/:key", "destination": "/api/page?kind=river&key=:key" },

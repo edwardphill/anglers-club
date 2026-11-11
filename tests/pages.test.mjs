@@ -112,7 +112,7 @@ try {
   const arts = graph.filter((x) => x["@type"] === "Article");
   assert.equal(arts.length, 2); // the live one and the archived one
   const a = arts.find((x) => x.datePublished === today);
-  assert.equal(a.author.name, "Cumberland Fly Shop"); assert.equal(a.about["@id"], riverNode["@id"]); assert.equal(a.image, `${base}/photos/${live.photoId}.jpg`);
+  assert.equal(a.author.name, "Cumberland Fly Shop"); assert.equal(a.about["@id"], riverNode["@id"]); assert.equal(a.image["@type"], "ImageObject"); assert.equal(a.image.url, `${base}/photos/${live.photoId}.jpg`); assert.ok(a.image.description.includes("Cumberland Fly Shop"), "an older report's photo still gets a plain-words description");
   assert.ok(arts.some((x) => x.datePublished === daysAgo(15)));
   ok("JSON-LD names the river with its coordinates and each report as an article by the shop, with its photo");
 
@@ -172,7 +172,7 @@ try {
   assert.equal(g.status, 200); assert.match(g.type, /application\/xml/);
   const locs = [...g.text.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   for (const p of ["/", "/rivers", "/shops", "/rivers/south-holston", "/rivers/elk", "/shops/cumberland-fly-shop"]) assert.ok(locs.includes(base + p), p);
-  assert.equal(locs.length, 5 + 3 + 8 + 1 + 1 + 82); assert.ok(locs.includes(base + "/guides") && locs.includes(base + "/grouse")); assert.ok(locs.includes(base + "/dove-fields") && locs.includes(base + "/dove-fields/bark-camp-barrens-wma"));
+  assert.equal(locs.length, 5 + 4 + 8 + 1 + 1 + 82); assert.ok(locs.includes(base + "/guides") && locs.includes(base + "/grouse")); assert.ok(locs.includes(base + "/dove-fields") && locs.includes(base + "/dove-fields/bark-camp-barrens-wma"));
   assert.ok(g.text.includes(`<loc>${base}/rivers/south-holston</loc><lastmod>${today}</lastmod>`));
   assert.ok(g.text.includes(`<loc>${base}/shops/cumberland-fly-shop</loc><lastmod>${today}</lastmod>`));
   assert.ok(!locs.some((l) => l.includes("_")));
