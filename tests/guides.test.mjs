@@ -93,7 +93,7 @@ r = await S("guide", { query: { slug: "nobody" } }); assert.equal(r.status, 404)
 r = await PAGE("guide", { slug: g.slug });
 assert.equal(r.status, 200); const html = r.body;
 assert.ok(html.includes("<h1>Ann Rivers Guide Service</h1>")); assert.ok(html.includes('href="https://www.instagram.com/annrivers/"') && html.includes('href="https://www.instagram.com/annrivers.fly/"'));
-assert.ok(html.includes('<a href="/shops/cumberland-fly-shop">Cumberland Fly Shop</a>') && html.includes("Valley Fly Outfitters") && html.includes("(not on Anglers Club)"));
+assert.ok(html.includes('<a href="/shops/cumberland-fly-shop">Cumberland Fly Shop</a>') && html.includes("Valley Fly Outfitters") && html.includes("(not on Fly AI)"));
 assert.ok(html.includes("(self-reported)") && html.includes('href="/rivers/south-holston"') && html.includes("Also the Doe River") && html.includes("Float trips"));
 assert.ok(html.includes("Hackers &lt;b&gt;Fly&lt;/b&gt;") && !html.includes("Hackers <b>"), "shop names are escaped");
 assert.ok(html.includes('<link rel="canonical" href="https://test.example/guides/ann-rivers-guide-service">'));
@@ -158,9 +158,9 @@ await P("guide_status", { status: "active" }, bo.token);
 // ---- the Trip Planner knows them ----
 const club = { id: "club-x", name: "Nashville Anglers Club", city: "Nashville", state: "TN", lat: 36.16, lon: -86.78, region: "south", waters: ["Caney Fork"], tz: "America/Chicago" };
 let ctx = await buildContext(club, "2026-11-11", { base: "https://test.example" });
-assert.ok(ctx.includes("## Guides who list themselves on Anglers Club"));
+assert.ok(ctx.includes("## Guides who list themselves on Fly AI"));
 assert.ok(ctx.includes("Ann Rivers Guide Service") && ctx.includes("Instagram @annrivers") && ctx.includes("https://test.example/guides/ann-rivers-guide-service"));
-assert.ok(ctx.includes("works with Cumberland Fly Shop, Valley Fly Outfitters (not on Anglers Club)") && ctx.includes("12 years guiding (self-reported)"));
+assert.ok(ctx.includes("works with Cumberland Fly Shop, Valley Fly Outfitters (not on Fly AI)") && ctx.includes("12 years guiding (self-reported)"));
 assert.ok(!ctx.includes("Ignore") && !/user_id/.test(ctx));
 await P("guide_status", { guide: g2.slug, status: "hidden" }, admin.token);
 await P("guide_status", { status: "paused" }, ann.token);
@@ -168,7 +168,7 @@ ctx = await buildContext(club, "2026-11-11", { base: "https://test.example" });
 assert.ok(ctx.includes("None near this club yet") && !ctx.includes("Ann Rivers Guide Service")); ok("the Trip Planner's club data lists nearby signed-up guides with Instagram, shops and a link, and says so when there are none");
 const { systemPrompt } = await import("../lib/planner.js");
 const sp = systemPrompt(club, "2026-11-11");
-assert.ok(/who isn't on Anglers Club|aren't on Anglers Club|they aren't on Anglers Club/.test(sp) && /never guess prices/.test(sp)); ok("the planner is told to name signed-up guides first, may search for others, and must label them");
+assert.ok(/who isn't on Fly AI|aren't on Fly AI|they aren't on Fly AI/.test(sp) && /never guess prices/.test(sp)); ok("the planner is told to name signed-up guides first, may search for others, and must label them");
 await P("guide_status", { status: "active" }, ann.token);
 
 // ---- limits and deleting ----

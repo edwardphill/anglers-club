@@ -47,7 +47,7 @@ try {
   let g = await get("/dove-fields");
   assert.equal(g.status, 200); assert.match(g.type, /text\/html/); assert.match(g.cache, /s-maxage=300/);
   const h = g.text;
-  assert.match(h, /<title>Public dove fields in Tennessee: 82-field TWRA map, 2026 season \| Anglers Club<\/title>/);
+  assert.match(h, /<title>Public dove fields in Tennessee: 82-field TWRA map, 2026 season \| Fly AI<\/title>/);
   assert.ok(h.includes(`<link rel="canonical" href="${base}/dove-fields">`));
   for (const f of F) assert.ok(h.includes(f.name.replace("&", "&amp;")) && h.includes(`href="/dove-fields/${f.slug}"`), f.slug);
   assert.ok(h.includes('id="dmap"') && h.includes("data-filter=\"wma\"") && h.includes("data-filter=\"leased\""));
@@ -91,7 +91,7 @@ try {
   for (const p of ["/dove-fields/nope", "/dove-fields/constructor", "/dove-fields/__proto__"]) { g = await get(p); assert.equal(g.status, 404, p); assert.match(g.text, /noindex/); }
   g = await get("/dove-fields/"); assert.equal(g.status, 200); ok("unknown fields are 404 with noindex; a trailing slash works");
 
-  assert.ok(h.includes('<nav><a href="/rivers">Rivers</a> &nbsp; <a href="/shops">Shops</a> &nbsp; <a href="/guides">Guides</a> &nbsp; <a href="/dove-fields">Dove fields</a> &nbsp; <a href="/grouse">Grouse</a></nav>')); ok("the site header links to the dove fields");
+  assert.ok(h.includes('<nav><a href="/fly-picker">Fly Picker</a> &nbsp; <a href="/ai-fly-guide">AI fly guide</a> &nbsp; <a href="/for-shops">For shops</a> &nbsp; <a href="/rivers">Rivers</a> &nbsp; <a href="/shops">Shops</a> &nbsp; <a href="/guides">Guides</a></nav>') && h.includes('<a href="/dove-fields">Public Tennessee dove fields</a>') && h.includes('<a href="/grouse">Tennessee grouse map</a>')); ok("the site header leads with the products and the footer links the dove fields and the grouse map");
 } finally {
   srv.kill();
 }

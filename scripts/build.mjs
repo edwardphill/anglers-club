@@ -6,6 +6,7 @@ import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readd
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { applyLocal } from "./fp-local.mjs";
+import { BRAND, HOME_TITLE, HOME_DESC, PRODUCTS, OTHER, orgLd, siteLd } from "../lib/brand.js";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const read = (p) => readFileSync(join(root, p), "utf8");
@@ -19,6 +20,31 @@ const swap = (marker, text) => {
   if (page.split(marker).length !== 2) throw new Error(`Expected exactly one ${marker} in src/club.html`);
   page = page.replace(marker, () => text);
 };
+
+// The home page's search and share metadata, structured data, and a crawlable copy of what the app shows (crawlers that
+// don't run JavaScript see only this; the app removes it once it has drawn the home page). Where the site lives: SITE_URL,
+// else Vercel's production address, else the known address, so a preview deploy still points search engines at production.
+const E = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const SITE = (process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? "https://" + process.env.VERCEL_PROJECT_PRODUCTION_URL : "https://angler-club.vercel.app")).replace(/\/+$/, "");
+const homeLd = { "@context": "https://schema.org", "@graph": [orgLd(SITE), siteLd(SITE),
+  { "@type": "WebApplication", "@id": SITE + "/#app", name: BRAND, url: SITE + "/", description: HOME_DESC, applicationCategory: "SportsApplication", operatingSystem: "Any (web browser)",
+    featureList: [...PRODUCTS.map((p) => p.name), "Trip calendars for fishing and hunting clubs", "Trout stocking schedule map", "Trout species life list", "Public Tennessee dove field map"], publisher: { "@id": SITE + "/#org" } }] };
+const seoHead = `<meta name="description" content="${E(HOME_DESC)}">
+<link rel="canonical" href="${E(SITE)}/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website"><meta property="og:site_name" content="${E(BRAND)}"><meta property="og:locale" content="en_US"><meta property="og:title" content="${E(HOME_TITLE)}"><meta property="og:description" content="${E(HOME_DESC)}"><meta property="og:url" content="${E(SITE)}/">
+<meta property="og:image" content="${E(SITE)}/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${E(BRAND)}: AI fly guide, fly fishing picker and fly shop reports">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${E(HOME_TITLE)}"><meta name="twitter:description" content="${E(HOME_DESC)}">
+<script type="application/ld+json">${JSON.stringify(homeLd).replace(/</g, "\\u003c")}</script>`;
+const seoStatic = `<section id="seo-static" class="home">
+    <section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p></section>
+    <section class="home-sec"><h2 class="home-h">Tools</h2>
+      <ul class="tools-grid">${PRODUCTS.map((p, i) => `<li><a class="tool" href="${p.path}"><span class="tool-n">${String(i + 1).padStart(2, "0")}</span><span class="tool-t">${E(p.name)}</span><span class="tool-d">${E(p.text)}</span></a></li>`).join("")}</ul>
+      <p class="hint">Also: ${OTHER.map((o) => `<a href="${o.path}">${E(o.name)}</a>`).join(" · ")}</p>
+    </section>
+  </section>`;
+swap("<!--SEO_HEAD-->", seoHead);
+swap("<!--SEO_STATIC-->", seoStatic);
 swap("<!--FP_TEMPLATE-->", FP.template.trimEnd());
 swap("<!--FP_SCRIPTS-->", FP.scripts.trimEnd());
 // Species illustrations: trout-art/<species-id>.png (or .jpg, .webp, .svg) replaces the generic
@@ -46,22 +72,14 @@ const cut = page.indexOf("</style>") + "</style>".length;
 const head = page.slice(0, cut);
 const body = page.slice(cut);
 
-const icon =
-  "data:image/svg+xml," +
-  encodeURIComponent(
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="12" fill="#F5F3E8"/>' +
-      '<path d="M10 38c6-8 12-8 18 0s12 8 18 0 8-6 8-6" fill="none" stroke="#2C6A99" stroke-width="5" stroke-linecap="round"/>' +
-      '<path d="M32 10l8 18H24z" fill="#BF4128"/></svg>',
-  );
-
 const html = `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Fishing and hunting trip calendars for clubs in any city: post a trip, RSVP, plan in one thread, keep a logbook.">
-<meta name="theme-color" content="#F5F3E8">
-<link rel="icon" href="${icon}">
+<meta name="theme-color" content="#FAFAF8">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}[hidden]{display:none!important}img{max-width:100%}</style>
 ${head.trim()}
 </head>

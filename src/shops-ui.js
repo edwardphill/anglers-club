@@ -170,7 +170,7 @@
   function guidesView() {
     if (!SH.guides) return `<p class="muted">Loading guides…</p>`;
     const mine = SH.myGuide && SH.myGuide.guide;
-    const intro = `<p class="hint">Guides list themselves here: where they guide, their Instagram, and the shops they work with. Message one to ask about a trip. They aren't verified by Anglers Club, so check the Instagram and ask the shop.</p>`;
+    const intro = `<p class="hint">Guides list themselves here: where they guide, their Instagram, and the shops they work with. Message one to ask about a trip. They aren't verified by Fly AI, so check the Instagram and ask the shop.</p>`;
     const cta = mine ? "" : `<div class="tool-row"><button class="btn ghost small" type="button" data-sx="tab" data-tab="gprofile">I'm a guide: add my page</button></div>`;
     if (!SH.guides.length) return intro + `<p class="muted">No guides are listed yet.</p>` + cta;
     return intro + `<div>${SH.guides.map((g) => guideCard(g, !(mine && mine.id === g.id))).join("")}</div>` + cta;
@@ -203,7 +203,7 @@
       <div class="sx-grid"><label>Years guiding<input name="years" inputmode="numeric" maxlength="2" value="${g.years == null ? "" : esc(g.years)}"></label>
         <label>License or credentials<span class="sub">Shown as self-reported.</span><input name="credentials" maxlength="140" value="${esc(g.credentials)}" placeholder="e.g. TN licensed, insured"></label></div>
       <div class="lab-like"><span class="sub">Shops you work with</span>${(SH.shops || []).length ? `<div class="sx-rivers">${SH.shops.map((x) => `<label><input type="checkbox" name="shop_slug" value="${esc(x.slug)}"${listed.has(x.slug) ? " checked" : ""}> ${esc(x.name)}</label>`).join("")}</div>` : `<p class="muted">No shops are listed here yet.</p>`}</div>
-      <label>Other shops<span class="sub">One per line: name | Instagram (optional). Shown as not on Anglers Club.</span><textarea name="other_shops" rows="3">${esc(other)}</textarea></label>
+      <label>Other shops<span class="sub">One per line: name | Instagram (optional). Shown as not on Fly AI.</span><textarea name="other_shops" rows="3">${esc(other)}</textarea></label>
       <div class="form-acts"><button class="btn primary" type="submit">${m.guide ? "Save changes" : "Publish my page"}</button></div></form>`;
     if (m.guide) {
       html += `<div class="tool-row">${g.status === "hidden" ? "" : `<button class="btn ghost small" type="button" data-sx="gstatus" data-to="${g.status === "paused" ? "active" : "paused"}">${g.status === "paused" ? "Show my page again" : "Pause my page"}</button>`}

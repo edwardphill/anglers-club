@@ -6,7 +6,7 @@ at /grouse. The report stays the source of truth in its own repo; run this after
     python3 scripts/sync_grouse.py /tmp/tn-grouse
 
 Patches applied (nothing else is touched): data paths made absolute, a description, canonical link and JSON-LD in the
-head, a slim Anglers Club bar above the report, and a source line in its footer."""
+head, a slim Fly AI bar above the report, and a source line in its footer."""
 import json, os, re, shutil, sys
 
 src = sys.argv[1] if len(sys.argv) > 1 else "/tmp/tn-grouse"
@@ -37,15 +37,15 @@ CSS = ".nac-bar{display:flex;justify-content:space-between;align-items:center;ga
 head = "\n".join([
     f'<meta name="description" content="{desc}">',
     f'<link rel="canonical" href="{base}/grouse">',
-    f'<meta property="og:type" content="article"><meta property="og:site_name" content="Anglers Club"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{base}/grouse">',
+    f'<meta property="og:type" content="article"><meta property="og:site_name" content="Fly AI"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{base}/grouse">',
     f'<script type="application/ld+json">{ld_json}</script>',
     "<style>" + CSS + "</style>",
 ]) + "\n"
 html = sub(r"(<title>.*?</title>)", lambda m: m.group(1) + head, html, flags=re.S)
-bar = '''<div class="nac-bar"><a href="/" style="font-weight:600">Anglers Club</a><nav aria-label="Anglers Club"><a href="/rivers">Rivers</a><a href="/shops">Shops</a><a href="/guides">Guides</a><a href="/dove-fields">Dove fields</a><a href="/grouse" aria-current="page">Grouse</a></nav></div>
+bar = '''<div class="nac-bar"><a href="/" style="font-weight:600">Fly AI</a><nav aria-label="Fly AI"><a href="/fly-picker">Fly Picker</a><a href="/ai-fly-guide">AI fly guide</a><a href="/for-shops">For shops</a><a href="/rivers">Rivers</a><a href="/shops">Shops</a><a href="/guides">Guides</a><a href="/dove-fields">Dove fields</a><a href="/grouse" aria-current="page">Grouse</a></nav></div>
 '''
 html = sub(r"(<body[^>]*>)", lambda m: m.group(1) + "\n" + bar, html)
-html = sub(r"(<footer>)", lambda m: m.group(1) + '\n    <div>Source and data: <a href="https://github.com/edwardphill/tn-grouse">github.com/edwardphill/tn-grouse</a>. Shown here as part of Anglers Club.</div>', html)
+html = sub(r"(<footer>)", lambda m: m.group(1) + '\n    <div>Source and data: <a href="https://github.com/edwardphill/tn-grouse">github.com/edwardphill/tn-grouse</a>. Shown here as part of Fly AI.</div>', html)
 
 os.makedirs(os.path.join(out, "data"), exist_ok=True)
 open(os.path.join(out, "index.html"), "w", encoding="utf-8").write(html)

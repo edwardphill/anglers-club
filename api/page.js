@@ -2,11 +2,12 @@
 // shop, a directory of each, sitemap.xml, robots.txt and llms.txt. vercel.json rewrites the clean URLs to
 // /api/page?kind=...; the markup lives in lib/pages.js. Only published reports from active shops appear.
 //
-//   /rivers  /rivers/south-holston  /shops  /shops/<slug>  /guides  /guides/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
+//   /fly-picker  /ai-fly-guide  /for-shops  /rivers  /rivers/south-holston  /shops  /shops/<slug>  /guides  /guides/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
 //   /photos/<id>.jpg is api/shops.js. The dove fields come from data/dove-fields.json, so those pages need no database.
 import { q, ensureSchema } from "../lib/db.js";
 import { str, siteBase } from "../lib/http.js";
 import { LIVE_DAYS, DAY, ymd, shopOut, reportOut, REPORT_COLS } from "../lib/shops.js";
+import { flyPickerPage, aiGuidePage, forShopsPage } from "../lib/landing.js";
 import { riverPage, shopPage, riversIndex, shopsIndex, guidePage, guidesIndex, sitemap, robots, llms, riverKey } from "../lib/pages.js";
 import { guideOut, resolveShops } from "../lib/guides.js";
 import { doveIndex, doveFieldPage } from "../lib/dove.js";
@@ -41,7 +42,7 @@ async function guidesWhere(sql = "", params = []) {
   return rows.map((g) => guideOut({ ...g, shops: resolveShops(g.shops, listed) }));
 }
 
-const notFound = (what) => ({ status: 404, type: "text/html; charset=utf-8", cache: "public, s-maxage=60", body: `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Not found | Anglers Club</title><body style="font:18px Georgia,serif;max-width:560px;margin:60px auto;padding:0 18px"><h1>${what} isn't here</h1><p><a href="/rivers">Rivers</a> · <a href="/shops">Shops</a> · <a href="/guides">Guides</a> · <a href="/">Anglers Club</a></p>` });
+const notFound = (what) => ({ status: 404, type: "text/html; charset=utf-8", cache: "public, s-maxage=60", body: `<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex"><title>Not found | Fly AI</title><body style="font:18px Georgia,serif;max-width:560px;margin:60px auto;padding:0 18px"><h1>${what} isn't here</h1><p><a href="/rivers">Rivers</a> · <a href="/shops">Shops</a> · <a href="/guides">Guides</a> · <a href="/">Fly AI</a></p>` });
 
 async function build(req) {
   const now = Date.now(), base = baseUrl(req);
@@ -50,6 +51,9 @@ async function build(req) {
 
   if (kind === "robots") return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: robots(base) };
 
+  if (kind === "flypicker") return html(flyPickerPage({ base }));
+  if (kind === "aiguide") return html(aiGuidePage({ base }));
+  if (kind === "forshops") return html(forShopsPage({ base }));
   if (kind === "dove") return html(doveIndex({ base }));
   if (kind === "dovefield") {
     const f = doveField(str(req.query.slug, 80));

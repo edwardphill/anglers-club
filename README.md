@@ -1,6 +1,6 @@
-# Anglers Club
+# Fly AI
 
-Fishing and hunting trip calendars for clubs in any city. There is no sign-in and no club password: anyone can look around, and the first time someone posts a trip, RSVPs, comments or asks the Trip Planner they type a name, which is saved on that device. Anyone can start a club for their town and text the link to the crew, who can then:
+AI tools for fly fishing: an AI fly guide (the Trip Planner), an AI fly fishing picker (the Fly Picker, a rules engine over hatch charts and dated reports, not a chatbot), and a way for fly shops to publish weekly river reports that search engines and AI tools can read. It also runs fishing and hunting trip calendars for clubs in any city. There is no sign-in and no club password: anyone can look around, and the first time someone posts a trip, RSVPs, comments or asks the Trip Planner they type a name, which is saved on that device. Anyone can start a club for their town and text the link to the crew, who can then:
 
 - post a trip with the water, time, meetup spot and open seats
 - RSVP (I'm in, Maybe, Can't go), with seat limits enforced
@@ -31,6 +31,16 @@ Each club also has these tabs:
 - Database: Postgres on Supabase, through its pooled connection (any Postgres works). Tables are created automatically on the first request (new ones, like `catches`, are added to an existing database the same way), with row-level security on so Supabase's public data API can't reach them; only the site's server can.
 
 Security and privacy: there are no passwords anywhere. A name becomes a session, a random token kept on the device; only its hash is stored, and the club knows you by that device. Names are self-declared, so anyone can type any name; a name is not proof of who someone is. Anyone with a club's link can read its calendar, threads, reports and member names (emails and Google profile details are never sent to the page), so keep anything private out of trips. A life list stays private to its owner. Only a trip's host or the club organizer can edit or delete a trip, and only the organizer can change club details or remove members (a removed device can't post again under that name, though a person can still start over with a new one). New names, new clubs, planner questions and posts are rate limited, and the Trip Planner has a daily cap overall. Clearing a browser's site data means a new identity, unless the person added Google, which carries the name and clubs to other devices. Members from the password days are attached to a name the first time that device opens the site.
+
+## Discoverability (SEO and GEO)
+
+- `lib/brand.js` holds the product name, home title and description, and the product list. Change words there, not in five places.
+- Crawlable pages, served as HTML by `api/page.js`: `/fly-picker`, `/ai-fly-guide`, `/for-shops` (`lib/landing.js`), plus `/rivers`, `/shops`, `/guides`, `/dove-fields` and `/grouse`. Each has a canonical link, Open Graph and Twitter cards, and schema.org data; the product pages carry a FAQ that is also in the JSON-LD. The numbers on the picker page come from `data/flypicker.json`, so they can't drift.
+- The home page (`public/index.html`) gets its metadata, JSON-LD and a crawlable copy of the product list at build time (`scripts/build.mjs`); the app removes the copy once it has drawn. Crawlers that don't run JavaScript see only that copy.
+- `/sitemap.xml`, `/robots.txt` (names the search and AI crawlers; remove a name to opt it out) and `/llms.txt` are generated. Bump `LANDING_UPDATED` in `lib/brand.js` when a product page changes.
+- Set `SITE_URL` in Vercel to the real address (a custom domain, once there is one). It sets every canonical link, the sitemap and the JSON-LD. Without it the build falls back to Vercel's production address, then to `https://angler-club.vercel.app`.
+- `public/og.png` (share image) and `public/apple-touch-icon.png` come from `python3 scripts/make_brand_images.py`.
+- After deploying, submit `/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
 
 ## Deploy on Vercel
 

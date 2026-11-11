@@ -1,5 +1,5 @@
-<title>Anglers Club</title>
-<meta name="description" content="Trip calendars for fishing and hunting clubs, a Fly Picker for Tennessee and New England rivers, stocking dates, a trout map, local guides and weekly river reports from fly shops.">
+<title>Fly AI: AI fly guide, AI fly fishing picker and fly shop reports</title>
+<!--SEO_HEAD-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
@@ -490,6 +490,7 @@ details.adv summary{font-style:normal}
 .hero{display:grid;gap:8px;padding:6px 2px 0;max-width:62ch}
 .hero h2{font-size:1.6rem;font-weight:700;letter-spacing:-.025em}
 .hero p{color:var(--muted)}
+.hero-links{font-size:.92rem}
 .sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:4px 16px;padding-inline:2px}
 .tools-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
 .tools-grid>li{display:flex}
@@ -507,8 +508,8 @@ details.adv summary{font-style:normal}
     <div class="brand">
       <span class="patch lg" id="hd-patch" hidden></span>
       <div class="brand-t">
-        <p class="kicker" id="hd-kicker">Fishing &amp; hunting clubs, city by city</p>
-        <h1 id="hd-title">Anglers Club</h1>
+        <p class="kicker" id="hd-kicker">AI fly guide · fly picker · shop reports</p>
+        <h1 id="hd-title">Fly AI</h1>
       </div>
     </div>
     <div class="club-acts">
@@ -536,6 +537,7 @@ details.adv summary{font-style:normal}
 <main class="wrap">
   <div id="banner" class="banner" hidden></div>
   <p class="loading" id="v-loading">Loading clubs…</p>
+  <!--SEO_STATIC-->
 
   <section id="v-home" class="home" hidden></section>
   <section id="v-gate" hidden></section>
@@ -674,7 +676,7 @@ details.adv summary{font-style:normal}
     </div>
   </section>
 </main>
-<nav class="pubnav" aria-label="Public pages"><a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
+<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/for-shops">For fly shops</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
@@ -1201,21 +1203,21 @@ function renderHeader(v) {
   const patch = $("#hd-patch");
   patch.hidden = !inClub;
   if (inClub) { patch.className = "patch lg " + c.kinds; patch.innerHTML = `<span>${esc(crestOf(c.name))}</span>${c.at ? `<span class="yr">${new Date(c.at).getFullYear()}</span>` : ""}`; }
-  $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : "Fishing & hunting clubs, city by city";
-  $("#hd-title").textContent = inClub ? c.name : "Anglers Club";
+  $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : "AI fly guide · fly picker · shop reports";
+  $("#hd-title").textContent = inClub ? c.name : "Fly AI";
   $("#home-btn").hidden = !inClub;
   $("#invite-btn").hidden = v !== "club";
   $("#start-btn").hidden = true;
   $("#post-btn").hidden = v !== "club" || S.readOnly;
 }
 const TOOLS = [
-  { name: "Fly Picker", text: "Which flies to tie on, ranked from shop and guide reports for your river and date.", tab: "flies", tag: "In your club" },
+  { name: "Fly Picker", text: "The AI fly fishing picker: which flies to tie on, ranked from hatch charts and dated shop and guide reports for your river and date.", tab: "flies", tag: "In your club" },
   { name: "Stocking calendar", text: "Every stocked water on one map, with the dates of the next stocking.", tab: "stocking", tag: "In your club" },
   { name: "Trout map", text: "A personal life list of every native trout and char, drawn on a world chart.", tab: "trout", tag: "In your club" },
   { name: "Logbook", text: "Past trips keep their catch reports, flies and conditions on the calendar.", tab: "calendar", tag: "In your club" },
-  { name: "Trip planner", text: "Ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "In your club" },
+  { name: "AI fly guide", text: "The trip planner: ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "In your club" },
   { name: "Guides", text: "Local guides by area, with their shops and Instagram. Guides add themselves and take messages.", href: "/guides", tag: "Public page" },
-  { name: "Shops", text: "Weekly river reports from local fly shops, and a way to message the shop.", href: "/shops", tag: "Public page" },
+  { name: "Fly shops", text: "Weekly river reports from local fly shops, published as dated pages AI tools can read, and a way to message the shop.", href: "/shops", tag: "Public page" },
   { name: "Public TN dove fields", text: "TWRA public dove fields for Regions 1 to 4 on one map, with each field's details.", href: "/dove-fields", tag: "Public page" },
   { name: "TN grouse map", text: "A field report on ruffed grouse in Tennessee: range, decline, habitat and sightings on a map.", href: "/grouse", tag: "Public page" },
   { name: "Create a club", text: "A private trip calendar for your crew, with RSVPs and one thread per trip.", act: "new-club", tag: "Start here" },
@@ -1242,7 +1244,7 @@ function renderHome() {
   const mine = [...S.mine.keys()].map((id) => S.clubs.get(id)).filter(Boolean);
   const others = [...S.clubs.values()].filter((c) => !S.mine.has(c.id) && !S.removed.has(c.id))
     .sort((a, b) => (a.state + a.city + a.name).localeCompare(b.state + b.city + b.name));
-  let html = `<section class="hero"><h2>Trip planning for fishing and hunting clubs</h2><p>Trip calendars for your crew, river reports from local shops and guides, stocking dates and a trip planner that cites where each fact came from.</p></section>`;
+  let html = `<section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p><p class="hero-links"><a href="/fly-picker">AI fly fishing picker</a> · <a href="/ai-fly-guide">AI fly guide</a> · <a href="/for-shops">For fly shops</a></p></section>`;
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
   html += toolsSection();
   if (!S.readOnly) html += `<section class="start" id="start-club"><div><h2>Start a club for your city</h2><p>Pick your city and text the link to your crew. Anyone with the link can read the calendar and add a name to post or RSVP. A trip calendar with RSVPs and one thread per trip, the Trip Planner, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
@@ -1853,7 +1855,7 @@ async function saveMapImage() {
   const idx = catchIdx(), full = SP.filter(counts), got = full.filter((x) => idx.has(x.id)).length;
   const name = S.members.get(S.me.id)?.handle;
   g.textAlign = "center"; g.fillStyle = "#66706A"; g.font = "500 12px ui-monospace, Menlo, monospace";
-  g.fillText(((club() && club().name) || "Anglers Club").toUpperCase(), W / 2, 44);
+  g.fillText(((club() && club().name) || "Fly AI").toUpperCase(), W / 2, 44);
   g.fillStyle = "#131815"; g.font = "700 30px Inter, system-ui, sans-serif";
   g.fillText((name ? name + "'s" : "My") + " trout life list", W / 2, 80);
   g.fillStyle = "#5C6660"; g.font = "16px Inter, system-ui, sans-serif";
@@ -2403,6 +2405,7 @@ function renderAll() {
   const v = currentView();
   renderHeader(v);
   $("#v-loading").hidden = v !== "boot";
+  if (v !== "boot") { const s = $("#seo-static"); if (s) s.remove(); }   // the crawlable copy of the home page gives way to the app
   $("#v-home").hidden = v !== "home";
   $("#v-gate").hidden = v !== "gate";
   $("#v-club").hidden = v !== "club";
@@ -2593,7 +2596,7 @@ function gcalUrl(t) {
     dates = `${d}T${hm(h)}/${endD}T${hm(eh)}`;
   } else dates = `${d}/${addDays(t.date, 1).replace(/-/g, "")}`;
   const k = t.kind === "hunt" ? "hunt" : "fish";
-  const details = [t.meet ? "Meet at: " + t.meet : "", t.cond ? COND_LABEL[k] + ": " + t.cond : "", t.notes || "", (club() ? club().name : "Anglers Club") + ": " + tripLink(t)].filter(Boolean).join("\n");
+  const details = [t.meet ? "Meet at: " + t.meet : "", t.cond ? COND_LABEL[k] + ": " + t.cond : "", t.notes || "", (club() ? club().name : "Fly AI") + ": " + tripLink(t)].filter(Boolean).join("\n");
   const p = new URLSearchParams({ action: "TEMPLATE", text: `${KIND[k]}: ${tripTitle(t)}`, dates, ctz: tz(), location: t.water || "", details });
   return "https://calendar.google.com/calendar/render?" + p.toString();
 }

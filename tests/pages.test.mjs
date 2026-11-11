@@ -86,7 +86,7 @@ try {
   let g = await get("/rivers/south-holston");
   assert.equal(g.status, 200); assert.match(g.type, /text\/html/); assert.match(g.cache, /s-maxage=300/);
   const h = g.text;
-  assert.match(h, /<title>South Holston River fishing report and what to fish, \w+ \d{4} \| Anglers Club<\/title>/);
+  assert.match(h, /<title>South Holston River fishing report and what to fish, \w+ \d{4} \| Fly AI<\/title>/);
   assert.ok(h.includes(`<link rel="canonical" href="${base}/rivers/south-holston">`));
   assert.ok(h.includes("<h1>South Holston River fishing report</h1>"));
   assert.ok(h.includes("Cumberland Fly Shop") && h.includes("350 cfs") && h.includes("Parachute Adams") && h.includes("#16"));
@@ -172,14 +172,14 @@ try {
   assert.equal(g.status, 200); assert.match(g.type, /application\/xml/);
   const locs = [...g.text.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
   for (const p of ["/", "/rivers", "/shops", "/rivers/south-holston", "/rivers/elk", "/shops/cumberland-fly-shop"]) assert.ok(locs.includes(base + p), p);
-  assert.equal(locs.length, 5 + 8 + 1 + 1 + 82); assert.ok(locs.includes(base + "/guides") && locs.includes(base + "/grouse")); assert.ok(locs.includes(base + "/dove-fields") && locs.includes(base + "/dove-fields/bark-camp-barrens-wma"));
+  assert.equal(locs.length, 5 + 3 + 8 + 1 + 1 + 82); assert.ok(locs.includes(base + "/guides") && locs.includes(base + "/grouse")); assert.ok(locs.includes(base + "/dove-fields") && locs.includes(base + "/dove-fields/bark-camp-barrens-wma"));
   assert.ok(g.text.includes(`<loc>${base}/rivers/south-holston</loc><lastmod>${today}</lastmod>`));
   assert.ok(g.text.includes(`<loc>${base}/shops/cumberland-fly-shop</loc><lastmod>${today}</lastmod>`));
   assert.ok(!locs.some((l) => l.includes("_")));
   g = await get("/robots.txt");
   assert.match(g.type, /text\/plain/); assert.ok(g.text.includes(`Sitemap: ${base}/sitemap.xml`) && g.text.includes("Disallow: /api/") && g.text.includes("Allow: /"));
   g = await get("/llms.txt");
-  assert.match(g.type, /text\/plain/); assert.ok(g.text.startsWith("# Anglers Club"));
+  assert.match(g.type, /text\/plain/); assert.ok(g.text.startsWith("# Fly AI"));
   assert.ok(g.text.includes(`[South Holston River](${base}/rivers/south-holston): latest shop report ${today} from Cumberland Fly Shop`));
   assert.ok(g.text.includes(`[Elk River](${base}/rivers/elk): no shop report in the last 10 days`) && g.text.includes(`[Cumberland Fly Shop](${base}/shops/cumberland-fly-shop): Bristol, TN`)); ok("sitemap.xml, robots.txt and llms.txt list the real pages and nothing hidden");
 
