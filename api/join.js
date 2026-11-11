@@ -1,8 +1,9 @@
-// POST /api/join { club, handle }: joins a club as the signed-in user. Any Google account can join;
-// someone the organizer removed can't come back.
+// POST /api/join { club, handle }: joins a club under this device's name. Posting or RSVPing joins
+// automatically, so this is only for joining without doing either. Someone the organizer removed
+// can't come back.
 import { route, readBody, str, HttpError } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { requireUser, newId, limit, firstName } from "../lib/auth.js";
+import { requireUser, newId, limit, cleanName } from "../lib/auth.js";
 
 export default route(["POST"], async (req) => {
   await ensureSchema();
@@ -19,7 +20,7 @@ export default route(["POST"], async (req) => {
   await q(
     `insert into members (id, club_id, handle, role, user_id, at) values ($1, $2, $3, 'member', $4, $5)
      on conflict (club_id, user_id) where user_id is not null do nothing`,
-    [memberId, clubId, str(b.handle, 30) || firstName(user.name), user.id, Date.now()],
+    [memberId, clubId, cleanName(b.handle) || cleanName(user.name) || "Angler", user.id, Date.now()],
   );
   const [m] = await q("select id from members where club_id = $1 and user_id = $2", [clubId, user.id]);
   return { memberId: m.id };

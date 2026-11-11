@@ -198,7 +198,11 @@ main.wrap{padding-block:28px 80px;display:grid;gap:20px}
 /* Sheet */
 dialog.sheet{position:fixed;inset:0 0 0 auto;margin:0;width:min(580px,100%);height:100%;max-height:100%;max-width:100%;border:0;border-left:5px double var(--brass);padding:0;background:var(--paper);color:var(--ink)}
 dialog.sheet::backdrop{background:var(--shade)}
-@media (prefers-reduced-motion:no-preference){dialog.sheet[open]{animation:slide .22s ease-out}}
+dialog.sheet.name-sheet{inset:0;margin:auto;height:fit-content;max-height:calc(100% - 32px);width:min(460px,calc(100% - 32px));border:1px solid var(--brass);box-shadow:0 0 0 3px var(--paper),0 0 0 4px var(--brass);animation:none}
+dialog.sheet.name-sheet .sh{height:auto}
+.g-or{display:flex;align-items:center;gap:10px;color:var(--muted);font-size:.9rem}
+.g-or::before,.g-or::after{content:"";flex:1;border-top:1px solid var(--line,#d9cfb8)}
+@media (prefers-reduced-motion:no-preference){dialog.sheet[open]{animation:slide .22s ease-out}dialog.sheet.name-sheet[open]{animation:none}}
 @keyframes slide{from{transform:translateX(24px);opacity:.4}to{transform:none;opacity:1}}
 .sh{display:flex;flex-direction:column;height:100%}
 .sh-top{flex:none;display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:calc(env(safe-area-inset-top,0px) + 12px);padding-bottom:12px;padding-left:22px;padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--hair)}
@@ -445,15 +449,6 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
   <div id="banner" class="banner" hidden></div>
   <p class="loading" id="v-loading">Loading clubs…</p>
 
-  <section id="v-signin" hidden>
-    <div class="gate signin">
-      <div class="gate-h"><span class="patch lg" aria-hidden="true"><span>AC</span></span>
-        <div><h2>Sign in to your club</h2><p class="muted">Trip calendars, a trip planner, the stocking schedule and a trout life list for fishing clubs, city by city.</p></div></div>
-      <div id="g-btn" class="g-btn"></div>
-      <p class="err" id="si-err" aria-live="polite"></p>
-      <p class="hint">Sign in with your Google account. Your Google name and photo show on trips so the crew knows who's coming.</p>
-    </div>
-  </section>
   <section id="v-home" class="home" hidden></section>
   <section id="v-gate" hidden></section>
 
@@ -594,6 +589,7 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
+<dialog class="sheet name-sheet" id="name-dlg" aria-label="Your name"><div class="sh" id="name-body"></div></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 
 <!--FP_TEMPLATE-->
@@ -638,6 +634,7 @@ const WORKED_LABEL = { fish: "Flies that worked", hunt: "What worked" };
 const TABS = ["calendar", "planner", "stocking", "flies", "trout"];
 // Older links named tabs that are gone; they land on the calendar.
 const OLD_TABS = { upcoming: "calendar", logbook: "calendar" };
+const POST_WHY = "Add your name to post a trip. It's saved on this device, so you only do this once.";
 const NO_WRITE = "You can look around but can't change anything. Ask the person who shared this page for edit access.";
 
 /* ---------- state ---------- */
@@ -794,9 +791,11 @@ function passes(t) {
 const byWhen = (a, b) => (a.date + (a.time || "99")).localeCompare(b.date + (b.time || "99"));
 
 /* ---------- server ---------- */
-// Sign-in is Google: the server trades a Google ID token for a session token kept on this device.
-// "nac-sessions" holds per-club tokens from the password days; they're sent once at sign-in so
-// those memberships carry over to the Google account.
+// Browsing is open. Anything that writes needs a name: the server trades it for a session token kept
+// on this device ("nac-auth"), and the first post, RSVP or comment adds that name to the club.
+// Google sign-in is optional and only offered when the server has a client ID.
+// "nac-sessions" holds per-club tokens from the password days; they're sent along with the first
+// name so those memberships carry over.
 const AUTH_KEY = "nac-auth", SESS_KEY = "nac-sessions", LAST_KEY = "nac-last";
 function loadAuth() { try { const v = JSON.parse(localStorage.getItem(AUTH_KEY) || "null"); if (v && v.token) S.auth = v; } catch (e) {} }
 function saveAuth() { try { if (S.auth) localStorage.setItem(AUTH_KEY, JSON.stringify(S.auth)); else localStorage.removeItem(AUTH_KEY); } catch (e) {} }
@@ -833,37 +832,106 @@ async function api(path, { method = "GET", body } = {}) {
   if (!res.ok) { const err = new Error(data.error || "Something went wrong. Try again."); err.status = res.status; throw err; }
   return data;
 }
-// The session ended (signed out elsewhere, or expired): back to the sign-in screen.
-function signedOutAll(msg) {
+// The session ended (signed out, or the server forgot it): back to browsing. The next write asks for a name again.
+function sessionEnded(msg) {
   S.auth = null; saveAuth();
-  S.mine = new Map(); S.removed = new Set(); S.clubs = new Map(); S.clubsLoaded = false;
-  S.me = { id: null, role: "" }; S.members = new Map();
-  closeSheet();
-  if (S.clubId) S.pendingClub = S.clubId;
+  S.mine = new Map();
+  S.me = { id: null, role: "" };
+  S.catches = []; S.catchIdx = null;
   if (msg) toast(msg);
   scheduleRender();
 }
-// No longer a member of this club (left, or removed): show the club's join page.
-function notMember(cid) {
-  S.mine.delete(cid);
+// The organizer removed this device's name from the club: show the club's closed page.
+function removedFrom(cid) {
+  S.removed.add(cid); S.mine.delete(cid);
   if (S.clubId === cid) { S.me = { id: null, role: "" }; S.members = new Map(); closeSheet(); }
-  loadDirectory();
+  scheduleRender();
 }
-// Every change goes through here: send it, then reload the club so the page matches the server.
-async function act(type, data, okMsg) {
+// Every change goes through here: make sure there's a name, send it, then reload the club so the page matches the server.
+async function act(type, data, okMsg, retried) {
   const cid = S.clubId;
+  if (!(await ensureIdentity())) return null;
   try {
     const out = await api("action", { method: "POST", body: { club: cid, type, data } });
     if (okMsg) toast(okMsg);
     await loadClub(cid);
     return out || {};
   } catch (e) {
-    if (e.status === 401) { signedOutAll(e.message); return null; }
+    if (e.status === 401 && !retried) { sessionEnded(); return act(type, data, okMsg, true); }
     toast(e.message);
-    if (e.status === 403 && /join/i.test(e.message)) notMember(cid);
+    if (e.status === 403 && /removed/i.test(e.message)) removedFrom(cid);
     if (e.status === 404 || e.status === 409) loadClub(cid);
     return null;
   }
+}
+
+/* ---------- your name ---------- */
+let nameAsk = null;
+// Resolves true once this device has a name and a session. Asks once, then it's saved.
+function ensureIdentity(why) {
+  if (S.auth && S.auth.token) return Promise.resolve(true);
+  return openName(why || "Add your name to post, RSVP or comment. It's saved on this device, so you only do this once.");
+}
+function openName(why, rename) {
+  if (nameAsk) return nameAsk.promise;
+  let done;
+  const promise = new Promise((r) => { done = r; });
+  nameAsk = { promise, done, rename: !!rename };
+  const cur = rename ? myName() : "";
+  $("#name-body").innerHTML = `<div class="sh-top"><span class="lab">${rename ? "Change name" : "Your name"}</span><button class="icon-btn" type="button" data-act="name-cancel" aria-label="Close">×</button></div>
+    <div class="sh-scroll"><form class="f" id="name-form" autocomplete="off" novalidate>
+      <h2 style="font-size:1.45rem">${rename ? "What should we call you?" : "Who's fishing?"}</h2>
+      <p class="hint">${esc(why)}</p>
+      <label>Your name<span class="sub">Nicknames welcome. The crew sees it on your trips, RSVPs and messages.</span><input id="nm-input" maxlength="30" value="${esc(cur)}" placeholder="e.g. Hutch" autocomplete="nickname"></label>
+      <p class="err" id="nm-err" aria-live="polite"></p>
+      <div class="form-acts"><button class="btn primary" type="submit">Save name</button><button class="btn ghost" type="button" data-act="name-cancel">Not now</button></div>
+      ${S.gcid && !rename ? `<div class="g-or"><span>or sign in with Google</span></div><div id="nm-g" class="g-btn"></div>` : ""}
+    </form></div>`;
+  const d = $("#name-dlg");
+  try { d.showModal(); } catch (e) { d.setAttribute("open", ""); }
+  setTimeout(() => { const i = $("#nm-input"); if (i) { i.focus(); i.select(); } }, 30);
+  if (S.gcid && !rename) renderGoogleButton($("#nm-g"));
+  return promise;
+}
+function closeName(ok) {
+  const a = nameAsk; nameAsk = null;
+  const d = $("#name-dlg"); if (d.open) d.close();
+  if (a) a.done(!!ok);
+}
+// A device that has a session: keep it, and refresh what depends on who we are.
+async function adopt(out) {
+  S.auth = { token: out.token, user: out.user }; saveAuth();
+  dropLegacy(out.linked || []);
+  await loadDirectory();
+  if (S.clubId) await loadClub(S.clubId);
+}
+async function submitName() {
+  const err = $("#nm-err"), name = $("#nm-input").value.trim();
+  if (!name) { err.textContent = "Enter a name to continue."; $("#nm-input").focus(); return; }
+  try {
+    if (nameAsk && nameAsk.rename && S.auth) await renameTo(name);
+    else await createGuest(name);
+    toast("Saved. You're " + name + ".");
+    closeName(true);
+  } catch (e) { err.textContent = e.message; }
+}
+async function createGuest(name) {
+  const out = await api("auth", { method: "POST", body: { type: "guest", name, link: legacySessions() } });
+  await adopt(out);
+}
+async function renameTo(name) {
+  const out = await api("auth", { method: "POST", body: { type: "rename", name } });
+  S.auth.user = out.user; saveAuth();
+  if (S.clubId) await loadClub(S.clubId);
+  scheduleRender();
+}
+// A device from the password days that never typed a name here: quietly carry its clubs over.
+async function restoreLegacy() {
+  try {
+    const out = await api("auth", { method: "POST", body: { type: "guest", name: "", link: legacySessions() } });
+    S.auth = { token: out.token, user: out.user }; saveAuth();
+    dropLegacy(out.linked || []);
+  } catch (e) { /* no name to reuse: the first post asks for one and brings the clubs along */ }
 }
 
 /* Google's sign-in button */
@@ -878,45 +946,42 @@ function loadGsi() {
   });
   return S.gsiLoading;
 }
-async function renderSignin() {
-  const box = $("#g-btn");
-  if (!S.gcid) { box.innerHTML = `<p class="muted">Google sign-in isn't switched on yet. The organizer adds GOOGLE_CLIENT_ID in Vercel and redeploys.</p>`; return; }
-  if (box.dataset.ready === S.gcid && box.childElementCount) return;
+async function renderGoogleButton(box) {
+  if (!box || !S.gcid) return;
   try { await loadGsi(); }
-  catch (e) { box.innerHTML = `<p class="err">Google sign-in didn't load. Check your connection and reload the page.</p>`; return; }
+  catch (e) { box.hidden = true; const o = box.previousElementSibling; if (o && o.classList.contains("g-or")) o.hidden = true; return; } // Google is optional: no button beats an error
   google.accounts.id.initialize({ client_id: S.gcid, callback: onGoogle, cancel_on_tap_outside: true, use_fedcm_for_prompt: true });
   box.innerHTML = "";
   google.accounts.id.renderButton(box, { type: "standard", theme: "outline", size: "large", text: "signin_with", shape: "rectangular", logo_alignment: "left", width: 280 });
-  box.dataset.ready = S.gcid;
-  try { google.accounts.id.prompt(); } catch (e) {}
 }
 async function onGoogle(resp) {
-  const err = $("#si-err"); if (err) err.textContent = "";
   try {
     const out = await api("auth", { method: "POST", body: { type: "google", credential: resp && resp.credential, link: legacySessions() } });
-    S.auth = { token: out.token, user: out.user }; saveAuth();
-    dropLegacy(out.linked || []);
+    await adopt(out);
     toast("Signed in as " + (out.user.name || out.user.email));
-    await loadDirectory();
-    afterSignIn();
-  } catch (e) { if (err) err.textContent = e.message; else toast(e.message); }
+    if (nameAsk) closeName(true);
+    scheduleRender();
+  } catch (e) { const el = $("#nm-err"); if (el) el.textContent = e.message; toast(e.message); }
 }
 async function signOut() {
   try { await api("auth", { method: "POST", body: { type: "signout" } }); } catch (e) {}
   try { if (window.google && google.accounts && google.accounts.id) google.accounts.id.disableAutoSelect(); } catch (e) {}
-  signedOutAll("Signed out");
+  sessionEnded("This device no longer has a name.");
   enterClub(null);
+  loadDirectory();
 }
-// Where to go once signed in: the club or trip a link pointed at, else the last club you opened.
-function afterSignIn() {
+// Where to go once the page has loaded: the club or trip a link pointed at, else the last club you opened.
+function afterBoot() {
   const last = lastClub();
-  const start = S.pendingClub || (last && S.mine.has(last) ? last : null) || ((S.wantTab || S.mine.size === 1) ? [...S.mine.keys()][0] || null : null);
+  const only = S.clubs.size === 1 ? [...S.clubs.keys()][0] : null;
+  const start = S.pendingClub || (last && S.clubs.has(last) ? last : null)
+    || ((S.wantTab || S.mine.size === 1) ? [...S.mine.keys()][0] || (S.wantTab ? only : null) : null);
   const trip = S.pendingTrip;
   S.pendingClub = null; S.pendingTrip = null;
   enterClub(start && S.clubs.has(start) ? start : null);
   if (trip && start) {
     const tryOpen = (n) => {
-      if (S.clubId === start && isMember() && S.trips.has(trip)) openSheet("trip", { id: trip });
+      if (S.clubId === start && S.loaded.members && S.trips.has(trip)) openSheet("trip", { id: trip });
       else if (n > 0) setTimeout(() => tryOpen(n - 1), 400);
     };
     tryOpen(20);
@@ -952,7 +1017,7 @@ function enterClub(cid, opts = {}) {
   if (S.clubId) S.wantTab = null;
   S.filter = "all"; S.onlyMine = false; S.cal = null; S.calSel = null; S.fpNote = "";
   const mt = $("#mine-toggle"); if (mt) mt.checked = false;
-  if (S.clubId && S.mine.has(S.clubId)) loadClub(S.clubId);
+  if (S.clubId) loadClub(S.clubId);
   saveProfile();
   setHash();
   window.scrollTo(0, 0);
@@ -1020,13 +1085,12 @@ function emptyState(title, body, withBtn) {
 function currentView() {
   if (S.booting) return "boot";
   if (!S.connected) return "off";
-  if (!S.auth) return "signin";
   if (!S.clubsLoaded) return "boot";
   if (!S.clubId) return "home";
   if (!club()) return "home";
-  if (!S.mine.has(S.clubId)) return "gate";
+  if (S.removed.has(S.clubId)) return "gate";
   if (!S.loaded.members) return "boot";
-  return isMember() ? "club" : "gate";
+  return "club";
 }
 function renderHeader(v) {
   const c = club(), inClub = (v === "club" || v === "gate") && c;
@@ -1048,27 +1112,21 @@ function renderHome() {
     .sort((a, b) => (a.state + a.city + a.name).localeCompare(b.state + b.city + b.name));
   let html = "";
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
-  if (!S.readOnly) html += `<section class="start"><div><h2>Start a club for your city</h2><p>Pick your city and text the link to your crew. They sign in with Google and tap Join. A trip calendar with RSVPs and one thread per trip, the Trip Planner, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
+  if (!S.readOnly) html += `<section class="start"><div><h2>Start a club for your city</h2><p>Pick your city and text the link to your crew. Anyone with the link can read the calendar and add a name to post or RSVP. A trip calendar with RSVPs and one thread per trip, the Trip Planner, the Fly Picker and a trout life list come with it.</p></div><button class="btn primary" type="button" data-act="new-club">Start a club</button></section>`;
   html += `<section class="home-sec"><h2 class="home-h">${mine.length ? "Other clubs" : "Find your club"}</h2>${others.length
-    ? `<ul class="rows">${others.map((c) => clubRow(c, "Join")).join("")}</ul>`
+    ? `<ul class="rows">${others.map((c) => clubRow(c, "Open")).join("")}</ul>`
     : `<p class="muted" style="padding-inline:2px">${S.clubs.size ? "You're in every club so far." : "No clubs yet. Start the first one."}</p>`}</section>`;
   const u = S.auth && S.auth.user;
-  if (u) html += `<p class="signout-line">Signed in as ${esc(u.name || u.email)}${u.name && u.email ? ` (${esc(u.email)})` : ""}. <button class="linkbtn" type="button" data-act="signout">Sign out</button></p>`;
+  html += u && u.name
+    ? `<p class="signout-line">Posting as ${esc(u.name)}. <button class="linkbtn" type="button" data-act="rename">Change name</button></p>`
+    : `<p class="signout-line">Browsing as a guest. You add a name when you post, RSVP or comment.</p>`;
   el.innerHTML = html;
 }
 function renderGate() {
   const c = club(), el = $("#v-gate");
-  let body;
-  if (S.removed.has(c.id)) body = `<p class="muted">The organizer removed you from this club.</p>`;
-  else body = `<form class="f" id="gate-form" autocomplete="off" novalidate>
-      <p class="hint">Members see the club's trips, threads and reports. Join to see them and RSVP.</p>
-      <label>Your name in the club <span class="sub">How you'll show up on trips. Nicknames welcome.</span><input id="g-name" maxlength="30" value="${esc(myName().split(/\s+/)[0] || "")}" placeholder="e.g. Hutch"></label>
-      <p class="err" id="g-err" aria-live="polite"></p>
-      <div class="form-acts"><button class="btn primary" type="submit">Join ${esc(c.name)}</button></div>
-    </form>`;
   el.innerHTML = `<div class="gate">
     <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true">${esc(c.state || "··")}</span><div><h2>${esc(c.name)}</h2><p class="muted">${esc([c.city && c.state ? c.city + ", " + c.state : c.city, KINDS_LABEL[c.kinds]].filter(Boolean).join(" · "))}</p></div></div>
-    ${body}
+    <p class="muted">The organizer removed you from this club.</p>
     <div><button class="btn ghost small" type="button" data-act="home">See all clubs</button></div>
   </div>`;
 }
@@ -1794,7 +1852,7 @@ async function tpAsk(question) {
   question = String(question || "").trim();
   if (!question || TP.busy) return;
   const cid = S.clubId;
-  if (!authToken()) return;
+  if (!(await ensureIdentity("Add your name to ask the Trip Planner. It's saved on this device, so you only do this once."))) return;
   const history = TP.items.filter((x) => x.a && !x.error && !x.busy).slice(0, 2).reverse().map((x) => ({ q: x.q, a: x.a.slice(0, 2500) }));
   const it = { id: nid("p"), q: question, a: "", cites: [], at: Date.now(), busy: true, status: "Thinking" };
   TP.items.unshift(it); TP.busy = true;
@@ -1809,8 +1867,7 @@ async function tpAsk(question) {
     if (!res.ok) {
       let d = {}; try { d = await res.json(); } catch (e) {}
       it.error = d.error || "Something went wrong. Try again.";
-      if (res.status === 401) signedOutAll(it.error);
-      if (res.status === 403) notMember(cid);
+      if (res.status === 401) sessionEnded();
     } else {
       const reader = res.body.getReader(), dec = new TextDecoder();
       let buf = "";
@@ -2161,7 +2218,7 @@ function inviteSheetMarkup() {
   const text = inviteText(c);
   return sheetTop("Invite") + `<div class="sh-scroll"><div style="display:grid;gap:18px">
     <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true"><span>${esc(crestOf(c.name))}</span></span>
-      <div><h2 style="font-size:1.55rem">Invite someone to ${esc(c.name)}</h2><p class="muted">They open the link, sign in with Google and tap Join.</p></div></div>
+      <div><h2 style="font-size:1.55rem">Invite someone to ${esc(c.name)}</h2><p class="muted">They open the link and add a name when they post or RSVP. No password, no sign-in.</p></div></div>
     <textarea class="copybox" id="inv-text" rows="4" readonly aria-label="Invite text">${esc(text)}</textarea>
     <div class="tool-row" id="inv-tools">
       <button class="btn primary small" type="button" data-act="inv-copy">Copy invite</button>
@@ -2176,7 +2233,6 @@ function renderBanner(v) {
   let msg = "", btn = "";
   if (v === "off") msg = "Can't reach the club server right now. Check your connection and reload the page.";
   else if (v !== "boot" && S.readOnly) msg = NO_WRITE;
-  else if (v === "club" && !S.members.get(S.me.id)?.handle && !S.profiles[S.me.id]?.name) { msg = "Add your name so people know who's coming."; btn = `<button class="btn ghost small" type="button" data-act="club">Add name</button>`; }
   b.hidden = !msg;
   if (msg) b.innerHTML = `<span>${esc(msg)}</span>${btn}`;
 }
@@ -2202,7 +2258,7 @@ function renderTabs() {
   $("#kind-chips").hidden = kinds() !== "both";
   document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === S.filter)));
   const meBtn = $("#me-btn");
-  meBtn.innerHTML = `${av(S.me.id)}<span>${esc(S.members.get(S.me.id)?.handle || S.profiles[S.me.id]?.name || "Club settings")}</span>`;
+  meBtn.innerHTML = `${S.me.id ? av(S.me.id) : ""}<span>${esc(S.members.get(S.me.id)?.handle || myName() || "Add your name")}</span>`;
   const wl = $("#waters");
   const ws = (club() && club().waters) || [];
   const key = ws.join("|");
@@ -2212,13 +2268,11 @@ function renderAll() {
   const v = currentView();
   renderHeader(v);
   $("#v-loading").hidden = v !== "boot";
-  $("#v-signin").hidden = v !== "signin";
   $("#v-home").hidden = v !== "home";
   $("#v-gate").hidden = v !== "gate";
   $("#v-club").hidden = v !== "club";
   $("#tabsbar").hidden = v !== "club";
-  if (v === "signin") renderSignin();
-  else if (v === "home") renderHome();
+  if (v === "home") renderHome();
   else if (v === "gate") renderGate();
   else if (v === "club") {
     renderTabs();
@@ -2264,7 +2318,7 @@ function openSheet(mode, data = {}) {
   if (mode === "species") updateSpeciesSheet();
   if (mode === "form") wireTripForm(data.id);
   if (mode === "new") wireClubFields($("#new-form"), true);
-  if (mode === "club") { const f = $("#club-form"); if (f) wireClubFields(f, false); updateMembersList(); }
+  if (mode === "club") { const f = $("#club-form"); if (f) wireClubFields(f, false); updateMembersList(); if ($("#acct-g")) renderGoogleButton($("#acct-g")); }
 }
 function closeSheet() {
   S.sheet = null;
@@ -2556,22 +2610,22 @@ function newClubMarkup() {
   return sheetTop("New club") + `<div class="sh-scroll">
     <form class="f" id="new-form" autocomplete="off" novalidate>
       <h2 style="font-size:1.4rem">Start a club</h2>
-      <p class="hint">You'll be the organizer. Anyone you send the link to signs in with Google and taps Join.</p>
+      <p class="hint">You'll be the organizer. There's no password: anyone with the link can read the calendar, and adds a name when they post or RSVP.</p>
       ${clubFields(null, true)}
-      <label>Your name in the club<input name="handle" maxlength="30" value="${esc(myName().split(/\s+/)[0] || "")}" placeholder="e.g. Hutch"></label>
+      <label>Your name<input name="handle" maxlength="30" value="${esc(myName())}" placeholder="e.g. Hutch"></label>
       <p class="err" id="n-err" aria-live="polite"></p>
       <div class="form-acts"><button class="btn primary" type="submit">Start club</button><button class="btn ghost" type="button" data-act="close">Cancel</button></div>
     </form></div>`;
 }
 function inviteText(c) {
-  return [`Join the ${c.name} to see trips and RSVP:`, clubLink(c), "Sign in with Google and tap Join."].join("\n");
+  return [`The ${c.name} trip calendar. See what's planned and RSVP:`, clubLink(c), "No sign-in. Add your name when you RSVP."].join("\n");
 }
 function createdMarkup(d) {
   const c = S.clubs.get(d.id) || d.club;
   return sheetTop("Club ready") + `<div class="sh-scroll">
     <div style="display:grid;gap:14px">
       <div class="gate-h"><span class="patch lg ${c.kinds}" aria-hidden="true">${esc(c.state)}</span><div><h2 style="font-size:1.4rem">${esc(c.name)} is live</h2><p class="muted">${esc(c.city)}, ${esc(c.state)}</p></div></div>
-      <p>Text this to your crew. They open the link, sign in with Google and tap Join.</p>
+      <p>Text this to your crew. They open the link, add a name when they RSVP, and they're in.</p>
       <textarea class="copybox" id="created-text" rows="4" readonly aria-label="Invite text">${esc(d.invite)}</textarea>
       <div class="form-acts"><button class="btn primary" type="button" data-act="copy-created">Copy invite</button><button class="btn ghost" type="button" data-act="close">Open the club</button></div>
     </div></div>`;
@@ -2584,19 +2638,21 @@ function clubSheetMarkup() {
   const h = S.members.get(S.me.id)?.handle || "";
   return sheetTop("Club") + `<div class="sh-scroll">
     <form class="f" id="me-form" autocomplete="off">
-      <h2 style="font-size:1.35rem">Your name in ${esc(c.name)}</h2>
-      <p class="hint">How you show up on trips, RSVPs and in threads.</p>
-      <label>Name<input id="m-handle" maxlength="30" placeholder="${esc(S.profiles[S.me.id]?.name || "e.g. Hutch")}" value="${esc(h)}"></label>
+      <h2 style="font-size:1.35rem">Your name</h2>
+      <p class="hint">How you show up on trips, RSVPs and in threads, in every club. Saved on this device.</p>
+      <label>Name<input id="m-handle" maxlength="30" placeholder="e.g. Hutch" value="${esc(h || myName())}"></label>
       <div class="form-acts"><button class="btn primary" type="submit">Save name</button></div>
     </form>
     <section class="sh-sec"><h3>Invite people</h3>
       <p class="hint">Send the club link. The Invite button at the top of the club does the same.</p>
       <div class="tool-row"><button class="btn ghost small" type="button" data-act="invite">Write an invite</button></div>
     </section>
-    <section class="sh-sec"><h3>Your account</h3>
-      <p class="hint">Signed in with Google as ${esc(myName() || "you")}${S.auth && S.auth.user && S.auth.user.email ? ` (${esc(S.auth.user.email)})` : ""}.</p>
-      <div class="tool-row"><button class="btn ghost small" type="button" data-act="signout">Sign out</button></div>
-    </section>
+    ${S.auth ? `<section class="sh-sec"><h3>This device</h3>
+      <p class="hint">${S.auth.user && S.auth.user.google ? `Signed in with Google${S.auth.user.email ? ` as ${esc(S.auth.user.email)}` : ""}, so your name and clubs follow you to other devices.` : `You're posting as ${esc(myName() || "a guest")}. The club knows you by this device, so clearing the browser's site data means starting over with a new name.${S.gcid ? " Sign in with Google to keep your name on other devices." : ""}`}</p>
+      ${S.gcid && !(S.auth.user && S.auth.user.google) ? `<div id="acct-g" class="g-btn"></div>` : ""}
+      <div class="tool-row"><button class="btn ghost small" type="button" data-act="ask-signout">Not you? Switch name</button></div>
+      <div class="confirm" id="signout-confirm" hidden>This device will forget ${esc(myName() || "this name")}. ${S.auth.user && S.auth.user.google ? "Sign in with Google again to get back your clubs." : "Trips and RSVPs under that name stay, but you can't edit them from here afterwards."} <button class="btn danger solid small" type="button" data-act="signout">Switch</button><button class="btn ghost small" type="button" data-act="no-signout">Stay</button></div>
+    </section>` : ""}
     ${owner ? `<form class="f sh-sec" id="club-form" autocomplete="off" novalidate>
       <h3>Club details</h3>
       ${clubFields(c, false)}
@@ -2604,7 +2660,7 @@ function clubSheetMarkup() {
       <div class="form-acts"><button class="btn primary" type="submit">Save details</button></div>
     </form>` : ""}
     <section class="sh-sec"><h3 id="mem-h">Members</h3><ul class="roster" id="mem-list"></ul></section>
-    ${!owner ? `<section class="sh-sec"><div class="form-acts"><button class="btn danger" type="button" data-act="ask-leave">Leave club</button></div>
+    ${!owner && isMember() ? `<section class="sh-sec"><div class="form-acts"><button class="btn danger" type="button" data-act="ask-leave">Leave club</button></div>
       <div class="confirm" id="leave-confirm" hidden>Leave ${esc(c.name)}? You can rejoin anytime. <button class="btn danger solid small" type="button" data-act="do-leave">Leave</button><button class="btn ghost small" type="button" data-act="no-leave">Stay</button></div></section>` : ""}
   </div>`;
 }
@@ -2654,8 +2710,8 @@ document.addEventListener("click", async (e) => {
   if (cr) { enterClub(cr.dataset.club); return; }
   const r = e.target.closest("[data-rsvp]");
   if (r) { await setRsvp(r.dataset.rsvp); return; }
-  if (e.target.closest("#post-btn")) { openSheet("form", {}); return; }
-  if (e.target.closest("#start-btn")) { openSheet("new"); return; }
+  if (e.target.closest("#post-btn")) { if (await ensureIdentity("Add your name to post a trip. It's saved on this device, so you only do this once.")) openSheet("form", {}); return; }
+  if (e.target.closest("#start-btn")) { if (await ensureIdentity("Add your name to start a club. You'll be its organizer.")) openSheet("new"); return; }
   if (e.target.closest("#home-btn")) { enterClub(null); return; }
   if (e.target.closest("#invite-btn")) { openSheet("invite"); return; }
   if (e.target.closest("#me-btn")) { openSheet("club"); return; }
@@ -2669,9 +2725,9 @@ document.addEventListener("click", async (e) => {
   switch (act) {
     case "close": closeSheet(); break;
     case "home": enterClub(null); break;
-    case "post": openSheet("form", {}); break;
-    case "post-day": openSheet("form", { day: a.dataset.day }); break;
-    case "new-club": openSheet("new"); break;
+    case "post": if (await ensureIdentity(POST_WHY)) openSheet("form", {}); break;
+    case "post-day": if (await ensureIdentity(POST_WHY)) openSheet("form", { day: a.dataset.day }); break;
+    case "new-club": if (await ensureIdentity("Add your name to start a club. You'll be its organizer.")) openSheet("new"); break;
     case "club": openSheet("club"); break;
     case "fp-dismiss": S.fpNote = ""; scheduleRender(); break;
     case "edit": openSheet("form", { id: a.dataset.trip }); break;
@@ -2686,6 +2742,10 @@ document.addEventListener("click", async (e) => {
     case "invite": openSheet("invite"); break;
     case "inv-copy": copyText($("#inv-text").value, $("#inv-tools"), "Invite copied. Paste it into a text."); break;
     case "signout": closeSheet(); await signOut(); break;
+    case "ask-signout": $("#signout-confirm").hidden = false; break;
+    case "no-signout": $("#signout-confirm").hidden = true; break;
+    case "rename": openName("This changes the name on your trips, RSVPs and messages in every club.", true); break;
+    case "name-cancel": closeName(false); break;
     case "inv-share": { try { await navigator.share({ title: club().name, text: $("#inv-text").value }); } catch (err) { /* closed the share sheet */ } break; }
     case "tp-del": TP.items = TP.items.filter((x) => x.id !== a.dataset.tp || x.busy); tpSave(); renderPlanner(); break;
     case "tp-again": { const x = TP.items.find((y) => y.id === a.dataset.tp); if (x) tpAsk(x.q); break; }
@@ -2714,6 +2774,8 @@ document.addEventListener("click", async (e) => {
   }
 });
 dlg().addEventListener("cancel", (e) => { e.preventDefault(); closeSheet(); });
+$("#name-dlg").addEventListener("cancel", (e) => { e.preventDefault(); closeName(false); });
+$("#name-dlg").addEventListener("click", (e) => { if (e.target === $("#name-dlg")) closeName(false); });
 dlg().addEventListener("close", () => { S.sheet = null; });
 $("#mine-toggle").addEventListener("change", (e) => { S.onlyMine = e.target.checked; scheduleRender(); });
 document.addEventListener("keydown", (e) => {
@@ -2738,7 +2800,7 @@ window.addEventListener("resize", () => {
 document.addEventListener("submit", async (e) => {
   const id = e.target.id;
   if (id === "tp-form") { e.preventDefault(); tpAsk($("#tp-q").value); return; }
-  if (!["cm-form", "rep-form", "me-form", "gate-form", "new-form", "club-form", "catch-form"].includes(id)) return;
+  if (!["cm-form", "rep-form", "me-form", "name-form", "new-form", "club-form", "catch-form"].includes(id)) return;
   e.preventDefault();
   const btn = e.target.querySelector("button[type=submit]");
   if (btn && btn.disabled) return;
@@ -2747,7 +2809,7 @@ document.addEventListener("submit", async (e) => {
     if (id === "cm-form") await submitComment();
     else if (id === "rep-form") await submitReport();
     else if (id === "me-form") await submitHandle();
-    else if (id === "gate-form") await submitJoin();
+    else if (id === "name-form") await submitName();
     else if (id === "new-form") await submitNewClub(e.target);
     else if (id === "club-form") await submitClubDetails(e.target);
     else if (id === "catch-form") await submitCatch();
@@ -2767,22 +2829,13 @@ async function submitReport() {
   await act("report.save", data, "Report saved");
 }
 async function submitHandle() {
-  const handle = $("#m-handle").value.trim();
-  const ok = await act("me.update", { handle }, handle ? "Name saved" : "Name cleared");
-  if (ok) closeSheet();
-}
-async function submitJoin() {
-  const c = club(); if (!c) return;
-  const err = $("#g-err");
+  const name = $("#m-handle").value.trim();
+  if (!name) { toast("Enter a name."); return; }
   try {
-    const out = await api("join", { method: "POST", body: { club: c.id, handle: $("#g-name").value.trim() } });
-    S.mine.set(c.id, { memberId: out.memberId, role: "member" });
-    toast("You're in. Welcome to " + c.name + ".");
-    enterClub(c.id, { tab: S.tab });
-  } catch (e) {
-    if (e.status === 401) { signedOutAll(e.message); return; }
-    err.textContent = e.message;
-  }
+    if (S.auth) await renameTo(name); else await createGuest(name);
+    toast("Name saved");
+    closeSheet();
+  } catch (e) { toast(e.message); }
 }
 async function submitNewClub(form) {
   const err = $("#n-err");
@@ -2797,7 +2850,12 @@ async function submitNewClub(form) {
   }
   err.textContent = "";
   try {
-    const out = await api("clubs", { method: "POST", body: { ...r.data, handle: form.elements.namedItem("handle").value.trim() } });
+    const given = form.elements.namedItem("handle").value.trim();
+    if (!S.auth) {
+      if (!given) { err.textContent = "Add your name. You'll be the organizer."; form.elements.namedItem("handle").focus(); return; }
+      await createGuest(given);
+    }
+    const out = await api("clubs", { method: "POST", body: { ...r.data, handle: given } });
     const c = normClub(out.club.id, out.club);
     S.clubs.set(c.id, c);
     S.mine.set(c.id, { memberId: out.memberId, role: "owner" });
@@ -2824,7 +2882,8 @@ async function leaveClub() {
 }
 async function setRsvp(status) {
   const t = S.sheet && S.trips.get(S.sheet.id);
-  if (!t || !S.me.id) return;
+  if (!t) return;
+  if (!(await ensureIdentity("Add your name to RSVP. It's saved on this device, so you only do this once."))) return;
   const cur = myRsvp(t);
   if (status === "out" && !cur) { toast("Marked can't go"); return; }
   if (cur && cur.status === status) return;
@@ -2849,7 +2908,6 @@ function calShift(n) { let { y, m } = S.cal; m += n; if (m < 0) { m = 11; y--; }
 
 /* ---------- data ---------- */
 async function loadDirectory() {
-  if (!S.auth) { scheduleRender(); return; }
   try {
     const out = await api("clubs");
     S.clubs = new Map(out.clubs.map((c) => [c.id, normClub(c.id, c)]));
@@ -2857,25 +2915,24 @@ async function loadDirectory() {
     S.removed = new Set(out.removed || []);
     S.clubsLoaded = true; S.connected = true;
     if (S.clubId && !S.clubs.has(S.clubId)) { toast("That club isn't here anymore."); enterClub(null); }
-    else if (S.clubId && S.mine.has(S.clubId) && !S.loaded.members) loadClub(S.clubId);
   } catch (e) {
-    if (e.status === 401) { signedOutAll(e.message); return; }
     if (!S.clubsLoaded) S.connected = false;
     else toast(e.message);
   }
   scheduleRender();
 }
 async function loadClub(cid) {
-  if (!cid || !S.mine.has(cid)) return;
+  if (!cid) return;
   const seq = ++S.loadSeq;
   try {
     const out = await api("state?club=" + encodeURIComponent(cid));
     if (S.clubId !== cid || seq !== S.loadSeq) return;
     const c = normClub(out.club.id, out.club);
     S.clubs.set(c.id, c);
-    S.me = { id: out.me.id, role: out.me.role };
-    S.members = new Map(out.members.map((m) => [m.id, { handle: m.handle || m.name.split(/\s+/)[0] || "", role: m.role, at: m.at }]));
-    S.profiles = Object.fromEntries(out.members.map((m) => [m.id, { name: m.name, avatarUrl: m.picture }]));
+    S.me = out.me ? { id: out.me.id, role: out.me.role } : { id: null, role: "" };
+    if (out.me) S.mine.set(cid, { memberId: out.me.id, role: out.me.role }); else S.mine.delete(cid);
+    S.members = new Map(out.members.map((m) => [m.id, { handle: m.handle || "", role: m.role, at: m.at }]));
+    S.profiles = {};
     S.trips = new Map(out.trips.map((t) => [t.id, { ...t, seats: typeof t.seats === "number" ? t.seats : null, kind: t.kind === "hunt" ? "hunt" : "fish" }]));
     S.rsvps = out.rsvps; S.comments = out.comments; S.reports = out.reports;
     S.catches = Array.isArray(out.catches) ? out.catches : []; S.catchIdx = null;
@@ -2884,8 +2941,8 @@ async function loadClub(cid) {
     scheduleRender();
   } catch (e) {
     if (S.clubId !== cid) return;
-    if (e.status === 401) { signedOutAll(e.message); return; }
-    if (e.status === 403) { notMember(cid); return; }
+    if (e.status === 403) { removedFrom(cid); return; }
+    if (e.status === 404) { toast(e.message); loadDirectory(); return; }
     if (!S.loaded.members) { S.connected = false; scheduleRender(); }
   }
 }
@@ -2895,7 +2952,6 @@ function startPolling() {
   S.poll = setInterval(() => { if (document.visibilityState === "visible" && S.clubId) loadClub(S.clubId); }, 20000);
   document.addEventListener("visibilitychange", () => {
     if (document.visibilityState !== "visible") return;
-    if (!S.auth) return;
     if (S.clubId) loadClub(S.clubId); else loadDirectory();
   });
 }
@@ -2975,9 +3031,10 @@ async function boot() {
     if (S.auth && !a.user) { S.auth = null; saveAuth(); }
     else if (S.auth && a.user) { S.auth.user = a.user; saveAuth(); }
   } catch (e) { S.connected = false; }
-  if (S.auth) await loadDirectory();
+  if (S.connected && !S.auth && legacySessions().length) await restoreLegacy();
+  await loadDirectory();
   S.booting = false;
-  if (S.auth) afterSignIn(); else { try { history.replaceState(null, "", "/" + location.hash); } catch (e) {} scheduleRender(); }
+  afterBoot();
   startPolling();
 }
 boot();

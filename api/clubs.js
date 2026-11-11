@@ -1,20 +1,20 @@
-// GET /api/clubs: every club, with which ones the signed-in user belongs to.
-// POST /api/clubs: start a club. The signed-in user becomes its organizer.
+// GET /api/clubs: every club (anyone can browse), plus which ones this device's name belongs to.
+// POST /api/clubs: start a club. The named person who starts it becomes its organizer.
 import crypto from "node:crypto";
 import { route, readBody, str } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { requireUser, newId, limit, firstName } from "../lib/auth.js";
+import { currentUser, requireUser, newId, limit, cleanName } from "../lib/auth.js";
 import { clubInput, clubOut, slug } from "../lib/clubs.js";
 
 export default route(["GET", "POST"], async (req) => {
   await ensureSchema();
-  const user = await requireUser(req);
 
   if (req.method === "GET") {
+    const user = await currentUser(req);
     const [rows, mine] = await Promise.all([
       q(`select c.*, (select count(*)::int from members m where m.club_id = c.id and m.role <> 'removed') as members
          from clubs c order by c.state, c.city, c.name limit 1000`),
-      q("select club_id, id, role from members where user_id = $1", [user.id]),
+      user ? q("select club_id, id, role from members where user_id = $1", [user.id]) : [],
     ]);
     return {
       clubs: rows.map(clubOut),
@@ -23,6 +23,7 @@ export default route(["GET", "POST"], async (req) => {
     };
   }
 
+  const user = await requireUser(req);
   const b = readBody(req);
   await limit(`create:${user.id}`, 6, 60 * 60e3, "That's a lot of new clubs in an hour. Try again later.");
   const data = clubInput(b);
@@ -41,7 +42,7 @@ export default route(["GET", "POST"], async (req) => {
   try {
     await q(
       `insert into members (id, club_id, handle, role, user_id, at) values ($1, $2, $3, 'owner', $4, $5)`,
-      [memberId, id, str(b.handle, 30) || firstName(user.name), user.id, now],
+      [memberId, id, cleanName(b.handle) || cleanName(user.name) || "Organizer", user.id, now],
     );
   } catch (e) {
     await q("delete from clubs where id = $1", [id]);

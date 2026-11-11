@@ -1,9 +1,9 @@
-// POST /api/plan { club, question, history: [{ q, a }] }: the Trip Planner. Members only.
+// POST /api/plan { club, question, history: [{ q, a }] }: the Trip Planner. Needs a saved name.
 // Errors before the answer starts come back as JSON; the answer itself streams as
 // newline-delimited JSON events (see lib/planner.js).
 import { readBody, str, HttpError } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { requireMember, limit } from "../lib/auth.js";
+import { requireUser, limit } from "../lib/auth.js";
 import { buildContext, systemPrompt, streamAnswer, todayIn } from "../lib/planner.js";
 
 const NO_KEY = "The Trip Planner isn't switched on yet. The club organizer adds an Anthropic API key in Vercel (Settings, Environment Variables, ANTHROPIC_API_KEY) and redeploys.";
@@ -16,15 +16,16 @@ export default async function handler(req, res) {
     await ensureSchema();
     const b = readBody(req);
     const clubId = str(b.club, 80);
-    const me = await requireMember(req, clubId);
+    const user = await requireUser(req);
     const question = str(b.question, 600);
     if (question.length < 3) throw new HttpError(400, "Ask a question first.");
     if (!process.env.ANTHROPIC_API_KEY) throw new HttpError(503, NO_KEY);
-    await limit(`plan:${me.id}`, 25, 24 * 3600e3, "That's the day's limit of Trip Planner questions for you. It resets tomorrow.");
-    await limit(`plan-club:${clubId}`, 150, 24 * 3600e3, "The club has used its Trip Planner questions for today. They reset tomorrow.");
-
     const [row] = await q("select * from clubs where id = $1", [clubId]);
     if (!row) throw new HttpError(404, "That club isn't here anymore.");
+    await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of Trip Planner questions for you. It resets tomorrow.");
+    await limit(`plan-club:${clubId}`, 150, 24 * 3600e3, "The club has used its Trip Planner questions for today. They reset tomorrow.");
+    await limit("plan-all", 600, 24 * 3600e3, "The Trip Planner has hit its limit for today. It resets tomorrow.");
+
     const club = { ...row, waters: Array.isArray(row.waters) ? row.waters : [] };
     const t0 = todayIn(club.tz);
     const context = await buildContext(club, t0);

@@ -1,18 +1,20 @@
-// GET /api/state?club=ID: everything a signed-in member sees for one club.
+// GET /api/state?club=ID: a club's calendar, threads and reports. Anyone with the link can read it;
+// `me` is filled in only when the caller has a saved name and has taken part in the club.
 import { route, str } from "../lib/http.js";
 import { q, ensureSchema } from "../lib/db.js";
-import { requireMember } from "../lib/auth.js";
+import { findMember } from "../lib/auth.js";
+import { HttpError } from "../lib/http.js";
 import { clubOut } from "../lib/clubs.js";
 
 export default route(["GET"], async (req) => {
   await ensureSchema();
   const clubId = str(req.query?.club, 80);
-  const me = await requireMember(req, clubId);
+  const me = await findMember(req, clubId);
+  if (me && me.role === "removed") throw new HttpError(403, "The organizer removed you from this club.");
 
   const [clubs, members, trips, rsvps, comments, reports, catches] = await Promise.all([
     q("select * from clubs where id = $1", [clubId]),
-    q(`select m.id, m.handle, m.role, m.at, u.picture, u.name as gname from members m left join users u on u.id = m.user_id
-       where m.club_id = $1 and m.role <> 'removed' order by m.at`, [clubId]),
+    q(`select id, handle, role, at from members where club_id = $1 and role <> 'removed' order by at`, [clubId]),
     q(
       `select id, kind, water, title, date, time, meet, seats, cond, notes, host_id, canceled, at
        from trips where club_id = $1 order by date, time limit 3000`,
@@ -22,13 +24,15 @@ export default route(["GET"], async (req) => {
     q("select id, trip_id, member_id, text, at from comments where club_id = $1 order by at limit 6000", [clubId]),
     q("select trip_id, member_id, worked, count, cond, notes, at from reports where club_id = $1", [clubId]),
     // Only the caller's own life list.
-    q("select id, species_id, caught_on, water, note, at from catches where member_id = $1 order by at limit 2000", [me.id]),
+    me ? q("select id, species_id, caught_on, water, note, at from catches where member_id = $1 order by at limit 2000", [me.id]) : [],
   ]);
+  if (!clubs.length) throw new HttpError(404, "That club isn't here anymore.");
 
   return {
     club: clubOut(clubs[0]),
-    me: { id: me.id, role: me.role, email: me.user.email },
-    members: members.map((m) => ({ id: m.id, handle: m.handle || "", name: m.gname || "", picture: m.picture || "", role: m.role, at: m.at })),
+    me: me ? { id: me.id, role: me.role } : null,
+    // Only the name each person goes by here; Google names, photos and emails stay private.
+    members: members.map((m) => ({ id: m.id, handle: m.handle || "", name: "", picture: "", role: m.role, at: m.at })),
     trips: trips.map((t) => ({
       id: t.id, kind: t.kind, water: t.water, title: t.title, date: t.date, time: t.time, meet: t.meet,
       seats: t.seats, cond: t.cond, notes: t.notes, hostId: t.host_id, canceled: t.canceled, at: t.at,
