@@ -19,5 +19,19 @@
     "dam": "Tims Ford Dam",
     "note": "TVA runs Tims Ford. Its page links the recreation release schedule and the Elk River water temperatures.",
     "url": "https://www.tva.com/energy/our-power-system/hydroelectric/tims-ford"
+  },
+  {
+    "match": "south holston|\\bsoho\\b",
+    "water": "South Holston River",
+    "dam": "South Holston Dam",
+    "note": "TVA posts observed and predicted hourly releases; next-day schedules usually appear by 6 p.m. With no generation a weir holds the flow near 90 cfs (wadeable); full generation can rise rapidly and without warning.",
+    "url": "https://tva.com/environment/lake-levels/south-holston"
+  },
+  {
+    "match": "watauga river|wilbur",
+    "water": "Watauga River",
+    "dam": "Wilbur Dam",
+    "note": "TVA runs Wilbur and posts its release schedule on the dam page. Wade only with the dam not generating; releases can change on short notice.",
+    "url": "https://www.tva.com/energy/our-power-system/hydroelectric/wilbur"
   }
 ]

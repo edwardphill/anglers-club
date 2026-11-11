@@ -19,11 +19,22 @@
     "se_elk_2015_03": { "site": "southeasternfly.blogspot.com", "url": "https://southeasternfly.blogspot.com/2015/03/fly-fishing-middle-tennessee-tailwaters.html" },
     "se_elk_2014_07": { "site": "southeasternfly.blogspot.com", "url": "https://southeasternfly.blogspot.com/2014/07/elk-river-fishing-report.html" },
     "elk_2009_11": { "site": "flyfishingtheelk.blogspot.com", "url": "https://flyfishingtheelk.blogspot.com/2009/11/fly-fishing-on-elk-river-around-bend.html" },
-    "cf_caney_2026_01": { "site": "cfoutdoors.com", "url": "https://cfoutdoors.com/blogs/news-feed/caney-fork-river-fishing-report-mid-winter-shad-kills-lure-guide" }
+    "cf_caney_2026_01": { "site": "cfoutdoors.com", "url": "https://cfoutdoors.com/blogs/news-feed/caney-fork-river-fishing-report-mid-winter-shad-kills-lure-guide" },
+    "pfs_soho": { "site": "Perfect Fly Store", "url": "https://perfectflystore.com/?p=2175" },
+    "pfs_watauga": { "site": "Perfect Fly Store", "url": "https://perfectflystore.com/?p=2428" },
+    "ff_soho_hatches": { "site": "Fly Fisherman (South Holston hatch calendar)", "url": "https://www.flyfisherman.com/editorial/south-holston-river-hatches/151806" },
+    "ff_soho_sulphur": { "site": "Fly Fisherman (South Holston sulphurs)", "url": "https://www.flyfisherman.com/editorial/south-holston-sulphur-hatch/357258" },
+    "ff_watauga_caddis": { "site": "Fly Fisherman (Watauga caddis hatch)", "url": "https://www.flyfisherman.com/editorial/brachycentrus-hatch-on-the-country-mile/152175" },
+    "tt_soho_watauga": { "site": "Thomas & Thomas (South Holston and Watauga)", "url": "https://thomasandthomas.com/blogs/news/east-tennessee-fly-fishing-south-holston-watauga-rivers" },
+    "mc_tn_winter": { "site": "MidCurrent (Tennessee winter tailwaters)", "url": "https://midcurrent.com/v2/tennessees-winter-tailwater-guide-how-to-fish-the-south-holston-watauga-clinch-hiwassee-for-trout/" },
+    "twra_tailwater_stocking": { "site": "TWRA tailwater stocking schedule", "url": "https://www.tn.gov/content/dam/tn/twra/documents/fishing/trout/tailwater-stocking-schedule.pdf" },
+    "twra_coldwater_r4": { "site": "TWRA coldwater trout report, Region 4 (2023)", "url": "https://www.tn.gov/content/dam/tn/twra/documents/fishing/trout/Coldwater-Trout-Report-R4-2023.pdf" },
+    "tva_soho": { "site": "TVA (South Holston releases)", "url": "https://tva.com/environment/lake-levels/south-holston" },
+    "tva_wilbur": { "site": "TVA (Wilbur Dam)", "url": "https://www.tva.com/energy/our-power-system/hydroelectric/wilbur" },
+    "bro_cooling": { "site": "Blue Ridge Outdoors (Cooling Waters)", "url": "https://blueridgeoutdoors.com/?p=142687" },
+    "netn_access": { "site": "Northeast Tennessee tourism", "url": "https://northeasttennessee.org/?p=103653" }
   },
-
-  "places": { "tellico": "Tellico River", "hiwassee": "Hiwassee River" },
-
+  "places": { "tellico": "Tellico River", "hiwassee": "Hiwassee River", "south_holston": "South Holston River", "watauga": "Watauga River" },
   "rivers": {
     "tellico": {
       "name": "Tellico River",
@@ -54,13 +65,23 @@
       ],
       "plan": [
         {
-          "months": [11, 12, 1],
+          "months": [11, 12],
           "dries": "no",
-          "dries_text": "Nothing is hatching that you can count on (a few winter stoneflies in January), and stocked trout in cold water eat nymphs. Fish deep and slow.",
+          "dries_text": "Delayed harvest is stocked and the big browns are spawning (leave fish on redds alone). The sources list needle stoneflies into November and midges all year, but nothing says Tellico trout rise to them. Fish below the gravel and near the bottom; the dries stay home.",
           "picks": [
-            { "fly": "prince_nymph", "size": "#12-14", "why": "Searching nymph for cold, stocked water; a dropper pick for Tellico Outfitters, too." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#16-18", "why": "The small mayfly-nymph look for clear, low water and the odd olive." },
-            { "fly": "woolly_bugger", "size": "#8", "why": "Olive or black, stripped slowly, when the river is stained and fish want something bigger." }
+            { "fly": "blood_dot_egg", "size": "#14-16", "why": "Browns spawn in the fall (Perfect Fly Store), so loose eggs drift to every fish below a redd. Fish it in the run below the gravel, never on it. Our reading of the spawn note: no source names an egg for the Tellico." },
+            { "fly": "zebra_midge", "size": "#18-20", "why": "Midge larva and pupa work all year on the Tellico, most of all in cold water (Perfect Fly Store). Trail it 12 to 18 inches behind the egg." },
+            { "fly": "black_nosed_dace", "size": "#6-8", "why": "Perfect Fly Store has sculpin and black-nosed dace streamers working best in slightly off-color water: the fly for after rain, not for clear low flow." }
+          ],
+          "src": ["pf_tellico"]
+        },
+        {
+          "months": [1],
+          "dries": "no",
+          "dries_text": "Winter stoneflies are listed for January, but nothing in the sources says Tellico trout rise to them, and the water is at its coldest. Small and deep, on warm afternoons.",
+          "picks": [
+            { "fly": "copper_john", "size": "#16", "why": "Small dark stonefly nymph, our pick for the January winter stoneflies Perfect Fly Store lists; Tellico Outfitters names the Copper John too (#14 or smaller)." },
+            { "fly": "zebra_midge", "size": "#20", "why": "Midge larva and pupa work any time of year on the Tellico (Perfect Fly Store): the trailing fly." }
           ],
           "src": ["pf_tellico", "tu_tellico"]
         },
@@ -69,9 +90,9 @@
           "dries": "hatch-only",
           "dries_text": "Only if you see fish rising on a cloudy afternoon: late-February olives are the first real hatch. Otherwise stay on the bottom.",
           "picks": [
-            { "fly": "hot_spot_pheasant_tail", "size": "#18", "why": "Lead fly: it matches the olive nymph before and during the hatch." },
-            { "fly": "bwo_parachute", "size": "#18-20", "why": "Tie it on only when fish are rising to olives on a cloudy afternoon." },
-            { "fly": "woolly_bugger", "size": "#8", "why": "For stained water or when nothing is moving." }
+            { "fly": "juju_baetis", "size": "#18-20", "why": "The olive nymph before and during the hatch. Perfect Fly Store has olives from late February on cloudy days and names no pattern, so this is our pick." },
+            { "fly": "barrs_emerger_bwo", "size": "#18-20", "why": "An emerger in the film for olives you cannot see on top. Our pick." },
+            { "fly": "bwo_parachute", "size": "#18-20", "why": "Tie it on only when fish are rising to olives on a cloudy afternoon." }
           ],
           "src": ["pf_tellico"]
         },
@@ -104,7 +125,7 @@
           "picks": [
             { "fly": "yellow_stimulator", "size": "#12-14", "why": "Stonefly and sally imitation that floats well in pocket water." },
             { "fly": "elk_hair_caddis", "size": "#14-16", "why": "Tan, for the evening caddis." },
-            { "fly": "prince_nymph", "size": "#14", "why": "Dropper a foot or two under the dry, for fish that are not looking up." }
+            { "fly": "pats_rubber_legs", "size": "#8-10", "why": "Dropper a foot or two under the dry, for the giant black stoneflies Perfect Fly Store lists for May. Tellico Outfitters names Pat's Rubber Legs." }
           ],
           "src": ["pf_tellico", "tu_tellico"]
         },
@@ -115,7 +136,7 @@
           "picks": [
             { "fly": "yellow_stimulator", "size": "#12-14", "why": "Evening sallies and golden stones; the attractor fish rise to." },
             { "fly": "foam_beetle", "size": "#14-16", "why": "Terrestrial, for the stretches with few aquatic bugs about." },
-            { "fly": "prince_nymph", "size": "#14", "why": "Dropper 1 to 1.5 feet under the dry." }
+            { "fly": "copper_john", "size": "#14", "why": "Dropper 1 to 1.5 feet under the dry. Tellico Outfitters lists the Copper John in size 14 or smaller for June." }
           ],
           "src": ["pf_tellico", "tu_tellico"]
         },
@@ -125,8 +146,8 @@
           "dries_text": "Hatches have slowed, but wild fish are still looking up. A small dry with a nymph dropper on the upper river and the tributaries; the lower river is too warm.",
           "picks": [
             { "fly": "parachute_adams", "size": "#14-16", "why": "Tellico Outfitters' September dry pick (purple haze or a Neversink caddis if they refuse it)." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#16", "why": "Dropper 1 to 1.5 feet under the dry." },
-            { "fly": "frenchie", "size": "#16", "why": "Second dropper choice for fish that are not looking up." }
+            { "fly": "frenchie", "size": "#16", "why": "Dropper 1 to 1.5 feet under the dry; Tellico Outfitters names the Frenchie." },
+            { "fly": "copper_john", "size": "#14", "why": "Second dropper choice, size 14 or smaller as they suggest." }
           ],
           "src": ["tu_tellico", "pf_tellico"]
         },
@@ -135,15 +156,14 @@
           "dries": "hatch-only",
           "dries_text": "Delayed harvest opens October 1 and fresh stockers eat nymphs. Olives and mahogany duns hatch in early to mid October, so a dry is worth it only when you see rises.",
           "picks": [
-            { "fly": "prince_nymph", "size": "#12-14", "why": "Lead fly for fresh stocked fish." },
-            { "fly": "bwo_parachute", "size": "#18-20", "why": "Only when fish are rising to olives or mahogany duns." },
-            { "fly": "woolly_bugger", "size": "#8", "why": "Stripped through stained water, or for a bigger fall brown." }
+            { "fly": "squirmy_wormy", "size": "#12", "why": "Delayed harvest opens October 1 and the fish are fresh from the truck. Tellico Outfitters names squirmy worms; fishing one for stockers is our reading." },
+            { "fly": "barrs_emerger_bwo", "size": "#18-20", "why": "For the late olives and mahogany duns (#18-20) of early to mid October. A dry only if you see rises." },
+            { "fly": "black_nosed_dace", "size": "#6-8", "why": "Perfect Fly Store's fall streamer for slightly off-color water, and for a bigger brown." }
           ],
           "src": ["pf_tellico"]
         }
       ]
     },
-
     "hiwassee": {
       "name": "Hiwassee River",
       "label": "Hiwassee River (TN)",
@@ -174,13 +194,33 @@
       ],
       "plan": [
         {
-          "months": [11, 12, 1],
+          "months": [11],
           "dries": "no",
-          "dries_text": "Midges are the main food in December, and the only surface bugs are small winter stoneflies in January afternoons. Trout feed slowly. Nymph under an indicator, or throw a white streamer when the turbines run.",
+          "dries_text": "Little brown caddis hatch into mid-November, but no source names a dry for them. Delayed harvest is stocked; nymph the runs and drop a midge behind.",
           "picks": [
-            { "fly": "blood_midge", "size": "#20-22", "why": "Tandem larva and pupa under an indicator, with the larva near the bottom: the shop standard here." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#18", "why": "Small olive nymph; small BWOs can show up in December." },
-            { "fly": "white_woolly_bugger", "size": "#4-6", "why": "When the turbines run: swing or strip it through the soft water on the edges." }
+            { "fly": "beadhead_caddis_pupa", "size": "#14-16", "why": "Little brown caddis hatch into mid-November (Perfect Fly Store): fish the pupa near the bottom." },
+            { "fly": "blood_midge", "size": "#20-22", "why": "Tandem larva and pupa under an indicator: the shop standard here." }
+          ],
+          "src": ["pf_hiwassee", "tu_year"]
+        },
+        {
+          "months": [12],
+          "dries": "hatch-only",
+          "dries_text": "Hiwassee TU has fish sipping tiny midges in slow water in December. Nymph first; tie on a dry only when you see fish sipping, and then the smallest, on light tippet.",
+          "picks": [
+            { "fly": "blood_midge", "size": "#20-22", "why": "Tandem larva and pupa under an indicator: the shop standard here, and the main food this month." },
+            { "fly": "griffiths_gnat", "size": "#16-18", "why": "Hiwassee TU's own December dry. Only for fish you can see sipping midges in slow water." }
+          ],
+          "src": ["tu_year", "pf_hiwassee"]
+        },
+        {
+          "months": [1],
+          "dries": "hatch-only",
+          "dries_text": "Winter stoneflies skim the surface on January afternoons, with the water in the low 40s (Hiwassee TU). Nymph first; a small dry only when fish are taking them on top.",
+          "picks": [
+            { "fly": "blood_midge", "size": "#20-22", "why": "Tandem larva and pupa under an indicator when nothing is rising." },
+            { "fly": "griffiths_gnat", "size": "#16", "why": "Hiwassee TU names it in January, in size 16." },
+            { "fly": "elk_hair_caddis", "size": "#16-18", "why": "Small and gray: the other January dry Hiwassee TU names, for the afternoon winter stoneflies." }
           ],
           "src": ["tu_year", "pf_hiwassee"]
         },
@@ -202,7 +242,7 @@
           "picks": [
             { "fly": "beadhead_caddis_pupa", "size": "#16", "why": "Lead fly during the day, before the caddis show on the surface." },
             { "fly": "elk_hair_caddis", "size": "#14-16", "why": "Gray or black, late in the day when the caddis and stoneflies are about." },
-            { "fly": "cdc_pheasant_tail_emerger", "size": "#18", "why": "Olives get more dependable from mid-March." }
+            { "fly": "barrs_emerger_bwo", "size": "#18", "why": "Olives get more dependable from mid-March; an emerger in the film." }
           ],
           "src": ["tu_year", "pf_hiwassee"]
         },
@@ -213,7 +253,7 @@
           "picks": [
             { "fly": "hendrickson_parachute", "size": "#12-14", "why": "Early afternoon. Light and uneven in places, so don't plan the day around it." },
             { "fly": "elk_hair_caddis", "size": "#16", "why": "Small gray, for the grannoms just before dark." },
-            { "fly": "pt_soft_hackle", "size": "#14-16", "why": "Emerging caddis; the fly for the hour before the dry-fly window." }
+            { "fly": "sparkle_pupa", "size": "#16", "why": "Emerging caddis: the fly for the hour before the dry-fly window." }
           ],
           "src": ["tu_year", "pf_hiwassee"]
         },
@@ -245,8 +285,8 @@
           "dries_text": "Dry flies pay only in narrow windows: tricos (#26) early morning and olive spinners late morning, with the water off. The water near the powerhouse can reach 70°F in August, so fish early. Otherwise a terrestrial with a nymph dropper, or an Isonychia nymph.",
           "picks": [
             { "fly": "foam_beetle", "size": "#14", "why": "Top fly for a dry-dropper rig on summer low water." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#16-18", "why": "Dropper under the beetle." },
-            { "fly": "isonychia_nymph", "size": "#8-10", "why": "Stripped; the Isonychia run from May through September." }
+            { "fly": "isonychia_nymph", "size": "#8-10", "why": "Stripped or dead-drifted; the Isonychia run from May through September." },
+            { "fly": "rusty_spinner", "size": "#14-16", "why": "Late-morning olive spinner falls in August with the water off: the one dry worth tying on in the heat." }
           ],
           "src": ["tu_year", "pf_hiwassee"]
         },
@@ -255,9 +295,9 @@
           "dries": "hatch-only",
           "dries_text": "Water is often too warm for active feeding, and near-constant generation is likely. Dries only for the mid-month olive brood, or for the white mayflies at dark.",
           "picks": [
-            { "fly": "bwo_parachute", "size": "#18", "why": "Second brood of olives around mid-month. Dry only when you see rises." },
-            { "fly": "isonychia_nymph", "size": "#8-10", "why": "Stripped; Isonychia are still hatching in September." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#16", "why": "General small nymph for a dropper or double-nymph rig." }
+            { "fly": "barrs_emerger_bwo", "size": "#18", "why": "Second brood of olives around mid-month: an emerger first." },
+            { "fly": "bwo_parachute", "size": "#18", "why": "Dry only when you see rises." },
+            { "fly": "isonychia_nymph", "size": "#8-10", "why": "Stripped; Isonychia are still hatching in September." }
           ],
           "src": ["tu_year", "pf_hiwassee", "twra_weekly"]
         },
@@ -266,15 +306,14 @@
           "dries": "hatch-only",
           "dries_text": "Delayed harvest is open and the river has just been stocked; a double-nymph rig was working in October 2026. The only dry worth the trouble is a big caddis when the Great Autumn Brown Sedge are about (not abundant, but trout notice them).",
           "picks": [
-            { "fly": "prince_nymph", "size": "#14", "why": "Lead fly in a double-nymph rig for fresh stockers." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#16", "why": "Second nymph in the rig." },
+            { "fly": "squirmy_wormy", "size": "#12", "why": "Delayed harvest is open and the river has just been stocked. No source names a fly for it; a worm for fresh stockers is our reading." },
+            { "fly": "beadhead_caddis_pupa", "size": "#12-14", "why": "Autumn and little brown caddis are about (Perfect Fly Store); the pupa near the bottom." },
             { "fly": "orange_elk_hair_caddis", "size": "#10", "why": "Only when the autumn sedges are on the water." }
           ],
           "src": ["pf_hiwassee", "tu_year", "twra_weekly"]
         }
       ]
     },
-
     "caney_fork": {
       "hatch_notes_add": [
         { "months": [1, 2, 3, 10, 11], "text": "Blue-winged olives hatch January through March and again in October and November (size 16 or so).", "ref": "pf_caney" },
@@ -335,7 +374,6 @@
         }
       ]
     },
-
     "elk": {
       "hatch_notes_add": [
         { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Scuds are abundant and midge larvae are plentiful; mayflies and caddis are present in smaller numbers. Fishing is poor after heavy rain, when the dam releases extra water.", "ref": "pf_elk" },
@@ -356,7 +394,7 @@
           "picks": [
             { "fly": "hares_ear", "size": "#14-16", "why": "The Elk's best-performing nymph in the reports we trained on." },
             { "fly": "san_juan_worm", "size": "#10-12", "why": "Red or pink; named in the winter reports." },
-            { "fly": "woolly_bugger", "size": "#8", "why": "Small, white or olive, for stocked browns and rainbows." }
+            { "fly": "tan_scud", "size": "#14-16", "why": "Scuds are abundant on the Elk (Perfect Fly Store). Our pick for the third fly." }
           ],
           "src": ["se_elk_2014_07", "elk_2009_11"]
         },
@@ -366,8 +404,8 @@
           "dries_text": "Midge and caddis hatches come off on sunny March afternoons; a dry fly is worth it then, usually with a nymph under it. On cloudy days, nymph.",
           "picks": [
             { "fly": "elk_hair_caddis", "size": "#14-16", "why": "Only when you see bugs on the water on a sunny afternoon." },
-            { "fly": "hot_spot_pheasant_tail", "size": "#16-18", "why": "Dropper under the caddis, or the main fly on cloudy days." },
-            { "fly": "hares_ear", "size": "#14-16", "why": "Backup nymph." }
+            { "fly": "hares_ear", "size": "#14-16", "why": "The main fly on cloudy days." },
+            { "fly": "tan_scud", "size": "#14-16", "why": "Dropper under the caddis; scuds are abundant here (Perfect Fly Store)." }
           ],
           "src": ["se_elk_2015_03"]
         },
@@ -376,8 +414,8 @@
           "dries": "hatch-only",
           "dries_text": "Nymphs, soft hackles and midges are the base. Caddis dries were taken in one April report; don't tie on a dry unless you see them hatching.",
           "picks": [
-            { "fly": "hot_spot_pheasant_tail", "size": "#16-18", "why": "Named in the April and May reports." },
-            { "fly": "pt_soft_hackle", "size": "#14-16", "why": "The soft hackle the April reports call for." },
+            { "fly": "hares_ear_soft_hackle", "size": "#14-16", "why": "The April reports call for soft hackles; this is the Elk's best-performing nymph tied as one." },
+            { "fly": "hot_spot_pheasant_tail", "size": "#16-18", "why": "Named in the April and May reports, so it stays, but as the second fly." },
             { "fly": "elk_hair_caddis", "size": "#14-16", "why": "Only when caddis are hatching (April)." }
           ],
           "src": ["se_elk_2015_04"]
@@ -387,8 +425,8 @@
           "dries": "hatch-only",
           "dries_text": "Nymphs and midges carry the Elk in summer. Small dries and terrestrials show up in the reports only on low, steady flows (about 240 cfs). Don't lead with a dry.",
           "picks": [
-            { "fly": "hot_spot_pheasant_tail", "size": "#16-18", "why": "Summer nymph standby." },
             { "fly": "zebra_midge", "size": "#18-20", "why": "Midges are the summer base." },
+            { "fly": "tan_scud", "size": "#14-16", "why": "Scuds are abundant (Perfect Fly Store)." },
             { "fly": "foam_ant", "size": "#14-16", "why": "Only on low, steady flow, with a nymph under it." }
           ],
           "src": ["se_elk_2014_07"]
@@ -398,16 +436,212 @@
           "dries": "no",
           "dries_text": "Fall is streamers and soft hackles on the Elk, with steady flows. One guide's 2009 logs counted the most fish on Kenny and Trout Candy soft hackles and chartreuse woolly buggers.",
           "picks": [
-            { "fly": "woolly_bugger", "size": "#6-8", "why": "Chartreuse. The top fly in a guide's fall and early-winter logs." },
-            { "fly": "kenny", "size": "#12-14", "why": "The Kenny, a soft-hackle-style fly the same logs name." },
-            { "fly": "san_juan_worm", "size": "#10-12", "why": "Close behind in the same logs." }
+            { "fly": "kenny", "size": "#12-14", "why": "The Kenny, a soft-hackle-style fly. A guide's fall logs counted the most fish on it." },
+            { "fly": "trout_candy", "size": "#12-14", "why": "The Trout Candy soft hackle, named alongside the Kenny in the same logs." },
+            { "fly": "woolly_bugger", "size": "#6-8", "why": "Chartreuse. The third fly in the same logs." }
           ],
           "src": ["elk_2009_11"]
         }
       ]
+    },
+    "south_holston": {
+      "name": "South Holston River",
+      "label": "South Holston River (TN)",
+      "region": "south",
+      "water_type": "tailwater",
+      "place": "South Holston River (South Holston Dam tailwater, Bristol), TN",
+      "lat": 36.51,
+      "lon": -82.08,
+      "hatch_notes": [
+        { "months": [11, 12, 1, 2, 3], "text": "Blue-winged olives (Baetis) and midges, best on dismal gray days, from late November through February and sometimes March. Fly Fisherman names Smith's Olive Emerger (#18-20), Last Chance Cripple (#20-22) and Sprout Baetis (#18-22).", "ref": "ff_soho_hatches" },
+        { "months": [1, 2], "text": "Black flies are the most important insect of the season in one shop's calendar, with tiny black fly larvae working in low water.", "ref": "pfs_soho" },
+        { "months": [12, 1], "text": "The upper river hatches sulphurs nearly every day of the year, weakly in winter; sunny days near 60°F can still give a fishable emergence near the dam.", "ref": "ff_soho_sulphur" },
+        { "months": [3, 4], "text": "Sulphurs show on the first warm days of March but trout mostly ignore them; they key on them from late April.", "ref": "ff_soho_hatches" },
+        { "months": [4, 5, 6], "text": "On the lower river (below Weaver Pike Bridge) sulphur adults come off late April through late May, with spinner falls in early June.", "ref": "ff_soho_sulphur" },
+        { "months": [4, 5, 6, 7, 8, 9], "text": "Sulphur nymphs start rising around 11 a.m.; emergences run three to eight hours and duns come off until about 5 or 6 p.m. In early summer a spinner fall follows around 8 p.m. for about an hour.", "ref": "ff_soho_sulphur" },
+        { "months": [7, 8, 9], "text": "From late July the sulphurs get smaller (#18-20): downsize rather than change pattern.", "ref": "ff_soho_hatches" },
+        { "months": [4, 5, 6, 7], "text": "Green sedge caddis from late April to about July 1; their rock worm larvae are in the river all year. Caddis bring fewer trout up than mayflies do.", "ref": "pfs_soho" },
+        { "months": [6, 7, 8, 9], "text": "Terrestrials from mid-June to the first frost: Japanese beetles (#14-16), CDC beetles and black ants (#16-18). Trout rise to them irregularly, so prospect under overhanging branches and along the banks with a long leader.", "ref": "ff_soho_hatches" },
+        { "months": [9, 10], "text": "Little black caddis, then cinnamon caddis, through late October.", "ref": "pfs_soho" },
+        { "months": [10, 11], "text": "Large browns are taken on sculpin streamers before they spawn, best in slightly off-color water, low light and rain. Browns in the big tailwaters spawn from mid-November into December.", "ref": "pfs_soho" },
+        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Scuds, sowbugs, cranefly larvae and midges are in the river all year; the slower flats hold more scuds and sowbugs than sulphur nymphs.", "ref": "ff_soho_sulphur" }
+      ],
+      "facts": [
+        { "text": "16 to 22 inch protected length range on all trout in the tailwater below South Holston Dam: seven trout a day, and only one may be over 22 inches.", "ref": "twra_regs" },
+        { "text": "Closed to all fishing November 1 to January 31 in two stretches: from Hickory Tree Bridge up to the Bottom Creek confluence, and from the downstream point of Boy's Island (the first island below Weaver Pike Bridge) up to the first island above Webb Road Bridge. The stretches are marked on the river.", "ref": "twra_regs" },
+        { "text": "TWRA's stocking schedule lists only rainbow trout for the South Holston tailwater, and its Region 4 report says natural reproduction supports the brown trout fishery.", "ref": "twra_tailwater_stocking" },
+        { "text": "With no generation a weir holds the flow near 90 cfs, which is wadeable. Full generation averages about 2,400 cfs and the water can rise rapidly and without warning; trout usually stop feeding for about an hour after a change.", "ref": "ff_soho_hatches" },
+        { "text": "TVA posts observed and predicted hourly releases; next-day schedules usually appear by 6 p.m. Releases can change on short notice, and TVA warns that large amounts of water could be discharged at any time.", "ref": "tva_soho" },
+        { "text": "Wading is for the turbine-off hours; with the water running, a boat is the better way. The stretch just below the weir dam is heavily fished and hard.", "ref": "pfs_soho" },
+        { "text": "Long leaders (10 to 12 feet) and 5X to 7X tippet; most of the fishing is drag-free drifts to single fish.", "ref": "mc_tn_winter" }
+      ],
+      "plan": [
+        {
+          "months": [12, 1, 2],
+          "dries": "hatch-only",
+          "dries_text": "Midges are the daily food and olives come off on gray afternoons. MidCurrent's advice for the South Holston: start with midges under an indicator and tie on a dry only once fish are visibly feeding on top. Calm, overcast afternoons are when an emerger in the film pays.",
+          "picks": [
+            { "fly": "zebra_midge", "size": "#20-22", "why": "Under an indicator with a small BWO nymph above it; fix the depth first (MidCurrent: #20-24)." },
+            { "fly": "black_beauty", "size": "#18-20", "why": "The closest catalog fly to a black fly larva, which the shop and Fly Fisherman both name for winter and low water. Use a true black fly larva if you have one." },
+            { "fly": "last_chance_cripple", "size": "#20-22", "why": "Fly Fisherman's named fly for olives on gray days. Tie it on only when you see rises." }
+          ],
+          "src": ["mc_tn_winter", "ff_soho_hatches", "pfs_soho", "ff_soho_sulphur"]
+        },
+        {
+          "months": [3],
+          "dries": "hatch-only",
+          "dries_text": "Olives continue and sulphurs show on the first warm days, but trout mostly ignore the sulphurs until late April. Fish the bottom and the olive emergers on gray afternoons; a dry only for fish you see rising.",
+          "picks": [
+            { "fly": "barrs_emerger_bwo", "size": "#18-20", "why": "Stand-in for the Smith's Olive Emerger (#18-20) Fly Fisherman names for olives." },
+            { "fly": "gray_sowbug", "size": "#16", "why": "Sowbugs and scuds live on the weedy flats all year (Fly Fisherman, Perfect Fly Store). Under an indicator." },
+            { "fly": "zebra_midge", "size": "#20-22", "why": "The trailing fly." }
+          ],
+          "src": ["ff_soho_hatches", "ff_soho_sulphur", "pfs_soho"]
+        },
+        {
+          "months": [4],
+          "dries": "hatch-only",
+          "dries_text": "Sulphurs and green sedges start in mid to late April. Until you see fish working, fish nymphs: the sulphur nymphs start leaving the bottom around 11 a.m. TVA also raises generation in April for summer demand, so plan around the schedule.",
+          "picks": [
+            { "fly": "sulfur_nymph", "size": "#14-16", "why": "Late-instar sulphur nymphs run 12 to 15 mm (#14-16). Fly Fisherman's rig fishes a bright yellow one under a black soft hackle." },
+            { "fly": "green_rockworm", "size": "#14-16", "why": "Rock worms, the green sedge larvae, are in the river all year and the caddis start late April (Perfect Fly Store)." },
+            { "fly": "cdc_sulfur_emerger", "size": "#16", "why": "The fly to switch to the first time you see fish working in the film." }
+          ],
+          "src": ["ff_soho_sulphur", "ff_soho_hatches", "pfs_soho"]
+        },
+        {
+          "months": [5, 6],
+          "dries": "yes",
+          "dries_text": "Sulphur season, which Perfect Fly Store calls one of the best dry-fly stretches in the Southeast. Duns come off from late morning to about 5 p.m. and a spinner fall follows around 8 p.m. in early summer. Trout are selective and often pick males or females.",
+          "picks": [
+            { "fly": "cdc_sulfur_emerger", "size": "#16", "why": "Fly Fisherman: low-riding patterns work best, and trout take emergers as the bugs leave the bottom." },
+            { "fly": "sulfur_comparadun", "size": "#14-16", "why": "The dun on lighter days. On heavy hatch days Fly Fisherman fishes soft hackles on a tight line instead." },
+            { "fly": "sulfur_spinner", "size": "#14", "why": "The early-summer spinner fall around 8 p.m.; the big fish feed on spent spinners in the flats." }
+          ],
+          "src": ["ff_soho_sulphur", "ff_soho_hatches", "pfs_soho"]
+        },
+        {
+          "months": [7, 8],
+          "dries": "yes",
+          "dries_text": "Sulphurs are still the hatch, smaller from late July (#18-20), and terrestrials run June to August. Trout take terrestrials irregularly, so downsize the sulphur rather than change fly and fish beetles and ants along the banks and under branches.",
+          "picks": [
+            { "fly": "cdc_sulfur_emerger", "size": "#16-18", "why": "Downsize through the summer rather than switch patterns (Fly Fisherman)." },
+            { "fly": "japanese_beetle", "size": "#14-16", "why": "Fly Fisherman's June to August terrestrial, under overhanging branches." },
+            { "fly": "parachute_ant", "size": "#16-18", "why": "Black parachute or CDC ants, named by Fly Fisherman, for the banks." }
+          ],
+          "src": ["ff_soho_hatches", "ff_soho_sulphur", "pfs_soho"]
+        },
+        {
+          "months": [9],
+          "dries": "hatch-only",
+          "dries_text": "Sulphurs wind down in September and terrestrials last to the first frost; once both are gone, trout feed mostly below the surface. Perfect Fly Store calls fall the second-best season, with fewer releases and better wading.",
+          "picks": [
+            { "fly": "cdc_sulfur_emerger", "size": "#18-20", "why": "The last of the sulphurs, small." },
+            { "fly": "parachute_ant", "size": "#16-18", "why": "Terrestrials last until the first frost." },
+            { "fly": "black_caddis", "size": "#18", "why": "Little black caddis come through late October (Perfect Fly Store)." }
+          ],
+          "src": ["pfs_soho", "ff_soho_hatches"]
+        },
+        {
+          "months": [10, 11],
+          "dries": "hatch-only",
+          "dries_text": "The biggest browns feed hard before they spawn and the sulphurs thin out. Streamers are the main event in low light and slightly stained water. From November 1 two stretches are closed to all fishing through January 31; browns in big tailwaters spawn from mid-November into December, so stay off the gravel.",
+          "picks": [
+            { "fly": "sculpzilla", "size": "#4-6", "why": "Perfect Fly Store names brown and white-belly sculpin articulated streamers in #4-6 for pre-spawn browns; best in off-color water, low light and rain." },
+            { "fly": "olive_matuka", "size": "#4-6", "why": "The black and olive Matuka sculpins the same shop names." },
+            { "fly": "barrs_emerger_bwo", "size": "#18-20", "why": "Olives and midges take over from late November (Fly Fisherman); the fly for a gray afternoon." }
+          ],
+          "src": ["pfs_soho", "bro_cooling", "twra_regs", "ff_soho_hatches"]
+        }
+      ]
+    },
+    "watauga": {
+      "name": "Watauga River",
+      "label": "Watauga River (TN)",
+      "region": "south",
+      "water_type": "tailwater",
+      "place": "Watauga River (Wilbur Dam tailwater, Elizabethton), TN",
+      "lat": 36.32,
+      "lon": -82.16,
+      "hatch_notes": [
+        { "months": [11, 12, 1, 2, 3, 4, 5, 6], "text": "Blue-winged olives from November through June (Perfect Fly Store lists #16). Baetis and Acentrella hatch ahead of the caddis in spring.", "ref": "pfs_watauga" },
+        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Midges all year (cream, red and light green, #20-22), with black flies in the colder months; midges are king when nothing bigger is hatching.", "ref": "pfs_watauga" },
+        { "months": [3, 4], "text": "Little black caddis (Brachycentrus) start in late March on the lower river and move upstream: about a week later at Elizabethton, a week and a half later on the upper river. For about two weeks beforehand dry-fly fishing nearly disappears and trout eat larvae, cases and pupae.", "ref": "ff_watauga_caddis" },
+        { "months": [4], "text": "Mornings (about 7 a.m. to noon) are the pupa and emerger game. The big egg-laying flight is after 6 p.m., peaking 7 to 8. Adults run #12 early, #16 a few days in.", "ref": "ff_watauga_caddis" },
+        { "months": [4, 5], "text": "Cinnamon caddis follow the little black caddis through May.", "ref": "pfs_watauga" },
+        { "months": [4, 5], "text": "Suckers and shad run up from Boone Lake in spring and the biggest browns follow them to feed.", "ref": "tt_soho_watauga" },
+        { "months": [4, 5, 6, 7, 8, 9], "text": "Sulphurs come off and on from late April or May into early September, most consistently through that stretch, and thin out in summer.", "ref": "tt_soho_watauga" },
+        { "months": [7, 8], "text": "Summer: sulphurs thin out and trout shift to small midges, scuds and sowbugs; beetles and ants are an option. Lower flows allow sight fishing to large browns.", "ref": "tt_soho_watauga" },
+        { "months": [9, 10, 11], "text": "The largest browns move upriver toward winter spawning grounds and feed heavily first; expect olives, midges and an occasional sulphur. Streamers are especially productive.", "ref": "tt_soho_watauga" },
+        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "The largest browns mostly ignore hatches and rarely feed at the surface; when sulphurs and caddis hatch together, anything can happen. Scuds are best from May.", "ref": "ff_watauga_caddis" }
+      ],
+      "facts": [
+        { "text": "Quality Trout Fishing Area from Smallings Bridge down to the CSX railroad bridges: 14-inch minimum, two trout a day, no bait. Check the current TWRA guide for the limits elsewhere on the river.", "ref": "twra_regs" },
+        { "text": "TWRA's stocking schedule lists only rainbow trout below Wilbur Dam, and its Region 4 report says natural reproduction supports the brown trout fishery. Older pages that say browns and brook trout are stocked are out of date.", "ref": "twra_tailwater_stocking" },
+        { "text": "Base flow is about 220 cfs and generation pushes it to roughly 1,500 to 3,000 cfs. The best surface fishing is at low water with no generation, when trout sit in shallower lanes; when generation resumes, rising fish drop off.", "ref": "ff_watauga_caddis" },
+        { "text": "Wade only with the dam not generating; drift boats want one generator running. Watch for sudden rises.", "ref": "pfs_watauga" },
+        { "text": "TVA posts the Wilbur release schedule; it can change on short notice.", "ref": "tva_wilbur" },
+        { "text": "Public ramps include the Wilbur Dam access at the head of the tailwater, Hunter Bridge, Lover's Lane in Elizabethton and Blevins Road.", "ref": "netn_access" }
+      ],
+      "plan": [
+        {
+          "months": [12, 1, 2],
+          "dries": "hatch-only",
+          "dries_text": "Midge nymphing is the plan: MidCurrent expects it on the Watauga, with olive pods in the tailouts as a sometimes surprise. Cast a dry only at fish you can see rising. When flows rise, work soft edges and streamer lanes.",
+          "picks": [
+            { "fly": "blood_midge", "size": "#20-22", "why": "Perfect Fly Store lists cream, red and light-green midges in #20-22 as the year-round food." },
+            { "fly": "black_beauty", "size": "#18-20", "why": "The closest catalog fly to a black fly larva; black flies are the colder-months food there. Use a true black fly larva if you have one." },
+            { "fly": "barrs_emerger_bwo", "size": "#18-20", "why": "For olive pods in the tailouts. Tie it on only if you see rises." }
+          ],
+          "src": ["mc_tn_winter", "pfs_watauga"]
+        },
+        {
+          "months": [3, 4],
+          "dries": "hatch-only",
+          "dries_text": "For about two weeks before the caddis emerge, dry-fly fishing nearly disappears: trout eat larvae, cases and pupae. Once the little black caddis are going, mornings are the pupa game and the egg-laying flight after 6 p.m. is the dry-fly window. Water running from the dam shuts the surface bite off.",
+          "picks": [
+            { "fly": "beadhead_caddis_pupa", "size": "#14-16", "why": "Lead fly. The stage 2 and 3 pupae run 12 to 14 mm; fish them in the morning (Fly Fisherman)." },
+            { "fly": "leadwing_coachman", "size": "#12-14", "why": "Swung with a lift: Fly Fisherman names Royal and Leadwing Coachman and Hare's Ear wets for the pupae." },
+            { "fly": "black_caddis", "size": "#16", "why": "The evening egg-layers, dark brown or black. Skate and twitch it when fish slash; use a 10 to 12 foot leader when they sip." }
+          ],
+          "src": ["ff_watauga_caddis", "pfs_watauga", "tt_soho_watauga"]
+        },
+        {
+          "months": [5, 6],
+          "dries": "yes",
+          "dries_text": "Cinnamon caddis follow the little black caddis through May and sulphurs come off and on from May into early fall. These are the dry-fly months, but the largest browns still ignore them: the dry is for numbers, not the trophy.",
+          "picks": [
+            { "fly": "cdc_sulfur_emerger", "size": "#16-18", "why": "Low-riding emerger for the sulphurs; Thomas & Thomas has them most consistent from late April into early September." },
+            { "fly": "elk_hair_caddis", "size": "#16", "why": "Cinnamon or tan, for the cinnamon caddis." },
+            { "fly": "sparkle_pupa", "size": "#14-16", "why": "The emerging caddis, in or just under the film." }
+          ],
+          "src": ["pfs_watauga", "tt_soho_watauga", "ff_watauga_caddis"]
+        },
+        {
+          "months": [7, 8],
+          "dries": "no",
+          "dries_text": "The slow stretch: sulphurs thin out and trout shift to small midges, scuds and sowbugs (Thomas & Thomas). Beetles and ants are an option on the flats but not the plan, so leave the dries home. Low flows let you sight-fish big browns; when TVA runs water, nymph or throw a streamer.",
+          "picks": [
+            { "fly": "gray_sowbug", "size": "#16", "why": "Small midges, scuds and sowbugs are the summer food." },
+            { "fly": "tan_scud", "size": "#16", "why": "Perfect Fly Store has scuds best from May." },
+            { "fly": "sculpzilla", "size": "#4-6", "why": "Thomas & Thomas calls summer streamer fishing highly productive for the bigger browns." }
+          ],
+          "src": ["tt_soho_watauga", "pfs_watauga"]
+        },
+        {
+          "months": [9, 10, 11],
+          "dries": "hatch-only",
+          "dries_text": "The largest browns move upriver toward winter spawning grounds and feed hard first. Streamers are the main event; olives, midges and an odd sulphur show up in the afternoons. Browns in the big tailwaters spawn from mid-November into December, so keep off the gravel.",
+          "picks": [
+            { "fly": "sculpzilla", "size": "#4-6", "why": "Perfect Fly Store names brown and white-belly sculpin articulated streamers in #4-6. When flows rise, fish soft edges and streamer lanes (MidCurrent)." },
+            { "fly": "olive_matuka", "size": "#4-6", "why": "The black and olive Matuka sculpins the same shop names." },
+            { "fly": "barrs_emerger_bwo", "size": "#18-20", "why": "For the afternoon olives. Tie it on only if you see rises." }
+          ],
+          "src": ["tt_soho_watauga", "pfs_watauga", "mc_tn_winter", "bro_cooling"]
+        }
+      ]
     }
   },
-
   "sources": [
     {
       "place": "caney_fork",
