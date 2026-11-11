@@ -1,0 +1,81 @@
+// The public dove field pages: data sanity, then the pages fetched over HTTP from the dev server (which applies
+// vercel.json's rewrites). No database needed: these pages come from data/dove-fields.json.
+import { spawn } from "node:child_process";
+import { readFileSync } from "node:fs";
+import assert from "node:assert/strict";
+
+const data = JSON.parse(readFileSync(new URL("../data/dove-fields.json", import.meta.url), "utf8"));
+let n = 0; const ok = (label) => { n++; console.log("ok", n, label); };
+
+// ---- the data ----
+const F = data.fields;
+assert.equal(F.length, 17); assert.equal(F.filter((f) => f.type === "wma").length, 11); assert.equal(F.filter((f) => f.type === "leased").length, 6);
+assert.equal(new Set(F.map((f) => f.slug)).size, 17);
+for (const f of F) {
+  assert.match(f.slug, /^[a-z0-9-]+$/, f.slug);
+  assert.ok(f.name && f.days && f.permit && data.regions[f.region], f.slug);
+  assert.ok(f.lat > 34.98 && f.lat < 36.68 && f.lon > -90.31 && f.lon < -81.65, `${f.slug} is outside Tennessee`);
+  assert.ok(f.lat > 35.0 && f.lat < 36.5 && f.lon > -88.0 && f.lon < -85.5, `${f.slug} is outside Middle Tennessee`);
+  assert.ok(f.type === "wma" || f.county, `${f.slug}: a leased field names its county`);
+  assert.ok(f.directions || f.address, `${f.slug} needs directions or an address`);
+  assert.ok(Array.isArray(f.crops) && Array.isArray(f.rules));
+}
+ok("17 fields (11 WMAs, 6 leased), unique slugs, every point inside Middle Tennessee, every field has directions, permit and hunt days");
+
+// ---- the pages ----
+const port = 4900 + Math.floor(Math.random() * 90);
+const srv = spawn("node", ["tests/dev-server.mjs"], { env: { ...process.env, PORT: String(port), PGTEST: "" }, stdio: ["ignore", "pipe", "inherit"] });
+await new Promise((res, rej) => { srv.stdout.on("data", (d) => String(d).includes("ready") && res()); srv.on("exit", () => rej(new Error("dev server exited"))); });
+const base = `http://localhost:${port}`;
+const get = async (p) => { const x = await fetch(base + p, { redirect: "manual" }); return { status: x.status, type: x.headers.get("content-type") || "", cache: x.headers.get("cache-control") || "", text: await x.text() }; };
+const ldOf = (html) => [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => JSON.parse(m[1]));
+const embedded = (html) => JSON.parse(html.match(/<script type="application\/json" id="dove-data">([\s\S]*?)<\/script>/)[1]);
+
+try {
+  let g = await get("/dove-fields");
+  assert.equal(g.status, 200); assert.match(g.type, /text\/html/); assert.match(g.cache, /s-maxage=300/);
+  const h = g.text;
+  assert.match(h, /<title>Public dove fields in Middle Tennessee: 17-field TWRA map, 2026 season \| Anglers Club<\/title>/);
+  assert.ok(h.includes(`<link rel="canonical" href="${base}/dove-fields">`));
+  for (const f of F) assert.ok(h.includes(f.name.replace("&", "&amp;")) && h.includes(`href="/dove-fields/${f.slug}"`), f.slug);
+  assert.ok(h.includes('id="dmap"') && h.includes("data-filter=\"wma\"") && h.includes("data-filter=\"leased\""));
+  assert.ok(h.includes("leaflet@1.9.4/dist/leaflet.js") && h.includes('integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="') && h.includes('integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="'));
+  assert.ok(h.includes("Checked against TWRA on November 11, 2026") && h.includes("page updated October 6, 2026") && h.includes("crop status as of August 31, 2026"));
+  assert.ok(h.includes("<strong>2026 hunt days:</strong> Closed September 1."), "Haley Jaqueth's days are on the card");
+  ok("the map page lists all 17 fields with their 2026 hunt days, a map, filters, TWRA's dates and pinned Leaflet files");
+
+  const emb = embedded(h);
+  assert.equal(emb.fields.length, 17); assert.equal(emb.focus, "");
+  assert.ok(!/<\/script/i.test(h.match(/id="dove-data">([\s\S]*?)<\/script>/)[1]) && !h.match(/id="dove-data">([\s\S]*?)<\/script>/)[1].includes("<"));
+  const idx = ldOf(h)[0]["@graph"];
+  assert.equal(idx.find((x) => x["@type"] === "ItemList").itemListElement.length, 17); ok("the map's data and the JSON-LD list carry all 17 and hold no raw <");
+
+  for (const f of F) {
+    const r = await get("/dove-fields/" + f.slug);
+    assert.equal(r.status, 200, f.slug);
+    const t = r.text;
+    assert.ok(t.includes(`<h1>${f.name.replace("&", "&amp;")}</h1>`));
+    assert.ok(t.includes(`${f.lat}, ${f.lon}`), `${f.slug} shows its coordinates`);
+    assert.ok(t.includes(`https://www.google.com/maps/dir/?api=1&amp;destination=${f.lat},${f.lon}`));
+    assert.ok(t.includes(`<link rel="canonical" href="${base}/dove-fields/${f.slug}">`));
+    assert.ok(t.includes(f.permit.replace("&", "&amp;")) && t.includes("2026 hunt days"));
+    const place = ldOf(t)[0]["@graph"].find((x) => x["@type"] === "Place");
+    assert.equal(place.geo.latitude, f.lat); assert.equal(place.geo.longitude, f.lon); assert.equal(place.address.addressRegion, "TN");
+    assert.equal(embedded(t).focus, f.slug);
+    assert.equal((t.match(/<li><a href="\/dove-fields\//g) || []).length, 4, "four nearby fields");
+  }
+  ok("every field page has its coordinates, a Google Maps link, permit, hunt days, Place JSON-LD with the same point, and four nearby fields");
+
+  g = await get("/dove-fields/cheatham-wma");
+  assert.ok(/Nearby dove fields[\s\S]*?<a href="\/dove-fields\/cheatham-lake-wma">Cheatham Lake WMA<\/a>/.test(g.text), "Cheatham Lake is the nearest to Cheatham");
+  assert.ok(g.text.includes("Open only for the first dove segment")); ok("the nearest-fields list makes sense (Cheatham and Cheatham Lake are neighbors) and field rules show");
+
+  for (const p of ["/dove-fields/nope", "/dove-fields/constructor", "/dove-fields/__proto__"]) { g = await get(p); assert.equal(g.status, 404, p); assert.match(g.text, /noindex/); }
+  g = await get("/dove-fields/"); assert.equal(g.status, 200); ok("unknown fields are 404 with noindex; a trailing slash works");
+
+  assert.ok(h.includes('<nav><a href="/rivers">Rivers</a> &nbsp; <a href="/shops">Shops</a> &nbsp; <a href="/dove-fields">Dove fields</a></nav>')); ok("the site header links to the dove fields");
+} finally {
+  srv.kill();
+}
+console.log(`dove: ${n} groups ok`);
+process.exit(0);

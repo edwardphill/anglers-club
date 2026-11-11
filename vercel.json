@@ -20,6 +20,8 @@
     { "source": "/rivers/:key", "destination": "/api/page?kind=river&key=:key" },
     { "source": "/shops", "destination": "/api/page?kind=shops" },
     { "source": "/shops/:slug", "destination": "/api/page?kind=shop&slug=:slug" },
+    { "source": "/dove-fields", "destination": "/api/page?kind=dove" },
+    { "source": "/dove-fields/:slug", "destination": "/api/page?kind=dovefield&slug=:slug" },
     { "source": "/sitemap.xml", "destination": "/api/page?kind=sitemap" },
     { "source": "/robots.txt", "destination": "/api/page?kind=robots" },
     { "source": "/llms.txt", "destination": "/api/page?kind=llms" },
@@ -34,7 +36,7 @@
       "includeFiles": "data/flypicker.json"
     },
     "api/page.js": {
-      "includeFiles": "data/flypicker.json"
+      "includeFiles": "data/*.json"
     },
     "api/rivers.js": {
       "includeFiles": "data/flypicker.json"

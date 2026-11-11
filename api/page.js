@@ -2,11 +2,14 @@
 // shop, a directory of each, sitemap.xml, robots.txt and llms.txt. vercel.json rewrites the clean URLs to
 // /api/page?kind=...; the markup lives in lib/pages.js. Only published reports from active shops appear.
 //
-//   /rivers  /rivers/south-holston  /shops  /shops/<slug>  /sitemap.xml  /robots.txt  /llms.txt  /photos/<id>.jpg (api/shops.js)
+//   /rivers  /rivers/south-holston  /shops  /shops/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
+//   /photos/<id>.jpg is api/shops.js. The dove fields come from data/dove-fields.json, so those pages need no database.
 import { q, ensureSchema } from "../lib/db.js";
 import { str } from "../lib/http.js";
 import { LIVE_DAYS, DAY, ymd, shopOut, reportOut, REPORT_COLS } from "../lib/shops.js";
 import { riverPage, shopPage, riversIndex, shopsIndex, sitemap, robots, llms, riverKey } from "../lib/pages.js";
+import { doveIndex, doveFieldPage } from "../lib/dove.js";
+import { doveField } from "../lib/dovedata.js";
 
 // Where the pages say they live (canonical links, sitemap, JSON-LD): SITE_URL, else the production domain
 // Vercel provides, else the host the request came to.
@@ -45,6 +48,12 @@ async function build(req) {
   const html = (body) => ({ status: 200, type: "text/html; charset=utf-8", cache: "public, s-maxage=300, stale-while-revalidate=3600", body });
 
   if (kind === "robots") return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: robots(base) };
+
+  if (kind === "dove") return html(doveIndex({ base }));
+  if (kind === "dovefield") {
+    const f = doveField(str(req.query.slug, 80));
+    return f ? html(doveFieldPage({ base, field: f })) : notFound("That dove field");
+  }
 
   await ensureSchema();
 
