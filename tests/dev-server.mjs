@@ -1,7 +1,7 @@
 // A stand-in for Vercel: serves public/ and runs api/*.js against a local Postgres.
 // Usage: PGTEST="-h /socket -p 54329 -U user -d db" PORT=3999 node tests/dev-server.mjs
 import http from "node:http";
-import { readFileSync, existsSync } from "node:fs";
+import { readFileSync, existsSync, readdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { usePsql } from "./pg-adapter.mjs";
@@ -13,7 +13,7 @@ usePsql((process.env.PGTEST || "").split(" ").filter(Boolean));
 const G = process.env.TEST_GOOGLE ? fakeGoogle() : null;
 if (G) { process.env.GOOGLE_CLIENT_ID = G.clientId; globalThis.__nacJwks = G.jwks; }
 const routes = {};
-for (const name of ["health", "auth", "clubs", "join", "state", "action", "plan"]) {
+for (const name of readdirSync(join(root, "api")).filter((f) => f.endsWith(".js")).map((f) => f.slice(0, -3))) {
   routes[name] = (await import(`../api/${name}.js`)).default;
 }
 

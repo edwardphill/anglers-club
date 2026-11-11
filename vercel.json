@@ -21,6 +21,9 @@
     "api/plan.js": {
       "maxDuration": 60,
       "includeFiles": "data/**"
+    },
+    "api/shops.js": {
+      "includeFiles": "data/flypicker.json"
     }
   },
   "crons": [
