@@ -19,7 +19,7 @@ def mark(d, x, y, s, r):
 im = Image.new("RGB", (1200, 630), GROUND); d = ImageDraw.Draw(im)
 mark(d, 72, 72, 96, 22)
 d.text((190, 98), "Fly AI", font=ImageFont.truetype(F + "Inter-Bold.otf", 44), fill=INK)
-d.text((72, 232), "AI fly guide and", font=ImageFont.truetype(F + "InterDisplay-Bold.otf", 84), fill=INK)
+d.text((72, 232), "Trip planner and", font=ImageFont.truetype(F + "InterDisplay-Bold.otf", 84), fill=INK)
 d.text((72, 330), "fly fishing picker", font=ImageFont.truetype(F + "InterDisplay-Bold.otf", 84), fill=GREEN)
 d.text((72, 462), "Flies ranked for your river and date, with the reports behind", font=ImageFont.truetype(F + "Inter-Regular.otf", 32), fill=MUTED)
 d.text((72, 506), "every pick. River reports and fly shop pages that AI tools can read.", font=ImageFont.truetype(F + "Inter-Regular.otf", 32), fill=MUTED)

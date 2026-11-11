@@ -1,5 +1,5 @@
 // Guides end to end against a real Postgres through psql: a guide adds themself (Google sign-in), lists Instagram and
-// shops, anglers message them in the shared inbox, the public pages and the Trip Planner's context pick them up.
+// shops, anglers message them in the shared inbox, the public pages and the trip planner's context pick them up.
 // Usage: PGTEST="-h /path/to/socket -p 54329 -U user -d dbname" node tests/guides.test.mjs
 import { spawnSync } from "node:child_process";
 import assert from "node:assert/strict";
@@ -155,7 +155,7 @@ r = await P("guide_save", { ...form, city: "Johnson City" }, ann.token); assert.
 r = await P("guide_status", { guide: g.slug, status: "active" }, admin.token); assert.equal(r.status, 200); ok("the admin can hide a profile and only the admin lifts it; other people's profile ids are ignored");
 await P("guide_status", { status: "active" }, bo.token);
 
-// ---- the Trip Planner knows them ----
+// ---- the trip planner knows them ----
 const club = { id: "club-x", name: "Nashville Anglers Club", city: "Nashville", state: "TN", lat: 36.16, lon: -86.78, region: "south", waters: ["Caney Fork"], tz: "America/Chicago" };
 let ctx = await buildContext(club, "2026-11-11", { base: "https://test.example" });
 assert.ok(ctx.includes("## Guides who list themselves on Fly AI"));
@@ -165,7 +165,7 @@ assert.ok(!ctx.includes("Ignore") && !/user_id/.test(ctx));
 await P("guide_status", { guide: g2.slug, status: "hidden" }, admin.token);
 await P("guide_status", { status: "paused" }, ann.token);
 ctx = await buildContext(club, "2026-11-11", { base: "https://test.example" });
-assert.ok(ctx.includes("None near this club yet") && !ctx.includes("Ann Rivers Guide Service")); ok("the Trip Planner's club data lists nearby signed-up guides with Instagram, shops and a link, and says so when there are none");
+assert.ok(ctx.includes("None near this club yet") && !ctx.includes("Ann Rivers Guide Service")); ok("the trip planner's club data lists nearby signed-up guides with Instagram, shops and a link, and says so when there are none");
 const { systemPrompt } = await import("../lib/planner.js");
 const sp = systemPrompt(club, "2026-11-11");
 assert.ok(/who isn't on Fly AI|aren't on Fly AI|they aren't on Fly AI/.test(sp) && /never guess prices/.test(sp)); ok("the planner is told to name signed-up guides first, may search for others, and must label them");

@@ -1,4 +1,4 @@
-// The tools open for anyone: the AI fly guide with no club (a state stands in for it, limited by a hash of the address,
+// The tools open for anyone: the trip planner with no club (a state stands in for it, limited by a hash of the address,
 // never asking for a name), the Club calendar product page, and the product pages that send people to the open tools.
 // Usage: PGTEST="-h /path/to/socket -p 54329 -U user -d dbname" node tests/open-tools.test.mjs
 import { spawnSync } from "node:child_process";
@@ -29,7 +29,7 @@ ok("a state (and an optional town) becomes a place; unknown states and markup ar
 // ---- what the model is told: no club, no members ----
 const t0 = todayIn(nc.tz);
 const sp = systemPrompt(nc, t0);
-assert.ok(/AI fly guide on Fly AI/.test(sp) && /North Carolina/.test(sp));
+assert.ok(/trip planner on Fly AI/.test(sp) && /North Carolina/.test(sp));
 assert.ok(!/private club|members|the club/i.test(sp), "no club wording: " + (sp.match(/.{30}(private club|members|the club).{30}/i) || [])[0]);
 assert.ok(/don't present a Tennessee hatch chart as local/.test(sp), "outside Tennessee it says what the data covers");
 assert.ok(!/don't present a Tennessee/.test(systemPrompt(publicPlace({ state: "TN" }), t0)));
@@ -102,10 +102,10 @@ assert.equal(r.status, 200); const h = String(r.body);
 assert.ok(h.includes("<h1>Club calendar</h1>") && h.includes('rel="canonical" href="https://test.example/clubs"') && h.includes("SoftwareApplication") && h.includes("FAQPage"));
 assert.ok(h.includes('href="/picker"') && h.includes('href="/plan"') && h.includes('href="/stocking"') && h.includes('href="/trout"'), "it says the tools are open and links them");
 assert.ok(h.includes('href="/#start"'));
-const fp = String((await PAGE("flypicker")).body), ag = String((await PAGE("aiguide")).body);
+const fp = String((await PAGE("flypicker")).body), ag = String((await PAGE("tripplanner")).body);
 assert.ok(fp.includes('class="cta" href="/picker"') && /no club, no sign-in/i.test(fp));
-assert.ok(ag.includes('class="cta" href="/plan"') && /no club, no sign-in/i.test(ag) && !/Trip Planner tab of a club/.test(ag));
-ok("the Club calendar page exists, and the Fly Picker and AI fly guide pages open the tools for anyone");
+assert.ok(ag.includes('class="cta" href="/plan"') && /no club, no sign-in/i.test(ag) && !/trip planner tab of a club/.test(ag));
+ok("the Club calendar page exists, and the Fly Picker and trip planner pages open the tools for anyone");
 const sm = String((await PAGE("sitemap")).body), ll = String((await PAGE("llms")).body);
 assert.ok(sm.includes("<loc>https://test.example/clubs</loc>") && ll.includes("[Club calendar](https://test.example/clubs)"));
 ok("the sitemap and llms.txt list the Club calendar");

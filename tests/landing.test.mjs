@@ -1,4 +1,4 @@
-// The product pages (AI fly fishing picker, AI fly guide, river report tool, fly shop discoverability), the home page's search metadata, and the
+// The product pages (AI fly fishing picker, trip planner, river report tool, fly shop discoverability), the home page's search metadata, and the
 // site-wide discoverability files. These pages need no database. Run: node tests/landing.test.mjs
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
@@ -17,7 +17,7 @@ const base = "https://test.example";
 const ld = (html) => JSON.parse(/<script type="application\/ld\+json">(.*?)<\/script>/s.exec(html)[1]);
 let n = 0; const ok = (label) => { n++; console.log("ok", n, label); };
 
-const pages = [["flypicker", "/fly-picker", "AI fly fishing picker"], ["aiguide", "/ai-fly-guide", "AI fly guide"], ["rivertool", "/river-report-tool", "River report tool"], ["forshops", "/for-shops", "Fly shop AI discoverability"]];
+const pages = [["flypicker", "/fly-picker", "AI fly fishing picker"], ["tripplanner", "/trip-planner", "Trip planner"], ["rivertool", "/river-report-tool", "River report tool"], ["forshops", "/for-shops", "Fly shop AI discoverability"]];
 for (const [kind, path, h1] of pages) {
   const r = await call({ kind }); assert.equal(r.status, 200, kind);
   const h = r.body;
@@ -49,11 +49,11 @@ assert.ok(/rules engine, not a chatbot/i.test(h) && /not a chatbot/i.test(h), "s
 assert.ok(ld(h)["@graph"].some((x) => x["@type"] === "SoftwareApplication" && x.featureList.length >= 4));
 ok("the picker page states its real numbers from the data (reports, flies, rivers), links each river, and says it is a rules engine, not a chatbot");
 
-h = (await call({ kind: "aiguide" })).body;
+h = (await call({ kind: "tripplanner" })).body;
 assert.ok(/Stocking and dam generation data cover Tennessee today/.test(h) && /Yes\. Check flows/.test(h), "states its limits");
 assert.ok(h.includes('href="/guides"') && h.includes('href="/fly-picker"'));
 assert.ok(!/Claude|Anthropic|OpenAI|GPT/.test(h), "doesn't name a model vendor");
-ok("the AI fly guide page states its limits (Tennessee stocking and generation, can be wrong), links guides and the picker, and names no model vendor");
+ok("the trip planner page states its limits (Tennessee stocking and generation, can be wrong), links guides and the picker, and names no model vendor");
 
 h = (await call({ kind: "rivertool" })).body;
 assert.ok(/photograph/i.test(h) && /An image alone can't be read/.test(h) && /up to six/.test(h) && /checks every report before it goes live/.test(h), "says what it does, why words matter and who checks");
@@ -77,7 +77,7 @@ assert.ok(rb.includes("User-agent: *\nAllow: /\nDisallow: /api/") && rb.includes
 ok("robots.txt names the search and AI crawlers, each with the /api/ rule repeated (a named group ignores the * group), and points at the sitemap");
 
 const sm = sitemap({ base, shops: [], guides: [], riverDates: {} });
-for (const p of ["/", "/fly-picker", "/ai-fly-guide", "/river-report-tool", "/for-shops"]) assert.ok(sm.includes(`<loc>${base}${p}</loc>`), p);
+for (const p of ["/", "/fly-picker", "/trip-planner", "/river-report-tool", "/for-shops"]) assert.ok(sm.includes(`<loc>${base}${p}</loc>`), p);
 assert.ok(/<loc>https:\/\/test\.example\/fly-picker<\/loc><lastmod>\d{4}-\d{2}-\d{2}<\/lastmod>/.test(sm));
 ok("the sitemap lists the home page and the product pages with a lastmod");
 
@@ -88,7 +88,7 @@ assert.ok(/rules engine, not a chatbot/.test(lt) && /Nothing on this site is a g
 assert.ok(lt.includes("## Fishing tools") && lt.includes("## Hunting") && /transcribes it into a written report for each river/.test(lt));
 ok("llms.txt leads with the one-line description, lists the products with links under fishing and hunting, and says what is and isn't a language model");
 
-assert.deepEqual(NAV.slice(0, 3).map((x) => x[0]), ["/fly-picker", "/ai-fly-guide", "/river-report-tool"]);
+assert.deepEqual(NAV.slice(0, 3).map((x) => x[0]), ["/fly-picker", "/trip-planner", "/river-report-tool"]);
 ok("the site header leads with the three tools");
 
 // ---- the home page ----
@@ -107,11 +107,14 @@ ok("the home page has the title, one description, a canonical, Open Graph image,
 const TOOLS_SRC = /const TOOLS = \[(.*?)\n\];/s.exec(home)[1];
 const toolGroup = (name) => (new RegExp(`\\{ group: "(\\w+)", name: "${name}"`).exec(TOOLS_SRC) || [])[1];
 assert.equal(toolGroup("Public TN dove fields"), "hunting"); assert.equal(toolGroup("TN grouse map"), "hunting");
-for (const n of ["Fly Picker", "AI fly guide", "River report tool", "Trout map", "Fly shops", "Guides", "Logbook"]) assert.equal(toolGroup(n), "fishing", n);
+for (const n of ["Fly Picker", "Trip planner", "River report tool", "Trout map", "Fly shops", "Guides", "Logbook"]) assert.equal(toolGroup(n), "fishing", n);
 const order = [...TOOLS_SRC.matchAll(/name: "([^"]+)"/g)].map((m) => m[1]);
 assert.ok(order.indexOf("Logbook") > order.indexOf("Guides") && order.indexOf("Logbook") === order.indexOf("Guides") + 1, "the Logbook sits at the end of the fishing tools");
 assert.ok(order.indexOf("River report tool") < order.indexOf("Stocking calendar"));
 assert.ok(home.includes('"Fishing"') && home.includes('"Hunting"') && /\.tool:hover\{background:var\(--tc\)/.test(home), "two sections, and a selected card fills with its own color");
+assert.equal(toolGroup("Forum"), "community"); assert.equal(toolGroup("Club calendar"), "community");
+assert.ok(home.includes('"Forums and clubs"') && !/group: "clubs"/.test(TOOLS_SRC) && home.indexOf('["hunting", "Hunting"') < home.indexOf('["community", "Forums and clubs"'), "Forum and Club calendar share the third section");
+assert.ok(JSON.parse(readFileSync(new URL("../vercel.json", import.meta.url), "utf8")).redirects.some((r) => r.source === "/ai-fly-guide" && r.destination === "/trip-planner" && r.permanent), "the old trip planner address redirects for good");
 ok("the home page splits the tools into fishing and hunting (dove and grouse under hunting), lists the river report tool near the top and the Logbook last among the fishing tools, and fills a selected card with its own color");
 
 const png = readFileSync(new URL("../public/og.png", import.meta.url));

@@ -1,4 +1,4 @@
-<title>Fly AI: AI fly guide, AI fly fishing picker and fly shop reports</title>
+<title>Fly AI: AI trip planner, AI fly fishing picker and fly shop reports</title>
 <!--SEO_HEAD-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -359,7 +359,7 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .tm-catches .cm-h b{font-size:1.05rem}
 .tm-empty{color:var(--muted);padding:14px 4px}
 
-/* Trip Planner tab */
+/* Trip planner tab */
 .tp-ask{display:grid;gap:10px;background:var(--paper);border:1px solid var(--brass);box-shadow:0 0 0 3px var(--ground),0 0 0 4px var(--brass);padding:16px 18px}
 .tp-lab{font:500 .66rem/1.3 var(--caps);letter-spacing:.01em;color:var(--brass-ink)}
 .tp-ask textarea{width:100%;font:400 1.15rem/1.45 var(--body);background:var(--ground);border:1px solid var(--hair);border-bottom-color:var(--muted);padding:12px 14px;resize:vertical;color:var(--ink)}
@@ -532,7 +532,7 @@ header.club .kicker{color:var(--green)}
     <div class="brand">
       <span class="patch lg" id="hd-patch" hidden></span>
       <div class="brand-t">
-        <p class="kicker" id="hd-kicker">AI fly guide · fly picker · shop reports</p>
+        <p class="kicker" id="hd-kicker">Trip planner · fly picker · shop reports</p>
         <h1 id="hd-title">Fly AI</h1>
       </div>
     </div>
@@ -549,7 +549,7 @@ header.club .kicker{color:var(--green)}
   <div class="wrap tabs-in">
     <div class="tablist" role="tablist">
       <button class="tab" role="tab" id="t-calendar" data-tab="calendar" aria-selected="true">Calendar</button>
-      <button class="tab" role="tab" id="t-planner" data-tab="planner" aria-selected="false"><span class="long">AI fly guide</span><span class="short">Guide</span></button>
+      <button class="tab" role="tab" id="t-planner" data-tab="planner" aria-selected="false"><span class="long">Trip planner</span><span class="short">Planner</span></button>
       <button class="tab" role="tab" id="t-stocking" data-tab="stocking" aria-selected="false" hidden>Stocking</button>
       <button class="tab" role="tab" id="t-flies" data-tab="flies" aria-selected="false"><span class="long">Fly Picker</span><span class="short">Flies</span></button>
       <button class="tab" role="tab" id="t-trout" data-tab="trout" aria-selected="false"><span class="long">Trout Map</span><span class="short">Trout</span></button>
@@ -704,7 +704,7 @@ header.club .kicker{color:var(--green)}
     </div>
   </section>
 </main>
-<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/ai-fly-guide">AI fly guide</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/clubs">Club calendar</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/forum">Forum</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
+<nav class="pubnav" aria-label="Public pages"><a href="/fly-picker">AI fly fishing picker</a> &middot; <a href="/trip-planner">Trip planner</a> &middot; <a href="/river-report-tool">River report tool</a> &middot; <a href="/clubs">Club calendar</a> &middot; <a href="/rivers">River reports</a> &middot; <a href="/shops">Fly shops</a> &middot; <a href="/guides">Guides</a> &middot; <a href="/forum">Forum</a> &middot; <a href="/dove-fields">Dove fields</a> &middot; <a href="/grouse">Grouse map</a></nav>
 
 <datalist id="waters"></datalist>
 <dialog class="sheet" id="sheet" aria-label="Details"><div class="sh" id="sheet-body"></div></dialog>
@@ -1240,7 +1240,7 @@ function renderHeader(v) {
   const patch = $("#hd-patch");
   patch.hidden = !inClub;
   if (inClub) { patch.className = "patch lg " + c.kinds; patch.innerHTML = `<span>${esc(crestOf(c.name))}</span>${c.at ? `<span class="yr">${new Date(c.at).getFullYear()}</span>` : ""}`; }
-  $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : v === "tools" ? "Open to everyone · no club or sign-in" : "AI fly guide · fly picker · shop reports";
+  $("#hd-kicker").textContent = inClub ? [KINDS_LABEL[c.kinds], c.city && c.state ? c.city + ", " + c.state : c.city].filter(Boolean).join(" · ") : v === "tools" ? "Open to everyone · no club or sign-in" : "Trip planner · fly picker · shop reports";
   $("#hd-title").textContent = inClub ? c.name : "Fly AI";
   $("#home-btn").hidden = !inClub && v !== "tools";
   $("#home-btn").textContent = v === "tools" ? "All tools" : "All clubs";
@@ -1252,7 +1252,7 @@ function renderHeader(v) {
 // the Logbook is a small club feature, so it sits last.
 const TOOLS = [
   { group: "fishing", name: "Fly Picker", text: "The AI fly fishing picker: which flies to tie on, ranked from hatch charts and dated shop and guide reports for your river and date.", tab: "flies", tag: "Open to everyone", c: "#3DDC97", ink: "#0A2A20" },
-  { group: "fishing", name: "AI fly guide", text: "The trip planner: ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "Open to everyone", c: "#0F3D2E", ink: "#FFFFFF" },
+  { group: "fishing", name: "Trip planner", text: "Ask where and when to go. The answer weighs hatches, stocking, flows, weather and guides, and links its sources.", tab: "planner", tag: "Open to everyone", c: "#0F3D2E", ink: "#FFFFFF" },
   { group: "fishing", name: "River report tool", text: "Fly shops photograph the weekly whiteboard. It's transcribed into dated, written river reports that anglers and AI tools can read.", href: "/river-report-tool", tag: "For fly shops", c: "#0E7C66", ink: "#FFFFFF" },
   { group: "fishing", name: "Stocking calendar", text: "Every stocked water on one map, with the dates of the next stocking.", tab: "stocking", tag: "Open to everyone", c: "#BFD8CB", ink: "#0C1A14" },
   { group: "fishing", name: "Trout map", text: "A personal life list of every native trout and char, drawn on a world chart.", tab: "trout", tag: "Open to everyone", c: "#1F5F8B", ink: "#FFFFFF" },
@@ -1262,13 +1262,12 @@ const TOOLS = [
   { group: "hunting", name: "Public TN dove fields", text: "TWRA public dove fields for Regions 1 to 4 on one map, with each field's details.", href: "/dove-fields", tag: "Public page", c: "#9A5B14", ink: "#FFFFFF" },
   { group: "hunting", name: "TN grouse map", text: "A field report on ruffed grouse in Tennessee: range, decline, habitat and sightings on a map.", href: "/grouse", tag: "Public page", c: "#7A3B2E", ink: "#FFFFFF" },
   { group: "community", name: "Forum", text: "Ask about rivers, hatches, flies, gear, hunting and trips, or start a thread. Anyone can read; add a name to post.", href: "/forum", tag: "Open to everyone", c: "#B4532A", ink: "#FFFFFF" },
-  { group: "clubs", name: "Club calendar", text: "Start a club for your city: a shared trip calendar with RSVPs, a thread for each trip, catch reports and a trout life list. Text the link to your crew; no passwords.", act: "new-club", tag: "Start a club", c: "#0F3D2E", ink: "#FFFFFF" },
+  { group: "community", name: "Club calendar", text: "Start a club for your city: a shared trip calendar with RSVPs, a thread for each trip, catch reports and a trout life list. Text the link to your crew; no passwords.", act: "new-club", tag: "Start a club", c: "#0F3D2E", ink: "#FFFFFF" },
 ];
 const TOOL_GROUPS = [
   ["fishing", "Fishing", "Every tool here opens for anyone: no club, no sign-in."],
   ["hunting", "Hunting", "Public land and field reports, open for anyone."],
-  ["community", "Community", "Threads from other anglers and hunters."],
-  ["clubs", "Clubs", "Optional: a shared calendar for your own crew."],
+  ["community", "Forums and clubs", "Talk with other anglers and hunters, or start a club for your own crew."],
 ];
 function toolsSection() {
   const card = (x) => {
@@ -1293,7 +1292,7 @@ function renderHome() {
   const mine = [...S.mine.keys()].map((id) => S.clubs.get(id)).filter(Boolean);
   const others = [...S.clubs.values()].filter((c) => !S.mine.has(c.id) && !S.removed.has(c.id))
     .sort((a, b) => (a.state + a.city + a.name).localeCompare(b.state + b.city + b.name));
-  let html = `<section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p><p class="hero-links"><a href="/fly-picker">AI fly fishing picker</a> · <a href="/ai-fly-guide">AI fly guide</a> · <a href="/river-report-tool">River report tool</a></p></section>`;
+  let html = `<section class="hero"><h2>AI tools for fly fishing</h2><p>A trip planner that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p><p class="hero-links"><a href="/fly-picker">AI fly fishing picker</a> · <a href="/trip-planner">Trip planner</a> · <a href="/river-report-tool">River report tool</a></p></section>`;
   if (mine.length) html += `<section class="home-sec"><h2 class="home-h">Your clubs</h2><ul class="rows">${mine.map((c) => clubRow(c, "Open")).join("")}</ul></section>`;
   html += toolsSection();
   html += `<section class="home-sec"><h2 class="home-h">${mine.length ? "Other clubs" : "Find your club"}</h2>${others.length
@@ -1952,7 +1951,7 @@ function generationFor(text) {
 }
 const genButton = (g) => g ? `<a class="btn ghost small" href="${esc(g.url)}" target="_blank" rel="noopener" title="${esc(g.note || "")}">${esc(g.dam)} generation</a>` : "";
 
-/* ---------- Trip Planner tab ---------- */
+/* ---------- Trip planner tab ---------- */
 // Questions go to /api/plan, which streams the answer back as newline-delimited JSON. The last few
 // questions and answers stay on this device so they're there when you come back.
 const TP = { items: [], scope: "", busy: false, paint: 0, place: null };
@@ -2035,8 +2034,8 @@ function renderPlanner() {
   tpLoad();
   const open = isOpen(), pl = tpPlace();
   $("#tp-lede").textContent = open
-    ? "Ask where and when to go. The AI fly guide weighs what's hatching, the stocking schedule, dam generation, the weather and recent shop reports, and links where each fact came from. Open to everyone; no club or name needed."
-    : "Ask where and when to go. The AI fly guide weighs what's hatching, the stocking schedule, dam generation, the weather and the club's recent reports, and links where each fact came from.";
+    ? "Ask where and when to go. The trip planner weighs what's hatching, the stocking schedule, dam generation, the weather and recent shop reports, and links where each fact came from. Open to everyone; no club or name needed."
+    : "Ask where and when to go. The trip planner weighs what's hatching, the stocking schedule, dam generation, the weather and the club's recent reports, and links where each fact came from.";
   const pb = $("#tp-place"); pb.hidden = !open;
   if (open) {
     const sel = $("#tp-state");
@@ -2062,7 +2061,7 @@ async function tpAsk(question) {
   question = String(question || "").trim();
   if (!question || TP.busy) return;
   const cid = S.clubId;
-  if (cid) { if (!(await ensureIdentity("Add your name to ask the AI fly guide. It's saved on this device, so you only do this once."))) return; }
+  if (cid) { if (!(await ensureIdentity("Add your name to ask the trip planner. It's saved on this device, so you only do this once."))) return; }
   else if (!tpPlace().state) { toast("Pick the state you fish in first."); const sel = $("#tp-state"); if (sel) sel.focus(); return; }
   const history = TP.items.filter((x) => x.a && !x.error && !x.busy).slice(0, 2).reverse().map((x) => ({ q: x.q, a: x.a.slice(0, 2500) }));
   const it = { id: nid("p"), q: question, a: "", cites: [], at: Date.now(), busy: true, status: "Thinking" };
@@ -2398,7 +2397,7 @@ function waterSheetMarkup(id) {
       <dl class="facts"><div><dt>Species</dt><dd>${esc(L.species.join(", "))}</dd></div><div><dt>Region</dt><dd>${esc(D.agency)} Region ${esc(L.region)}</dd></div></dl>
       <div class="host-tools">
         ${S.readOnly || !S.clubId ? "" : `<button class="btn primary small" type="button" data-act="sk-post" data-w="${L.id}">Post a trip here</button>`}
-        ${S.clubId ? "" : `<button class="btn ghost small" type="button" data-act="sk-ask" data-w="${L.id}">Ask the AI fly guide</button>`}
+        ${S.clubId ? "" : `<button class="btn ghost small" type="button" data-act="sk-ask" data-w="${L.id}">Ask the trip planner</button>`}
         <button class="btn ghost small" type="button" data-act="sk-show" data-w="${L.id}">Show on the map</button>
         ${genButton(generationFor(L.name))}
         <a class="btn ghost small" href="${esc(gm)}" target="_blank" rel="noopener">Google Maps</a>
@@ -2425,7 +2424,7 @@ function skLocate() {
     scheduleRender();
   }, () => toast("Couldn't get your location. Allow it in the browser, or keep sorting by soonest."), { timeout: 10000, maximumAge: 600000 });
 }
-// From a water's sheet, hand the question to the AI fly guide (Tennessee is where the schedule is).
+// From a water's sheet, hand the question to the trip planner (Tennessee is where the schedule is).
 function skAsk(id) {
   const L = SK.data.waters[id];
   closeSheet();
@@ -2493,7 +2492,7 @@ function renderTabs() {
   }
   TABS.forEach((t) => { $("#v-" + t).hidden = t !== S.tab; });
   $("#filters").hidden = S.tab !== "calendar";
-  const vh = $("#view-h"), vt = { planner: "AI fly guide", stocking: "The Stocking Ledger", trout: "Trout of the World" }[S.tab];
+  const vh = $("#view-h"), vt = { planner: "Trip planner", stocking: "The Stocking Ledger", trout: "Trout of the World" }[S.tab];
   vh.hidden = !vt; if (vt) vh.textContent = vt;
   $("#kind-chips").hidden = kinds() !== "both";
   document.querySelectorAll("[data-filter]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filter === S.filter)));

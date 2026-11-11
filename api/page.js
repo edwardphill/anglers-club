@@ -3,12 +3,12 @@
 // /api/page?kind=...; the markup lives in lib/pages.js. Only published reports from active shops appear.
 //
 //   /forum  /forum/c/<category>  /forum/t/<slug>-<id>   (the forum; posting is api/forum.js)
-//   /fly-picker  /ai-fly-guide  /for-shops  /rivers  /rivers/south-holston  /shops  /shops/<slug>  /guides  /guides/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
+//   /fly-picker  /trip-planner  /for-shops  /rivers  /rivers/south-holston  /shops  /shops/<slug>  /guides  /guides/<slug>  /dove-fields  /dove-fields/<slug>  /sitemap.xml  /robots.txt  /llms.txt
 //   /photos/<id>.jpg is api/shops.js. The dove fields come from data/dove-fields.json, so those pages need no database.
 import { q, ensureSchema } from "../lib/db.js";
 import { str, siteBase } from "../lib/http.js";
 import { LIVE_DAYS, DAY, ymd, shopOut, reportOut, REPORT_COLS } from "../lib/shops.js";
-import { flyPickerPage, aiGuidePage, riverReportToolPage, forShopsPage, clubsPage } from "../lib/landing.js";
+import { flyPickerPage, tripPlannerPage, riverReportToolPage, forShopsPage, clubsPage } from "../lib/landing.js";
 import { riverPage, shopPage, riversIndex, shopsIndex, guidePage, guidesIndex, sitemap, robots, llms, riverKey } from "../lib/pages.js";
 import { guideOut, resolveShops } from "../lib/guides.js";
 import { doveIndex, doveFieldPage } from "../lib/dove.js";
@@ -56,7 +56,7 @@ async function build(req) {
   if (kind === "robots") return { status: 200, type: "text/plain; charset=utf-8", cache: "public, s-maxage=3600", body: robots(base) };
 
   if (kind === "flypicker") return html(flyPickerPage({ base }));
-  if (kind === "aiguide") return html(aiGuidePage({ base }));
+  if (kind === "tripplanner") return html(tripPlannerPage({ base }));
   if (kind === "rivertool") return html(riverReportToolPage({ base }));
   if (kind === "clubs") return html(clubsPage({ base }));
   if (kind === "forshops") return html(forShopsPage({ base }));

@@ -1,4 +1,4 @@
-// A stand-in for the Messages API for local Trip Planner tests: streams a canned answer with one
+// A stand-in for the Messages API for local trip planner tests: streams a canned answer with one
 // web search and one citation, and saves each request body to MOCK_LOG.
 // Usage: PORT=4999 MOCK_LOG=/tmp/last.json node tests/mock-anthropic.mjs
 import http from "node:http";

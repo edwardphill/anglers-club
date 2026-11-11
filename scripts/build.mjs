@@ -1,6 +1,6 @@
 // Assembles public/index.html from src/club.html, the embedded Fly Picker and the Trout Map
 // checklist; writes the files the tabs load later (coastlines, stocking schedule); and copies the
-// Fly Picker's data and engine where the Trip Planner's server code can use them.
+// Fly Picker's data and engine where the trip planner's server code can use them.
 // Run after editing anything under src/: npm run build
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
@@ -33,11 +33,11 @@ const seoHead = `<meta name="description" content="${E(HOME_DESC)}">
 <link rel="canonical" href="${E(SITE)}/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website"><meta property="og:site_name" content="${E(BRAND)}"><meta property="og:locale" content="en_US"><meta property="og:title" content="${E(HOME_TITLE)}"><meta property="og:description" content="${E(HOME_DESC)}"><meta property="og:url" content="${E(SITE)}/">
-<meta property="og:image" content="${E(SITE)}/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${E(BRAND)}: AI fly guide, fly fishing picker and fly shop reports">
+<meta property="og:image" content="${E(SITE)}/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:image:alt" content="${E(BRAND)}: AI trip planner, fly fishing picker and fly shop reports">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${E(HOME_TITLE)}"><meta name="twitter:description" content="${E(HOME_DESC)}">
 <script type="application/ld+json">${JSON.stringify(homeLd).replace(/</g, "\\u003c")}</script>`;
 const seoStatic = `<section id="seo-static" class="home">
-    <section class="hero"><h2>AI tools for fly fishing</h2><p>An AI fly guide that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p></section>
+    <section class="hero"><h2>AI tools for fly fishing</h2><p>A trip planner that cites its sources, a fly fishing picker that ranks flies for your river and date, and river reports from local fly shops. Add a club calendar for your crew.</p></section>
     <section class="home-sec"><h2 class="home-h">Tools</h2>
       <ul class="tools-grid">${PRODUCTS.map((p, i) => `<li><a class="tool" href="${p.path}"><span class="tool-n">${String(i + 1).padStart(2, "0")}</span><span class="tool-t">${E(p.name)}</span><span class="tool-d">${E(p.text)}</span></a></li>`).join("")}</ul>
       <p class="hint">Also: ${OTHER.map((o) => `<a href="${o.path}">${E(o.name)}</a>`).join(" · ")}</p>
@@ -60,7 +60,7 @@ if (existsSync(artDir)) {
   }
 }
 // Dam generation schedules (data/generation.json) are linked from trips, the Stocking tab and the
-// Trip Planner.
+// trip planner.
 swap("/*SHOPS_UI*/", read("src/shops-ui.js").trimEnd());
 swap("/*WAITLIST_UI*/", read("src/waitlist-ui.js").trimEnd());
 swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() +
@@ -94,12 +94,12 @@ writeFileSync(join(root, "public/index.html"), html);
 // The Trout Map's coastlines load with that tab, not with the page.
 copyFileSync(join(root, "src/trout-land.js"), join(root, "public/trout-land.js"));
 // The Stocking tab's schedule loads with that tab too. data/stocking-tn.json is the source; the
-// Trip Planner reads the same file on the server.
+// trip planner reads the same file on the server.
 writeFileSync(join(root, "public/stocking-tn.js"),
   "// Tennessee trout stocking schedule (TWRA). Generated from data/stocking-tn.json by npm run build.\n" +
   "window.STOCKING = " + read("data/stocking-tn.json").trim() + ";\n");
 
-// The Trip Planner runs the Fly Picker's engine on the server: copy its data and engine out of
+// The trip planner runs the Fly Picker's engine on the server: copy its data and engine out of
 // the embedded Fly Picker so the two never drift apart.
 const fp = FP.scripts;
 const dataLine = fp.split("\n").find((l) => l.startsWith("const DATA = "));

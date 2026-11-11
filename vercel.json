@@ -3,6 +3,9 @@
   "framework": null,
   "buildCommand": "npm run build",
   "outputDirectory": "public",
+  "redirects": [
+    { "source": "/ai-fly-guide", "destination": "/trip-planner", "permanent": true }
+  ],
   "rewrites": [
     {
       "source": "/trout",
@@ -21,7 +24,7 @@
       "destination": "/index.html"
     },
     { "source": "/fly-picker", "destination": "/api/page?kind=flypicker" },
-    { "source": "/ai-fly-guide", "destination": "/api/page?kind=aiguide" },
+    { "source": "/trip-planner", "destination": "/api/page?kind=tripplanner" },
     { "source": "/river-report-tool", "destination": "/api/page?kind=rivertool" },
     { "source": "/for-shops", "destination": "/api/page?kind=forshops" },
     { "source": "/clubs", "destination": "/api/page?kind=clubs" },
@@ -49,6 +52,9 @@
     },
     "api/shops.js": {
       "includeFiles": "data/flypicker.json"
+    },
+    "api/forum.js": {
+      "includeFiles": "data/*.json"
     },
     "api/page.js": {
       "includeFiles": "data/*.json"

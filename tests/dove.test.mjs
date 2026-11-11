@@ -91,7 +91,7 @@ try {
   for (const p of ["/dove-fields/nope", "/dove-fields/constructor", "/dove-fields/__proto__"]) { g = await get(p); assert.equal(g.status, 404, p); assert.match(g.text, /noindex/); }
   g = await get("/dove-fields/"); assert.equal(g.status, 200); ok("unknown fields are 404 with noindex; a trailing slash works");
 
-  assert.ok(h.includes('<nav><a href="/fly-picker">Fly Picker</a> <a href="/ai-fly-guide">AI fly guide</a> <a href="/river-report-tool">River report tool</a> <a href="/rivers">Rivers</a> <a href="/shops">Shops</a> <a href="/guides">Guides</a> <a href="/forum">Forum</a></nav>') && h.includes('<a href="/dove-fields">Public Tennessee dove fields</a>') && h.includes('<a href="/grouse">Tennessee grouse map</a>')); ok("the site header leads with the products and the footer links the dove fields and the grouse map");
+  assert.ok(h.includes('<nav><a href="/fly-picker">Fly Picker</a> <a href="/trip-planner">Trip planner</a> <a href="/river-report-tool">River report tool</a> <a href="/rivers">Rivers</a> <a href="/shops">Shops</a> <a href="/guides">Guides</a> <a href="/forum">Forum</a></nav>') && h.includes('<a href="/dove-fields">Public Tennessee dove fields</a>') && h.includes('<a href="/grouse">Tennessee grouse map</a>')); ok("the site header leads with the products and the footer links the dove fields and the grouse map");
 } finally {
   srv.kill();
 }

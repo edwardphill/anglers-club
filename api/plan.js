@@ -1,4 +1,4 @@
-// POST /api/plan { club, place, question, history: [{ q, a }] }: the AI fly guide (the Trip Planner).
+// POST /api/plan { club, place, question, history: [{ q, a }] }: the trip planner (the trip planner).
 // In a club it needs a saved name and answers from the club's data. With no club it is open to anyone: { place: { state,
 // city? } } stands in for the club, and an anonymous caller is limited by a hash of their address instead of a name.
 // Errors before the answer starts come back as JSON; the answer itself streams as
@@ -9,7 +9,7 @@ import { requireUser, currentUser, limit } from "../lib/auth.js";
 import { publicPlace } from "../lib/places.js";
 import { buildContext, systemPrompt, streamAnswer, todayIn } from "../lib/planner.js";
 
-const NO_KEY = "The AI fly guide isn't switched on yet. The club organizer adds an Anthropic API key in Vercel (Settings, Environment Variables, ANTHROPIC_API_KEY) and redeploys.";
+const NO_KEY = "The trip planner isn't switched on yet. The club organizer adds an Anthropic API key in Vercel (Settings, Environment Variables, ANTHROPIC_API_KEY) and redeploys.";
 
 export default async function handler(req, res) {
   const started = Date.now();
@@ -27,8 +27,8 @@ export default async function handler(req, res) {
       const user = await requireUser(req);
       const [row] = await q("select * from clubs where id = $1", [clubId]);
       if (!row) throw new HttpError(404, "That club isn't here anymore.");
-      await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of AI fly guide questions for you. It resets tomorrow.");
-      await limit(`plan-club:${clubId}`, 150, 24 * 3600e3, "The club has used its AI fly guide questions for today. They reset tomorrow.");
+      await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of trip planner questions for you. It resets tomorrow.");
+      await limit(`plan-club:${clubId}`, 150, 24 * 3600e3, "The club has used its trip planner questions for today. They reset tomorrow.");
       club = { ...row, waters: Array.isArray(row.waters) ? row.waters : [] };
     } else {
       // Open to anyone: a state stands in for the club. A named user gets the same daily allowance as in a club;
@@ -36,11 +36,11 @@ export default async function handler(req, res) {
       club = publicPlace(b.place);
       if (!club) throw new HttpError(400, "Pick the state you fish in first.");
       const user = await currentUser(req);
-      if (user) await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of AI fly guide questions for you. It resets tomorrow.");
-      else await limit(`plan-anon:${clientKey(req)}`, 8, 24 * 3600e3, "That's the day's limit of AI fly guide questions from this device. It resets tomorrow. Add a name to ask more.");
-      await limit("plan-open", 300, 24 * 3600e3, "The AI fly guide has hit its limit for today. It resets tomorrow.");
+      if (user) await limit(`plan:${user.id}`, 25, 24 * 3600e3, "That's the day's limit of trip planner questions for you. It resets tomorrow.");
+      else await limit(`plan-anon:${clientKey(req)}`, 8, 24 * 3600e3, "That's the day's limit of trip planner questions from this device. It resets tomorrow. Add a name to ask more.");
+      await limit("plan-open", 300, 24 * 3600e3, "The trip planner has hit its limit for today. It resets tomorrow.");
     }
-    await limit("plan-all", 600, 24 * 3600e3, "The AI fly guide has hit its limit for today. It resets tomorrow.");
+    await limit("plan-all", 600, 24 * 3600e3, "The trip planner has hit its limit for today. It resets tomorrow.");
 
     const t0 = todayIn(club.tz);
     const context = await buildContext(club, t0, { base: siteBase(req) });
