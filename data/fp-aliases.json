@@ -1,0 +1,375 @@
+{
+ "_about": "Fly phrases the shop and guide reports in data/fp-reports use that the Fly Picker's eval/aliases.json doesn't have yet. Same rules as there: a catalog fly when the pattern is in the catalog (color and bead variants included), else the food it imitates when the report makes that clear, else the type. Named local patterns whose food or type the report doesn't pin down go under uncataloged.",
+ "phrases": {
+  "american pheasant tail": [
+   "pheasant_tail"
+  ],
+  "ants": [
+   "food:ant"
+  ],
+  "baetis nymph": [
+   "food:bwo family:nymph"
+  ],
+  "batman nymph": [
+   "nymphs"
+  ],
+  "beetle": [
+   "food:beetle"
+  ],
+  "beetles": [
+   "food:beetle"
+  ],
+  "birchell's hatch midge": [
+   "food:midge family:dry",
+   "food:midge family:emerger"
+  ],
+  "black dungeon": [
+   "sex_dungeon",
+   "mini_dungeon"
+  ],
+  "black midge": [
+   "food:midge family:nymph"
+  ],
+  "bloody mary": [
+   "nymphs"
+  ],
+  "bullet quill": [
+   "nymphs"
+  ],
+  "bwo and hendrickson flymphs": [
+   "family:wet"
+  ],
+  "bwo cdc comparadun": [
+   "bwo_comparadun"
+  ],
+  "bwo cdc sparkle dun": [
+   "bwo_sparkle_dun"
+  ],
+  "bwo dry": [
+   "food:bwo family:dry"
+  ],
+  "bwo dun": [
+   "food:bwo family:dry"
+  ],
+  "bwo nymphs": [
+   "food:bwo family:nymph"
+  ],
+  "bwo parachute": [
+   "bwo_parachute"
+  ],
+  "bwo puff daddy": [
+   "food:bwo family:dry"
+  ],
+  "bwo split case nymph": [
+   "split_case_bwo"
+  ],
+  "caddis dry": [
+   "family:dry food:caddis"
+  ],
+  "caddis nymph": [
+   "food:caddis family:nymph"
+  ],
+  "cdc emerger": [
+   "family:emerger"
+  ],
+  "cdc pheasant tail jig": [
+   "jig_pheasant_tail"
+  ],
+  "cdc sulphur dun": [
+   "food:sulfur family:dry"
+  ],
+  "cdc thorax bwo": [
+   "thorax_bwo"
+  ],
+  "chubby": [
+   "chubby_chernobyl",
+   "micro_chubby"
+  ],
+  "copper and black midge": [
+   "food:midge family:nymph"
+  ],
+  "cranefly": [
+   "food:cranefly"
+  ],
+  "cream caddis": [
+   "family:dry food:caddis"
+  ],
+  "cripple sulphur": [
+   "food:sulfur family:emerger"
+  ],
+  "croston's fmj": [
+   "nymphs"
+  ],
+  "dark elk hair caddis": [
+   "elk_hair_caddis"
+  ],
+  "dark soft hackles": [
+   "family:wet"
+  ],
+  "donnie's quill body": [
+   "sulfur_nymph"
+  ],
+  "dungeon": [
+   "sex_dungeon",
+   "mini_dungeon"
+  ],
+  "eggs": [
+   "food:egg"
+  ],
+  "english pheasant tail": [
+   "pheasant_tail"
+  ],
+  "firestarter perdigon": [
+   "perdigon"
+  ],
+  "foam stone": [
+   "foam_golden_stone"
+  ],
+  "gold kreelex": [
+   "kreelex"
+  ],
+  "hair-winged drake": [
+   "family:dry"
+  ],
+  "hendrickson dry": [
+   "food:hendrickson family:dry"
+  ],
+  "hickey's auto emerger": [
+   "family:emerger"
+  ],
+  "hopper": [
+   "food:hopper"
+  ],
+  "hot bead pheasant tail": [
+   "pheasant_tail"
+  ],
+  "hot bead pt": [
+   "pheasant_tail"
+  ],
+  "hot head pt": [
+   "pheasant_tail"
+  ],
+  "jake's fluffer": [
+   "food:sulfur family:dry"
+  ],
+  "jigged leeches": [
+   "food:leech"
+  ],
+  "juan's jiggidy jedi": [
+   "nymphs"
+  ],
+  "klinkhammer": [
+   "klinkhamer"
+  ],
+  "leeches": [
+   "food:leech"
+  ],
+  "master baetis": [
+   "food:bwo family:nymph"
+  ],
+  "mayfly dries": [
+   "family:dry"
+  ],
+  "micro eggs": [
+   "food:egg"
+  ],
+  "micro leeches": [
+   "food:leech"
+  ],
+  "micro olive bullet": [
+   "nymphs"
+  ],
+  "midge dries": [
+   "food:midge family:dry"
+  ],
+  "midge pupa": [
+   "food:midge"
+  ],
+  "mini hopper": [
+   "food:hopper"
+  ],
+  "mops": [
+   "mop_fly"
+  ],
+  "olive and starling soft hackle": [
+   "family:wet"
+  ],
+  "olive bullet": [
+   "nymphs"
+  ],
+  "olive hot spot": [
+   "nymphs"
+  ],
+  "olive micro bullet": [
+   "nymphs"
+  ],
+  "olive midge": [
+   "food:midge family:nymph"
+  ],
+  "olive puff daddy": [
+   "food:bwo family:dry"
+  ],
+  "olive zebra midge": [
+   "zebra_midge"
+  ],
+  "olson's perdigon": [
+   "perdigon"
+  ],
+  "parachute cahill": [
+   "parachute_light_cahill"
+  ],
+  "parachute march brown": [
+   "march_brown_parachute"
+  ],
+  "parachute mayflies": [
+   "family:dry"
+  ],
+  "parachute sulphur": [
+   "sulfur_parachute"
+  ],
+  "pheasant tail frenchie": [
+   "frenchie"
+  ],
+  "pink albert": [
+   "food:pmd family:dry"
+  ],
+  "pink eggs": [
+   "food:egg"
+  ],
+  "pink y2k": [
+   "y2k_bug"
+  ],
+  "pmd": [
+   "food:pmd family:dry"
+  ],
+  "pt frenchie": [
+   "frenchie"
+  ],
+  "pt soft hackle": [
+   "pt_soft_hackle"
+  ],
+  "purple midge": [
+   "food:midge family:nymph"
+  ],
+  "purple thread frenchie": [
+   "frenchie"
+  ],
+  "purple zebra midge": [
+   "zebra_midge"
+  ],
+  "quill body nymph": [
+   "nymphs"
+  ],
+  "quill body perdigon": [
+   "perdigon"
+  ],
+  "quill jig nymph": [
+   "nymphs"
+  ],
+  "quill perdigon": [
+   "perdigon"
+  ],
+  "rainbow sow bug": [
+   "food:sowbug"
+  ],
+  "rc leggy": [
+   "nymphs"
+  ],
+  "redneck pheasant tail": [
+   "pheasant_tail"
+  ],
+  "reversing caddis": [
+   "family:dry food:caddis"
+  ],
+  "rod's bwo nymph": [
+   "food:bwo family:nymph"
+  ],
+  "rosa's pt": [
+   "pheasant_tail"
+  ],
+  "soft hackle baetis": [
+   "family:wet"
+  ],
+  "solitude baetis nymph": [
+   "food:bwo family:nymph"
+  ],
+  "sow bug": [
+   "food:sowbug"
+  ],
+  "spanish bullet": [
+   "nymphs"
+  ],
+  "split case": [
+   "split_case_pmd",
+   "split_case_bwo"
+  ],
+  "squirmy worm": [
+   "squirmy_wormy"
+  ],
+  "stripper midge": [
+   "food:midge family:nymph"
+  ],
+  "sulphur cdc comparadun": [
+   "sulfur_comparadun"
+  ],
+  "sulphur cdc sparkle dun": [
+   "sulfur_sparkle_dun"
+  ],
+  "sulphur comparadun": [
+   "sulfur_comparadun"
+  ],
+  "sulphur deer hair comparadun": [
+   "sulfur_comparadun"
+  ],
+  "sulphur dry": [
+   "food:sulfur family:dry"
+  ],
+  "sulphur dry flies": [
+   "food:sulfur family:dry"
+  ],
+  "sulphur dun": [
+   "food:sulfur family:dry"
+  ],
+  "sulphur nymph": [
+   "sulfur_nymph"
+  ],
+  "sulphur puff daddy": [
+   "food:sulfur family:dry"
+  ],
+  "sulphur sparkle dun": [
+   "sulfur_sparkle_dun"
+  ],
+  "swisher's caddis": [
+   "family:dry food:caddis"
+  ],
+  "trude": [
+   "lime_trude",
+   "royal_trude"
+  ],
+  "tungsten eggs": [
+   "food:egg"
+  ],
+  "tungsten soft hackle": [
+   "family:wet"
+  ],
+  "weiss cdc baetis": [
+   "food:bwo family:dry"
+  ],
+  "weiss dark": [
+   "nymphs"
+  ],
+  "weiss light": [
+   "nymphs"
+  ],
+  "white dungeon": [
+   "sex_dungeon",
+   "mini_dungeon"
+  ],
+  "yellow y2k": [
+   "y2k_bug"
+  ]
+ },
+ "uncataloged": {
+  "unholy diver": "streamer, not in the catalog; the report gives no pattern details"
+ }
+}

@@ -1,6 +1,19 @@
 {
   "_about": "Local additions to the embedded Fly Picker, merged into its data by npm run build (scripts/fp-local.mjs). They live here, not in src/flypicker/, so syncing the Fly Picker from its own repo does not drop them. Every plan below is our reading of the cited sources: fly ids must exist in the Fly Picker's catalog (the build checks), months are 1-12, and dries is 'no' (leave them home), 'hatch-only' (only when fish are rising) or 'yes'.",
   "refs": {
+    "fb_mar24": { "site": "The Fly Box on the South Holston", "url": "https://www.theflyboxtn.com/riverreports/march2024" },
+    "fb_apr25": { "site": "The Fly Box on the South Holston", "url": "https://www.theflyboxtn.com/riverreports/april2025-sheh5-bz2kg-msrhe-yc4r6" },
+    "fb_may25": { "site": "The Fly Box on the South Holston", "url": "https://www.theflyboxtn.com/riverreports/may2025-sheh5-bz2kg-msrhe-yc4r6-4sjrk" },
+    "fb_fall": { "site": "The Fly Box on the South Holston", "url": "https://www.theflyboxtn.com/riverreports/afalloverview/report-sheh5-bz2kg-msrhe-yc4r6-4sjrk-t9x8k" },
+    "sha_jul26": { "site": "South Holston Angler", "url": "https://www.southholstonangler.com/july-2026-south-holston-and-watauga-river-fishing-report" },
+    "sha_aug26": { "site": "South Holston Angler", "url": "https://www.southholstonangler.com/august-2026-south-holston-and-watauga-river-fishing-report-big-brown-trout-flies-and-river-conditions" },
+    "to_0313": { "site": "Tellico Outfitters", "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/3132026-1" },
+    "to_0620": { "site": "Tellico Outfitters", "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/62025" },
+    "to_1008": { "site": "Tellico Outfitters", "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-100825" },
+    "to_0814": { "site": "Tellico Outfitters", "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-81425" },
+    "hga_0114": { "site": "Hiwassee Angler (shop blog)", "url": "https://hiwasseeangler.blogspot.com/2013/01/fishing-report.html" },
+    "hga_0415": { "site": "Hiwassee Angler (shop blog)", "url": "https://hiwasseeangler.blogspot.com/2013/04/fishing-report.html" },
+    "hrg_0124": { "site": "Hiwassee River Guides (blog)", "url": "http://hiwasseeriverguides.blogspot.com/2014/01/hiwassee-river-report-jan-24-2014.html" },
     "pf_tellico": { "site": "Perfect Fly Store", "url": "https://perfectflystore.com/your-streams/fly-fishing-tellico-river-tennessee/" },
     "pf_tellico_permit": { "site": "Perfect Fly Store", "url": "https://perfectflystore.com/?p=2713" },
     "tu_tellico": { "site": "Tellico Outfitters (Hiwassee TU)", "url": "https://hiwassee.tu.org/node/137360" },
@@ -56,7 +69,11 @@
         { "months": [9], "text": "Few stocked fish are left by early September. Wild rainbows and brook trout in the tributaries (North River, Bald River) are eating well. Small dries (stimulators, parachute Adams, purple haze, Neversink caddis) with a nymph a foot or so underneath.", "ref": "tu_tellico" },
         { "months": [10], "text": "Delayed harvest opens October 1. Blue-winged olives and mahogany duns (#18-20) hatch early to mid October.", "ref": "pf_tellico" },
         { "months": [10, 11], "text": "Needle stoneflies hatch. Big browns spawn in the fall, which makes them easier to catch; leave fish on redds alone.", "ref": "pf_tellico" },
-        { "months": [3, 4, 5, 10, 11], "text": "Sculpin and black-nosed dace streamers work best when the water is slightly off color.", "ref": "pf_tellico" }
+        { "months": [3, 4, 5, 10, 11], "text": "Sculpin and black-nosed dace streamers work best when the water is slightly off color.", "ref": "pf_tellico" },
+        { "months": [3], "text": "Mid-March: Quill Gordons, March browns, tan and black caddis and blue-winged olives are hatching. The shop lists pale olive or gray mayfly dries and tan or black elk hair caddis on top, with Blowtorches, Walt's worms and Pat's rubber legs below.", "ref": "to_0313", "date": "2026-03-13" },
+        { "months": [6], "text": "June: yellow sallies, golden stoneflies, salmonflies, tan caddis and cahill mayflies. The shop lists Neversink caddis, Klinkhammers and Chubby Chernobyls on top, with Walt's worms, Pat's rubber legs and Blowtorches below.", "ref": "to_0620", "date": "2025-06-20" },
+        { "months": [8], "text": "August: yellow sallies, golden stoneflies, tan caddis and sulphurs. The shop lists Neversink caddis, ants and beetles on top, with Walt's worms, quill perdigons and Rainbow Warriors below.", "ref": "to_0814", "date": "2025-08-14" },
+        { "months": [10], "text": "October: blue-winged olives, midges, tan caddis and October caddis. The shop lists Griffith's gnats, Purple Haze and orange stimulators on top, with eggs, mops, perdigons and jigged leeches below (stocked fish are around).", "ref": "to_1008", "date": "2025-10-08" }
       ],
       "facts": [
         { "text": "Delayed harvest runs October 1 to mid-March: catch and release, single-hook artificial flies and lures only.", "ref": "pf_tellico" },
@@ -185,7 +202,10 @@
         { "months": [9], "text": "Often too warm for active feeding: ~68°F near the powerhouse in late September 2026, with near-constant generation expected. Second brood of olives mid-month; white mayflies at dark.", "ref": "twra_weekly", "date": "2026-10-01" },
         { "months": [10], "text": "Delayed harvest opened October 1 with about 4,000 stocked rainbows; tens of thousands of browns and rainbows were scheduled for October and November. The Great Autumn Brown Sedge (#10) hatches, and dry-dropper and double-nymph rigs were working.", "ref": "twra_weekly", "date": "2026-10-01" },
         { "months": [11], "text": "Little brown caddis hatch into mid-November.", "ref": "pf_hiwassee" },
-        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Generation decides the day: wade only with the turbines off; one turbine is wadeable with care; with the water running, float or fish the edges. When it is high, streamers work because of the forage fish.", "ref": "pf_hiwassee" }
+        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Generation decides the day: wade only with the turbines off; one turbine is wadeable with care; with the water running, float or fish the edges. When it is high, streamers work because of the forage fish.", "ref": "pf_hiwassee" },
+        { "months": [1], "text": "Winter one year: white and olive buggers and pink or yellow Y2K bugs were the bite, with blue-winged olives and winter stoneflies hatching but drawing less attention.", "ref": "hga_0114", "date": "2013-01-14" },
+        { "months": [1, 2], "text": "Winter: a guide fished size 6 zonkers and buggers in a range of colors while waiting on the shad kill.", "ref": "hrg_0124", "date": "2014-01-24" },
+        { "months": [4], "text": "April: size 16 Hendricksons, size 20 blue-winged olives and size 18 dark elk hair caddis were the dry flies. Olive buggers with nymph droppers and dark soft hackles filled in.", "ref": "hga_0415", "date": "2013-04-15" }
       ],
       "facts": [
         { "text": "Delayed harvest runs October 1 through February from Apalachia Powerhouse down to the L&N Railroad Bridge: catch and release, artificial lures only.", "ref": "twra_weekly" },
@@ -464,7 +484,13 @@
         { "months": [6, 7, 8, 9], "text": "Terrestrials from mid-June to the first frost: Japanese beetles (#14-16), CDC beetles and black ants (#16-18). Trout rise to them irregularly, so prospect under overhanging branches and along the banks with a long leader.", "ref": "ff_soho_hatches" },
         { "months": [9, 10], "text": "Little black caddis, then cinnamon caddis, through late October.", "ref": "pfs_soho" },
         { "months": [10, 11], "text": "Large browns are taken on sculpin streamers before they spawn, best in slightly off-color water, low light and rain. Browns in the big tailwaters spawn from mid-November into December.", "ref": "pfs_soho" },
-        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Scuds, sowbugs, cranefly larvae and midges are in the river all year; the slower flats hold more scuds and sowbugs than sulphur nymphs.", "ref": "ff_soho_sulphur" }
+        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "Scuds, sowbugs, cranefly larvae and midges are in the river all year; the slower flats hold more scuds and sowbugs than sulphur nymphs.", "ref": "ff_soho_sulphur" },
+        { "months": [3], "text": "March: blue-winged olives show on falling water with an occasional sulphur, and bugs are otherwise scarce. One shop found bottom-bounce nymph rigs fished best.", "ref": "fb_mar24", "date": "2024-03-29" },
+        { "months": [4], "text": "April: small black caddis (#18-20) are the dry-fly angler's best bet, in early mornings after the pulses and in the evening. The shop's favorite rig is a sulphur sparkle dun with an olive RS2 or Morgan's Midge trailing it.", "ref": "fb_apr25", "date": "2025-05-05" },
+        { "months": [5], "text": "Mid to late May: sulphurs are solid most afternoons after 3 p.m. The shop fishes a sulphur dry over a #20 pheasant tail or midge.", "ref": "fb_may25", "date": "2025-07-01" },
+        { "months": [7], "text": "July: on the upper river sulphurs come off around 2 p.m. on many days. One guide service starts with pheasant tail and split case nymphs, a #20 midge under a beetle or Chubby Chernobyl, and sulphur comparaduns.", "ref": "sha_jul26", "date": "2026-07-10" },
+        { "months": [8], "text": "August: sulphur hatches get less steady once air temperatures pass 80°F. The same guide service expects to nymph (midges, BWO nymphs, scuds, sowbugs) or fish streamers, with beetles and small Chubby Chernobyls as the dries.", "ref": "sha_aug26", "date": "2026-08-14" },
+        { "months": [12], "text": "December: blue-winged olives are the dry-fly game. The shop fished a size 18-20 BWO dun or CDC sparkle dun with a midge or CDC BWO emerger suspended below.", "ref": "fb_fall", "date": "2026-01-05" }
       ],
       "facts": [
         { "text": "16 to 22 inch protected length range on all trout in the tailwater below South Holston Dam: seven trout a day, and only one may be over 22 inches.", "ref": "twra_regs" },
@@ -573,7 +599,11 @@
         { "months": [4, 5, 6, 7, 8, 9], "text": "Sulphurs come off and on from late April or May into early September, most consistently through that stretch, and thin out in summer.", "ref": "tt_soho_watauga" },
         { "months": [7, 8], "text": "Summer: sulphurs thin out and trout shift to small midges, scuds and sowbugs; beetles and ants are an option. Lower flows allow sight fishing to large browns.", "ref": "tt_soho_watauga" },
         { "months": [9, 10, 11], "text": "The largest browns move upriver toward winter spawning grounds and feed heavily first; expect olives, midges and an occasional sulphur. Streamers are especially productive.", "ref": "tt_soho_watauga" },
-        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "The largest browns mostly ignore hatches and rarely feed at the surface; when sulphurs and caddis hatch together, anything can happen. Scuds are best from May.", "ref": "ff_watauga_caddis" }
+        { "months": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "text": "The largest browns mostly ignore hatches and rarely feed at the surface; when sulphurs and caddis hatch together, anything can happen. Scuds are best from May.", "ref": "ff_watauga_caddis" },
+        { "months": [3, 4], "text": "March has little hatching. The Grannom caddis hatch comes in April, in some years with a Mother's Day caddis hatch after it. Until then, larger streamers on sink-tip or full-sink lines fish well on higher flows.", "ref": "fb_mar24", "date": "2024-03-29" },
+        { "months": [4], "text": "April: in one year the Grannom hatch came and went quickly, blue-winged olives were described as phenomenal in the riffles of the upper and middle river, and sulphurs and PMDs were just starting.", "ref": "fb_apr25", "date": "2025-05-05" },
+        { "months": [7, 8], "text": "Late July and early August: beetles, ants and small hoppers are productive. Sulphurs hatch in the late morning, mostly between the Stoney Creek confluence and the Lovers Lane bridge.", "ref": "sha_jul26", "date": "2026-07-10" },
+        { "months": [10, 11], "text": "October and November: small blue-winged olives and midge emergers, on long leaders and light tippet for selective fish.", "ref": "fb_fall", "date": "2026-01-05" }
       ],
       "facts": [
         { "text": "Quality Trout Fishing Area from Smallings Bridge down to the CSX railroad bridges: 14-inch minimum, two trout a day, no bait. Check the current TWRA guide for the limits elsewhere on the river.", "ref": "twra_regs" },

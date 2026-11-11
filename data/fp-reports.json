@@ -1,0 +1,5314 @@
+{
+ "_about": "Built by scripts/fp_reports.py from data/fp-reports/*.csv and data/fp-aliases.json; don't edit by hand. Same shape as the Fly Picker's sources.json entries: 'said' is the report's own words, 'match' the catalog flies it stands for, 'named' whether the report named the pattern itself.",
+ "sources": [
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-10-07",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/september-south-holston-watauga-fishing-report",
+   "picks": [
+    {
+     "said": "donnie's quill body",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "sow bug",
+     "match": [
+      "food:sowbug"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur deer hair comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo dun",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    },
+    {
+     "said": "mini dungeon",
+     "match": [
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "sparkle minnow",
+     "match": [
+      "sparkle_minnow"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-10-07",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/september-south-holston-watauga-fishing-report",
+   "picks": [
+    {
+     "said": "girdle bug",
+     "match": [
+      "girdle_bug"
+     ],
+     "named": true
+    },
+    {
+     "said": "pt frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss light",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "pt soft hackle",
+     "match": [
+      "pt_soft_hackle"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-09-18",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-september/",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur dry",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "scud",
+     "match": [
+      "food:scud"
+     ],
+     "named": false
+    },
+    {
+     "said": "sow bug",
+     "match": [
+      "food:sowbug"
+     ],
+     "named": false
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "squirmy worm",
+     "match": [
+      "squirmy_wormy"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-09-18",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-september/",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "midge dries",
+     "match": [
+      "food:midge family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-09-02",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports//august-south-holston-watauga-river-fishing-report",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "split case",
+     "match": [
+      "split_case_pmd",
+      "split_case_bwo"
+     ],
+     "named": true
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur deer hair comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-09-02",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports//august-south-holston-watauga-river-fishing-report",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss light",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "solitude baetis nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "girdle bug",
+     "match": [
+      "girdle_bug"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "jig pheasant tail",
+     "match": [
+      "jig_pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill body perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "pt soft hackle",
+     "match": [
+      "pt_soft_hackle"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-08-19",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-august/",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur dry",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "sow bug",
+     "match": [
+      "food:sowbug"
+     ],
+     "named": false
+    },
+    {
+     "said": "scud",
+     "match": [
+      "food:scud"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-08-19",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-august/",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "caddis dry",
+     "match": [
+      "family:dry food:caddis"
+     ],
+     "named": false
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "baetis nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "caddis nymph",
+     "match": [
+      "food:caddis family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-08-14",
+   "kind": "report",
+   "site": "southholstonangler.com",
+   "url": "https://www.southholstonangler.com/august-2026-south-holston-and-watauga-river-fishing-report-big-brown-trout-flies-and-river-conditions",
+   "picks": [
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "rod's bwo nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo split case nymph",
+     "match": [
+      "split_case_bwo"
+     ],
+     "named": true
+    },
+    {
+     "said": "scud",
+     "match": [
+      "food:scud"
+     ],
+     "named": false
+    },
+    {
+     "said": "beetle",
+     "match": [
+      "food:beetle"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-08-14",
+   "kind": "report",
+   "site": "southholstonangler.com",
+   "url": "https://www.southholstonangler.com/august-2026-south-holston-and-watauga-river-fishing-report-big-brown-trout-flies-and-river-conditions",
+   "picks": [
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "beetle",
+     "match": [
+      "food:beetle"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-07-22",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/7222026",
+   "picks": [
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "hot bead pt",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "micro leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "stimulator",
+     "match": [
+      "stimulator"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-07-13",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-july/",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur dry",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "scud",
+     "match": [
+      "food:scud"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-07-13",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-july/",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur dry",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "baetis nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-07-10",
+   "kind": "report",
+   "site": "southholstonangler.com",
+   "url": "https://www.southholstonangler.com/july-2026-south-holston-and-watauga-river-fishing-report",
+   "picks": [
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "split case",
+     "match": [
+      "split_case_pmd",
+      "split_case_bwo"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "rod's bwo nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "scud",
+     "match": [
+      "food:scud"
+     ],
+     "named": false
+    },
+    {
+     "said": "beetle",
+     "match": [
+      "food:beetle"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-07-10",
+   "kind": "report",
+   "site": "southholstonangler.com",
+   "url": "https://www.southholstonangler.com/july-2026-south-holston-and-watauga-river-fishing-report",
+   "picks": [
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "bead head pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "beetle",
+     "match": [
+      "food:beetle"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-07-09",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/7092026",
+   "picks": [
+    {
+     "said": "cdc caddis",
+     "match": [
+      "cdc_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute mayflies",
+     "match": [
+      "family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "yellow stimulator",
+     "match": [
+      "yellow_stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-06-18",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/6182026",
+   "picks": [
+    {
+     "said": "foam stone",
+     "match": [
+      "foam_golden_stone"
+     ],
+     "named": true
+    },
+    {
+     "said": "stimulator",
+     "match": [
+      "stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-06-05",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-june/",
+   "picks": [
+    {
+     "said": "sulphur dry",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "soft hackles",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "baetis nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-06-05",
+   "kind": "report",
+   "site": "duesouthoutfitters.com",
+   "url": "https://duesouthoutfitters.com/western-north-carolina-east-tennessee-fly-fishing-report-june/",
+   "picks": [
+    {
+     "said": "sulphur dry",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "soft hackles",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "baetis nymph",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-05-27",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/5272026",
+   "picks": [
+    {
+     "said": "parachute sulphur",
+     "match": [
+      "sulfur_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "reversing caddis",
+     "match": [
+      "family:dry food:caddis"
+     ],
+     "named": false
+    },
+    {
+     "said": "yellow stimulator",
+     "match": [
+      "yellow_stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "batman nymph",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-05-07",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/5072026",
+   "picks": [
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "yellow stimulator",
+     "match": [
+      "yellow_stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute sulphur",
+     "match": [
+      "sulfur_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill jig nymph",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-04-16",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/4162026",
+   "picks": [
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "batman nymph",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "hot head pt",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "egg patterns",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-03-27",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/3272026",
+   "picks": [
+    {
+     "said": "quill gordon",
+     "match": [
+      "quill_gordon"
+     ],
+     "named": true
+    },
+    {
+     "said": "march brown dry",
+     "match": [
+      "march_brown_dry"
+     ],
+     "named": true
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "prince nymph",
+     "match": [
+      "prince_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "bloody mary",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "hot bead pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-03-13",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/3132026-1",
+   "picks": [
+    {
+     "said": "mayfly dries",
+     "match": [
+      "family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "pink eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-02-26",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/2262026",
+   "picks": [
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "firestarter perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "micro eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute adams",
+     "match": [
+      "parachute_adams"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2026-01-29",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2026/8/4/1292026",
+   "picks": [
+    {
+     "said": "croston's fmj",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "rosa's pt",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2026-01-05",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/afalloverview/report-sheh5-bz2kg-msrhe-yc4r6-4sjrk-t9x8k",
+   "picks": [
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill body nymph",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo sparkle dun",
+     "match": [
+      "bwo_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur dun",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "black midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "rs2",
+     "match": [
+      "rs2"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive puff daddy",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "cdc emerger",
+     "match": [
+      "family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2026-01-05",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/afalloverview/report-sheh5-bz2kg-msrhe-yc4r6-4sjrk-t9x8k",
+   "picks": [
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill body perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "cdc pheasant tail jig",
+     "match": [
+      "jig_pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "juan's jiggidy jedi",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "girdle bug",
+     "match": [
+      "girdle_bug"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "pmd",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo sparkle dun",
+     "match": [
+      "bwo_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo puff daddy",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-11-20",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-112025",
+   "picks": [
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "redneck pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-11-11",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-111125",
+   "picks": [
+    {
+     "said": "eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "mops",
+     "match": [
+      "mop_fly"
+     ],
+     "named": true
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-11-05",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-110525",
+   "picks": [
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute adams",
+     "match": [
+      "parachute_adams"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-10-29",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-102925",
+   "picks": [
+    {
+     "said": "eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "mops",
+     "match": [
+      "mop_fly"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-10-23",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-102325",
+   "picks": [
+    {
+     "said": "eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "mops",
+     "match": [
+      "mop_fly"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo parachute",
+     "match": [
+      "bwo_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "mini hopper",
+     "match": [
+      "food:hopper"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-10-15",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-101525",
+   "picks": [
+    {
+     "said": "mops",
+     "match": [
+      "mop_fly"
+     ],
+     "named": true
+    },
+    {
+     "said": "eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "squirmy worm",
+     "match": [
+      "squirmy_wormy"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-10-08",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-100825",
+   "picks": [
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "orange stimulator",
+     "match": [
+      "orange_stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "tungsten eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "mops",
+     "match": [
+      "mop_fly"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-08-14",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-81425",
+   "picks": [
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "ants",
+     "match": [
+      "food:ant"
+     ],
+     "named": false
+    },
+    {
+     "said": "beetles",
+     "match": [
+      "food:beetle"
+     ],
+     "named": false
+    },
+    {
+     "said": "bloody mary",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2025-07-27",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2025/7/27/watauga-river-fishing-report-727",
+   "picks": [
+    {
+     "said": "beetles",
+     "match": [
+      "food:beetle"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-07-02",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-70225",
+   "picks": [
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "foam beetle",
+     "match": [
+      "foam_beetle"
+     ],
+     "named": true
+    },
+    {
+     "said": "green weenie",
+     "match": [
+      "green_weenie"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2025-07-01",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/may2025-sheh5-bz2kg-msrhe-yc4r6-4sjrk",
+   "picks": [
+    {
+     "said": "sulphur cdc sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "cripple sulphur",
+     "match": [
+      "food:sulfur family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "black midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "rs2",
+     "match": [
+      "rs2"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2025-07-01",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/may2025-sheh5-bz2kg-msrhe-yc4r6-4sjrk",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss light",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "olson's perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "cdc sulphur dun",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "pink albert",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo sparkle dun",
+     "match": [
+      "bwo_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby",
+     "match": [
+      "chubby_chernobyl",
+      "micro_chubby"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-06-24",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/62425",
+   "picks": [
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-06-20",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/62025",
+   "picks": [
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-06-13",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/11/21/stream-report-61325",
+   "picks": [
+    {
+     "said": "parachute cahill",
+     "match": [
+      "parachute_light_cahill"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute sulphur",
+     "match": [
+      "sulfur_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "hair-winged drake",
+     "match": [
+      "family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo and hendrickson flymphs",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-05-30",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/6/7/stream-report-53025",
+   "picks": [
+    {
+     "said": "neversink caddis",
+     "match": [
+      "neversink_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple haze",
+     "match": [
+      "purple_haze"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2025-05-05",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/april2025-sheh5-bz2kg-msrhe-yc4r6",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "rs2",
+     "match": [
+      "rs2"
+     ],
+     "named": true
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2025-05-05",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/april2025-sheh5-bz2kg-msrhe-yc4r6",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss light",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "olson's perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "cdc sulphur dun",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "pink albert",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo sparkle dun",
+     "match": [
+      "bwo_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "swisher's caddis",
+     "match": [
+      "family:dry food:caddis"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro chubby",
+     "match": [
+      "micro_chubby"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-03-03",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/3/8/stream-report-30325",
+   "picks": [
+    {
+     "said": "parachute adams",
+     "match": [
+      "parachute_adams"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute hare's ear",
+     "match": [
+      "parachute_hare_s_ear"
+     ],
+     "named": true
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "hickey's auto emerger",
+     "match": [
+      "family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "tungsten eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2025-02-27",
+   "kind": "report",
+   "site": "tellicooutfitters.com",
+   "url": "https://www.tellicooutfitters.com/fishing-reports/2025/3/8/stream-report-22725",
+   "picks": [
+    {
+     "said": "parachute march brown",
+     "match": [
+      "march_brown_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute adams",
+     "match": [
+      "parachute_adams"
+     ],
+     "named": true
+    },
+    {
+     "said": "griffith's gnat",
+     "match": [
+      "griffiths_gnat"
+     ],
+     "named": true
+    },
+    {
+     "said": "klinkhammer",
+     "match": [
+      "klinkhamer"
+     ],
+     "named": true
+    },
+    {
+     "said": "walt's worm",
+     "match": [
+      "walts_worm"
+     ],
+     "named": true
+    },
+    {
+     "said": "blowtorch",
+     "match": [
+      "blowtorch"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow warrior",
+     "match": [
+      "rainbow_warrior"
+     ],
+     "named": true
+    },
+    {
+     "said": "pink eggs",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "jigged leeches",
+     "match": [
+      "food:leech"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2024-08-06",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/july2024-sheh5-bz2kg-msrhe",
+   "picks": [
+    {
+     "said": "split case",
+     "match": [
+      "split_case_pmd",
+      "split_case_bwo"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill body perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute sulphur",
+     "match": [
+      "sulfur_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute bwo",
+     "match": [
+      "bwo_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "pink albert",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "soft hackles",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-08-06",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/july2024-sheh5-bz2kg-msrhe",
+   "picks": [
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill body perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "tungsten soft hackle",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "pmd",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-06-07",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2024/6/7/watauga-river-fly-fishing-report-june-7-2024",
+   "picks": [
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "terrestrials",
+     "match": [
+      "food:hopper",
+      "food:ant",
+      "food:beetle"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2024-06-03",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/may2024-sheh5-bz2kg",
+   "picks": [
+    {
+     "said": "parachute sulphur",
+     "match": [
+      "sulfur_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute bwo",
+     "match": [
+      "bwo_parachute"
+     ],
+     "named": true
+    },
+    {
+     "said": "split case",
+     "match": [
+      "split_case_pmd",
+      "split_case_bwo"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple thread frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc sparkle dun",
+     "match": [
+      "bwo_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "pink albert",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-06-03",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/may2024-sheh5-bz2kg",
+   "picks": [
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "quill body perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "tungsten soft hackle",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "pmd",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-05-31",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2024/5/31/watauga-river-fly-fishing-report-may-31st-2024",
+   "picks": [
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "midge pupa",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2024-05-01",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/april2024-sheh5",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "cdc emerger",
+     "match": [
+      "family:emerger"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-05-01",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/april2024-sheh5",
+   "picks": [
+    {
+     "said": "sulphur nymph",
+     "match": [
+      "sulfur_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "rc leggy",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "quill body perdigon",
+     "match": [
+      "perdigon"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "chubby chernobyl",
+     "match": [
+      "chubby_chernobyl"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur sparkle dun",
+     "match": [
+      "sulfur_sparkle_dun"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "cream caddis",
+     "match": [
+      "family:dry food:caddis"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2024-03-29",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/march2024",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow sow bug",
+     "match": [
+      "food:sowbug"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-03-29",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/march2024",
+   "picks": [
+    {
+     "said": "squirmy worm",
+     "match": [
+      "squirmy_wormy"
+     ],
+     "named": true
+    },
+    {
+     "said": "rc leggy",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "spanish bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2024-02-29",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/february/2024",
+   "picks": [
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "rainbow sow bug",
+     "match": [
+      "food:sowbug"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "mini dungeon",
+     "match": [
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "soft hackles",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-02-29",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/february/2024",
+   "picks": [
+    {
+     "said": "pat's rubber legs",
+     "match": [
+      "pats_rubber_legs"
+     ],
+     "named": true
+    },
+    {
+     "said": "squirmy worm",
+     "match": [
+      "squirmy_wormy"
+     ],
+     "named": true
+    },
+    {
+     "said": "rc leggy",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2024-01-31",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/january",
+   "picks": [
+    {
+     "said": "white woolly bugger",
+     "match": [
+      "white_woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "gold kreelex",
+     "match": [
+      "kreelex"
+     ],
+     "named": true
+    },
+    {
+     "said": "white dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo nymphs",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "rainbow sow bug",
+     "match": [
+      "food:sowbug"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "egg",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "jake's fluffer",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo sparkle dun",
+     "match": [
+      "bwo_sparkle_dun"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2024-01-31",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/january",
+   "picks": [
+    {
+     "said": "frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "squirmy worm",
+     "match": [
+      "squirmy_wormy"
+     ],
+     "named": true
+    },
+    {
+     "said": "rc leggy",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "duracell jig",
+     "match": [
+      "duracell_jig"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive and starling soft hackle",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "soft hackle baetis",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    },
+    {
+     "said": "partridge and orange",
+     "match": [
+      "partridge_orange"
+     ],
+     "named": true
+    },
+    {
+     "said": "black dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "white dungeon",
+     "match": [
+      "sex_dungeon",
+      "mini_dungeon"
+     ],
+     "named": true
+    },
+    {
+     "said": "peanut envy",
+     "match": [
+      "peanut_envy"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2023-12-28",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/december/2023",
+   "picks": [
+    {
+     "said": "purple thread frenchie",
+     "match": [
+      "frenchie"
+     ],
+     "named": true
+    },
+    {
+     "said": "american pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "adams",
+     "match": [
+      "adams"
+     ],
+     "named": true
+    },
+    {
+     "said": "weiss cdc baetis",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2023-12-28",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/december/2023",
+   "picks": [
+    {
+     "said": "stripper midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "purple midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "copper and black midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive micro bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "parachute adams",
+     "match": [
+      "parachute_adams"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "dry dropper",
+     "match": [
+      "family:dry",
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2023-12-01",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/november/2023",
+   "picks": [
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "bullet quill",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "weiss dark",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "copper and black midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "sulphur puff daddy",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "jake's fluffer",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2023-12-01",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/november/2023",
+   "picks": [
+    {
+     "said": "master baetis",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "purple zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "stimulator",
+     "match": [
+      "stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2023-10-31",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/october/2023",
+   "picks": [
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo puff daddy",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "sulphur cdc comparadun",
+     "match": [
+      "sulfur_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "pink albert",
+     "match": [
+      "food:pmd family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "micro olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "copper and black midge",
+     "match": [
+      "food:midge family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2023-10-31",
+   "kind": "report",
+   "site": "theflyboxtn.com",
+   "url": "https://www.theflyboxtn.com/riverreports/october/2023",
+   "picks": [
+    {
+     "said": "master baetis",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive hot spot",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "bullet quill",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive bullet",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "rc leggy",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "birchell's hatch midge",
+     "match": [
+      "food:midge family:dry",
+      "food:midge family:emerger"
+     ],
+     "named": false
+    },
+    {
+     "said": "morgan's midge",
+     "match": [
+      "morgan_s_midge"
+     ],
+     "named": true
+    },
+    {
+     "said": "cdc thorax bwo",
+     "match": [
+      "thorax_bwo"
+     ],
+     "named": true
+    },
+    {
+     "said": "bwo cdc comparadun",
+     "match": [
+      "bwo_comparadun"
+     ],
+     "named": true
+    },
+    {
+     "said": "chubby",
+     "match": [
+      "chubby_chernobyl",
+      "micro_chubby"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2023-10-28",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2023/10/28/ebcck645mi7b52j27gaxvibf95dn5g",
+   "picks": [
+    {
+     "said": "bwo puff daddy",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "midge pupa",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "egg",
+     "match": [
+      "food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo nymphs",
+     "match": [
+      "food:bwo family:nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2023-06-21",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2023/6/21/e8gvvp82pfx6hmj2y04qiu866qb3g5",
+   "picks": [
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2023-04-19",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2023/4/19/xe6f6livp6po4chup0c35tuwgk5z06",
+   "picks": [
+    {
+     "said": "caddis larva/pupa",
+     "match": [
+      "family:nymph food:caddis",
+      "family:emerger food:caddis"
+     ],
+     "named": false
+    },
+    {
+     "said": "mayfly nymphs",
+     "match": [
+      "family:nymph food:bwo",
+      "family:nymph food:hendrickson",
+      "family:nymph food:march_brown",
+      "family:nymph food:sulfur"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2022-06-13",
+   "kind": "report",
+   "site": "wataugariverguides.com",
+   "url": "https://jon-huckaba.squarespace.com/fishing-report/2022/6/13/wrvbx94nzc6mg83hubqaatn8tfbfv3",
+   "picks": [
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "terrestrials",
+     "match": [
+      "food:hopper",
+      "food:ant",
+      "food:beetle"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2019-05-11",
+   "kind": "trip",
+   "site": "galen-kipar.squarespace.com",
+   "url": "https://galen-kipar.squarespace.com/blog/2019/5/11/south-holston-river-brown-trout-fly-fishing-the-fun-is-being-had",
+   "picks": [
+    {
+     "said": "sulfur emerger",
+     "match": [
+      "sulfur_emerger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2014-01-24",
+   "kind": "report",
+   "site": "hiwasseeriverguides.blogspot.com",
+   "url": "http://hiwasseeriverguides.blogspot.com/2014/01/hiwassee-river-report-jan-24-2014.html",
+   "picks": [
+    {
+     "said": "zonker",
+     "match": [
+      "zonker"
+     ],
+     "named": true
+    },
+    {
+     "said": "woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2013-07-18",
+   "kind": "report",
+   "site": "relianceflyshop.blogspot.com",
+   "url": "https://relianceflyshop.blogspot.com/2013/07/hiwassee-and-tellico-river-updates.html",
+   "picks": [
+    {
+     "said": "hopper",
+     "match": [
+      "food:hopper"
+     ],
+     "named": false
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "prince nymph",
+     "match": [
+      "prince_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "tellico nymph",
+     "match": [
+      "tellico_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "lightning bug",
+     "match": [
+      "lightning_bug"
+     ],
+     "named": true
+    },
+    {
+     "said": "zug bug",
+     "match": [
+      "zug_bug"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "tellico",
+   "region": "south",
+   "date": "2013-07-18",
+   "kind": "report",
+   "site": "relianceflyshop.blogspot.com",
+   "url": "https://relianceflyshop.blogspot.com/2013/07/hiwassee-and-tellico-river-updates.html",
+   "picks": [
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "stimulator",
+     "match": [
+      "stimulator"
+     ],
+     "named": true
+    },
+    {
+     "said": "trude",
+     "match": [
+      "lime_trude",
+      "royal_trude"
+     ],
+     "named": true
+    },
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "hare's ear",
+     "match": [
+      "hares_ear"
+     ],
+     "named": true
+    },
+    {
+     "said": "prince nymph",
+     "match": [
+      "prince_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "copper john",
+     "match": [
+      "copper_john"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2013-06-02",
+   "kind": "report",
+   "site": "hiwasseeangler.blogspot.com",
+   "url": "https://hiwasseeangler.blogspot.com/2013/06/fishing-report.html",
+   "picks": [
+    {
+     "said": "elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2013-05-24",
+   "kind": "report",
+   "site": "relianceflyshop.blogspot.com",
+   "url": "https://relianceflyshop.blogspot.com/2013/05/on-fire.html",
+   "picks": [
+    {
+     "said": "sulphur dry flies",
+     "match": [
+      "food:sulfur family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "dry flies",
+     "match": [
+      "family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "nymphs",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "streamers",
+     "match": [
+      "family:streamer"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2013-04-15",
+   "kind": "report",
+   "site": "hiwasseeangler.blogspot.com",
+   "url": "https://hiwasseeangler.blogspot.com/2013/04/fishing-report.html",
+   "picks": [
+    {
+     "said": "hendrickson dry",
+     "match": [
+      "food:hendrickson family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "bwo dry",
+     "match": [
+      "food:bwo family:dry"
+     ],
+     "named": false
+    },
+    {
+     "said": "dark elk hair caddis",
+     "match": [
+      "elk_hair_caddis"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "nymphs",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "dark soft hackles",
+     "match": [
+      "family:wet"
+     ],
+     "named": false
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2013-03-17",
+   "kind": "report",
+   "site": "hiwasseeangler.blogspot.com",
+   "url": "https://hiwasseeangler.blogspot.com/2013/03/fishing-report.html",
+   "picks": [
+    {
+     "said": "nymphs",
+     "match": [
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "olive woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "hiwassee",
+   "region": "south",
+   "date": "2013-01-14",
+   "kind": "report",
+   "site": "hiwasseeangler.blogspot.com",
+   "url": "https://hiwasseeangler.blogspot.com/2013/01/fishing-report.html",
+   "picks": [
+    {
+     "said": "white woolly bugger",
+     "match": [
+      "white_woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "olive woolly bugger",
+     "match": [
+      "woolly_bugger"
+     ],
+     "named": true
+    },
+    {
+     "said": "pink y2k",
+     "match": [
+      "y2k_bug"
+     ],
+     "named": true
+    },
+    {
+     "said": "yellow y2k",
+     "match": [
+      "y2k_bug"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "south_holston",
+   "region": "south",
+   "date": "2009-11-05",
+   "kind": "report",
+   "site": "diyflyfishing.com",
+   "url": "https://diyflyfishing.com/fishing-report-south-holston-river-11-02-09/",
+   "picks": [
+    {
+     "said": "dry dropper",
+     "match": [
+      "family:dry",
+      "family:nymph !food:midge !food:worm !food:egg"
+     ],
+     "named": false
+    },
+    {
+     "said": "english pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "zebra midge",
+     "match": [
+      "zebra_midge"
+     ],
+     "named": true
+    }
+   ]
+  },
+  {
+   "place": "watauga",
+   "region": "south",
+   "date": "2009-09-30",
+   "kind": "report",
+   "site": "virtualblueridge.com",
+   "url": "https://www.virtualblueridge.com/?p=4050",
+   "picks": [
+    {
+     "said": "pheasant tail",
+     "match": [
+      "pheasant_tail"
+     ],
+     "named": true
+    },
+    {
+     "said": "prince nymph",
+     "match": [
+      "prince_nymph"
+     ],
+     "named": true
+    },
+    {
+     "said": "hare's ear",
+     "match": [
+      "hares_ear"
+     ],
+     "named": true
+    },
+    {
+     "said": "stonefly nymphs",
+     "match": [
+      "food:stonefly_nymph"
+     ],
+     "named": false
+    },
+    {
+     "said": "midges",
+     "match": [
+      "food:midge"
+     ],
+     "named": false
+    },
+    {
+     "said": "cranefly",
+     "match": [
+      "food:cranefly"
+     ],
+     "named": false
+    }
+   ]
+  }
+ ]
+}

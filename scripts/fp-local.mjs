@@ -6,7 +6,7 @@
 //   3. the page gets a "What to fish" card above the long list.
 // build.mjs calls applyLocal() on the text of src/flypicker/scripts.html and template.html before the
 // page and the server's copy of the engine are cut from them, so the two stay identical.
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 
 const root = join(import.meta.dirname, "..");
@@ -61,6 +61,14 @@ function mergeData(DATA, local) {
     if (!DATA.sources.places[s.place]) throw new Error(`fp-local: source for unknown place ${s.place}`);
     DATA.sources.sources.push(s);
   }
+  // Shop and guide reports from data/fp-reports/*.csv, turned into source links by scripts/fp_reports.py.
+  for (const s of local.reports || []) {
+    if (!DATA.sources.places[s.place]) throw new Error(`fp-local: report for unknown place ${s.place}`);
+    if (!/^https?:\/\//.test(s.url) || /instagram\.com/i.test(s.url)) throw new Error(`fp-local: report link must be a plain web link (${s.url})`);
+    if (!s.picks || !s.picks.length) throw new Error(`fp-local: report without flies (${s.url})`);
+    DATA.sources.sources.push(s);
+  }
+  DATA.sources.sources.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : a.url < b.url ? 1 : a.url > b.url ? -1 : 0));
   return DATA;
 }
 
@@ -156,6 +164,7 @@ const CSS = `
 .more-flies>summary{padding:12px 0;font-weight:600;cursor:pointer}
 .more-flies[open]>summary{margin-bottom:4px}
 .more-flies .flies{margin-bottom:12px}
+.cites-borrowed{margin:6px 0 2px;font-size:.82rem;font-style:italic;color:var(--muted)}
 `;
 
 const RENDER = String.raw`
@@ -185,6 +194,17 @@ const RENDER = String.raw`
   }
 `;
 
+const BORROWED = String.raw`  function citeBlock(f) {
+    const html = citeBlock0(f);
+    const rk = lastReq && lastReq.river, r = rk && DATA.rivers[rk];
+    if (!html || !r || html.indexOf("cite-block") < 0) return html;
+    const cond = FP.conditions(resolvedReq(lastRes));
+    const c = f.sources || FP.citations(DATA.flies[f.id], cond.region, cond.month, rk);
+    if (!c || c.own > 0) return html;
+    const places = [...new Set(c.items.map(x => x.place))].slice(0, 3);
+    return '<p class="cites-borrowed">No ' + esc(r.name) + ' reports are in the Fly Picker yet. These come from ' + esc(places.join(" and ")) + ', other waters in the same region.</p>' + html;
+  }`;
+
 function patchScripts(text, local) {
   // data
   const lines = text.split("\n");
@@ -203,6 +223,17 @@ function patchScripts(text, local) {
     "    const [y, m] = n.date ? n.date.split(\"-\").map(Number) : [0, 0];\n    const src = n.url", "noteItem date");
   out = swap(out, "${src}, ${MONTHS[m - 1].slice(0, 3)} ${y}</span></li>`;\n  }\n\n  // Phones show",
     "${src}${m ? `, ${MONTHS[m - 1].slice(0, 3)} ${y}` : \"\"}</span></li>`;\n  }\n\n  // Phones show", "noteItem tail");
+
+  // Evidence from other waters: the reports shown behind a fly come from the whole region, with this river's own first.
+  // Say so. A river with no reports of its own (the South Holston, Watauga, Hiwassee, Tellico) otherwise shows another
+  // river's reports under its own name. A place counts as the river's own when its key is the river's or starts with it
+  // (androscoggin_nh belongs to androscoggin).
+  out = swap(out, "      const key = [pick.named, Math.min(d, 12 - d) <= 1, s.place === (river || null), s.date];",
+    "      const key = [pick.named, Math.min(d, 12 - d) <= 1, !!river && (s.place === river || s.place.startsWith(river + \"_\")), s.date];", "citation key");
+  out = swap(out, "    return { total: found.length, named: found.filter(f => f.item.named).length, items: found.slice(0, 12).map(f => f.item) };",
+    "    return { total: found.length, named: found.filter(f => f.item.named).length, own: found.filter(f => f.key[2]).length, items: found.slice(0, 12).map(f => f.item) };", "citation result");
+  out = swap(out, "  function citeBlock(f) {\n    const c = f.sources",
+    BORROWED + "\n  function citeBlock0(f) {\n    const c = f.sources", "citeBlock");
 
   // the card
   out = swap(out, "    renderHatch(res);\n", "    renderPick(res);\n    renderHatch(res);\n", "renderHatch call");
@@ -232,5 +263,7 @@ function patchTemplate(text) {
 
 export function applyLocal({ scripts, template }) {
   const local = JSON.parse(readFileSync(join(root, "data/fp-local.json"), "utf8"));
+  const reports = join(root, "data/fp-reports.json");
+  if (existsSync(reports)) local.reports = JSON.parse(readFileSync(reports, "utf8")).sources;
   return { scripts: patchScripts(scripts, local), template: patchTemplate(template) };
 }
