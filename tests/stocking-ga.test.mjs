@@ -66,3 +66,17 @@ assert.ok(!/nothing is going in the water/.test(read("src/stocking-ga.js")), "ne
 assert.ok(app.includes('data-sksa="GA"') && app.includes("function gaSheetMarkup") && app.includes('id="ga-map"'), "the built app has the Georgia switch: run npm run build");
 assert.ok(/stockOk = \(\) => .*"GA"/.test(app), "Georgia clubs get the Stocking tab");
 ok("the Stocking tab's Georgia script and screen are built from the data");
+
+// ---- the dated view: counties the weekly report names that the sheet doesn't, and what the screen does with them ----
+for (const c of ["Fulton", "Cobb", "Pickens", "Polk"]) {
+  const [lat, lon] = D.reportCounties[c] || [];
+  assert.ok(lat > 33.4 && lat < 35.1 && lon > -85.7 && lon < -81.9, `${c} County has a place on the map`);
+}
+assert.ok(!D.cities.some(([n]) => n === "Atlanta"), "the Atlanta label would sit on the Fulton County circle");
+const src = read("src/stocking-ga.js");
+assert.ok(app.includes("function gaEvRow") && app.includes('api("stocking?state=GA")') && app.includes('id="ga-evlist"') && app.includes('id="ga-when"'), "the built app lists the reported stockings: run npm run build");
+assert.ok(/function gaEvMatch/.test(src) && /GA\.when !== "all"/.test(src), "the window filter is there");
+assert.ok(!/addDays\([^)]*,\s*\d+\)[^;]*gaEvRow|upcoming|next stocking|will be stocked/i.test(src), "nothing on the Georgia screen predicts a date");
+assert.ok(/reports a stocking after it happens/i.test(src), "the screen says the dates are after the fact");
+ok("the dated Georgia view is built, places every county the report names, and predicts nothing");
+console.log(`\nAll ${n} checks passed.`);

@@ -697,18 +697,30 @@ header.club .kicker{color:var(--green)}
             <p class="tm-note" id="ga-note"></p>
           </div>
           <section data-st="GA" hidden>
-            <div class="tm-sec-h"><h2>The waters</h2><span class="hint" id="ga-count"></span></div>
+            <div class="tm-sec-h"><h2>Stocked recently</h2><span class="hint" id="ga-evcount"></span></div>
             <div class="sk-filters">
               <input class="tm-search" id="ga-q" type="search" placeholder="Find a water or county" aria-label="Find a water or county" autocomplete="off">
+              <label class="sk-when">When
+                <select id="ga-when">
+                  <option value="7">Last 7 days</option>
+                  <option value="30" selected>Last 30 days</option>
+                  <option value="all">Everything reported</option>
+                </select></label>
+              <div class="chips" id="ga-kinds" role="group" aria-label="Kind of stocking"></div>
+            </div>
+            <div id="ga-county"></div>
+            <ul class="rows" id="ga-evlist"></ul>
+          </section>
+          <section data-st="GA" hidden>
+            <div class="tm-sec-h"><h2>How often each water is stocked</h2><span class="hint" id="ga-count"></span></div>
+            <p class="tm-note" id="ga-freqnote"></p>
+            <div class="sk-filters">
               <div class="chips" role="group" aria-label="Sort">
                 <button class="chip" type="button" data-gas="freq" aria-pressed="true">By frequency</button>
                 <button class="chip" type="button" data-gas="az" aria-pressed="false">A to Z</button>
               </div>
-            </div>
-            <div class="sk-filters">
               <div class="chips" id="ga-groups" role="group" aria-label="How often"></div>
             </div>
-            <div id="ga-county"></div>
             <ul class="rows" id="ga-list"></ul>
           </section>
         </div>
@@ -1209,7 +1221,7 @@ function enterClub(cid, opts = {}) {
   S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.catches = []; S.catchIdx = null; S.members = new Map();
   S.loaded = { trips: false, members: false };
   TM.focus = null; TM.sel = null; if (TM.pz) TM.pz.set({ k: 1, x: 0, y: 0 });
-  SK.sel = null; SK.built = false; SK.state = null; GA.sel = null; GA.built = false; GA.county = null;
+  SK.sel = null; SK.built = false; SK.state = null; GA.sel = null; GA.built = false; GA.county = null; GA.ev = null;
   const want = OLD_TABS[opts.tab] || opts.tab || S.wantTab;
   S.tab = want && TABS.includes(want) ? want : "calendar";
   if (S.pub && S.tab === "calendar") S.tab = "flies";
@@ -2637,6 +2649,7 @@ function openSheet(mode, data = {}) {
   else if (mode === "form") body.innerHTML = tripFormMarkup(data.id ? S.trips.get(data.id) : null, data.day, data.water);
   else if (mode === "water") body.innerHTML = waterSheetMarkup(data.w);
   else if (mode === "gawater") body.innerHTML = gaSheetMarkup(data.w);
+  else if (mode === "gaevent") body.innerHTML = gaEvSheetMarkup(data.i);
   else if (mode === "club") body.innerHTML = clubSheetMarkup();
   else if (mode === "new") body.innerHTML = newClubMarkup();
   else if (mode === "created") body.innerHTML = createdMarkup(data);
@@ -3033,6 +3046,10 @@ document.addEventListener("click", async (e) => {
   const gag = e.target.closest("[data-gag]");
   if (gag) { const v = +gag.dataset.gag; if (GA.groups.has(v)) GA.groups.delete(v); else GA.groups.add(v); renderGA(); return; }
   if (e.target.closest("[data-gal]")) { GA.late = !GA.late; renderGA(); return; }
+  const gak = e.target.closest("[data-gak]");
+  if (gak) { const v = gak.dataset.gak; if (GA.kinds.has(v)) GA.kinds.delete(v); else GA.kinds.add(v); renderGA(); return; }
+  const gae = e.target.closest("[data-gae]");
+  if (gae) { gaOpenEv(+gae.dataset.gae); return; }
   const gas = e.target.closest("[data-gas]");
   if (gas) { GA.sort = gas.dataset.gas; renderGA(); return; }
   const skf = e.target.closest("[data-skr],[data-skt]");
@@ -3106,9 +3123,10 @@ document.addEventListener("click", async (e) => {
     case "ga-all": if (!GA.pz) break; GA.county = null; GA.sel = null; renderGA(); gaHome(true); break;
     case "ga-clear": GA.county = null; renderGA(); break;
     case "ga-retry": ensureGA().then((ok) => { if (ok) scheduleRender(); }); break;
-    case "ga-post": closeSheet(); gaPostTrip(+a.dataset.w); break;
-    case "ga-ask": gaAsk(+a.dataset.w); break;
-    case "ga-show": await gaShow(+a.dataset.w); break;
+    case "ga-post": closeSheet(); gaPostTrip(gaSubj(a.dataset)); break;
+    case "ga-ask": gaAsk(gaSubj(a.dataset)); break;
+    case "ga-show": await gaShow(gaSubj(a.dataset)); break;
+    case "ga-evretry": GA.ev = null; GA.evErr = false; renderGA(); break;
     case "tm-zin": if (TM.pz) TM.pz.zoomStep(2); break;
     case "tm-zout": if (TM.pz) TM.pz.zoomStep(0.5); break;
     case "tm-world": if (!TM.pz) break; TM.sel = null; if (TM.focus) { TM.focus = null; renderTroutTab(); } else paintMap(); TM.pz.animateTo({ k: 1, x: 0, y: 0 }); break;
@@ -3141,6 +3159,7 @@ document.addEventListener("input", (e) => {
   else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockingTab(); }
   else if (e.target.id === "ga-q") { GA.q = e.target.value; renderGA(); }
   else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockingTab(); }
+  else if (e.target.id === "ga-when") { GA.when = e.target.value; renderGA(); }
   else if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); }
   else if (e.target.id === "tp-city") { tpPlace().city = e.target.value.slice(0, 60); tpSavePlace(); }
 });

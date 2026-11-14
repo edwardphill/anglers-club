@@ -65,12 +65,19 @@
     },
     "api/rivers.js": {
       "includeFiles": "data/flypicker.json"
+    },
+    "api/stocking.js": {
+      "includeFiles": "data/*.json"
     }
   },
   "crons": [
     {
       "path": "/api/health",
       "schedule": "17 11 * * *"
+    },
+    {
+      "path": "/api/stocking?refresh=1",
+      "schedule": "43 12 * * *"
     }
   ]
 }

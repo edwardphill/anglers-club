@@ -11,6 +11,24 @@
  "note": "Georgia publishes how often each water is stocked, not dates. Frequency depends on the area available, fishing pressure and summer water temperatures. Asterisks on the sheet mark a variation from the group's heading.",
  "page": "https://georgiawildlife.com/fishing/trout",
  "winter": "Delayed Harvest streams are stocked from November 1. They are not on this sheet; the weekly stocking report lists them.",
+ "reportCounties": {
+  "Fulton": [
+   33.75,
+   -84.39
+  ],
+  "Cobb": [
+   33.95,
+   -84.55
+  ],
+  "Pickens": [
+   34.47,
+   -84.43
+  ],
+  "Polk": [
+   34.01,
+   -85.26
+  ]
+ },
  "weekly": "https://georgiawildlife.com/sites/default/files/wrd/pdf/trout/Weekly%20Stocking%20Report.pdf",
  "outline": [
   [
@@ -63,11 +81,6 @@
   ]
  ],
  "cities": [
-  [
-   "Atlanta",
-   33.749,
-   -84.388
-  ],
   [
    "Gainesville",
    34.297,
