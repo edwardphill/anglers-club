@@ -50,10 +50,10 @@ assert.ok(ld(h)["@graph"].some((x) => x["@type"] === "SoftwareApplication" && x.
 ok("the picker page states its real numbers from the data (reports, flies, rivers), links each river, and says it is a rules engine, not a chatbot");
 
 h = (await call({ kind: "tripplanner" })).body;
-assert.ok(/Stocking and dam generation data cover Tennessee today/.test(h) && /Yes\. Check flows/.test(h), "states its limits");
+assert.ok(/Stocking covers Tennessee \(with dates\) and Georgia \(how often each water is stocked, with no dates\), and dam generation covers Tennessee\./.test(h) && /Yes\. Check flows/.test(h), "states its limits");
 assert.ok(h.includes('href="/guides"') && h.includes('href="/fly-picker"'));
 assert.ok(!/Claude|Anthropic|OpenAI|GPT/.test(h), "doesn't name a model vendor");
-ok("the trip planner page states its limits (Tennessee stocking and generation, can be wrong), links guides and the picker, and names no model vendor");
+ok("the trip planner page states its limits (stocking in Tennessee and Georgia, generation in Tennessee, can be wrong), links guides and the picker, and names no model vendor");
 
 // The way into the tool comes first: a launch card right under each explainer page's title.
 for (const [kind, href] of [["flypicker", "/picker"], ["tripplanner", "/plan"], ["rivertool", "/my-shop"], ["clubs", "/#start"], ["forshops", "/my-shop"]]) {

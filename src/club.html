@@ -427,6 +427,14 @@ details.adv[open]>div{display:grid;gap:12px;margin-top:12px}
 .sk-mi{font-size:.92rem;color:var(--muted);font-variant-numeric:lining-nums}
 .stamp .wk{font:500 .58rem/1 var(--caps);letter-spacing:.01em;color:var(--green)}
 @media (max-width:640px){.sk-row{grid-template-columns:62px minmax(0,1fr);gap:12px}.sk-side{grid-column:2;justify-items:start;grid-auto-flow:column;gap:12px;white-space:normal}.sk-nm{font-size:1.15rem}}
+.sk-states{margin:-6px 0 -10px}
+.ga-row{grid-template-columns:minmax(0,1fr) auto}
+.ga-row .sk-side{align-content:start}
+@media (max-width:640px){.ga-row{grid-template-columns:minmax(0,1fr)}.ga-row .sk-side:empty{display:none}.ga-row .sk-side{grid-column:1}}
+.ga-gh{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:4px 14px;align-items:baseline;padding:14px 6px 8px;background:var(--paper)}
+.ga-gt{display:inline-flex;align-items:baseline;gap:2px;font:600 1.05rem/1.2 var(--serif)}
+@media (max-width:640px){.ga-gh{grid-template-columns:minmax(0,1fr) auto}.ga-gh .tm-meta{grid-column:1/-1;order:3}}
+.ga-mk{cursor:pointer}
 .sk-pill{display:inline-block;font:500 .6rem/1 var(--caps);letter-spacing:.01em;color:#fff;padding:4px 8px 3px;margin:0 6px 4px 0}
 .sk-next{background:var(--green-wash);border:1px solid var(--green);padding:12px 16px;display:grid;gap:3px}
 .sk-next b{font:600 1.107rem/1.2 var(--serif)}
@@ -632,9 +640,13 @@ header.club .kicker{color:var(--green)}
       </div>
       <div id="v-stocking" role="tabpanel" aria-labelledby="t-stocking" hidden>
         <div class="tm">
-          <p class="tm-lede" id="sk-lede">The state's trout stocking schedule, with every stocked water on one map. Tap a water to see its dates or post a trip there.</p>
-          <div class="tm-score" id="sk-score"></div>
-          <div>
+          <div class="chips sk-states" role="group" aria-label="State">
+            <button class="chip" type="button" data-sksa="TN" aria-pressed="true">Tennessee</button>
+            <button class="chip" type="button" data-sksa="GA" aria-pressed="false">Georgia</button>
+          </div>
+          <p class="tm-lede" data-st="TN" id="sk-lede">The state's trout stocking schedule, with every stocked water on one map. Tap a water to see its dates or post a trip there.</p>
+          <div class="tm-score" data-st="TN" id="sk-score"></div>
+          <div data-st="TN">
             <div class="tm-map" id="sk-map">
               <div class="tm-loading sk-loading" id="sk-map-msg">Loading the schedule…</div>
               <div class="tm-ctl" id="sk-ctl" hidden>
@@ -647,7 +659,7 @@ header.club .kicker{color:var(--green)}
             <div class="tm-foot"><div class="tm-legend" id="sk-legend" aria-label="Map key"></div></div>
             <p class="tm-note" id="sk-note"></p>
           </div>
-          <section>
+          <section data-st="TN">
             <div class="tm-sec-h"><h2>Coming up</h2><span class="hint" id="sk-count"></span></div>
             <div class="sk-filters">
               <input class="tm-search" id="sk-q" type="search" placeholder="Find a water or county" aria-label="Find a water or county" autocomplete="off">
@@ -668,6 +680,36 @@ header.club .kicker{color:var(--green)}
               <div class="chips" id="sk-types" role="group" aria-label="Water type"></div>
             </div>
             <ul class="rows" id="sk-list"></ul>
+          </section>
+          <p class="tm-lede" data-st="GA" id="ga-lede" hidden></p>
+          <div class="tm-score" data-st="GA" id="ga-score" hidden></div>
+          <div data-st="GA" hidden>
+            <div class="tm-map" id="ga-map">
+              <div class="tm-loading sk-loading" id="ga-map-msg">Loading the schedule…</div>
+              <div class="tm-ctl" id="ga-ctl" hidden>
+                <button class="icon-btn" type="button" data-act="ga-zin" aria-label="Zoom in">+</button>
+                <button class="icon-btn" type="button" data-act="ga-zout" aria-label="Zoom out">−</button>
+                <button class="icon-btn world" type="button" data-act="ga-all" aria-label="Show all of north Georgia">ALL</button>
+              </div>
+              <div class="tm-tip" id="ga-tip" hidden></div>
+            </div>
+            <div class="tm-foot"><div class="tm-legend" id="ga-legend" aria-label="Map key"></div></div>
+            <p class="tm-note" id="ga-note"></p>
+          </div>
+          <section data-st="GA" hidden>
+            <div class="tm-sec-h"><h2>The waters</h2><span class="hint" id="ga-count"></span></div>
+            <div class="sk-filters">
+              <input class="tm-search" id="ga-q" type="search" placeholder="Find a water or county" aria-label="Find a water or county" autocomplete="off">
+              <div class="chips" role="group" aria-label="Sort">
+                <button class="chip" type="button" data-gas="freq" aria-pressed="true">By frequency</button>
+                <button class="chip" type="button" data-gas="az" aria-pressed="false">A to Z</button>
+              </div>
+            </div>
+            <div class="sk-filters">
+              <div class="chips" id="ga-groups" role="group" aria-label="How often"></div>
+            </div>
+            <div id="ga-county"></div>
+            <ul class="rows" id="ga-list"></ul>
           </section>
         </div>
       </div>
@@ -1167,7 +1209,7 @@ function enterClub(cid, opts = {}) {
   S.trips = new Map(); S.rsvps = []; S.comments = []; S.reports = []; S.catches = []; S.catchIdx = null; S.members = new Map();
   S.loaded = { trips: false, members: false };
   TM.focus = null; TM.sel = null; if (TM.pz) TM.pz.set({ k: 1, x: 0, y: 0 });
-  SK.sel = null; SK.built = false;
+  SK.sel = null; SK.built = false; SK.state = null; GA.sel = null; GA.built = false; GA.county = null;
   const want = OLD_TABS[opts.tab] || opts.tab || S.wantTab;
   S.tab = want && TABS.includes(want) ? want : "calendar";
   if (S.pub && S.tab === "calendar") S.tab = "flies";
@@ -2145,10 +2187,15 @@ async function tpAsk(question) {
 // a state map with every stocked water, filters, and a list sorted by the next stocking.
 const SK = {
   me: null, data: null, loading: null, built: false, narrow: null, pz: null, svg: null, proj: null, pins: [], cities: [], tcol: {},
-  when: "upcoming", sort: "soon", q: "", regions: new Set(), types: new Set(), sel: null,
+  when: "upcoming", sort: "soon", q: "", regions: new Set(), types: new Set(), sel: null, state: null,
 };
+// Which state's schedule shows: a Georgia club opens on Georgia, everyone else on Tennessee, until they pick.
+function skState() {
+  if (!SK.state) { const c = club(); SK.state = c && c.state === "GA" ? "GA" : "TN"; }
+  return SK.state;
+}
 const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const stockOk = () => { const c = club(); return !!c && c.state === "TN" && kinds() !== "hunt"; };
+const stockOk = () => { const c = club(); return !!c && (c.state === "TN" || c.state === "GA") && kinds() !== "hunt"; };
 const evEnd = (e) => (e[1] === "week" ? addDays(e[0], 5) : e[0]);   // "week of" a Sunday: within five days
 const dayGap = (a, b) => Math.round((parseD(a) - parseD(b)) / 864e5);
 function loadStocking() {
@@ -2253,6 +2300,10 @@ function whenText(e, t0) {
 const evLabel = (e) => (e[1] === "week" ? "Week of " : "") + fmtD(e[0], { weekday: e[1] === "week" ? undefined : "short", month: "short", day: "numeric" });
 
 function renderStockingTab() {
+  const st = skState();
+  document.querySelectorAll("#v-stocking [data-st]").forEach((el) => { el.hidden = el.dataset.st !== st; });
+  document.querySelectorAll("[data-sksa]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.sksa === st)));
+  if (st === "GA") { renderGA(); return; }
   if (!SK.data) {
     $("#sk-list").innerHTML = `<li class="loading">Loading the schedule…</li>`;
     ensureStocking().then((ok) => { if (ok) scheduleRender(); });
@@ -2468,6 +2519,7 @@ function skAsk(id) {
 }
 async function skShow(id) {
   closeSheet();
+  SK.state = "TN";
   if (S.tab !== "stocking") goTab("stocking");
   for (let i = 0; i < 40 && !SK.built; i++) await sleep(100);
   if (!SK.built) return;
@@ -2584,6 +2636,7 @@ function openSheet(mode, data = {}) {
   if (mode === "trip") body.innerHTML = tripSheetSkeleton(data.id);
   else if (mode === "form") body.innerHTML = tripFormMarkup(data.id ? S.trips.get(data.id) : null, data.day, data.water);
   else if (mode === "water") body.innerHTML = waterSheetMarkup(data.w);
+  else if (mode === "gawater") body.innerHTML = gaSheetMarkup(data.w);
   else if (mode === "club") body.innerHTML = clubSheetMarkup();
   else if (mode === "new") body.innerHTML = newClubMarkup();
   else if (mode === "created") body.innerHTML = createdMarkup(data);
@@ -2973,6 +3026,15 @@ document.addEventListener("click", async (e) => {
   if (tpx) { tpAsk(tpx.dataset.tpx); return; }
   const skw = e.target.closest("[data-skw]");
   if (skw) { openWater(+skw.dataset.skw); return; }
+  const sksa = e.target.closest("[data-sksa]");
+  if (sksa) { SK.state = sksa.dataset.sksa; SK.sel = null; GA.sel = null; renderStockingTab(); return; }
+  const gaw = e.target.closest("[data-gaw]");
+  if (gaw) { gaOpen(+gaw.dataset.gaw); return; }
+  const gag = e.target.closest("[data-gag]");
+  if (gag) { const v = +gag.dataset.gag; if (GA.groups.has(v)) GA.groups.delete(v); else GA.groups.add(v); renderGA(); return; }
+  if (e.target.closest("[data-gal]")) { GA.late = !GA.late; renderGA(); return; }
+  const gas = e.target.closest("[data-gas]");
+  if (gas) { GA.sort = gas.dataset.gas; renderGA(); return; }
   const skf = e.target.closest("[data-skr],[data-skt]");
   if (skf) {
     const set = skf.dataset.skr ? SK.regions : SK.types, v = skf.dataset.skr || skf.dataset.skt;
@@ -3039,6 +3101,14 @@ document.addEventListener("click", async (e) => {
     case "sk-post": closeSheet(); skPostTrip(+a.dataset.w); break;
     case "sk-ask": skAsk(+a.dataset.w); break;
     case "sk-show": await skShow(+a.dataset.w); break;
+    case "ga-zin": if (GA.pz) GA.pz.zoomStep(2); break;
+    case "ga-zout": if (GA.pz) GA.pz.zoomStep(0.5); break;
+    case "ga-all": if (!GA.pz) break; GA.county = null; GA.sel = null; renderGA(); gaHome(true); break;
+    case "ga-clear": GA.county = null; renderGA(); break;
+    case "ga-retry": ensureGA().then((ok) => { if (ok) scheduleRender(); }); break;
+    case "ga-post": closeSheet(); gaPostTrip(+a.dataset.w); break;
+    case "ga-ask": gaAsk(+a.dataset.w); break;
+    case "ga-show": await gaShow(+a.dataset.w); break;
     case "tm-zin": if (TM.pz) TM.pz.zoomStep(2); break;
     case "tm-zout": if (TM.pz) TM.pz.zoomStep(0.5); break;
     case "tm-world": if (!TM.pz) break; TM.sel = null; if (TM.focus) { TM.focus = null; renderTroutTab(); } else paintMap(); TM.pz.animateTo({ k: 1, x: 0, y: 0 }); break;
@@ -3069,6 +3139,7 @@ document.addEventListener("input", (e) => {
   if (e.target.id === "tp-q") tpGrow();
   else if (e.target.id === "tm-q") { TM.q = e.target.value; renderChecklist(); }
   else if (e.target.id === "sk-q") { SK.q = e.target.value; renderStockingTab(); }
+  else if (e.target.id === "ga-q") { GA.q = e.target.value; renderGA(); }
   else if (e.target.id === "sk-when") { SK.when = e.target.value; renderStockingTab(); }
   else if (e.target.id === "tp-state") { tpPlace().state = e.target.value; tpSavePlace(); }
   else if (e.target.id === "tp-city") { tpPlace().city = e.target.value.slice(0, 60); tpSavePlace(); }
@@ -3079,8 +3150,11 @@ window.addEventListener("resize", () => {
   clearTimeout(tmResize);
   tmResize = setTimeout(() => {
     if (TM.built && S.tab === "trout") applyZoom();
-    if (SK.built && S.tab === "stocking") {
+    if (SK.built && S.tab === "stocking" && skState() === "TN") {
       if (($("#sk-map").clientWidth < 640) !== SK.narrow) { SK.built = false; renderStockingTab(); } else SK.pz.apply();
+    }
+    if (GA.built && S.tab === "stocking" && skState() === "GA") {
+      if (($("#ga-map").clientWidth < 640) !== GA.narrow) { GA.built = false; renderGA(); } else GA.pz.apply();
     }
   }, 120);
 });
@@ -3326,6 +3400,7 @@ async function boot() {
   afterBoot();
   startPolling();
 }
+/*STOCKING_GA*/
 /*SHOPS_UI*/
 /*WAITLIST_UI*/
 boot();

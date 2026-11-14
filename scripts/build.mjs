@@ -1,5 +1,5 @@
 // Assembles public/index.html from src/club.html, the embedded Fly Picker and the Trout Map
-// checklist; writes the files the tabs load later (coastlines, stocking schedule); and copies the
+// checklist; writes the files the tabs load later (coastlines, stocking schedules); and copies the
 // Fly Picker's data and engine where the trip planner's server code can use them.
 // Run after editing anything under src/: npm run build
 import { readFileSync, writeFileSync, mkdirSync, copyFileSync, existsSync, readdirSync } from "node:fs";
@@ -61,6 +61,7 @@ if (existsSync(artDir)) {
 }
 // Dam generation schedules (data/generation.json) are linked from trips, the Stocking tab and the
 // trip planner.
+swap("/*STOCKING_GA*/", read("src/stocking-ga.js").trimEnd());
 swap("/*SHOPS_UI*/", read("src/shops-ui.js").trimEnd());
 swap("/*WAITLIST_UI*/", read("src/waitlist-ui.js").trimEnd());
 swap("<!--TROUT_SPECIES-->", "<script>\n" + read("src/trout-species.js").trimEnd() +
@@ -98,6 +99,10 @@ copyFileSync(join(root, "src/trout-land.js"), join(root, "public/trout-land.js")
 writeFileSync(join(root, "public/stocking-tn.js"),
   "// Tennessee trout stocking schedule (TWRA). Generated from data/stocking-tn.json by npm run build.\n" +
   "window.STOCKING = " + read("data/stocking-tn.json").trim() + ";\n");
+// Georgia's frequency sheet loads when the Georgia switch is first used.
+writeFileSync(join(root, "public/stocking-ga.js"),
+  "// Georgia trout stocking frequencies (Georgia WRD). Generated from data/stocking-ga.json by npm run build.\n" +
+  "window.STOCKING_GA = " + JSON.stringify(JSON.parse(read("data/stocking-ga.json"))) + ";\n");
 
 // The trip planner runs the Fly Picker's engine on the server: copy its data and engine out of
 // the embedded Fly Picker so the two never drift apart.
