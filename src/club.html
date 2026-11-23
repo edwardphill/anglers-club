@@ -748,7 +748,7 @@ header.club .kicker{color:var(--green)}
               </div>
               <button class="btn ghost small" type="button" data-act="tm-save">Save map as image</button>
             </div>
-            <p class="tm-note">Pinch, scroll with Ctrl, or use + to zoom. Tap a range to open it. Circles mark each native range roughly, not survey lines.</p>
+            <p class="tm-note">Pinch, scroll with Ctrl, or use + to zoom. Tap a range to open it. Shaded ranges follow state, province and country lines, so they show where a species is native, not its exact waters. Circles are rough stand-ins for ranges not drawn as shapes yet.</p>
           </div>
           <div id="tm-focus" class="tm-focus" hidden></div>
           <section>
@@ -1487,6 +1487,7 @@ function makePanZoom(svg, zg, W, H, opts = {}) {
   };
   pz.unit = () => (pz.ppu ? 1 / (pz.ppu * pz.Z.k) : 0);       // one screen pixel, in map units
   pz.screenOf = (px, py) => { const r = svg.getBoundingClientRect(), s = r.width / W, { k, x, y } = pz.Z; return [r.left + (px * k + x) * s, r.top + (py * k + y) * s]; };
+  pz.mapOf = (cx, cy) => { const r = svg.getBoundingClientRect(), s = r.width / W, { k, x, y } = pz.Z; return [((cx - r.left) / s - x) / k, ((cy - r.top) / s - y) / k]; };   // screen to map units
   pz.set = (z) => { cancelAnimationFrame(anim); pz.Z = clamp(z); pz.apply(); };
   pz.zoomAt = (f, px, py) => { const { k, x, y } = pz.Z, nk = Math.max(1, Math.min(maxK, k * f)); pz.set({ k: nk, x: px - (px - x) * (nk / k), y: py - (py - y) * (nk / k) }); };
   pz.animateTo = (t) => {
@@ -1586,7 +1587,7 @@ const tierName = (t) => String(TIERS[t] || "").split(" · ")[0];
 const tierGenus = (t) => String(TIERS[t] || "").split(" · ")[1] || "";
 const TM = {
   built: false, building: false, loading: null, svg: null, zg: null, dots: [], labels: [],
-  pz: null, pts: new Map(), focus: null, sel: null, filter: "all", q: "",
+  pz: null, pts: new Map(), shapes: new Map(), focus: null, sel: null, filter: "all", q: "",
 };
 function catchIdx() {
   if (S.catchIdx) return S.catchIdx;
@@ -1644,6 +1645,37 @@ function outlineD() {
   return lineD(p) + "Z";
 }
 const rangePx = (x) => Math.max(4, x.rad * RAD * window.TROUT_LAND.s);   // circle radius in map units
+// A species with a drawn range (scripts/trout_ranges.json): its rings and bounding box, parsed once from the land file.
+// Every other species keeps the rough circle.
+const hasShape = (x) => !!(window.TROUT_LAND && window.TROUT_LAND.ranges && window.TROUT_LAND.ranges[x.id]);
+function shapeOf(x) {
+  if (!hasShape(x)) return null;
+  if (!TM.shapes.has(x.id)) {
+    const rings = window.TROUT_LAND.ranges[x.id].split("M").filter(Boolean).map((r) => r.replace("Z", "").split("L").map((p) => p.split(",").map(Number)));
+    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+    rings.forEach((r) => r.forEach(([px, py]) => { x0 = Math.min(x0, px); x1 = Math.max(x1, px); y0 = Math.min(y0, py); y1 = Math.max(y1, py); }));
+    TM.shapes.set(x.id, { rings, box: [x0, y0, x1, y1] });
+  }
+  return TM.shapes.get(x.id);
+}
+// Where a point (map units) falls: inside the shape, even-odd, so a lake or inland hole is not part of it.
+function inShape(sh, px, py) {
+  const [x0, y0, x1, y1] = sh.box;
+  if (px < x0 || px > x1 || py < y0 || py > y1) return false;
+  let c = false;
+  for (const r of sh.rings) for (let i = 0, j = r.length - 1; i < r.length; j = i++) {
+    const [xi, yi] = r[i], [xj, yj] = r[j];
+    if ((yi > py) !== (yj > py) && px < ((xj - xi) * (py - yi)) / (yj - yi) + xi) c = !c;
+  }
+  return c;
+}
+// The map-unit box a species' range fills, for zooming to it.
+function rangeBox(x) {
+  const sh = shapeOf(x);
+  if (sh) return sh.box;
+  const [px, py] = TM.pts.get(x.id), r = rangePx(x) * 0.8;
+  return [px - r, py - r, px + r, py + r];
+}
 
 function loadLand() {
   if (window.TROUT_LAND) return Promise.resolve();
@@ -1677,7 +1709,7 @@ function buildMap() {
   const L = window.TROUT_LAND, W = L.w, H = L.h, out = outlineD();
   SP.forEach((x) => TM.pts.set(x.id, proj(x.lon, x.lat)));
   const order = [...SP].sort((a, b) => b.rad - a.rad);   // small ranges draw on top
-  const terr = order.map((x) => `<path data-sp="${x.id}" d="${circleD(x.lat, x.lon, x.rad)}" vector-effect="non-scaling-stroke" stroke-width="0.9"/>`).join("");
+  const terr = order.map((x) => `<path data-sp="${x.id}" d="${hasShape(x) ? L.ranges[x.id] : circleD(x.lat, x.lon, x.rad)}" fill-rule="evenodd" stroke-linejoin="round" vector-effect="non-scaling-stroke" stroke-width="0.9"/>`).join("");
   const dots = order.map((x) => { const [cx, cy] = TM.pts.get(x.id); return `<circle data-sp="${x.id}" cx="${cx.toFixed(1)}" cy="${cy.toFixed(1)}" r="3" vector-effect="non-scaling-stroke"/>`; }).join("");
   const labels = order.map((x) => { const [cx, cy] = TM.pts.get(x.id); return `<text data-sp="${x.id}" x="${cx.toFixed(1)}" y="${cy.toFixed(1)}">${esc(x.name)}</text>`; }).join("");
   const host = $("#tm-map");
@@ -1747,19 +1779,20 @@ function troutZoomed(pz) {
 }
 function fitIds(ids, maxK = 9) {
   let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-  ids.forEach((id) => { const [px, py] = TM.pts.get(id), r = rangePx(SPM.get(id)) * 0.8; x0 = Math.min(x0, px - r); x1 = Math.max(x1, px + r); y0 = Math.min(y0, py - r); y1 = Math.max(y1, py + r); });
+  ids.forEach((id) => { const [a, b, c, d] = rangeBox(SPM.get(id)); x0 = Math.min(x0, a); x1 = Math.max(x1, c); y0 = Math.min(y0, b); y1 = Math.max(y1, d); });
   if (Number.isFinite(x0)) TM.pz.fit(x0, y0, x1, y1, maxK, 10);
 }
-// Nearest marker within tol screen pixels, else the smallest range circle under the point.
+// Nearest marker within tol screen pixels, else the smallest range under the point: a drawn shape (inside its lines) or a circle.
 function hitTest(cx, cy, tol) {
-  const s = TM.pz.ppu, k = TM.pz.Z.k;
+  const s = TM.pz.ppu, k = TM.pz.Z.k, [mx, my] = TM.pz.mapOf(cx, cy);
   let best = null, bd = tol, inside = null;
   SP.forEach((sp) => {
     const [px, py] = TM.pts.get(sp.id), [sx, sy] = TM.pz.screenOf(px, py);
     const d = Math.hypot(sx - cx, sy - cy);
     const pref = TM.focus && sp.board !== TM.focus ? 1.6 : 1;   // dimmed markers lose ties
     if (d * pref < bd) { bd = d * pref; best = sp.id; }
-    if (d < rangePx(sp) * k * s * 0.85 && (!TM.focus || sp.board === TM.focus) && (!inside || sp.rad < SPM.get(inside).rad)) inside = sp.id;
+    const sh = shapeOf(sp), within = sh ? inShape(sh, mx, my) : d < rangePx(sp) * k * s * 0.85;
+    if (within && (!TM.focus || sp.board === TM.focus) && (!inside || sp.rad < SPM.get(inside).rad)) inside = sp.id;
   });
   return best || inside;
 }
@@ -1794,7 +1827,8 @@ async function showOnMap(id) {
   TM.sel = id;
   renderTroutTab();
   const x = SPM.get(id), [px, py] = TM.pts.get(id);
-  TM.pz.centerOn(px, py, Math.max(2.5, Math.min(10, window.TROUT_LAND.h / (rangePx(x) * 4.5))));
+  if (shapeOf(x)) { const [a, b, c, d] = rangeBox(x); TM.pz.fit(a, b, c, d, 9, 14); }
+  else TM.pz.centerOn(px, py, Math.max(2.5, Math.min(10, window.TROUT_LAND.h / (rangePx(x) * 4.5))));
   mapIntoView();
 }
 
@@ -1857,7 +1891,7 @@ function renderChecklist() {
       html += `<h4 class="tm-group-h">${esc(GROUPS[group] || "")}</h4><ul class="rows">`;
     }
     const list = idx.get(x.id) || [], got = list.length > 0, first = firstCaught(list);
-    const flag = isForm(x) ? `<span class="tm-flag form">Form</span>` : isExtinct(x) ? `<span class="tm-flag extinct">Extinct</span>` : isOptional(x) ? `<span class="tm-flag optional">Optional</span>` : "";
+  const flag = isForm(x) ? `<span class="tm-flag form">Form</span>` : isExtinct(x) ? `<span class="tm-flag extinct">Extinct</span>` : isOptional(x) ? `<span class="tm-flag optional">Optional</span>` : "";
     const when = got ? (first ? fmtD(first, { month: "short", day: "numeric", year: "numeric" }) : "Caught") : "";
     html += `<li><button class="tm-row ${got ? "caught" : ""} ${isForm(x) ? "form" : ""} ${isExtinct(x) ? "extinct" : ""}" type="button" data-sp="${x.id}" aria-label="${esc(x.name + (got ? ", caught" : isExtinct(x) ? ", extinct" : ", not yet"))}">
       <span class="tm-box" aria-hidden="true"></span>
@@ -1926,6 +1960,9 @@ function updateSpeciesSheet() {
     ? `Caught${first ? ", first logged " + fmtD(first, { month: "long", day: "numeric", year: "numeric" }) : ""}${list.length > 1 ? ` · ${list.length} catches` : ""}`
     : isExtinct(x) ? "Extinct" : "Not yet";
   const counts_ = isExtinct(x) ? "Shown, not countable" : isForm(x) ? "A form: logged as a sub-entry, not counted in the total" : isOptional(x) ? "Optional: logged, not counted in the total" : "Counts toward your life list";
+  const onChart = !window.TROUT_LAND ? "" : hasShape(x)
+    ? "Shaded along state, province and country lines, so the shading covers more than the waters the species holds."
+    : "A rough circle. This range isn't drawn as a shape yet.";
   const flag = isForm(x) ? `<span class="tm-flag form">Form</span>` : isExtinct(x) ? `<span class="tm-flag extinct">Extinct</span>` : isOptional(x) ? `<span class="tm-flag optional">Optional</span>` : "";
   head.innerHTML = `${fishArt(x, got)}
     <div class="tv-kind"><span class="kind fish">Tier ${roman(x.tier)} · ${esc(tierName(x.tier))}</span>${flag}</div>
@@ -1933,6 +1970,7 @@ function updateSpeciesSheet() {
     <p class="tv-when">${esc(x.sci)}</p>
     <dl class="facts">
       <div class="wide"><dt>Native range</dt><dd>${esc(x.range)}</dd></div>
+      ${onChart ? `<div class="wide"><dt>On the chart</dt><dd>${esc(onChart)}</dd></div>` : ""}
       <div><dt>Regional board</dt><dd>${esc(BOARDS[x.board])}</dd></div>
       <div><dt>Group</dt><dd>${esc(GROUPS[x.group])}</dd></div>
       <div><dt>Your list</dt><dd>${esc(status)}</dd></div>
@@ -1987,9 +2025,9 @@ async function saveMapImage() {
   g.setLineDash([2, 2]); g.strokeStyle = "#C9CFCA"; g.lineWidth = 0.4; g.stroke(new Path2D(L.borders)); g.setLineDash([]);
   const order = [...SP].sort((a, b) => b.rad - a.rad);
   order.forEach((x) => {
-    const st = TM_STYLE[spState(x, idx)], p = new Path2D(circleD(x.lat, x.lon, x.rad));
-    g.globalAlpha = washOf(x, st); g.fillStyle = st.tf; g.fill(p);
-    g.globalAlpha = st.tso; g.strokeStyle = st.ts; g.lineWidth = 0.6; g.setLineDash(st.dash ? [2, 1.5] : []); g.stroke(p);
+    const st = TM_STYLE[spState(x, idx)], p = new Path2D(hasShape(x) ? L.ranges[x.id] : circleD(x.lat, x.lon, x.rad));
+    g.globalAlpha = washOf(x, st); g.fillStyle = st.tf; g.fill(p, "evenodd");
+    g.globalAlpha = st.tso; g.strokeStyle = st.ts; g.lineWidth = 0.6; g.lineJoin = "round"; g.setLineDash(st.dash ? [2, 1.5] : []); g.stroke(p);
   });
   g.globalAlpha = 1; g.setLineDash([]);
   order.forEach((x) => {
@@ -2001,7 +2039,7 @@ async function saveMapImage() {
   g.strokeStyle = "#8DA096"; g.lineWidth = 0.8; g.stroke(outline);
   g.restore();
   g.fillStyle = "#55655C"; g.font = "13px Inter, system-ui, sans-serif";
-  g.fillText("Green: caught. Gray: still to catch. Circles mark native ranges roughly. Coastlines: Natural Earth.", W / 2, H - 26);
+  g.fillText("Green: caught. Gray: still to catch. Shading follows state, province and country lines; circles are rough. Boundaries: Natural Earth.", W / 2, H - 26);
   cv.toBlob((blob) => {
     if (!blob) { toast("Couldn't make the image."); return; }
     const a = document.createElement("a");

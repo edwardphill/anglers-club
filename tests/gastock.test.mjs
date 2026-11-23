@@ -166,6 +166,8 @@ assert.equal(g.status, 200); assert.equal(g.body.events.length, 16); assert.ok(g
 assert.equal((await call2("/api/stocking")).status, 200, "Georgia is the default");
 assert.equal((await call2("/api/stocking?state=TN")).status, 404);
 ok("anyone can read the saved stockings and when the report was last read");
+// the endpoint uses the real clock, so mark the last read as just now (the reads above used made-up times)
+await q("update ga_stocking_runs set at = $1 where id = 1", [Date.now()]);
 calls = [];
 assert.equal((await call2("/api/stocking?refresh=1")).status, 403, "a visitor can't start a model call");
 assert.equal((await call2("/api/stocking?refresh=1", { "user-agent": "Mozilla/5.0" })).status, 403);
